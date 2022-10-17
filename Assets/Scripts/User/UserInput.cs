@@ -58,7 +58,7 @@ public class UserInput : MonoBehaviour
         #endregion
 
         #region »∏¿¸ 
-        
+
         #endregion
 
 #elif UNITY_IOS || UNITY_ANDROID
@@ -120,7 +120,24 @@ public class UserInput : MonoBehaviour
         #endregion
 
         #region ¡‹¿Œ/¡‹æ∆øÙ
+        
+        if (Input.touchCount == 2)
+        {
+            Touch touchFirstFinger = Input.GetTouch(0); 
+            Touch touchSecondFinger = Input.GetTouch(1); 
 
+            Vector2 touchFirstFingerPos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
+            Vector2 touchSecondFingerPos = touchSecondFinger.position - touchSecondFinger.deltaPosition;
+
+            float prevTouchDeltaMag = (touchFirstFingerPos - touchSecondFingerPos).magnitude;
+            float touchDeltaMag = (touchFirstFinger.position - touchSecondFinger.position).magnitude;
+
+            Zoom = prevTouchDeltaMag - touchDeltaMag;
+        }
+        else
+        {
+            Zoom = 0;
+        }
         #endregion
 
         #region »∏¿¸ 
