@@ -119,10 +119,10 @@ public class UserInput : MonoBehaviour
             Interact = false;
         #endregion
 
-        #region ¡‹¿Œ/¡‹æ∆øÙ
         
         if (Input.touchCount == 2)
         {
+        #region ¡‹¿Œ/¡‹æ∆øÙ
             Touch touchFirstFinger = Input.GetTouch(0); 
             Touch touchSecondFinger = Input.GetTouch(1); 
 
@@ -133,16 +133,17 @@ public class UserInput : MonoBehaviour
             float touchDeltaMag = (touchFirstFinger.position - touchSecondFinger.position).magnitude;
 
             Zoom = prevTouchDeltaMag - touchDeltaMag;
-        }
-        else
-        {
-            Zoom = 0;
-        }
         #endregion
 
         #region »∏¿¸ 
 
         #endregion
+
+        }
+        else
+        {
+            Zoom = 0;
+        }
 
 #endif
     }
