@@ -17,7 +17,8 @@ public class UserInteract : MonoBehaviour
 
         Vector3 moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
         moveDir.Normalize();
-        transform.GetChild(0).LookAt(transform.position + moveDir);
+        Debug.Log(transform.position + moveDir* 10);
+        transform.GetChild(0).LookAt(transform.position + moveDir * 10);
         transform.position += moveSpeed * moveDir * Time.deltaTime;
 
         #endregion
