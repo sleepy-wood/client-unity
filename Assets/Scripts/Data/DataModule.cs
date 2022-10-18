@@ -1,11 +1,16 @@
+using OpenCover.Framework.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
+
 
 //저장소 역할 
 //구조체는 그저 틀일 뿐,,,
@@ -38,6 +43,26 @@ public class DataModule:MonoBehaviour
         string url = "http://URL";
 
         StartCoroutine(DownLoadGet(url));
+
+    }
+    private async Task<string> AsyncGetRequest(string _url)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(_url);
+        request.SendWebRequest();
+
+        while (!request.isDone)
+        {
+            await Task.Yield();
+        }
+        if (request.result == UnityWebRequest.Result.ConnectionError)
+        {
+            Debug.Log("Get Request Error!: " + request.error);
+            return request.error;
+        }
+        else
+        {
+            return request.downloadHandler.text;
+        }
     }
     //DownLoad Data
     IEnumerator DownLoadGet(string _url)
@@ -74,21 +99,52 @@ public class DataModule:MonoBehaviour
     public void SendUserData(UserData user)
     {
         userData = user;
-        string json = JsonUtility.ToJson(userData);
+        string json = JsonUtility.ToJson(userData, true);
 
         string url = "http://URL";
         //userData2를 Web으로 Save
         StartCoroutine(Upload(url, json));
 
     }
+
+    //public async void test(string _url, string requestData)
+    //{
+    //    var response = await UnityWebRequest.Post(_url, requestData));
+
+
+    //    using (UnityWebRequest request = UnityWebRequest.Post(_url, json))
+    //    {
+    //        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+    //        request.uploadHandler = new UploadHandlerRaw(jsonToSend);
+    //        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+    //        request.SetRequestHeader("Content-Type", "application/json");
+    //        request.SetRequestHeader("Content-Type", "application/json");
+
+    //        yield return request.SendWebRequest();
+
+    //        if (request.error != null)
+    //        {
+    //            Debug.Log("Upload Error: " + request.error);
+    //        }
+    //    }
+    //}
+
     //Upload Data
     IEnumerator Upload(string _url, string json)
     {
-        using(UnityWebRequest request = UnityWebRequest.Post(_url, json))
+        //var client = new RestClient("https://team-buildup.shop/api/v1/users");
+        //var request = new RestRequest(Method.POST);
+        //request.AddHeader("Authorization", "Bearer REPLACE_BEARER_TOKEN");
+        //request.AddHeader("content-type", "application/json");
+        //request.AddParameter("application/json", "{}", ParameterType.RequestBody);
+        //IRestResponse response = client.Execute(request);
+
+        using (UnityWebRequest request = UnityWebRequest.Post(_url, json))
         {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
             request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.SetRequestHeader("Authorization", "Bearer REPLACE_BEARER_TOKEN");
             request.SetRequestHeader("Content-Type", "application/json");
 
             yield return request.SendWebRequest();
