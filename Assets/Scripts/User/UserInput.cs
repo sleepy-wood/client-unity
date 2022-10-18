@@ -79,7 +79,7 @@ public class UserInput : MonoBehaviour
         //현재 Touch를 한손가락으로 했을 경우 Move 상태인지, Touch상태인지 확인
         //Move 상태: 약간의 움직임이 감지가 된다면 Move
         //Touch 상태: 움직임이 감지가 되지 않은 상태에서 손가락을 뗐을 때
-        currnetStateText.text = "currentState: " + currentState.ToString();
+        //currnetStateText.text = "currentState: " + currentState.ToString();
         if (Input.touchCount == 1)
         {
             for (int i = 0; i < Input.touches.Length; i++)
@@ -94,30 +94,32 @@ public class UserInput : MonoBehaviour
                     currentState = currentState == TouchState.None ? TouchState.Touch : TouchState.None;
                 }
             }
-        }
 
-        #region 이동 
-        if (currentState == TouchState.Move)
-        {
-            clickText.text = "클릭여부: 노노";
-            Vector3 mousePos = Input.mousePosition;
-            Ray ray = Camera.main.ScreenPointToRay(mousePos);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            #region 이동 
+            if (currentState == TouchState.Move)
             {
-                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                clickText.text = "클릭여부: 노노";
+                Vector3 mousePos = Input.mousePosition;
+                Ray ray = Camera.main.ScreenPointToRay(mousePos);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    Vector3 dir = hit.point - transform.position;
-                    dir.Normalize();
-                    MoveX = dir.x;
-                    MoveZ = dir.z;
+                    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                    {
+                        Vector3 dir = hit.point - transform.position;
+                        dir.Normalize();
+                        MoveX = dir.x;
+                        MoveZ = dir.z;
+                        currnetStateText.text = $"hit.point = {hit.point} \n transform.position = {transform.position}" +
+                    $"\n dir = {dir}\n  MoveX = {MoveX} | MoveZ = {MoveZ}";
+                    }
                 }
             }
-        }
-        else
-        {
-            MoveX = 0;
-            MoveZ = 0;
+            else
+            {
+                MoveX = 0;
+                MoveZ = 0;
+            }
         }
         #endregion
 
@@ -140,16 +142,18 @@ public class UserInput : MonoBehaviour
             Touch touchFirstFinger = Input.GetTouch(0);
             Touch touchSecondFinger = Input.GetTouch(1);
 
+            //움직이기 전 손가락 위치 구하기
             Vector2 touchFirstFingerPos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
             Vector2 touchSecondFingerPos = touchSecondFinger.position - touchSecondFinger.deltaPosition;
 
             float prevTwoFingerDist = (touchFirstFingerPos - touchSecondFingerPos).magnitude;
             float curTwoFingerDist = (touchFirstFinger.position - touchSecondFinger.position).magnitude;
-            
-            //두 손가락의 간격이 달라졌을 경우 -> Zoom
-            if (prevTwoFingerDist != curTwoFingerDist) {
 
-                Zoom = prevTwoFingerDist - curTwoFingerDist;
+            //두 손가락의 간격이 달라졌을 경우 -> Zoom
+            //currnetStateText.text = Mathf.Abs(prevTwoFingerDist - curTwoFingerDist).ToString();
+            if (Mathf.Abs(prevTwoFingerDist - curTwoFingerDist) > 6) {
+
+                Zoom = (prevTwoFingerDist - curTwoFingerDist) * - 0.006f;
 
             }
             #endregion
@@ -162,7 +166,7 @@ public class UserInput : MonoBehaviour
                 {
                     if (Input.touches[i].phase == TouchPhase.Moved)
                     {
-                        Rotate = Vector2.Distance(touchFirstFinger.position, touchFirstFinger.deltaPosition); 
+                        Rotate = (touchFirstFingerPos.x - touchFirstFinger.position.x) * 0.07f; 
                     }
                 }
             }
@@ -172,6 +176,7 @@ public class UserInput : MonoBehaviour
         else
         {
             Zoom = 0;
+            Rotate = 0;
         }
 
 #endif

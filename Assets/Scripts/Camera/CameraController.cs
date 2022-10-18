@@ -31,7 +31,6 @@ public class CameraController : MonoBehaviour
             StartCoroutine(CameraMoving());
         }
         transform.parent.Rotate(user.transform.up, userInput.Rotate);
-        user.transform.Rotate(user.transform.up, userInput.Rotate);
     }
     IEnumerator CameraMoving()
     {
