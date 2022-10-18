@@ -10,12 +10,15 @@ public class CameraController : MonoBehaviour
 
     [Header("Zoom In / Out")]
     [SerializeField] private float wheelScrollSpeed;
+
+    private GameObject user;
     private UserInput userInput;
     private Camera myCamera;
 
     private void Start()
     {
-        userInput = GameManager.Instance.User.GetComponent<UserInput>();
+        user = GameManager.Instance.User;
+        userInput = user.GetComponent<UserInput>();
         myCamera = GetComponent<Camera>();
     }
     private void Update()
@@ -27,6 +30,8 @@ public class CameraController : MonoBehaviour
         {
             StartCoroutine(CameraMoving());
         }
+        //user.transform.Rotate(user.transform.up, userInput.Rotate);
+        camPos.parent.transform.Rotate(user.transform.up, userInput.Rotate);
     }
     IEnumerator CameraMoving()
     {

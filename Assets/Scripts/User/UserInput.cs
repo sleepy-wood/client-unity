@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class UserInput : MonoBehaviour
 {
     private const string MoveNameX = "Horizontal";
     private const string MoveNameZ = "Vertical";
     private const string LeftClickName = "Fire1";
+    private const string RightClickName = "Fire2";
+    private const string MouseXName = "Mouse X";
+
     public Text currnetStateText;
     public Text clickText;
 
@@ -41,6 +45,11 @@ public class UserInput : MonoBehaviour
     /// </summary>
     public bool Interact { get; private set; }
 
+    /// <summary>
+    /// Mouse Drag -> Rotate
+    /// </summary>
+    public float Rotate { get; private set; }
+
     private void Update()
     {
 #if UNITY_STANDALONE
@@ -58,7 +67,10 @@ public class UserInput : MonoBehaviour
         #endregion
 
         #region È¸Àü 
-
+        if (Input.GetButton(RightClickName))
+        {
+            Rotate = Input.GetAxis(MouseXName);
+        }
         #endregion
 
 #elif UNITY_IOS || UNITY_ANDROID
