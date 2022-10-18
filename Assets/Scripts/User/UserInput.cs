@@ -71,6 +71,10 @@ public class UserInput : MonoBehaviour
         {
             Rotate = Input.GetAxis(MouseXName);
         }
+        else
+        {
+            Rotate = 0;
+        }
         #endregion
 
 #elif UNITY_IOS || UNITY_ANDROID
