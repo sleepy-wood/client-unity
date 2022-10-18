@@ -13,7 +13,6 @@ public class UserInput : MonoBehaviour
     public Text currnetStateText;
     public Text clickText;
 
-#if  UNITY_IOS || UNITY_ANDROID
     /// <summary>
     /// Touch State 설정
     /// </summary>
@@ -24,7 +23,6 @@ public class UserInput : MonoBehaviour
         Touch
     }
     TouchState currentState = TouchState.None;
-#endif
 
     /// <summary>
     /// X축으로 이동
@@ -135,25 +133,40 @@ public class UserInput : MonoBehaviour
             Interact = false;
         #endregion
 
-        
+
         if (Input.touchCount == 2)
         {
-        #region 줌인/줌아웃
-            Touch touchFirstFinger = Input.GetTouch(0); 
-            Touch touchSecondFinger = Input.GetTouch(1); 
+            #region 줌인/줌아웃
+            Touch touchFirstFinger = Input.GetTouch(0);
+            Touch touchSecondFinger = Input.GetTouch(1);
 
             Vector2 touchFirstFingerPos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
             Vector2 touchSecondFingerPos = touchSecondFinger.position - touchSecondFinger.deltaPosition;
 
-            float prevTouchDeltaMag = (touchFirstFingerPos - touchSecondFingerPos).magnitude;
-            float touchDeltaMag = (touchFirstFinger.position - touchSecondFinger.position).magnitude;
+            float prevTwoFingerDist = (touchFirstFingerPos - touchSecondFingerPos).magnitude;
+            float curTwoFingerDist = (touchFirstFinger.position - touchSecondFinger.position).magnitude;
+            
+            //두 손가락의 간격이 달라졌을 경우 -> Zoom
+            if (prevTwoFingerDist != curTwoFingerDist) {
 
-            Zoom = prevTouchDeltaMag - touchDeltaMag;
-        #endregion
+                Zoom = prevTwoFingerDist - curTwoFingerDist;
 
-        #region 회전 
+            }
+            #endregion
 
-        #endregion
+            #region 회전
+            //두 손가락의 간격이 같은 경우 -> Roate
+            else
+            {
+                for (int i = 0; i < Input.touches.Length; i++)
+                {
+                    if (Input.touches[i].phase == TouchPhase.Moved)
+                    {
+                        Rotate = Vector2.Distance(touchFirstFinger.position, touchFirstFinger.deltaPosition); 
+                    }
+                }
+            }
+            #endregion
 
         }
         else
