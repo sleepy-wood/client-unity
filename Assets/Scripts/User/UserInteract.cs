@@ -15,7 +15,11 @@ public class UserInteract : MonoBehaviour
     {
         #region Player Move
 
+#if UNITY_STANDALONE
         Vector3 moveDir = userInput.MoveX * transform.right + userInput.MoveZ * transform.forward;
+#elif UNITY_IOS || UNITY_ANDROID
+        Vector3 moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
+#endif
         moveDir.Normalize();
         transform.GetChild(0).LookAt(transform.position + moveDir * 10);
         transform.position += moveSpeed * moveDir * Time.deltaTime;
@@ -23,9 +27,9 @@ public class UserInteract : MonoBehaviour
         //È¸Àü
         transform.Rotate(transform.up, userInput.Rotate);
 
-        #endregion
+#endregion
 
-        #region Player Click
+#region Player Click
         if (userInput.Interact)
         {
             Vector3 mousePos = Input.mousePosition;
@@ -40,6 +44,6 @@ public class UserInteract : MonoBehaviour
                 }
             }
         }
-        #endregion
+#endregion
     }
 }

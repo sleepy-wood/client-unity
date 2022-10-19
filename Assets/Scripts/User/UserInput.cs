@@ -4,15 +4,17 @@ using UnityEngine.UIElements;
 
 public class UserInput : MonoBehaviour
 {
+    public Text currnetStateText;
+    public Text clickText;
+
+#if UNITY_STANDALONE
     private const string MoveNameX = "Horizontal";
     private const string MoveNameZ = "Vertical";
     private const string LeftClickName = "Fire1";
     private const string RightClickName = "Fire2";
     private const string MouseXName = "Mouse X";
 
-    public Text currnetStateText;
-    public Text clickText;
-
+#elif UNITY_IOS || UNITY_ANDROID
     /// <summary>
     /// Touch State 설정
     /// </summary>
@@ -23,6 +25,7 @@ public class UserInput : MonoBehaviour
         Touch
     }
     TouchState currentState = TouchState.None;
+#endif
 
     /// <summary>
     /// X축으로 이동
@@ -48,23 +51,24 @@ public class UserInput : MonoBehaviour
     /// </summary>
     public float Rotate { get; private set; }
 
+
     private void Update()
     {
 #if UNITY_STANDALONE
-        #region 이동 
+#region 이동 
         MoveX = Input.GetAxisRaw(MoveNameX);
         MoveZ = Input.GetAxisRaw(MoveNameZ);
-        #endregion
+#endregion
 
-        #region interact
+#region interact
         Interact = Input.GetButtonDown(LeftClickName);
-        #endregion
+#endregion
 
-        #region 줌인/줌아웃
+#region 줌인/줌아웃
         Zoom = Input.GetAxis("Mouse ScrollWheel");
-        #endregion
+#endregion
 
-        #region 회전 
+#region 회전 
         if (Input.GetButton(RightClickName))
         {
             Rotate = Input.GetAxis(MouseXName);
@@ -73,7 +77,7 @@ public class UserInput : MonoBehaviour
         {
             Rotate = 0;
         }
-        #endregion
+#endregion
 
 #elif UNITY_IOS || UNITY_ANDROID
         //현재 Touch를 한손가락으로 했을 경우 Move 상태인지, Touch상태인지 확인
@@ -95,10 +99,10 @@ public class UserInput : MonoBehaviour
                 }
             }
 
-            #region 이동 
+#region 이동 
             if (currentState == TouchState.Move)
             {
-                clickText.text = "클릭여부: 노노";
+                clickText.text = "\n클릭여부: 노노";
                 Vector3 mousePos = Input.mousePosition;
                 Ray ray = Camera.main.ScreenPointToRay(mousePos);
                 RaycastHit hit;
@@ -106,6 +110,7 @@ public class UserInput : MonoBehaviour
                 {
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
                     {
+                        //맞은 곳과 플레이어의 방향 벡터 구하기
                         Vector3 dir = hit.point - transform.position;
                         dir.Normalize();
                         MoveX = dir.x;
@@ -121,24 +126,24 @@ public class UserInput : MonoBehaviour
                 MoveZ = 0;
             }
         }
-        #endregion
+#endregion
 
-        #region interact
+#region interact
 
         if (currentState == TouchState.Touch)
         {
-            clickText.text = "클릭여부: 클릭";
+            clickText.text = "\n클릭여부: 클릭";
             Interact = true;
             currentState = TouchState.None;
         }
         else
             Interact = false;
-        #endregion
+#endregion
 
 
         if (Input.touchCount == 2)
         {
-            #region 줌인/줌아웃
+#region 줌인/줌아웃
             Touch touchFirstFinger = Input.GetTouch(0);
             Touch touchSecondFinger = Input.GetTouch(1);
 
@@ -156,9 +161,9 @@ public class UserInput : MonoBehaviour
                 Zoom = (prevTwoFingerDist - curTwoFingerDist) * - 0.006f;
 
             }
-            #endregion
+#endregion
 
-            #region 회전
+#region 회전
             //두 손가락의 간격이 같은 경우 -> Roate
             else
             {
@@ -170,7 +175,7 @@ public class UserInput : MonoBehaviour
                     }
                 }
             }
-            #endregion
+#endregion
 
         }
         else
