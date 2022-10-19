@@ -14,12 +14,14 @@ public class CameraController : MonoBehaviour
     private GameObject user;
     private UserInput userInput;
     private Camera myCamera;
+    private float initialOrthographicSize = 0;
 
     private void Start()
     {
         user = GameManager.Instance.User;
         userInput = user.GetComponent<UserInput>();
         myCamera = GetComponent<Camera>();
+        initialOrthographicSize = myCamera.orthographicSize;
     }
     private void Update()
     {
@@ -29,9 +31,10 @@ public class CameraController : MonoBehaviour
             //카메라 재조정
             StopAllCoroutines();
             StartCoroutine(CameraMoving(7));
+           
             //카메라 Zoom in / out
             myCamera.orthographicSize -= userInput.Zoom * wheelScrollSpeed;
-            myCamera.orthographicSize = Mathf.Clamp(myCamera.orthographicSize, 2.5f, 15f);
+            myCamera.orthographicSize = Mathf.Clamp(myCamera.orthographicSize, initialOrthographicSize - 12, initialOrthographicSize + 12);
         }
 
         //플레이어와 카메라의 거리가 5정도 떨어지면 따라가기
