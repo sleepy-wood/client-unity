@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#nullable enable
 [System.Serializable]
-public struct UserData
+public class UserData
 {
-    public int Id;
-    public string NickName;
-    public string UserAvatar;
-    public SleepDataStruct SleepData;
+    public int? Id = null;
+    public string? NickName = null;
+    public string? UserAvatar = null;
+    public SleepDataStruct? SleepData = null;
 }
 [System.Serializable]
-public struct SleepDataStruct
+public class SleepDataStruct
 {
-    public string SleepAt;
-    public string WakeAt;
+    public string? SleepAt = null;
+    public string? WakeAt = null;
 }

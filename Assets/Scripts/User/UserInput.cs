@@ -108,7 +108,7 @@ public class UserInput : MonoBehaviour
             #region 이동 
             if (currentState == TouchState.Move)
             {
-                clickText.text = "\n클릭여부: 노노";
+                //clickText.text = "\n클릭여부: 노노";
                 Vector3 mousePos = Input.mousePosition;
                 Ray ray = Camera.main.ScreenPointToRay(mousePos);
                 RaycastHit hit;
@@ -121,8 +121,8 @@ public class UserInput : MonoBehaviour
                         dir.Normalize();
                         MoveX = dir.x;
                         MoveZ = dir.z;
-                        currnetStateText.text = $"hit.point = {hit.point} \n transform.position = {transform.position}" +
-                    $"\n dir = {dir}\n  MoveX = {MoveX} | MoveZ = {MoveZ}";
+                        //currnetStateText.text = $"hit.point = {hit.point} \n transform.position = {transform.position}" +
+                    //$"\n dir = {dir}\n  MoveX = {MoveX} | MoveZ = {MoveZ}";
                     }
                 }
             }
@@ -138,7 +138,7 @@ public class UserInput : MonoBehaviour
 
         if (currentState == TouchState.Touch)
         {
-            clickText.text = "\n클릭여부: 클릭";
+            //clickText.text = "\n클릭여부: 클릭";
             Interact = true;
             currentState = TouchState.None;
         }

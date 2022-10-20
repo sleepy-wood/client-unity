@@ -16,7 +16,7 @@ using UnityEngine.Rendering;
 //구조체는 그저 틀일 뿐,,,
 public class DataModule
 {
-    private const string DOMAIN = "";
+    private const string DOMAIN = "https://team-buildup.shop";
     private static string REPLACE_BEARER_TOKEN = "";
 
     public enum NetworkType
@@ -48,7 +48,7 @@ public class DataModule
         cts.CancelAfterSlim(TimeSpan.FromSeconds(timeout));
 
         //웹 요청 생성(Get,Post,Delete,Update)
-        UnityWebRequest request = new UnityWebRequest(_url, networkType.ToString());
+        UnityWebRequest request = new UnityWebRequest(requestURL, networkType.ToString());
         
         //Body 정보 입력
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -57,7 +57,13 @@ public class DataModule
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(data);
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
         }
+
         //Header 정보 입력
+        if (REPLACE_BEARER_TOKEN == "" && PlayerPrefs.GetString("Bearer") != "")
+        {
+            REPLACE_BEARER_TOKEN = PlayerPrefs.GetString("Bearer");
+        }
+       
         SetHeaders(request, "Authorization", "Bearer " + REPLACE_BEARER_TOKEN);
         SetHeaders(request, "Content-Type", "application/json");
 
