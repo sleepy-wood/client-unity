@@ -4,8 +4,8 @@ using UnityEngine.UIElements;
 
 public class UserInput : MonoBehaviour
 {
-    //public Text currnetStateText;
-    //public Text clickText;
+    public Text currnetStateText;
+    public Text clickText;
 
 #if UNITY_STANDALONE
     private const string MoveNameX = "Horizontal";
@@ -86,11 +86,11 @@ public class UserInput : MonoBehaviour
             #endregion
 
 #elif UNITY_IOS || UNITY_ANDROID
-        //현재 Touch를 한손가락으로 했을 경우 Move 상태인지, Touch상태인지 확인
-        //Move 상태: 약간의 움직임이 감지가 된다면 Move
-        //Touch 상태: 움직임이 감지가 되지 않은 상태에서 손가락을 뗐을 때
-        //currnetStateText.text = "currentState: " + currentState.ToString();
-        if (Input.touchCount == 1)
+            //현재 Touch를 한손가락으로 했을 경우 Move 상태인지, Touch상태인지 확인
+            //Move 상태: 약간의 움직임이 감지가 된다면 Move
+            //Touch 상태: 움직임이 감지가 되지 않은 상태에서 손가락을 뗐을 때
+            currnetStateText.text = "currentState: " + currentState.ToString();
+            if (Input.touchCount == 1)
         {
             for (int i = 0; i < Input.touches.Length; i++)
             {
@@ -108,8 +108,8 @@ public class UserInput : MonoBehaviour
             #region 이동 
             if (currentState == TouchState.Move)
             {
-                //clickText.text = "\n클릭여부: 노노";
-                Vector3 mousePos = Input.mousePosition;
+                    clickText.text = "\n클릭여부: 노노";
+                    Vector3 mousePos = Input.mousePosition;
                 Ray ray = Camera.main.ScreenPointToRay(mousePos);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
@@ -121,9 +121,9 @@ public class UserInput : MonoBehaviour
                         dir.Normalize();
                         MoveX = dir.x;
                         MoveZ = dir.z;
-                        //currnetStateText.text = $"hit.point = {hit.point} \n transform.position = {transform.position}" +
-                    //$"\n dir = {dir}\n  MoveX = {MoveX} | MoveZ = {MoveZ}";
-                    }
+                            currnetStateText.text = $"hit.point = {hit.point} \n transform.position = {transform.position}" +
+                        $"\n dir = {dir}\n  MoveX = {MoveX} | MoveZ = {MoveZ}";
+                        }
                 }
             }
             else
@@ -138,8 +138,8 @@ public class UserInput : MonoBehaviour
 
         if (currentState == TouchState.Touch)
         {
-            //clickText.text = "\n클릭여부: 클릭";
-            Interact = true;
+                clickText.text = "\n클릭여부: 클릭";
+                Interact = true;
             currentState = TouchState.None;
         }
         else
@@ -160,9 +160,9 @@ public class UserInput : MonoBehaviour
             float prevTwoFingerDist = (touchFirstFingerPos - touchSecondFingerPos).magnitude;
             float curTwoFingerDist = (touchFirstFinger.position - touchSecondFinger.position).magnitude;
 
-            //두 손가락의 간격이 달라졌을 경우 -> Zoom
-            //currnetStateText.text = Mathf.Abs(prevTwoFingerDist - curTwoFingerDist).ToString();
-            if (Mathf.Abs(prevTwoFingerDist - curTwoFingerDist) > 6) {
+                //두 손가락의 간격이 달라졌을 경우 -> Zoom
+                //currnetStateText.text = Mathf.Abs(prevTwoFingerDist - curTwoFingerDist).ToString();
+                if (Mathf.Abs(prevTwoFingerDist - curTwoFingerDist) > 6) {
 
                 Zoom = (prevTwoFingerDist - curTwoFingerDist) * - 0.006f;
 

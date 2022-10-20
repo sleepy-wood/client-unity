@@ -318,7 +318,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &65419024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1420,7 +1420,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1956336888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1819,6 +1819,10 @@ PrefabInstance:
     - target: {fileID: 3816834199776561486, guid: 1ff67a4cd957070459dfe559a1f079e9, type: 3}
       propertyPath: m_Name
       value: SkyLand
+      objectReference: {fileID: 0}
+    - target: {fileID: 3816834199776561486, guid: 1ff67a4cd957070459dfe559a1f079e9, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4590239872036295668, guid: 1ff67a4cd957070459dfe559a1f079e9, type: 3}
       propertyPath: m_RootOrder
