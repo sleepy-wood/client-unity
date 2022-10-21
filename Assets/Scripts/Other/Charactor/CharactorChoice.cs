@@ -90,13 +90,15 @@ public class CharactorChoice : MonoBehaviour
     public async void OnClickChoiceButton()
     {
         DataTemporary.MyUserData.UserAvatar = transform.GetChild(selectedIndex).gameObject.name;
+
         ResultTemp<Token> data = await DataModule.WebRequest<ResultTemp<Token>>(
-            "/api/v1/users/" +DataModule.REPLACE_BEARER_TOKEN.ToString(),
-            DataModule.NetworkType.POST);
+            "/api/v1/users/",
+            DataModule.NetworkType.PUT);
+
 
         if (data.result)
         {
-
+            
         }
     }
 }
