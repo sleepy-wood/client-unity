@@ -10,9 +10,18 @@ public class CharactorChoice : MonoBehaviour
 {
     public Transform content;
     public int selectedIndex;
+    public Transform explainText;
+
+    private UserInput userInput;    
     private void Start()
     {
         OnClickPreviewCharactor(0);
+        userInput = GetComponent<UserInput>();
+    }
+    private void Update()
+    {
+        transform.GetChild(selectedIndex).Rotate(transform.up, -userInput.Rotate * 2);
+        //explainText.
     }
     public void OnClickPreviewCharactor(int index)
     {
