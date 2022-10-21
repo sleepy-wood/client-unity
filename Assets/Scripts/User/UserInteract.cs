@@ -10,6 +10,8 @@ public class UserInteract : MonoBehaviour
     private void Start()
     {
         userInput = GetComponent<UserInput>();
+        
+        //userAvatar 생성
         GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + DataTemporary.MyUserData.UserAvatar);
         GameObject userAvatar = Instantiate(userAvatarResource);
         userAvatar.name = userAvatar.name.Split("(")[0];
