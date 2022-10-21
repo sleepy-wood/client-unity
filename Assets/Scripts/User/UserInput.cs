@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 public class UserInput : MonoBehaviour
 {
-    public Text currnetStateText;
+    public Text currentStateText;
     public Text clickText;
 
 #if UNITY_STANDALONE
@@ -90,7 +90,7 @@ public class UserInput : MonoBehaviour
             //Move 상태: 약간의 움직임이 감지가 된다면 Move
             //Touch 상태: 움직임이 감지가 되지 않은 상태에서 손가락을 뗐을 때
             if(currentStateText)
-                currnetStateText.text = "currentState: " + currentState.ToString();
+                currentStateText.text = "currentState: " + currentState.ToString();
             if (Input.touchCount == 1)
         {
             for (int i = 0; i < Input.touches.Length; i++)
@@ -123,8 +123,8 @@ public class UserInput : MonoBehaviour
                         dir.Normalize();
                         MoveX = dir.x;
                         MoveZ = dir.z;
-                        if(currnetStateText)
-                            currnetStateText.text = $"hit.point = {hit.point} \n transform.position = {transform.position}" +
+                        if(currentStateText)
+                                currentStateText.text = $"hit.point = {hit.point} \n transform.position = {transform.position}" +
                         $"\n dir = {dir}\n  MoveX = {MoveX} | MoveZ = {MoveZ}";
                         }
                 }
