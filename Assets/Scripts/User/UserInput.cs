@@ -89,7 +89,8 @@ public class UserInput : MonoBehaviour
             //현재 Touch를 한손가락으로 했을 경우 Move 상태인지, Touch상태인지 확인
             //Move 상태: 약간의 움직임이 감지가 된다면 Move
             //Touch 상태: 움직임이 감지가 되지 않은 상태에서 손가락을 뗐을 때
-            currnetStateText.text = "currentState: " + currentState.ToString();
+            if(currentStateText)
+                currnetStateText.text = "currentState: " + currentState.ToString();
             if (Input.touchCount == 1)
         {
             for (int i = 0; i < Input.touches.Length; i++)
@@ -108,7 +109,8 @@ public class UserInput : MonoBehaviour
             #region 이동 
             if (currentState == TouchState.Move)
             {
-                    clickText.text = "\n클릭여부: 노노";
+                    if(clickText)
+                        clickText.text = "\n클릭여부: 노노";
                     Vector3 mousePos = Input.mousePosition;
                 Ray ray = Camera.main.ScreenPointToRay(mousePos);
                 RaycastHit hit;
@@ -121,6 +123,7 @@ public class UserInput : MonoBehaviour
                         dir.Normalize();
                         MoveX = dir.x;
                         MoveZ = dir.z;
+                        if(currnetStateText)
                             currnetStateText.text = $"hit.point = {hit.point} \n transform.position = {transform.position}" +
                         $"\n dir = {dir}\n  MoveX = {MoveX} | MoveZ = {MoveZ}";
                         }
@@ -138,6 +141,7 @@ public class UserInput : MonoBehaviour
 
         if (currentState == TouchState.Touch)
         {
+            if(clickText)
                 clickText.text = "\n클릭여부: 클릭";
                 Interact = true;
             currentState = TouchState.None;

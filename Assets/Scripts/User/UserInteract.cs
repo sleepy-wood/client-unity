@@ -29,7 +29,7 @@ public class UserInteract : MonoBehaviour
 
 #endregion
 
-#region Player Click
+        #region Player Click
         if (userInput.Interact)
         {
             Vector3 mousePos = Input.mousePosition;
@@ -44,6 +44,6 @@ public class UserInteract : MonoBehaviour
                 }
             }
         }
-#endregion
+        #endregion
     }
 }
