@@ -24,7 +24,7 @@ public class UserInteract : MonoBehaviour
         transform.GetChild(0).LookAt(transform.position + moveDir * 10);
         transform.position += moveSpeed * moveDir * Time.deltaTime;
 
-        //È¸Àü
+        //íšŒì „
         transform.Rotate(transform.up, userInput.Rotate);
 
 #endregion
