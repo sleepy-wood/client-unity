@@ -4,6 +4,6 @@ using UnityEngine;
 
 public static class DataTemporary
 {
-    public static UserData MyUserData = null;
-    public static LandData MyLandData = null;
+    public static UserData MyUserData = new UserData();
+    public static LandData MyLandData = new LandData();
 }

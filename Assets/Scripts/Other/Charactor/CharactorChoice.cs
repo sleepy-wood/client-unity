@@ -89,16 +89,16 @@ public class CharactorChoice : MonoBehaviour
     }
     public async void OnClickChoiceButton()
     {
-        DataTemporary.MyUserData.UserAvatar = transform.GetChild(selectedIndex).gameObject.name;
-
+        transform.GetChild(selectedIndex).GetComponent<Animator>().SetTrigger("Victory");
+        DataTemporary.MyUserData.UserAvatar = transform.GetChild(selectedIndex).name;
+        string jsonData = JsonUtility.ToJson(DataTemporary.MyUserData);
         ResultTemp<Token> data = await DataModule.WebRequest<ResultTemp<Token>>(
             "/api/v1/users/",
-            DataModule.NetworkType.PUT);
+            DataModule.NetworkType.PUT, jsonData);
 
-
-        if (data.result)
-        {
-            
-        }
+        //if (data.result)
+        //{
+        //    Debug.Log("선택 완료");
+        //}
     }
 }
