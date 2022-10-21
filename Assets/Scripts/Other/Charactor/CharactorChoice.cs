@@ -1,11 +1,8 @@
-using Cysharp.Threading.Tasks.Triggers;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using UnityEngine.SceneManagement;
 
 public class CharactorChoice : MonoBehaviour
 {
@@ -13,6 +10,10 @@ public class CharactorChoice : MonoBehaviour
     public int selectedIndex;
     public Transform explainText;
     public float textSpeed = 7f;
+    public string userDataFileName = "UserData";
+
+    private bool isNextScene = false;
+    private float curTime = 0;
 
     private UserInput userInput;    
     private void Start()
@@ -34,6 +35,13 @@ public class CharactorChoice : MonoBehaviour
         }
 
         transform.GetChild(selectedIndex).Rotate(transform.up, -userInput.Rotate * 2);
+        //다음씬으로 넘어가자
+        if (isNextScene)
+        {
+            curTime += Time.deltaTime;
+            if (curTime > 1.2f)
+                SceneManager.LoadScene("MyRoom");
+        }
     }
     public IEnumerator AlphaText(int i)
     {
@@ -89,13 +97,27 @@ public class CharactorChoice : MonoBehaviour
     }
     public async void OnClickChoiceButton()
     {
+        //승리 애니메이션 재생
         transform.GetChild(selectedIndex).GetComponent<Animator>().SetTrigger("Victory");
+        
+        //데이터 저장
         DataTemporary.MyUserData.UserAvatar = transform.GetChild(selectedIndex).name;
-        string jsonData = JsonUtility.ToJson(DataTemporary.MyUserData);
+        string jsonData = JsonUtility.ToJson(DataTemporary.MyUserData, true);
+        //Json을 txt 파일로 레지스트리에 저장
+        string filePath = Application.dataPath + "/Data";
+
+        if (!Directory.Exists(filePath))
+        {
+            Directory.CreateDirectory(filePath);
+        }
+        File.WriteAllText(filePath + "/" + userDataFileName + ".txt", jsonData);
+
+        //TODO: 데이터 수정
         ResultTemp<Token> data = await DataModule.WebRequest<ResultTemp<Token>>(
             "/api/v1/users/",
             DataModule.NetworkType.PUT, jsonData);
-
+        
+        isNextScene = true;
         //if (data.result)
         //{
         //    Debug.Log("선택 완료");

@@ -10,6 +10,11 @@ public class UserInteract : MonoBehaviour
     private void Start()
     {
         userInput = GetComponent<UserInput>();
+        GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + DataTemporary.MyUserData.UserAvatar);
+        GameObject userAvatar = Instantiate(userAvatarResource);
+        userAvatar.name = userAvatar.name.Split("(")[0];
+        userAvatar.transform.parent = transform;
+        userAvatar.transform.localPosition = Vector3.zero;
     }
     private void Update()
     {
@@ -21,7 +26,7 @@ public class UserInteract : MonoBehaviour
         Vector3 moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
 #endif
         moveDir.Normalize();
-        transform.GetChild(0).LookAt(transform.position + moveDir * 10);
+        transform.GetChild(1).LookAt(transform.position + moveDir * 10);
         transform.position += moveSpeed * moveDir * Time.deltaTime;
 
         //회전
