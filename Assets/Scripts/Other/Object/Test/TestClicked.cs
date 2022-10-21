@@ -9,7 +9,7 @@ public class TestClicked : MonoBehaviour, IClickedObject
 
     public void ClickMe()
     {
-        //Debug.Log("³ª Å¬¸¯µÆÀ½: " + transform.gameObject);
-        uiText.text = "³ª Å¬¸¯µÆÀ½: " + transform.gameObject;
+        //Debug.Log("ë‚˜ í´ë¦­ëìŒ: " + transform.gameObject);
+        uiText.text = "ë‚˜ í´ë¦­ëìŒ: " + transform.gameObject;
     }
 }

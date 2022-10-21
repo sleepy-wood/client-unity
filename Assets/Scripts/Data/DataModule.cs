@@ -39,27 +39,27 @@ public class DataModule
     protected static double timeout = 5;
 
     /// <summary>
-    /// Web¿¡ Data¸¦ RequestÇÒ ¼ö ÀÖ´Ù.
+    /// Webì— Dataë¥¼ Requestí•  ìˆ˜ ìˆë‹¤.
     /// </summary>
-    /// <typeparam name="T">Json Çü½Ä</typeparam>
-    /// <param name="_url">Json ¿Ã¸± url</param>
-    /// <param name="networkType">¾î¶»°Ô Request ÇÒ °ÍÀÎ°¡</param>
-    /// <param name="data">º¸³¾ µ¥ÀÌÅÍ</param>
+    /// <typeparam name="T">Json í˜•ì‹</typeparam>
+    /// <param name="_url">Json ì˜¬ë¦´ url</param>
+    /// <param name="networkType">ì–´ë–»ê²Œ Request í•  ê²ƒì¸ê°€</param>
+    /// <param name="data">ë³´ë‚¼ ë°ì´í„°</param>
     /// <returns></returns>
     public static async UniTask<T> WebRequest<T>(string _url, NetworkType networkType, string data = null)
     {
-        //³×Æ®¿öÅ© Ã¼Å·
+        //ë„¤íŠ¸ì›Œí¬ ì²´í‚¹
         await CheckNetwork();
-        //API URL »ı¼º
+        //API URL ìƒì„±
         string requestURL = DOMAIN + _url;
-        //Timeout ¼³Á¤
+        //Timeout ì„¤ì •
         var cts = new CancellationTokenSource();
         cts.CancelAfterSlim(TimeSpan.FromSeconds(timeout));
 
-        //À¥ ¿äÃ» »ı¼º(Get,Post,Delete,Update)
+        //ì›¹ ìš”ì²­ ìƒì„±(Get,Post,Delete,Update)
         UnityWebRequest request = new UnityWebRequest(requestURL, networkType.ToString());
         
-        //Body Á¤º¸ ÀÔ·Â
+        //Body ì •ë³´ ì…ë ¥
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         if (data != null)
         {
@@ -67,7 +67,7 @@ public class DataModule
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
         }
 
-        //Header Á¤º¸ ÀÔ·Â
+        //Header ì •ë³´ ì…ë ¥
         if (REPLACE_BEARER_TOKEN == "" && PlayerPrefs.GetString("Bearer") != "")
         {
             REPLACE_BEARER_TOKEN = PlayerPrefs.GetString("Bearer");
@@ -87,9 +87,9 @@ public class DataModule
             if (ex.CancellationToken == cts.Token)
             {
                 Debug.Log("Timeout");
-                //TODO: ³×Æ®¿öÅ© Àç½Ãµµ ÆË¾÷ È£Ãâ.
+                //TODO: ë„¤íŠ¸ì›Œí¬ ì¬ì‹œë„ íŒì—… í˜¸ì¶œ.
 
-                //Àç½Ãµµ
+                //ì¬ì‹œë„
                 return await WebRequest<T>(_url, networkType, data);
             }
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 #nullable enable
 /// <summary>
-/// ¶¥ À§¿¡ ÀÖ´Â ¿ÀºêÁ§Æ®µéÀÇ Á¤º¸¸¦ ÀúÀåÇÏ´Â ±¸Á¶Ã¼
+/// ë•… ìœ„ì— ìˆëŠ” ì˜¤ë¸Œì íŠ¸ë“¤ì˜ ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” êµ¬ì¡°ì²´
 /// </summary>
 [Serializable]
 public class ObjectsInfo
@@ -16,7 +16,7 @@ public class ObjectsInfo
 }
 
 /// <summary>
-/// ¶¥À§¿¡ ÀÖ´Â ¿ÀºêÁ§Æ®µéÀÇ List
+/// ë•…ìœ„ì— ìˆëŠ” ì˜¤ë¸Œì íŠ¸ë“¤ì˜ List
 /// </summary>
 [Serializable]
 public class ArrayObjectsOfLand
@@ -25,7 +25,7 @@ public class ArrayObjectsOfLand
 }
 
 /// <summary>
-/// Land ÇÏ³ª¿¡ ÀÖ´Â Á¤º¸µé
+/// Land í•˜ë‚˜ì— ìˆëŠ” ì •ë³´ë“¤
 /// </summary>
 [Serializable]
 public class LandData
@@ -38,7 +38,7 @@ public class LandData
 }
 
 /// <summary>
-/// ¿©·¯ LandµéÀÇ Á¤º¸¸¦ ´ãÀ» List
+/// ì—¬ëŸ¬ Landë“¤ì˜ ì •ë³´ë¥¼ ë‹´ì„ List
 /// </summary>
 [Serializable]
 public class ArrayLandData

@@ -6,8 +6,8 @@
                                                                                                        
 
 ///// <summary>
-///// »ç¿ëÀÚ ´©Àû ÀÏ ¼ö¿¡ µû¶ó ³ª¹« 5´Ü°è·Î ¼ºÀå
-///// ¾¾¾Ñ ½É±â/»Ñ¸®±â - ¹ß¾Æ - ¹¦¸ñ - ³ª¹« - °³È­
+///// ì‚¬ìš©ì ëˆ„ì  ì¼ ìˆ˜ì— ë”°ë¼ ë‚˜ë¬´ 5ë‹¨ê³„ë¡œ ì„±ì¥
+///// ì”¨ì•— ì‹¬ê¸°/ë¿Œë¦¬ê¸° - ë°œì•„ - ë¬˜ëª© - ë‚˜ë¬´ - ê°œí™”
 ///// </summary>
 //public class TreeGrowth : MonoBehaviour
 //{
@@ -15,12 +15,12 @@
 //        public Tree t;
 //        public int testDay;
 
-//        // »ç¿ëÀÚ°¡ ¸Ç Ã³À½ ÀÔÀåÇÑ ½Ã°£
+//        // ì‚¬ìš©ìê°€ ë§¨ ì²˜ìŒ ì…ì¥í•œ ì‹œê°„
 //        DateTime startTime;
 
 //        void Start()
 //        {
-//                // ½ÃÀÛ ½Ã°£ ÀúÀå
+//                // ì‹œì‘ ì‹œê°„ ì €ì¥
 //               // startTime = new DateTime(2022, 10, 12, 17, 7, 0);
 //                startTime = DateTime.Parse("2022-10-12 PM 5:07:00");
                 
@@ -30,7 +30,7 @@
 //        void Update()
 //        {
 //                TimeSpan timeDif = DateTime.Now - startTime;
-//                print($"Áö³­ ½Ã°£ : {timeDif.Days}³¯");
+//                print($"ì§€ë‚œ ì‹œê°„ : {timeDif.Days}ë‚ ");
 
 //        }
 

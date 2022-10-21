@@ -23,7 +23,7 @@ public class LandDataManager : MonoBehaviour
     //}
 
     /// <summary>
-    /// LandManager ÇÏÀ§¿¡ ÀÖ´Â LandµéÀÇ Á¤º¸¸¦ ÀúÀåÇÏ´Â ÇÔ¼ö
+    /// LandManager í•˜ìœ„ì— ìˆëŠ” Landë“¤ì˜ ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     public void SaveLandData()
     {
@@ -59,7 +59,7 @@ public class LandDataManager : MonoBehaviour
         
         string jsonData = JsonUtility.ToJson(arrayLandData, true);
 
-        //JsonÀ» txt ÆÄÀÏ·Î ·¹Áö½ºÆ®¸®¿¡ ÀúÀå
+        //Jsonì„ txt íŒŒì¼ë¡œ ë ˆì§€ìŠ¤íŠ¸ë¦¬ì— ì €ì¥
         string filePath = Application.dataPath + "/Data";
 
         if (!Directory.Exists(filePath))

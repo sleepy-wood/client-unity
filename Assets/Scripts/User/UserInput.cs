@@ -16,7 +16,7 @@ public class UserInput : MonoBehaviour
 
 #elif UNITY_IOS || UNITY_ANDROID
     /// <summary>
-    /// Touch State ¼³Á¤
+    /// Touch State ì„¤ì •
     /// </summary>
     enum TouchState
     {
@@ -32,21 +32,21 @@ public class UserInput : MonoBehaviour
     public bool InputControl { get;private set; }
 
     /// <summary>
-    /// XÃàÀ¸·Î ÀÌµ¿
+    /// Xì¶•ìœ¼ë¡œ ì´ë™
     /// </summary>
     public float MoveX { get; private set; }
     /// <summary>
-    /// ZÃàÀ¸·Î ÀÌµ¿
+    /// Zì¶•ìœ¼ë¡œ ì´ë™
     /// </summary>
     public float MoveZ { get; private set; }
 
     /// <summary>
-    /// Zoom In / Out °ü·Ã
+    /// Zoom In / Out ê´€ë ¨
     /// </summary>
     public float Zoom { get; private set; }
 
     /// <summary>
-    /// Mouse Interact ¸¶¿ì½º ÁÂÅ¬¸¯, ¸ğ¹ÙÀÏ ÅÍÄ¡
+    /// Mouse Interact ë§ˆìš°ìŠ¤ ì¢Œí´ë¦­, ëª¨ë°”ì¼ í„°ì¹˜
     /// </summary>
     public bool Interact { get; private set; }
 
@@ -61,7 +61,7 @@ public class UserInput : MonoBehaviour
         if (!InputControl)
         {
 #if UNITY_STANDALONE
-            #region ÀÌµ¿ 
+            #region ì´ë™ 
             MoveX = Input.GetAxisRaw(MoveNameX);
             MoveZ = Input.GetAxisRaw(MoveNameZ);
             #endregion
@@ -70,11 +70,11 @@ public class UserInput : MonoBehaviour
             Interact = Input.GetButtonDown(LeftClickName);
             #endregion
 
-            #region ÁÜÀÎ/ÁÜ¾Æ¿ô
+            #region ì¤Œì¸/ì¤Œì•„ì›ƒ
             Zoom = Input.GetAxis("Mouse ScrollWheel");
             #endregion
 
-            #region È¸Àü 
+            #region íšŒì „ 
             if (Input.GetButton(RightClickName))
             {
                 Rotate = Input.GetAxis(MouseXName);
@@ -86,9 +86,9 @@ public class UserInput : MonoBehaviour
             #endregion
 
 #elif UNITY_IOS || UNITY_ANDROID
-            //ÇöÀç Touch¸¦ ÇÑ¼Õ°¡¶ôÀ¸·Î ÇßÀ» °æ¿ì Move »óÅÂÀÎÁö, Touch»óÅÂÀÎÁö È®ÀÎ
-            //Move »óÅÂ: ¾à°£ÀÇ ¿òÁ÷ÀÓÀÌ °¨Áö°¡ µÈ´Ù¸é Move
-            //Touch »óÅÂ: ¿òÁ÷ÀÓÀÌ °¨Áö°¡ µÇÁö ¾ÊÀº »óÅÂ¿¡¼­ ¼Õ°¡¶ôÀ» ¶ÃÀ» ¶§
+            //í˜„ì¬ Touchë¥¼ í•œì†ê°€ë½ìœ¼ë¡œ í–ˆì„ ê²½ìš° Move ìƒíƒœì¸ì§€, Touchìƒíƒœì¸ì§€ í™•ì¸
+            //Move ìƒíƒœ: ì•½ê°„ì˜ ì›€ì§ì„ì´ ê°ì§€ê°€ ëœë‹¤ë©´ Move
+            //Touch ìƒíƒœ: ì›€ì§ì„ì´ ê°ì§€ê°€ ë˜ì§€ ì•Šì€ ìƒíƒœì—ì„œ ì†ê°€ë½ì„ ë—ì„ ë•Œ
             currnetStateText.text = "currentState: " + currentState.ToString();
             if (Input.touchCount == 1)
         {
@@ -105,10 +105,10 @@ public class UserInput : MonoBehaviour
                 }
             }
 
-            #region ÀÌµ¿ 
+            #region ì´ë™ 
             if (currentState == TouchState.Move)
             {
-                    clickText.text = "\nÅ¬¸¯¿©ºÎ: ³ë³ë";
+                    clickText.text = "\ní´ë¦­ì—¬ë¶€: ë…¸ë…¸";
                     Vector3 mousePos = Input.mousePosition;
                 Ray ray = Camera.main.ScreenPointToRay(mousePos);
                 RaycastHit hit;
@@ -116,7 +116,7 @@ public class UserInput : MonoBehaviour
                 {
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
                     {
-                        //¸ÂÀº °÷°ú ÇÃ·¹ÀÌ¾îÀÇ ¹æÇâ º¤ÅÍ ±¸ÇÏ±â
+                        //ë§ì€ ê³³ê³¼ í”Œë ˆì´ì–´ì˜ ë°©í–¥ ë²¡í„° êµ¬í•˜ê¸°
                         Vector3 dir = hit.point - transform.position;
                         dir.Normalize();
                         MoveX = dir.x;
@@ -138,7 +138,7 @@ public class UserInput : MonoBehaviour
 
         if (currentState == TouchState.Touch)
         {
-                clickText.text = "\nÅ¬¸¯¿©ºÎ: Å¬¸¯";
+                clickText.text = "\ní´ë¦­ì—¬ë¶€: í´ë¦­";
                 Interact = true;
             currentState = TouchState.None;
         }
@@ -149,18 +149,18 @@ public class UserInput : MonoBehaviour
 
         if (Input.touchCount == 2)
         {
-            #region ÁÜÀÎ/ÁÜ¾Æ¿ô
+            #region ì¤Œì¸/ì¤Œì•„ì›ƒ
             Touch touchFirstFinger = Input.GetTouch(0);
             Touch touchSecondFinger = Input.GetTouch(1);
 
-            //¿òÁ÷ÀÌ±â Àü ¼Õ°¡¶ô À§Ä¡ ±¸ÇÏ±â
+            //ì›€ì§ì´ê¸° ì „ ì†ê°€ë½ ìœ„ì¹˜ êµ¬í•˜ê¸°
             Vector2 touchFirstFingerPos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
             Vector2 touchSecondFingerPos = touchSecondFinger.position - touchSecondFinger.deltaPosition;
 
             float prevTwoFingerDist = (touchFirstFingerPos - touchSecondFingerPos).magnitude;
             float curTwoFingerDist = (touchFirstFinger.position - touchSecondFinger.position).magnitude;
 
-                //µÎ ¼Õ°¡¶ôÀÇ °£°İÀÌ ´Ş¶óÁ³À» °æ¿ì -> Zoom
+                //ë‘ ì†ê°€ë½ì˜ ê°„ê²©ì´ ë‹¬ë¼ì¡Œì„ ê²½ìš° -> Zoom
                 //currnetStateText.text = Mathf.Abs(prevTwoFingerDist - curTwoFingerDist).ToString();
                 if (Mathf.Abs(prevTwoFingerDist - curTwoFingerDist) > 6) {
 
@@ -169,8 +169,8 @@ public class UserInput : MonoBehaviour
             }
             #endregion
 
-            #region È¸Àü
-            //µÎ ¼Õ°¡¶ôÀÇ °£°İÀÌ °°Àº °æ¿ì -> Roate
+            #region íšŒì „
+            //ë‘ ì†ê°€ë½ì˜ ê°„ê²©ì´ ê°™ì€ ê²½ìš° -> Roate
             else
             {
                 for (int i = 0; i < Input.touches.Length; i++)

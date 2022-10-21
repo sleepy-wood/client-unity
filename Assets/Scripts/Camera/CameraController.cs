@@ -25,26 +25,26 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
-        //zoomÀ» ÇßÀ» °æ¿ì
+        //zoomì„ í–ˆì„ ê²½ìš°
         if (userInput.Zoom != 0)
         {
-            //Ä«¸Þ¶ó ÀçÁ¶Á¤
+            //ì¹´ë©”ë¼ ìž¬ì¡°ì •
             StopAllCoroutines();
             StartCoroutine(CameraMoving(7));
            
-            //Ä«¸Þ¶ó Zoom in / out
+            //ì¹´ë©”ë¼ Zoom in / out
             myCamera.orthographicSize -= userInput.Zoom * wheelScrollSpeed;
             myCamera.orthographicSize = Mathf.Clamp(myCamera.orthographicSize, initialOrthographicSize - 12, initialOrthographicSize + 12);
         }
 
-        //ÇÃ·¹ÀÌ¾î¿Í Ä«¸Þ¶óÀÇ °Å¸®°¡ 5Á¤µµ ¶³¾îÁö¸é µû¶ó°¡±â
+        //í”Œë ˆì´ì–´ì™€ ì¹´ë©”ë¼ì˜ ê±°ë¦¬ê°€ 5ì •ë„ ë–¨ì–´ì§€ë©´ ë”°ë¼ê°€ê¸°
         if(Vector3.Distance(camPos.position, transform.position) > 5)
         {
             StartCoroutine(CameraMoving());
         }
         transform.parent.Rotate(user.transform.up, userInput.Rotate);
     }
-    //Ä«¸Þ¶ó ¿òÁ÷ÀÓ ÄÚ·çÆ¾
+    //ì¹´ë©”ë¼ ì›€ì§ìž„ ì½”ë£¨í‹´
     IEnumerator CameraMoving(float speed = 1)
     {
         while (Vector3.Distance(camPos.position, transform.position) > 0.1f)

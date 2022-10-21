@@ -10,12 +10,12 @@ public class DataTest : MonoBehaviour
 
     private async void Start()
     {
-        // IOS¿¡¼­ ±âÁ®¿Ã µ¥ÀÌÅÍ
+        // IOSì—ì„œ ê¸°ì ¸ì˜¬ ë°ì´í„°
         //SleepDataStruct sleepDataStruct = new SleepDataStruct();
         //sleepDataStruct.WakeAt = "2022-10-20 10:10:10";
         //sleepDataStruct.SleepAt = "2022-10-20 18:10:10";
 
-        // ¼­¹ö¿¡¼­ °¡Á®¿Ã µ¥ÀÌÅÍ
+        // ì„œë²„ì—ì„œ ê°€ì ¸ì˜¬ ë°ì´í„°
         //userData.Id = 1;
         //userData.NickName = "test";
         //userData.UserAvatar = "Julia";
@@ -30,16 +30,16 @@ public class DataTest : MonoBehaviour
             Token data1 = data.data;
             string token = data1.token;
 
-            // tokenÀº UserÀÇ id¸¦ ÀÎÄÚµùÇÑ µ¥ÀÌÅÍÀÓ
-            // Server´Â token decodeÇØ¼­ À¯Àú Á¤º¸¸¦ °¡Á®¿Ã ¼ö ÀÖÀ½.
-            // tokenÀº À¯È¿½Ã°£ÀÌ¶ó´Â°Ô ÀÖ¾î¼­ 30ºĞ ÈÄ¿¡ ¸¸·áµÊ
-            // ¸¸·áµÈ tokenÀº ´Ù½Ã ¹ß±Ş¹Ş¾Æ¾ßµÊ
-            // refresh tokenÀ» Server¿¡¼­ ¹ß±ŞÇØÁÙ°ÍÀÓ.
-            // ¸¸¾à¿¡ ÇÁ·Î¼¼½º°¡ º¹ÀâÇØÁ³¾î => ¸®ÇÁ·¹½Ã ÅäÅ« ¾øÀÌ ÅäÅ«ÀÇ ¸¸·á½Ã°£À» ÇÏ·ç Á¤µµ·Î ´Ã¸± °ÍÀÓ
-            // tokenÀ» ´©±º°¡¿¡°Ô »¯±â¸é => º¸¾È»ó ±²ÀåÈ÷ À§Çè
+            // tokenì€ Userì˜ idë¥¼ ì¸ì½”ë”©í•œ ë°ì´í„°ì„
+            // ServerëŠ” token decodeí•´ì„œ ìœ ì € ì •ë³´ë¥¼ ê°€ì ¸ì˜¬ ìˆ˜ ìˆìŒ.
+            // tokenì€ ìœ íš¨ì‹œê°„ì´ë¼ëŠ”ê²Œ ìˆì–´ì„œ 30ë¶„ í›„ì— ë§Œë£Œë¨
+            // ë§Œë£Œëœ tokenì€ ë‹¤ì‹œ ë°œê¸‰ë°›ì•„ì•¼ë¨
+            // refresh tokenì„ Serverì—ì„œ ë°œê¸‰í•´ì¤„ê²ƒì„.
+            // ë§Œì•½ì— í”„ë¡œì„¸ìŠ¤ê°€ ë³µì¡í•´ì¡Œì–´ => ë¦¬í”„ë ˆì‹œ í† í° ì—†ì´ í† í°ì˜ ë§Œë£Œì‹œê°„ì„ í•˜ë£¨ ì •ë„ë¡œ ëŠ˜ë¦´ ê²ƒì„
+            // tokenì„ ëˆ„êµ°ê°€ì—ê²Œ ëºê¸°ë©´ => ë³´ì•ˆìƒ êµ‰ì¥íˆ ìœ„í—˜
             PlayerPrefs.SetString("Bearer", token);
             
-            // tokenÀº WebRequest Header¿¡ µé¾î°¡¾ßÇÔ.
+            // tokenì€ WebRequest Headerì— ë“¤ì–´ê°€ì•¼í•¨.
             UserData user = await DataModule.WebRequest<UserData>("/api/v1/user", DataModule.NetworkType.GET);
 
 
