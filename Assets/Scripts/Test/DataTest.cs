@@ -6,17 +6,6 @@ using UnityEngine;
 
 public class DataTest : MonoBehaviour
 {
-    class Temp<T>
-    {
-        public bool result;
-        public T data;
-    }
-
-    class Token
-    {
-        public string token;
-    }
-
     UserData userData = new UserData();
 
     private async void Start()
@@ -32,7 +21,7 @@ public class DataTest : MonoBehaviour
         //userData.UserAvatar = "Julia";
         //userData.SleepData = sleepDataStruct;
 
-        Temp<Token> data = await DataModule.WebRequest<Temp<Token>>("/api/v1/auth/login/temp", DataModule.NetworkType.POST);
+        ResultTemp<Token> data = await DataModule.WebRequest<ResultTemp<Token>>("/api/v1/auth/login/temp", DataModule.NetworkType.POST);
 
         Debug.Log(data.result);
 

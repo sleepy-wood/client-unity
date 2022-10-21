@@ -12,12 +12,21 @@ using UnityEngine.Networking;
 using UnityEngine.Rendering;
 
 
-//저장소 역할 
-//구조체는 그저 틀일 뿐,,,
+class ResultTemp<T>
+{
+    public bool result;
+    public T data;
+}
+
+class Token
+{
+    public string token;
+}
+
 public class DataModule
 {
     private const string DOMAIN = "https://team-buildup.shop";
-    private static string REPLACE_BEARER_TOKEN = "";
+    public static string REPLACE_BEARER_TOKEN = "";
 
     public enum NetworkType
     {
@@ -105,6 +114,4 @@ public class DataModule
     {
         request.SetRequestHeader(value1, value2);
     }
-
-
 }
