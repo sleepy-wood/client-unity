@@ -1,0 +1,742 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a3b4d81ef0a4b57ab160fbc187f073, type: 3}
+  m_Name: CactusOpuntia
+  m_EditorClassIdentifier: 
+  name: Cactus Opuntia Shapes
+  shapes:
+  - name: Cactus Opuntia 01
+    axisLength: 1
+    minResolution: 5
+    maxResolution: 5
+    positions:
+    - 0
+    - 0.25
+    - 0.5
+    - 0.75
+    - 1
+    segments:
+    - _closed: 0
+      _axis: 0
+      nodes:
+      - handleStyle: 0
+        _position: {x: 0.15, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.04019238}
+        _handle2: {x: -0, y: -0, z: 0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.074999996, y: 0, z: 0.12990382}
+        _handle1: {x: 0.034807626, y: 0, z: -0.020096188}
+        _handle2: {x: -0.034807626, y: -0, z: 0.020096188}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.07500001, y: 0, z: 0.12990381}
+        _handle1: {x: 0.034807622, y: 0, z: 0.020096192}
+        _handle2: {x: -0.034807622, y: -0, z: -0.020096192}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.15, y: 0, z: -0.000000013113417}
+        _handle1: {x: -0.0000000035137295, y: 0, z: 0.04019238}
+        _handle2: {x: 0.0000000035137295, y: -0, z: -0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.07499999, y: 0, z: -0.12990382}
+        _handle1: {x: -0.034807626, y: 0, z: 0.020096187}
+        _handle2: {x: 0.034807626, y: -0, z: -0.020096187}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.07499999, y: 0, z: -0.12990382}
+        _handle1: {x: -0.034807626, y: 0, z: -0.020096187}
+        _handle2: {x: 0.034807626, y: -0, z: 0.020096187}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.15, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.04019238}
+        _handle2: {x: -0, y: -0, z: 0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      resolutionAngle: 5
+      noiseFactorAtFirstNode: 0
+      noiseFactorAtLastNode: 0
+      noiseScaleAtFirstNode: 1
+      noiseScaleAtLastNode: 1
+      noiseLengthOffset: 0
+      spareNoiseOffsetAtFirstPoint: 0
+      referenceForward: {x: 0, y: 1, z: 0}
+      normalMode: 0
+      referenceNormal: {x: 0, y: 0, z: 1}
+      referencePoint: {x: 0, y: 0, z: 0}
+    - _closed: 0
+      _axis: 0
+      nodes:
+      - handleStyle: 0
+        _position: {x: 0.24352609, y: 0, z: 0}
+        _handle1: {x: -0, y: -0, z: -0.11052904}
+        _handle2: {x: 0, y: 0, z: 0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.107070655, y: 0, z: 0.3572355}
+        _handle1: {x: 0.059523527, y: -0.000067026005, z: -0.05017242}
+        _handle2: {x: -0.059523527, y: 0.000067026005, z: 0.05017242}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.104337774, y: 0, z: 0.35723546}
+        _handle1: {x: 0.052729107, y: -0.00017232755, z: 0.04679722}
+        _handle2: {x: -0.052729107, y: 0.00017232755, z: -0.04679722}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.23968124, y: 0, z: -0.000000036061895}
+        _handle1: {x: -0.000000009662756, y: -0, z: 0.11052904}
+        _handle2: {x: 0.000000009662756, y: 0, z: -0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.10164919, y: 0, z: -0.3572355}
+        _handle1: {x: -0.057602607, y: 0.0004116811, z: 0.05348052}
+        _handle2: {x: 0.057602607, y: -0.0004116811, z: -0.05348052}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.10013979, y: 0, z: -0.3572355}
+        _handle1: {x: -0.054658026, y: 0.00030637957, z: -0.055560395}
+        _handle2: {x: 0.054658026, y: -0.00030637957, z: 0.055560395}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.24352609, y: 0, z: 0}
+        _handle1: {x: -0, y: -0, z: -0.11052904}
+        _handle2: {x: 0, y: 0, z: 0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      resolutionAngle: 5
+      noiseFactorAtFirstNode: 0
+      noiseFactorAtLastNode: 0
+      noiseScaleAtFirstNode: 1
+      noiseScaleAtLastNode: 1
+      noiseLengthOffset: 0
+      spareNoiseOffsetAtFirstPoint: 0
+      referenceForward: {x: 0, y: 1, z: 0}
+      normalMode: 0
+      referenceNormal: {x: 0, y: 0, z: 1}
+      referencePoint: {x: 0, y: 0, z: 0}
+    - _closed: 0
+      _axis: 0
+      nodes:
+      - handleStyle: 0
+        _position: {x: 0.27470145, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.1339746}
+        _handle2: {x: -0, y: -0, z: 0.1339746}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.117760874, y: 0, z: 0.43301272}
+        _handle1: {x: 0.06776216, y: -0.00008936801, z: -0.06019783}
+        _handle2: {x: -0.06776216, y: 0.00008936801, z: 0.06019783}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.11411703, y: 0, z: 0.4330127}
+        _handle1: {x: 0.05870294, y: -0.00022977007, z: 0.05569756}
+        _handle2: {x: -0.05870294, y: 0.00022977007, z: -0.05569756}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.269575, y: 0, z: -0.00000004371139}
+        _handle1: {x: -0.000000011712431, y: 0, z: 0.1339746}
+        _handle2: {x: 0.000000011712431, y: -0, z: -0.1339746}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.110532254, y: 0, z: -0.43301272}
+        _handle1: {x: -0.06520093, y: 0.00054890814, z: 0.06460863}
+        _handle2: {x: 0.06520093, y: -0.00054890814, z: -0.06460863}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.108519726, y: 0, z: -0.43301272}
+        _handle1: {x: -0.061274823, y: 0.00040850608, z: -0.0673818}
+        _handle2: {x: 0.061274823, y: -0.00040850608, z: 0.0673818}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.27470145, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.1339746}
+        _handle2: {x: -0, y: -0, z: 0.1339746}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      resolutionAngle: 5
+      noiseFactorAtFirstNode: 0
+      noiseFactorAtLastNode: 0
+      noiseScaleAtFirstNode: 1
+      noiseScaleAtLastNode: 1
+      noiseLengthOffset: 0
+      spareNoiseOffsetAtFirstPoint: 0
+      referenceForward: {x: 0, y: 1, z: 0}
+      normalMode: 0
+      referenceNormal: {x: 0, y: 0, z: 1}
+      referencePoint: {x: 0, y: 0, z: 0}
+    - _closed: 0
+      _axis: 0
+      nodes:
+      - handleStyle: 0
+        _position: {x: 0.24352609, y: 0, z: 0}
+        _handle1: {x: -0, y: -0, z: -0.11052904}
+        _handle2: {x: 0, y: 0, z: 0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.107070655, y: 0, z: 0.3572355}
+        _handle1: {x: 0.059523527, y: -0.000067026005, z: -0.05017242}
+        _handle2: {x: -0.059523527, y: 0.000067026005, z: 0.05017242}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.104337774, y: 0, z: 0.35723546}
+        _handle1: {x: 0.052729107, y: -0.00017232755, z: 0.04679722}
+        _handle2: {x: -0.052729107, y: 0.00017232755, z: -0.04679722}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.23968124, y: 0, z: -0.000000036061895}
+        _handle1: {x: -0.000000009662756, y: -0, z: 0.11052904}
+        _handle2: {x: 0.000000009662756, y: 0, z: -0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.10164919, y: 0, z: -0.3572355}
+        _handle1: {x: -0.057602607, y: 0.0004116811, z: 0.05348052}
+        _handle2: {x: 0.057602607, y: -0.0004116811, z: -0.05348052}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.10013979, y: 0, z: -0.3572355}
+        _handle1: {x: -0.054658026, y: 0.00030637957, z: -0.055560395}
+        _handle2: {x: 0.054658026, y: -0.00030637957, z: 0.055560395}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.24352609, y: 0, z: 0}
+        _handle1: {x: -0, y: -0, z: -0.11052904}
+        _handle2: {x: 0, y: 0, z: 0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      resolutionAngle: 5
+      noiseFactorAtFirstNode: 0
+      noiseFactorAtLastNode: 0
+      noiseScaleAtFirstNode: 1
+      noiseScaleAtLastNode: 1
+      noiseLengthOffset: 0
+      spareNoiseOffsetAtFirstPoint: 0
+      referenceForward: {x: 0, y: 1, z: 0}
+      normalMode: 0
+      referenceNormal: {x: 0, y: 0, z: 1}
+      referencePoint: {x: 0, y: 0, z: 0}
+    - _closed: 0
+      _axis: 0
+      nodes:
+      - handleStyle: 0
+        _position: {x: 0.15, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.04019238}
+        _handle2: {x: -0, y: -0, z: 0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.074999996, y: 0, z: 0.12990382}
+        _handle1: {x: 0.034807626, y: 0, z: -0.020096188}
+        _handle2: {x: -0.034807626, y: -0, z: 0.020096188}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.07500001, y: 0, z: 0.12990381}
+        _handle1: {x: 0.034807622, y: 0, z: 0.020096192}
+        _handle2: {x: -0.034807622, y: -0, z: -0.020096192}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.15, y: 0, z: -0.000000013113417}
+        _handle1: {x: -0.0000000035137295, y: 0, z: 0.04019238}
+        _handle2: {x: 0.0000000035137295, y: -0, z: -0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.07499999, y: 0, z: -0.12990382}
+        _handle1: {x: -0.034807626, y: 0, z: 0.020096187}
+        _handle2: {x: 0.034807626, y: -0, z: -0.020096187}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.07499999, y: 0, z: -0.12990382}
+        _handle1: {x: -0.034807626, y: 0, z: -0.020096187}
+        _handle2: {x: 0.034807626, y: -0, z: 0.020096187}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.15, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.04019238}
+        _handle2: {x: -0, y: -0, z: 0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      resolutionAngle: 5
+      noiseFactorAtFirstNode: 0
+      noiseFactorAtLastNode: 0
+      noiseScaleAtFirstNode: 1
+      noiseScaleAtLastNode: 1
+      noiseLengthOffset: 0
+      spareNoiseOffsetAtFirstPoint: 0
+      referenceForward: {x: 0, y: 1, z: 0}
+      normalMode: 0
+      referenceNormal: {x: 0, y: 0, z: 1}
+      referencePoint: {x: 0, y: 0, z: 0}
+    priorities: 0000000001000000000000000100000000000000
+    positionType: 2
+  - name: Cactus Opuntia 02
+    axisLength: 1
+    minResolution: 5
+    maxResolution: 5
+    positions:
+    - 0
+    - 0.25
+    - 0.5
+    - 0.8
+    - 1
+    segments:
+    - _closed: 0
+      _axis: 0
+      nodes:
+      - handleStyle: 0
+        _position: {x: 0.15, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.04019238}
+        _handle2: {x: -0, y: -0, z: 0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.074999996, y: 0, z: 0.12990382}
+        _handle1: {x: 0.034807626, y: 0, z: -0.020096188}
+        _handle2: {x: -0.034807626, y: -0, z: 0.020096188}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.07500001, y: 0, z: 0.12990381}
+        _handle1: {x: 0.034807622, y: 0, z: 0.020096192}
+        _handle2: {x: -0.034807622, y: -0, z: -0.020096192}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.15, y: 0, z: -0.000000013113417}
+        _handle1: {x: -0.0000000035137295, y: 0, z: 0.04019238}
+        _handle2: {x: 0.0000000035137295, y: -0, z: -0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.07499999, y: 0, z: -0.12990382}
+        _handle1: {x: -0.034807626, y: 0, z: 0.020096187}
+        _handle2: {x: 0.034807626, y: -0, z: -0.020096187}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.07499999, y: 0, z: -0.12990382}
+        _handle1: {x: -0.034807626, y: 0, z: -0.020096187}
+        _handle2: {x: 0.034807626, y: -0, z: 0.020096187}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.15, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.04019238}
+        _handle2: {x: -0, y: -0, z: 0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      resolutionAngle: 5
+      noiseFactorAtFirstNode: 0
+      noiseFactorAtLastNode: 0
+      noiseScaleAtFirstNode: 1
+      noiseScaleAtLastNode: 1
+      noiseLengthOffset: 0
+      spareNoiseOffsetAtFirstPoint: 0
+      referenceForward: {x: 0, y: 1, z: 0}
+      normalMode: 0
+      referenceNormal: {x: 0, y: 0, z: 1}
+      referencePoint: {x: 0, y: 0, z: 0}
+    - _closed: 0
+      _axis: 0
+      nodes:
+      - handleStyle: 0
+        _position: {x: 0.24352609, y: 0, z: 0}
+        _handle1: {x: -0, y: -0, z: -0.11052904}
+        _handle2: {x: 0, y: 0, z: 0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.107070655, y: 0, z: 0.3572355}
+        _handle1: {x: 0.059523527, y: -0.000067026005, z: -0.05017242}
+        _handle2: {x: -0.059523527, y: 0.000067026005, z: 0.05017242}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.104337774, y: 0, z: 0.35723546}
+        _handle1: {x: 0.052729107, y: -0.00017232755, z: 0.04679722}
+        _handle2: {x: -0.052729107, y: 0.00017232755, z: -0.04679722}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.23968124, y: 0, z: -0.000000036061895}
+        _handle1: {x: -0.000000009662756, y: -0, z: 0.11052904}
+        _handle2: {x: 0.000000009662756, y: 0, z: -0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.10164919, y: 0, z: -0.3572355}
+        _handle1: {x: -0.057602607, y: 0.0004116811, z: 0.05348052}
+        _handle2: {x: 0.057602607, y: -0.0004116811, z: -0.05348052}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.10013979, y: 0, z: -0.3572355}
+        _handle1: {x: -0.054658026, y: 0.00030637957, z: -0.055560395}
+        _handle2: {x: 0.054658026, y: -0.00030637957, z: 0.055560395}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.24352609, y: 0, z: 0}
+        _handle1: {x: -0, y: -0, z: -0.11052904}
+        _handle2: {x: 0, y: 0, z: 0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      resolutionAngle: 5
+      noiseFactorAtFirstNode: 0
+      noiseFactorAtLastNode: 0
+      noiseScaleAtFirstNode: 1
+      noiseScaleAtLastNode: 1
+      noiseLengthOffset: 0
+      spareNoiseOffsetAtFirstPoint: 0
+      referenceForward: {x: 0, y: 1, z: 0}
+      normalMode: 0
+      referenceNormal: {x: 0, y: 0, z: 1}
+      referencePoint: {x: 0, y: 0, z: 0}
+    - _closed: 0
+      _axis: 0
+      nodes:
+      - handleStyle: 0
+        _position: {x: 0.27470145, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.1339746}
+        _handle2: {x: -0, y: -0, z: 0.1339746}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.117760874, y: 0, z: 0.43301272}
+        _handle1: {x: 0.06776216, y: -0.00008936801, z: -0.06019783}
+        _handle2: {x: -0.06776216, y: 0.00008936801, z: 0.06019783}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.11411703, y: 0, z: 0.4330127}
+        _handle1: {x: 0.05870294, y: -0.00022977007, z: 0.05569756}
+        _handle2: {x: -0.05870294, y: 0.00022977007, z: -0.05569756}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.269575, y: 0, z: -0.00000004371139}
+        _handle1: {x: -0.000000011712431, y: 0, z: 0.1339746}
+        _handle2: {x: 0.000000011712431, y: -0, z: -0.1339746}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.110532254, y: 0, z: -0.43301272}
+        _handle1: {x: -0.06520093, y: 0.00054890814, z: 0.06460863}
+        _handle2: {x: 0.06520093, y: -0.00054890814, z: -0.06460863}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.108519726, y: 0, z: -0.43301272}
+        _handle1: {x: -0.061274823, y: 0.00040850608, z: -0.0673818}
+        _handle2: {x: 0.061274823, y: -0.00040850608, z: 0.0673818}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.27470145, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.1339746}
+        _handle2: {x: -0, y: -0, z: 0.1339746}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      resolutionAngle: 5
+      noiseFactorAtFirstNode: 0
+      noiseFactorAtLastNode: 0
+      noiseScaleAtFirstNode: 1
+      noiseScaleAtLastNode: 1
+      noiseLengthOffset: 0
+      spareNoiseOffsetAtFirstPoint: 0
+      referenceForward: {x: 0, y: 1, z: 0}
+      normalMode: 0
+      referenceNormal: {x: 0, y: 0, z: 1}
+      referencePoint: {x: 0, y: 0, z: 0}
+    - _closed: 0
+      _axis: 0
+      nodes:
+      - handleStyle: 0
+        _position: {x: 0.24352609, y: 0, z: 0}
+        _handle1: {x: -0, y: -0, z: -0.11052904}
+        _handle2: {x: 0, y: 0, z: 0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.107070655, y: 0, z: 0.3572355}
+        _handle1: {x: 0.059523527, y: -0.000067026005, z: -0.05017242}
+        _handle2: {x: -0.059523527, y: 0.000067026005, z: 0.05017242}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.104337774, y: 0, z: 0.35723546}
+        _handle1: {x: 0.052729107, y: -0.00017232755, z: 0.04679722}
+        _handle2: {x: -0.052729107, y: 0.00017232755, z: -0.04679722}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.23968124, y: 0, z: -0.000000036061895}
+        _handle1: {x: -0.000000009662756, y: -0, z: 0.11052904}
+        _handle2: {x: 0.000000009662756, y: 0, z: -0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.10164919, y: 0, z: -0.3572355}
+        _handle1: {x: -0.057602607, y: 0.0004116811, z: 0.05348052}
+        _handle2: {x: 0.057602607, y: -0.0004116811, z: -0.05348052}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.10013979, y: 0, z: -0.3572355}
+        _handle1: {x: -0.054658026, y: 0.00030637957, z: -0.055560395}
+        _handle2: {x: 0.054658026, y: -0.00030637957, z: 0.055560395}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.24352609, y: 0, z: 0}
+        _handle1: {x: -0, y: -0, z: -0.11052904}
+        _handle2: {x: 0, y: 0, z: 0.11052904}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      resolutionAngle: 5
+      noiseFactorAtFirstNode: 0
+      noiseFactorAtLastNode: 0
+      noiseScaleAtFirstNode: 1
+      noiseScaleAtLastNode: 1
+      noiseLengthOffset: 0
+      spareNoiseOffsetAtFirstPoint: 0
+      referenceForward: {x: 0, y: 1, z: 0}
+      normalMode: 0
+      referenceNormal: {x: 0, y: 0, z: 1}
+      referencePoint: {x: 0, y: 0, z: 0}
+    - _closed: 0
+      _axis: 0
+      nodes:
+      - handleStyle: 0
+        _position: {x: 0.09697221, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.04019238}
+        _handle2: {x: -0, y: -0, z: 0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.035281487, y: 0, z: 0.12990382}
+        _handle1: {x: 0.034807626, y: 0, z: -0.020096188}
+        _handle2: {x: -0.034807626, y: -0, z: 0.020096188}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.035066456, y: 0, z: 0.12990381}
+        _handle1: {x: 0.034807622, y: 0, z: 0.020096192}
+        _handle2: {x: -0.034807622, y: -0, z: -0.020096192}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.08252949, y: 0, z: -0.000000013113417}
+        _handle1: {x: -0.0000000035137295, y: 0, z: 0.04019238}
+        _handle2: {x: 0.0000000035137295, y: -0, z: -0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: -0.03207179, y: 0, z: -0.12990382}
+        _handle1: {x: -0.034807626, y: 0, z: 0.020096187}
+        _handle2: {x: 0.034807626, y: -0, z: -0.020096187}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.04590599, y: 0, z: -0.12990382}
+        _handle1: {x: -0.034807626, y: 0, z: -0.020096187}
+        _handle2: {x: 0.034807626, y: -0, z: 0.020096187}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      - handleStyle: 0
+        _position: {x: 0.09821565, y: 0, z: 0}
+        _handle1: {x: 0, y: 0, z: -0.04019238}
+        _handle2: {x: -0, y: -0, z: 0.04019238}
+        up: {x: 0, y: 1, z: 0}
+        roll: 0
+        scale: {x: 0, y: 1}
+        direction: {x: 0, y: 0, z: 1}
+      resolutionAngle: 5
+      noiseFactorAtFirstNode: 0
+      noiseFactorAtLastNode: 0
+      noiseScaleAtFirstNode: 1
+      noiseScaleAtLastNode: 1
+      noiseLengthOffset: 0
+      spareNoiseOffsetAtFirstPoint: 0
+      referenceForward: {x: 0, y: 1, z: 0}
+      normalMode: 0
+      referenceNormal: {x: 0, y: 0, z: 1}
+      referencePoint: {x: 0, y: 0, z: 0}
+    priorities: 0000000000000000000000000000000000000000
+    positionType: 1

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11e915ede4fa91456bc66134e0fb4426, type: 3}
+  m_Name: SproutCatalogBase
+  m_EditorClassIdentifier: 
+  catalogItems:
+  - name: Oak Green
+    thumb: {fileID: 2800000, guid: 71a648b6915db4ad9adc3a4acd8f53cc, type: 3}
+    path: Catalog/SproutLabCollections/br_sl_oak_green.asset
+    category: 
+    order: 0
+  - name: Oak Autumn
+    thumb: {fileID: 2800000, guid: f6e0a4a62bc5b9b6ca5fd319e3f27815, type: 3}
+    path: Catalog/SproutLabCollections/br_sl_oak_autumn.asset
+    category: 
+    order: 0
+  - name: Pine Green
+    thumb: {fileID: 2800000, guid: c29435160c9dcaec188f50aa18e056f3, type: 3}
+    path: Catalog/SproutLabCollections/br_sl_pine_green.asset
+    category: 
+    order: 0
+  - name: Pine Dry
+    thumb: {fileID: 2800000, guid: a891a1fcb5b43606db40f53221ddcf74, type: 3}
+    path: Catalog/SproutLabCollections/br_sl_pine_dry.asset
+    category: 
+    order: 0

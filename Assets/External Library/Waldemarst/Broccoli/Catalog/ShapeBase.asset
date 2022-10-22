@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5017c89bdb19a40fcbf6ddbb8c4728ae, type: 3}
+  m_Name: ShapeBase
+  m_EditorClassIdentifier: 
+  shapeItems:
+  - id: CactusSaguaro
+    name: Cactus (Saguaro)
+    thumb: {fileID: 0}
+    shapeCollection: {fileID: 11400000, guid: 95776d5b0928f4e858aaad4083099b85, type: 2}
+    path: 
+    category: Branch
+    order: 0
+  - id: CactusOpuntia
+    name: Cactus (Opuntia)
+    thumb: {fileID: 0}
+    shapeCollection: {fileID: 11400000, guid: 033b999b8524a4b289e52f79d9c41151, type: 2}
+    path: 
+    category: Branch
+    order: 0
