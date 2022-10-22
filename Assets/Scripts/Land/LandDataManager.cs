@@ -57,17 +57,16 @@ public class LandDataManager : MonoBehaviour
         ArrayLandData arrayLandData = new ArrayLandData();
         arrayLandData.LandLists = landDataList;
         
-        string jsonData = JsonUtility.ToJson(arrayLandData, true);
-
-        //Json을 txt 파일로 레지스트리에 저장
-        string filePath = Application.dataPath + "/Data";
-
-        if (!Directory.Exists(filePath))
-        {
-            Directory.CreateDirectory(filePath);
-        }
-        File.WriteAllText(filePath + "/" + landDataFileName + ".txt", jsonData);
+        FileManager.SaveDataFile(landDataFileName, arrayLandData);
     }
 
+    /// <summary>
+    /// Load Land Data and Create Object of Land
+    /// </summary>
+    public void LoadLandData()
+    {
+        ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
 
+
+    }
 }
