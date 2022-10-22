@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -718,14 +718,14 @@ namespace Broccoli.Generator
 			/// </summary>
 			/// <typeparam name="Structure"></typeparam>
 			/// <returns></returns>
-			[System.NonSerialized]
+			[SerializeField]
 			public List<Structure> childrenStructures = new List<Structure> ();
 			/// <summary>
 			/// Children terminal structures.
 			/// </summary>
 			/// <typeparam name="TerminalStructure"></typeparam>
 			/// <returns></returns>
-			[System.NonSerialized]
+			[SerializeField]
 			public List<TerminalStructure> childrenTerminalStructures = new List<TerminalStructure> ();
 			#endregion
 			#region Clone
