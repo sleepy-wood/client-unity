@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -77,7 +77,7 @@ namespace Broccoli.Pipe {
 		/// Object used to serialize the pipeline.
 		/// </summary>
 		[SerializeField]
-		PipelineSerializable _serializedPipeline = new PipelineSerializable ();
+		public PipelineSerializable _serializedPipeline = new PipelineSerializable ();
 		/// <summary>
 		/// Sprout groups on the pipeline, used to create leafs and other offspring from the branches.
 		/// </summary>
