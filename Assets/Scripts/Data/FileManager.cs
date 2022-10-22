@@ -26,7 +26,7 @@ public static class FileManager
     /// <typeparam name="T"></typeparam>
     /// <param name="fileName"></param>
     /// <param name="data"></param>
-    public static void SaveDataFile<T>(string fileName, T data)
+    public static string SaveDataFile<T>(string fileName, T data)
     {
         string jsonData = JsonUtility.ToJson(data, true);
 
@@ -38,5 +38,7 @@ public static class FileManager
             Directory.CreateDirectory(filePath);
         }
         File.WriteAllText(filePath + "/" + fileName + ".txt", jsonData);
+
+        return jsonData;
     }
 }

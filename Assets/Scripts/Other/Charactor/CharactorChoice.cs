@@ -102,15 +102,7 @@ public class CharactorChoice : MonoBehaviour
         
         //데이터 저장
         DataTemporary.MyUserData.UserAvatar = transform.GetChild(selectedIndex).name;
-        string jsonData = JsonUtility.ToJson(DataTemporary.MyUserData, true);
-        //Json을 txt 파일로 레지스트리에 저장
-        string filePath = Application.dataPath + "/Data";
-
-        if (!Directory.Exists(filePath))
-        {
-            Directory.CreateDirectory(filePath);
-        }
-        File.WriteAllText(filePath + "/" + userDataFileName + ".txt", jsonData);
+        string jsonData = FileManager.SaveDataFile<UserData>(userDataFileName, DataTemporary.MyUserData);
 
         //TODO: 데이터 수정
         ResultTemp<Token> data = await DataModule.WebRequest<ResultTemp<Token>>(

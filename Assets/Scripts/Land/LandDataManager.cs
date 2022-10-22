@@ -17,10 +17,10 @@ public class LandDataManager : MonoBehaviour
     private string landDataFileName = "LandData";
 
     ////test
-    //private void Start()
-    //{
-    //    SaveLandData();
-    //}
+    private void Start()
+    {
+        SaveLandData();
+    }
 
     /// <summary>
     /// LandManager 하위에 있는 Land들의 정보를 저장하는 함수
@@ -67,6 +67,6 @@ public class LandDataManager : MonoBehaviour
     {
         ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
 
-
+        
     }
 }

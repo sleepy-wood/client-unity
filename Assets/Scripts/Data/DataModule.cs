@@ -72,7 +72,7 @@ public class DataModule
         {
             REPLACE_BEARER_TOKEN = PlayerPrefs.GetString("Bearer");
         }
-       
+
         SetHeaders(request, "Authorization", "Bearer " + REPLACE_BEARER_TOKEN);
         SetHeaders(request, "Content-Type", "application/json");
 
