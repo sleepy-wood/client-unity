@@ -8,5 +8,5 @@ using UnityEngine;
 public class DataTemporary
 {
     public static UserData MyUserData = new UserData();
-    public static LandData MyLandData = new LandData();
+    public static ArrayLandData MyLandData = new ArrayLandData();
 }

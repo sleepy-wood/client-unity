@@ -6,14 +6,14 @@ using UnityEngine;
 [System.Serializable]
 public class UserData
 {
-    public int? Id = null;
-    public string? NickName = null;
-    public string? UserAvatar = null;
-    public SleepDataStruct? SleepData = null;
+    public int? Id;
+    public string? NickName;
+    public string? UserAvatar;
+    public SleepDataStruct? SleepData;
 }
 [System.Serializable]
 public class SleepDataStruct
 {
-    public string? SleepAt = null;
-    public string? WakeAt = null;
+    public string? SleepAt;
+    public string? WakeAt;
 }

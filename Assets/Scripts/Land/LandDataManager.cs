@@ -65,7 +65,11 @@ public class LandDataManager : MonoBehaviour
         }
         ArrayLandData arrayLandData = new ArrayLandData();
         arrayLandData.LandLists = landDataList;
-        
+
+        //DataTemporary에 Update or Save
+        DataTemporary.MyLandData = arrayLandData;
+
+        //File 형식으로 Update or Save
         FileManager.SaveDataFile(landDataFileName, arrayLandData);
     }
 

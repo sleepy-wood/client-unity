@@ -30,7 +30,7 @@ public class ArrayObjectsOfLand
 [Serializable]
 public class LandData
 {
-    public int landNum;
+    public int? landNum;
     public Vector3 landPosition;
     public Vector3 landScale;
     public Vector3 landEulerAngle;
