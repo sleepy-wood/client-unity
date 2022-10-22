@@ -95,7 +95,7 @@ public class CharactorChoice : MonoBehaviour
             }
         }
     }
-    public async void OnClickChoiceButton()
+    public void OnClickChoiceButton()
     {
         //승리 애니메이션 재생
         transform.GetChild(selectedIndex).GetComponent<Animator>().SetTrigger("Victory");
@@ -105,9 +105,9 @@ public class CharactorChoice : MonoBehaviour
         string jsonData = FileManager.SaveDataFile<UserData>(userDataFileName, DataTemporary.MyUserData);
 
         //TODO: 데이터 수정
-        ResultTemp<Token> data = await DataModule.WebRequest<ResultTemp<Token>>(
-            "/api/v1/users/",
-            DataModule.NetworkType.PUT, jsonData);
+        //ResultTemp<Token> data = await DataModule.WebRequest<ResultTemp<Token>>(
+        //    "/api/v1/users/",
+        //    DataModule.NetworkType.PUT, jsonData);
         
         isNextScene = true;
         //if (data.result)

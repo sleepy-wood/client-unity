@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Cysharp.Threading.Tasks.Triggers;
 
 public class LandDataManager : MonoBehaviour
 {
@@ -17,10 +18,18 @@ public class LandDataManager : MonoBehaviour
     private string landDataFileName = "LandData";
 
     ////test
-    private void Start()
-    {
-        SaveLandData();
-    }
+    //private void Start()
+    //{
+    //    SaveLandData();
+    //}
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Alpha1))
+    //    {
+    //        Debug.Log("Load");
+    //        LoadLandData();
+    //    }
+    //}
 
     /// <summary>
     /// LandManager 하위에 있는 Land들의 정보를 저장하는 함수
@@ -66,7 +75,34 @@ public class LandDataManager : MonoBehaviour
     public void LoadLandData()
     {
         ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
+        GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = false;
 
-        
+       for(int i = 0; i < arrayLandData.LandLists.Count; i++)
+        {
+            //Land 자체를 생성
+            GameObject landResource = Resources.Load<GameObject>("SkyLand");
+            GameObject land = Instantiate(landResource);
+            land.name = land.name.Split('(')[0];
+            land.name += (i + 1).ToString();
+            land.transform.parent = transform;
+            land.transform.localPosition = arrayLandData.LandLists[i].landPosition;
+            land.transform.localScale = arrayLandData.LandLists[i].landScale;
+            land.transform.localEulerAngles = arrayLandData.LandLists[i].landEulerAngle;
+            ArrayObjectsOfLand arrayObjectsOf = arrayLandData.LandLists[i].arrayObjectsOfLand;
+            
+            //Land 위에 있는 것 Load 해서 발견하기
+            for(int j = 0; j < arrayObjectsOf.Objects.Count; j++)
+            {
+                GameObject objResource = Resources.Load<GameObject>(arrayObjectsOf.Objects[j].path);
+                GameObject obj = Instantiate(objResource);
+                obj.name = obj.name.Split('(')[0];
+                obj.transform.parent = land.transform;
+                obj.transform.localPosition = arrayObjectsOf.Objects[j].localPosition;
+                obj.transform.localScale = arrayObjectsOf.Objects[j].localScale;
+                obj.transform.localEulerAngles = arrayObjectsOf.Objects[j].localEulerAngle;
+            }
+        }
+        GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = true;
+
     }
 }

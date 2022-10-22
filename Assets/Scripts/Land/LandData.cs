@@ -9,10 +9,10 @@ using System;
 [Serializable]
 public class ObjectsInfo
 {
-    public string? path = null;
-    public Vector3? localPosition = null;
-    public Vector3? localScale = null;
-    public Vector3? localEulerAngle = null;
+    public string? path;
+    public Vector3 localPosition;
+    public Vector3 localScale;
+    public Vector3 localEulerAngle;
 }
 
 /// <summary>
@@ -30,11 +30,11 @@ public class ArrayObjectsOfLand
 [Serializable]
 public class LandData
 {
-    public int? landNum = null;
-    public Vector3? landPosition = null;
-    public Vector3? landScale = null;
-    public Vector3? landEulerAngle = null;
-    public ArrayObjectsOfLand? arrayObjectsOfLand = null;
+    public int landNum;
+    public Vector3 landPosition;
+    public Vector3 landScale;
+    public Vector3 landEulerAngle;
+    public ArrayObjectsOfLand? arrayObjectsOfLand;
 }
 
 /// <summary>
@@ -43,5 +43,5 @@ public class LandData
 [Serializable]
 public class ArrayLandData
 {
-    public List<LandData>? LandLists= null;
+    public List<LandData>? LandLists=null;
 }
