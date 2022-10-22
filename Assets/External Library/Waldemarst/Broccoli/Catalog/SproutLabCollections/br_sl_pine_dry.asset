@@ -1,0 +1,1123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c98f0170c469685ac5dc4630b73f4d, type: 3}
+  m_Name: br_sl_pine_dry
+  m_EditorClassIdentifier: 
+  branchDescriptorCollection:
+    descriptorImplId: 0
+    branchDescriptors:
+    - id: 1
+      processorId: 0
+      seed: 538078966
+      activeLevels: 1
+      girthAtBase: 0.215
+      girthAtTop: 0.01
+      noiseAtBase: 0.5
+      noiseAtTop: 0.5
+      noiseScaleAtBase: 0.75
+      noiseScaleAtTop: 0.75
+      branchLevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 1
+        maxFrequency: 1
+        radius: 1
+        minLengthAtBase: 4.121631
+        maxLengthAtBase: 10.229153
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 3
+        maxFrequency: 4
+        radius: 1
+        minLengthAtBase: 6.1764708
+        maxLengthAtBase: 7.1764708
+        minLengthAtTop: 8.095975
+        maxLengthAtTop: 9.095975
+        minParallelAlignAtTop: 0.25239247
+        maxParallelAlignAtTop: 0.6678231
+        minParallelAlignAtBase: -0.111602865
+        maxParallelAlignAtBase: 0.5270335
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0.9894737
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 1
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 7
+        radius: 1
+        minLengthAtBase: 3
+        maxLengthAtBase: 4
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0.625
+        maxParallelAlignAtTop: 0.8181818
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.39772728
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 2
+        maxFrequency: 3
+        radius: 1
+        minLengthAtBase: 3
+        maxLengthAtBase: 4
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0.76878613
+        maxParallelAlignAtTop: 0.76878613
+        minParallelAlignAtBase: 0.433526
+        maxParallelAlignAtBase: 0.433526
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      sproutASize: 2.49
+      sproutAScaleAtBase: 0.79
+      sproutAScaleAtTop: 0.46
+      sproutAFlipAlign: 0.736
+      sproutALevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 9
+        maxFrequency: 15
+        minParallelAlignAtTop: -0.12662
+        maxParallelAlignAtTop: 0.33653793
+        minParallelAlignAtBase: -0.20839673
+        maxParallelAlignAtBase: 0.2337085
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0.33684212
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 8
+        maxFrequency: 12
+        minParallelAlignAtTop: 0.20316397
+        maxParallelAlignAtTop: 1
+        minParallelAlignAtBase: -0.09157288
+        maxParallelAlignAtBase: 0.37085485
+        minGravityAlignAtTop: 0.23157895
+        maxGravityAlignAtTop: 0.9894737
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0.7368421
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0.625
+        maxParallelAlignAtTop: 0.8863636
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.17045455
+        minGravityAlignAtTop: 0.38636363
+        maxGravityAlignAtTop: 0.60227275
+        minGravityAlignAtBase: 0.20454545
+        maxGravityAlignAtBase: 0.44318175
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0.41618496
+        maxParallelAlignAtTop: 0.80924845
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.25433525
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      sproutBSize: 1
+      sproutBScaleAtBase: 1
+      sproutBScaleAtTop: 1
+      sproutBFlipAlign: 0.8
+      sproutBLevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      polygonAreas: []
+      lodCount: 3
+    - id: 2
+      processorId: 0
+      seed: 1272869316
+      activeLevels: 1
+      girthAtBase: 0.215
+      girthAtTop: 0.01
+      noiseAtBase: 0.5
+      noiseAtTop: 0.5
+      noiseScaleAtBase: 0.75
+      noiseScaleAtTop: 0.75
+      branchLevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 1
+        maxFrequency: 1
+        radius: 1
+        minLengthAtBase: 4.121631
+        maxLengthAtBase: 10.229153
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 3
+        maxFrequency: 4
+        radius: 1
+        minLengthAtBase: 6.1764708
+        maxLengthAtBase: 7.1764708
+        minLengthAtTop: 7.1696596
+        maxLengthAtTop: 9.095975
+        minParallelAlignAtTop: 0.25239247
+        maxParallelAlignAtTop: 0.6678231
+        minParallelAlignAtBase: -0.1338251
+        maxParallelAlignAtBase: 0.52703345
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0.9894737
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 1
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 7
+        radius: 1
+        minLengthAtBase: 3
+        maxLengthAtBase: 4
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0.625
+        maxParallelAlignAtTop: 0.8181818
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.39772728
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 2
+        maxFrequency: 3
+        radius: 1
+        minLengthAtBase: 3
+        maxLengthAtBase: 4
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0.76878613
+        maxParallelAlignAtTop: 0.76878613
+        minParallelAlignAtBase: 0.433526
+        maxParallelAlignAtBase: 0.433526
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      sproutASize: 2.83
+      sproutAScaleAtBase: 0.79
+      sproutAScaleAtTop: 0.46
+      sproutAFlipAlign: 0.736
+      sproutALevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 9
+        maxFrequency: 15
+        minParallelAlignAtTop: -0.12662
+        maxParallelAlignAtTop: 0.33653793
+        minParallelAlignAtBase: -0.21950784
+        maxParallelAlignAtBase: 0.22259736
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0.33684212
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 8
+        maxFrequency: 12
+        minParallelAlignAtTop: 0.20316397
+        maxParallelAlignAtTop: 0.3333333
+        minParallelAlignAtBase: -0.14712843
+        maxParallelAlignAtBase: 0.33752152
+        minGravityAlignAtTop: 0.23157895
+        maxGravityAlignAtTop: 0.9894737
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0.7368421
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0.625
+        maxParallelAlignAtTop: 0.8863636
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.17045455
+        minGravityAlignAtTop: 0.38636363
+        maxGravityAlignAtTop: 0.60227275
+        minGravityAlignAtBase: 0.20454545
+        maxGravityAlignAtBase: 0.44318175
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0.41618496
+        maxParallelAlignAtTop: 0.80924845
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.25433525
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      sproutBSize: 1
+      sproutBScaleAtBase: 1
+      sproutBScaleAtTop: 1
+      sproutBFlipAlign: 0.8
+      sproutBLevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      polygonAreas: []
+      lodCount: 3
+    - id: 3
+      processorId: 0
+      seed: -1463166470
+      activeLevels: 1
+      girthAtBase: 0.215
+      girthAtTop: 0.01
+      noiseAtBase: 0.5
+      noiseAtTop: 0.5
+      noiseScaleAtBase: 0.75
+      noiseScaleAtTop: 0.75
+      branchLevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 1
+        maxFrequency: 1
+        radius: 1
+        minLengthAtBase: 4.121631
+        maxLengthAtBase: 7.629153
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 3
+        maxFrequency: 4
+        radius: 1
+        minLengthAtBase: 6.1764708
+        maxLengthAtBase: 7.1764708
+        minLengthAtTop: 5.5453897
+        maxLengthAtTop: 6.54539
+        minParallelAlignAtTop: 0.25239247
+        maxParallelAlignAtTop: 0.6678231
+        minParallelAlignAtBase: -0.111602865
+        maxParallelAlignAtBase: 0.5270335
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0.9894737
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 1
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 7
+        radius: 1
+        minLengthAtBase: 3
+        maxLengthAtBase: 4
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0.625
+        maxParallelAlignAtTop: 0.8181818
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.39772728
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 2
+        maxFrequency: 3
+        radius: 1
+        minLengthAtBase: 3
+        maxLengthAtBase: 4
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0.76878613
+        maxParallelAlignAtTop: 0.76878613
+        minParallelAlignAtBase: 0.433526
+        maxParallelAlignAtBase: 0.433526
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      sproutASize: 2.83
+      sproutAScaleAtBase: 0.79
+      sproutAScaleAtTop: 0.46
+      sproutAFlipAlign: 0.736
+      sproutALevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 7
+        minParallelAlignAtTop: -0.12662
+        maxParallelAlignAtTop: 0.33653793
+        minParallelAlignAtBase: 0.07815294
+        maxParallelAlignAtBase: 0.54481965
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0.05906433
+        maxRange: 0.7333333
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0.20316397
+        maxParallelAlignAtTop: 1
+        minParallelAlignAtBase: -0.09157288
+        maxParallelAlignAtBase: 0.37085485
+        minGravityAlignAtTop: 0.23157895
+        maxGravityAlignAtTop: 0.9894737
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0.7368421
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0.625
+        maxParallelAlignAtTop: 0.8863636
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.17045455
+        minGravityAlignAtTop: 0.38636363
+        maxGravityAlignAtTop: 0.60227275
+        minGravityAlignAtBase: 0.20454545
+        maxGravityAlignAtBase: 0.44318175
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0.41618496
+        maxParallelAlignAtTop: 0.80924845
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.25433525
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      sproutBSize: 1
+      sproutBScaleAtBase: 1
+      sproutBScaleAtTop: 1
+      sproutBFlipAlign: 0.8
+      sproutBLevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      polygonAreas: []
+      lodCount: 3
+    - id: 4
+      processorId: 0
+      seed: 1425370820
+      activeLevels: 2
+      girthAtBase: 0.188
+      girthAtTop: 0.01
+      noiseAtBase: 0.5
+      noiseAtTop: 0.5
+      noiseScaleAtBase: 0.75
+      noiseScaleAtTop: 0.75
+      branchLevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 1
+        maxFrequency: 1
+        radius: 1
+        minLengthAtBase: 4.121631
+        maxLengthAtBase: 10.229153
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 2
+        maxFrequency: 3
+        radius: 1
+        minLengthAtBase: 4.1598043
+        maxLengthAtBase: 5.1598043
+        minLengthAtTop: 4.0433435
+        maxLengthAtTop: 5.043344
+        minParallelAlignAtTop: 0.25239247
+        maxParallelAlignAtTop: 0.6678231
+        minParallelAlignAtBase: -0.111602865
+        maxParallelAlignAtBase: 0.5270335
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0.9894737
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 1
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 7
+        radius: 1
+        minLengthAtBase: 3
+        maxLengthAtBase: 4
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0.625
+        maxParallelAlignAtTop: 0.8181818
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.39772728
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 2
+        maxFrequency: 3
+        radius: 1
+        minLengthAtBase: 3
+        maxLengthAtBase: 4
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0.76878613
+        maxParallelAlignAtTop: 0.76878613
+        minParallelAlignAtBase: 0.433526
+        maxParallelAlignAtBase: 0.433526
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      sproutASize: 2.83
+      sproutAScaleAtBase: 0.79
+      sproutAScaleAtTop: 0.46
+      sproutAFlipAlign: 0.736
+      sproutALevelDescriptors:
+      - isEnabled: 0
+        minFrequency: 4
+        maxFrequency: 10
+        minParallelAlignAtTop: -0.12662
+        maxParallelAlignAtTop: 0.33653793
+        minParallelAlignAtBase: -0.20839673
+        maxParallelAlignAtBase: 0.2337085
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0.33684212
+        maxRange: 1
+      - isEnabled: 0
+        minFrequency: 3
+        maxFrequency: 7
+        minParallelAlignAtTop: 0.20316397
+        maxParallelAlignAtTop: 1
+        minParallelAlignAtBase: -0.09157288
+        maxParallelAlignAtBase: 0.37085485
+        minGravityAlignAtTop: 0.23157895
+        maxGravityAlignAtTop: 0.9894737
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0.7368421
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 0
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0.625
+        maxParallelAlignAtTop: 0.8863636
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.17045455
+        minGravityAlignAtTop: 0.38636363
+        maxGravityAlignAtTop: 0.60227275
+        minGravityAlignAtBase: 0.20454545
+        maxGravityAlignAtBase: 0.44318175
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0.41618496
+        maxParallelAlignAtTop: 0.80924845
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.25433525
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      sproutBSize: 1
+      sproutBScaleAtBase: 1
+      sproutBScaleAtTop: 1
+      sproutBFlipAlign: 0.8
+      sproutBLevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      polygonAreas: []
+      lodCount: 3
+    - id: 5
+      processorId: 0
+      seed: -696622852
+      activeLevels: 2
+      girthAtBase: 0.188
+      girthAtTop: 0.01
+      noiseAtBase: 0.5
+      noiseAtTop: 0.5
+      noiseScaleAtBase: 0.75
+      noiseScaleAtTop: 0.75
+      branchLevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 1
+        maxFrequency: 1
+        radius: 1
+        minLengthAtBase: 4.1882977
+        maxLengthAtBase: 6.5624866
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 2
+        maxFrequency: 3
+        radius: 1
+        minLengthAtBase: 2.7542486
+        maxLengthAtBase: 3.7542496
+        minLengthAtTop: 4.0433435
+        maxLengthAtTop: 5.043344
+        minParallelAlignAtTop: 0.25239247
+        maxParallelAlignAtTop: 0.6678231
+        minParallelAlignAtBase: -0.111602865
+        maxParallelAlignAtBase: 0.5270335
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0.9894737
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 1
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 3
+        maxFrequency: 5
+        radius: 1
+        minLengthAtBase: 2.0222223
+        maxLengthAtBase: 3.0222223
+        minLengthAtTop: 1
+        maxLengthAtTop: 1.9999999
+        minParallelAlignAtTop: 0.625
+        maxParallelAlignAtTop: 0.8181818
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.39772728
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      - isEnabled: 1
+        minFrequency: 2
+        maxFrequency: 3
+        radius: 1
+        minLengthAtBase: 3
+        maxLengthAtBase: 4
+        minLengthAtTop: 3
+        maxLengthAtTop: 4
+        minParallelAlignAtTop: 0.76878613
+        maxParallelAlignAtTop: 0.76878613
+        minParallelAlignAtBase: 0.433526
+        maxParallelAlignAtBase: 0.433526
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minPlaneAlignAtTop: 0
+        maxPlaneAlignAtTop: 0
+        minPlaneAlignAtBase: 0
+        maxPlaneAlignAtBase: 0
+      sproutASize: 2.83
+      sproutAScaleAtBase: 0.79
+      sproutAScaleAtTop: 0.46
+      sproutAFlipAlign: 0.736
+      sproutALevelDescriptors:
+      - isEnabled: 0
+        minFrequency: 4
+        maxFrequency: 10
+        minParallelAlignAtTop: -0.12662
+        maxParallelAlignAtTop: 0.33653793
+        minParallelAlignAtBase: -0.20839673
+        maxParallelAlignAtBase: 0.2337085
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0.33684212
+        maxRange: 1
+      - isEnabled: 0
+        minFrequency: 3
+        maxFrequency: 7
+        minParallelAlignAtTop: 0.20316397
+        maxParallelAlignAtTop: 1
+        minParallelAlignAtBase: -0.09157288
+        maxParallelAlignAtBase: 0.37085485
+        minGravityAlignAtTop: 0.23157895
+        maxGravityAlignAtTop: 0.9894737
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0.7368421
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 0
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0.625
+        maxParallelAlignAtTop: 0.8863636
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.17045455
+        minGravityAlignAtTop: 0.38636363
+        maxGravityAlignAtTop: 0.60227275
+        minGravityAlignAtBase: 0.20454545
+        maxGravityAlignAtBase: 0.44318175
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0.41618496
+        maxParallelAlignAtTop: 0.80924845
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0.25433525
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      sproutBSize: 1
+      sproutBScaleAtBase: 1
+      sproutBScaleAtTop: 1
+      sproutBFlipAlign: 0.8
+      sproutBLevelDescriptors:
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      - isEnabled: 1
+        minFrequency: 5
+        maxFrequency: 9
+        minParallelAlignAtTop: 0
+        maxParallelAlignAtTop: 0
+        minParallelAlignAtBase: 0
+        maxParallelAlignAtBase: 0
+        minGravityAlignAtTop: 0
+        maxGravityAlignAtTop: 0
+        minGravityAlignAtBase: 0
+        maxGravityAlignAtBase: 0
+        minRange: 0
+        maxRange: 1
+      polygonAreas: []
+      lodCount: 3
+    variationDescriptors: []
+    branchDescriptorIndex: 2
+    lastBranchDescriptorIndex: 2
+    variationDescriptorIndex: -1
+    lastVariationDescriptorIndex: -1
+    branchAlbedoTexture: {fileID: 2800000, guid: ac52998d0ceb24a8d8438b2b399e35e9, type: 3}
+    branchNormalTexture: {fileID: 2800000, guid: 21feba73c7aad467ab0fdc04da14aa1a, type: 3}
+    branchTextureYDisplacement: 2
+    sproutAMapAreas:
+    - enabled: 1
+      x: 0.073542535
+      y: 0.38934082
+      width: 0.8414691
+      height: 0.3061465
+      pivotX: 0.97620493
+      pivotY: 0.835489
+      texture: {fileID: 2800000, guid: c62e0d606b17349c29b50459d539cf02, type: 3}
+      normalMap: {fileID: 2800000, guid: 92e255772804df21283ca5aacb16686c, type: 3}
+      extraMap: {fileID: 0}
+      subsurfaceMap: {fileID: 0}
+    - enabled: 1
+      x: 0.029250458
+      y: 0.020109689
+      width: 0.91590494
+      height: 0.3510055
+      pivotX: 0.98502994
+      pivotY: 0.515625
+      texture: {fileID: 2800000, guid: c62e0d606b17349c29b50459d539cf02, type: 3}
+      normalMap: {fileID: 2800000, guid: 92e255772804df21283ca5aacb16686c, type: 3}
+      extraMap: {fileID: 0}
+      subsurfaceMap: {fileID: 0}
+    sproutBMapAreas: []
+    sproutAMapDescriptors:
+    - alphaFactor: 0.9
+    - alphaFactor: 0.9
+    - alphaFactor: 1
+    sproutBMapDescriptors: []
+    sproutStyleA:
+      minColorShade: 0.75
+      maxColorShade: 1
+      minColorTint: 0.06010929
+      maxColorTint: 0.4021858
+      colorTint: {r: 1, g: 0.5238116, b: 0.1745283, a: 1}
+      colorSaturation: 0.68
+      metallic: 0.132
+      glossiness: 0.278
+      subsurfaceMul: 1.202
+    sproutStyleB:
+      minColorShade: 0.75
+      maxColorShade: 1
+      minColorTint: 0
+      maxColorTint: 0.2
+      colorTint: {r: 1, g: 1, b: 1, a: 1}
+      colorSaturation: 1
+      metallic: 0
+      glossiness: 0
+      subsurfaceMul: 1
+    branchColorShade: 1
+    branchColorSaturation: 1
+    exportMode: 0
+    exportPath: 
+    exportPrefix: branch_
+    exportTake: 1
+    exportTextureSize: 4
+    exportAtlasPadding: 10
+    exportAlbedoEnabled: 1
+    exportTexturesFlags: -1
+    atlasAlbedoTexture: {fileID: 0}
+    atlasNormalsTexture: {fileID: 0}
+    atlasExtrasTexture: {fileID: 0}
+    atlasSubsurfaceTexture: {fileID: 0}
