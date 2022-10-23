@@ -38,6 +38,9 @@ public class SceneController : MonoBehaviour
         public GameObject tree;
         // sprout
         public GameObject sprout;
+        // FOV
+        public float defaultFOV = 64.0f;
+        public float targetFOV = 20.0f;
         #endregion
 
 
@@ -139,9 +142,19 @@ public class SceneController : MonoBehaviour
 
         IEnumerator PlantSeed(GameObject sproutGo, float targetScale)
         {
+                // 카메라 줌인
+                float t = 0;
+                while (t <1)
+                {
+                        t += Time.deltaTime;
+                        Camera.main.fieldOfView = Mathf.Lerp(defaultFOV, targetFOV, t);
+                        yield return null;
+                }
+                Camera.main.fieldOfView = targetFOV;
+
                 // 씨앗 심기
                 GameObject s = Instantiate(seedPrefab);
-                s.transform.position = growPos.position + new Vector3(0, 2, 0);
+                s.transform.position = growPos.position + new Vector3(0, 4, 0);
                 s.gameObject.SetActive(true);
                 yield return new WaitForSeconds(0.5f);
                 while (s.transform.position.y >= -1)
@@ -152,10 +165,10 @@ public class SceneController : MonoBehaviour
                 Destroy(s);
 
                 // 새싹 나타나기
-                float t = 0;
+                t = 0;
                 GameObject go = Instantiate(sproutGo);
                 sprout = go;
-                go.transform.position = new Vector3(0, 0, 0);
+                go.transform.position = new Vector3(0, 1, 0);
                 while (t <= targetScale)
                 {
                         t += Time.deltaTime*0.5f;
@@ -163,6 +176,8 @@ public class SceneController : MonoBehaviour
                         yield return null;
                 }
                 go.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
+                // 카메라 줌 아웃
+                Camera.main.fieldOfView = Mathf.Lerp(targetFOV, defaultFOV,  t);
         }
         /// <summary>
         /// 나무 정보 업데이트
