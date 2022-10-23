@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TFF_Water_01A
+  m_Shader: {fileID: 4800000, guid: 21b2f218fa38d334daf2f2012e6c546d, type: 3}
+  m_ShaderKeywords: _LIGHTS_ON _MAINFOAMPOWER_ON _VERTEXOFFSET2_ON
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2999
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _NoiseTexture:
+        m_Texture: {fileID: 2800000, guid: 41d01fe6e8db970449385e7f43d4aa06, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: db76e0ea49f14f147bee066871c70d88, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _FoamDistance: 0.03
+    - _FoamHardness: 0
+    - _FoamOpacity: 0.6
+    - _FoamScale: 0.38
+    - _FoamSpeed: 0.125
+    - _FresnelIntensity: 0.6
+    - _Opacity: 0.55
+    - _OpacityDepth: 17
+    - _ReflectionsCutoff: 0.4
+    - _ReflectionsCutoffScale: 16
+    - _ReflectionsCutoffScrollSpeed: -0.025
+    - _ReflectionsOpacity: 0.85
+    - _ReflectionsScale: 22
+    - _ReflectionsScrollSpeed: 0.045
+    - _ShallowColorDepth: 4
+    - _WaveAmplitude: 0.5
+    - _WaveIntensity: 0.15
+    - _WaveSpeed: 1
+    - _Waves: 0
+    - __dirty: 0
+    m_Colors:
+    - _DeepColor: {r: 0.13585797, g: 0.34535164, b: 0.4056604, a: 1}
+    - _FoamColor: {r: 0.8962264, g: 0.7051899, b: 0.49461553, a: 1}
+    - _FresnelColor: {r: 0.40792987, g: 0.6336544, b: 0.9716981, a: 1}
+    - _ShallowColor: {r: 0.20558919, g: 0.65796304, b: 0.7924528, a: 1}

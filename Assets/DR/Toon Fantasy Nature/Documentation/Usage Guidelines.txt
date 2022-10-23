@@ -1,0 +1,75 @@
+Thank you for purchasing Toon Fantasy Nature!
+Very glad to have you as a customer :)
+
+
+Version 1.0
+
+	In the promotional materials, the pack uses post processing profiles and you will need to import the post processing stack via the
+package manager and apply the profiles. (if you're using URP, the post processing stack is installed by default)
+
+	If you need help setting up the post processing stack, you can find more details here:
+https://docs.unity3d.com/2019.1/Documentation/Manual/PostProcessingOverview.html
+
+	If you install the post processing stack after importing this package, some errors might appear, depending on the version of Unity 
+that you're using. A Unity restart usually solves those issues. (if not, please re-import this pack in a project where post processing 
+stack is installed).
+
+
+
+		Naming convention:
+
+
+	The assets in this package use the "TFF" prefix, in case you're using other packs from the TOON Series, to be able to easily 
+identify the origin of an asset.
+	The last letter in the name, usually is a capital letter, such as :"TFF_Aspen_Tree_02A". It signifies the color scheme of the asset.
+If there are more color schemes for an asset, the naming would probably continue as follows: "TFF_Aspen_Tree_02B", "TFF_Aspen_Tree_02C", etc.
+
+
+
+		Prefabs:
+
+
+	The source files are contained in the "Models" folder, along with the custom mesh colliders, in the "Colliders" sub-folder. 
+Custom mesh colliders were used where the shape of the asset was too complicated to use simple "box" or "sphere" colliders.
+
+	The Prefabs are structured in multiple categories, like Rocks, Props, Vegetation, etc.
+	The Grass prefabs were used on the terrain in conjunction with "Prefab Painter 2", available here:
+https://assetstore.unity.com/packages/tools/painting/prefab-painter-2-61331
+
+	It's a very powerful tool, which adds a lot of value to any project where large areas need to be covered with foliage, vegetation or any
+other asset.
+
+	Another way of planting vegetation on the terrain is to use the Unity defalt "Paint Details" tool in the terrain tools. You can find the grass and
+flower textures in the "Textures" folder.
+
+
+		Demo Scenes:
+
+
+	There are 8 scenes included in this pack, showcasing all the assets shown in the promotional materials.
+
+
+		Skyboxes:
+
+	In addition to all the assets, there are 3 hand-painted skyboxes included in the pack, to better achieve different time-of-day lighting in the scenes.
+	
+		Shaders:
+
+	The assets use custom shaders for the most part, but the overall look of the package doesn't change drastically if the shaders are replaced by default
+Unity shaders (performance is also similar).
+
+	The water shader has a couple of nice features, such as shallow and deep colors, opacity, foam and reflections. There is also the option of activating
+the waves function, which add a nice height displacement effect on the water surface.
+
+	The grass shader interpolates two colors based on height and it has the option of adding a third color as a highlight where the wind distiortion is 
+most visible.
+
+	The toon shaders have a custom lighting model which tries to replicate the CEL shaded effect. The default shader used has an outline effect, but there
+is another shader included in the pack which doesn't contain that effect. The vegetation shader is the same as the toon shader, but it has added trnsparency
+cutout and a simple wind effect which affects some vertices.
+
+	The fire shader, similar to the grass shader, interpolates two colors based on height, along with an inner color and a billboarding effect. There are
+controls for the burn speed, transparency cutoff and color blending.
+
+
+* If you like the pack, please review it :) *
