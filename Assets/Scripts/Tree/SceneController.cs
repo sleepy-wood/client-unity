@@ -51,21 +51,20 @@ public class SceneController : MonoBehaviour
                 //        positionerElement.positions.Clear();
                 //}
                 #endregion
+
         }
 
         void Update()
         {
-                // TreePipeline -  높이 조절
-                if (dayCount == 0)
-                {
+                // 2. 발아
+                //if (dayCount == 2) TreeDataUpdate()
+                // 3. 묘목
+                //if (dayCount ==3) TreeDataUpdate()
+                // 4. 나무
+                //if (dayCount == 4) TreeDataUpdate()
+                // 5. 개화
+                if (dayCount == 5) TreeDataUpdate(10, 30, 40, 2, 10);
 
-                }
-
-                // TreePipeline - 굵기 조절
-                if (dayCount == 0)
-                {
-
-                }
 
 
                 // TreePipeline - 가지 추가
@@ -91,5 +90,53 @@ public class SceneController : MonoBehaviour
                 }
 
                 // TreePipeline -  잎 추가
+        }
+
+
+        /// <summary>
+        /// 나무 정보 업데이트
+        /// </summary>
+        /// /// <param name="branchNum">가지 개수</param>
+        /// <param name="lengthBase">Base나무 길이</param>
+        /// /// <param name="lengthTop">Top 나무 길이</param>
+        /// <param name="thick">나무 굵기</param>
+        /// <param name="abundance">나무 풍성함</param>
+        public void TreeDataUpdate(float branchNum, float lengthBase, float lengthTop, float thick, float abundance)
+        {
+                // 가지 개수
+                int levelCount = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
+                for (int i=0; i< levelCount; i++)
+                {
+                        if (i < 2)
+                        {
+                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minFrequency = (int)branchNum;
+                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxFrequency = (int)branchNum;
+                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxLengthAtBase = (int)branchNum;
+                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minLengthAtBase = (int)branchNum;
+                        }
+                        else
+                        {
+                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minFrequency = (int)branchNum/ 2;
+                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxFrequency = (int)branchNum / 2;
+                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxLengthAtBase = (int)branchNum / 2;
+                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minLengthAtBase = (int)branchNum / 2;
+                        }
+                }
+                
+                // 나무 길이
+                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxLengthAtBase = lengthBase;
+                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase = lengthBase;
+                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtTop = lengthTop;
+                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtTop = lengthTop;
+
+                // 나무 굵기
+                treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase = thick;
+                treePipeline._serializedPipeline.girthTransforms[0].maxGirthAtBase = thick;
+
+                // 나무의 풍성함
+                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = (int) abundance;
+                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = (int) abundance;
+
+
         }
 }

@@ -174,33 +174,33 @@ MonoBehaviour:
     minColorTint: 0
     maxColorTint: 0.5
     textureMode: 0
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
     normalMap: {fileID: 0}
     extraMap: {fileID: 0}
-    subsurfaceMap: {fileID: 0}
+    subsurfaceMap: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
     sproutAreas:
     - enabled: 1
       x: 0
-      y: 0.6224129
-      width: 0.5438372
-      height: 0.37218216
+      y: 0
+      width: 1
+      height: 1
       pivotX: 0.35352492
       pivotY: 0.3830796
-      texture: {fileID: 2800000, guid: bf90f9ba0e7e242129386f2a94f92673, type: 3}
+      texture: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
       normalMap: {fileID: 0}
       extraMap: {fileID: 0}
-      subsurfaceMap: {fileID: 0}
+      subsurfaceMap: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
     - enabled: 1
       x: 0
-      y: 0.281841
-      width: 0.5586273
-      height: 0.35126254
+      y: 0
+      width: 1
+      height: 1
       pivotX: 0.30114144
       pivotY: 0.36583394
-      texture: {fileID: 2800000, guid: bf90f9ba0e7e242129386f2a94f92673, type: 3}
+      texture: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
       normalMap: {fileID: 0}
       extraMap: {fileID: 0}
-      subsurfaceMap: {fileID: 0}
+      subsurfaceMap: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
     vector4UV0Enabled: 0
     selectedAreaIndex: 1
   selectedMapIndex: 1
@@ -379,8 +379,8 @@ MonoBehaviour:
   nodePosition: {x: 31, y: 130}
   materialMode: 0
   customMaterial: {fileID: 2100000, guid: 491b5957863b84d8b886c1af5cd6f718, type: 2}
-  mainTexture: {fileID: 2800000, guid: 156b448408e494e73b8d5b0ba3eb5188, type: 3}
-  normalTexture: {fileID: 2800000, guid: 4558a13ebc211415b9fcf36c0151b1b6, type: 3}
+  mainTexture: {fileID: 2800000, guid: 44c19c76698c6574fbf4269c92bf3053, type: 3}
+  normalTexture: {fileID: 0}
   mappingXDisplacement: -0.36
   mappingYDisplacement: 0
   mappingXTiles: 1
@@ -1494,8 +1494,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 1
-    maxFrequency: 1
+    minFrequency: 2
+    maxFrequency: 2
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
