@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using JetBrains.Annotations;
 #nullable enable
 /// <summary>
 /// 땅 위에 있는 오브젝트들의 정보를 저장하는 구조체
@@ -21,7 +22,7 @@ public class ObjectsInfo
 [Serializable]
 public class ArrayObjectsOfLand
 {
-    public List<ObjectsInfo>? Objects = null;
+    public List<ObjectsInfo>? objects = null;
 }
 
 /// <summary>
@@ -36,13 +37,26 @@ public class LandData
     public Vector3 landEulerAngle;
     public ArrayObjectsOfLand? arrayObjectsOfLand;
 }
-
+[Serializable]
+public class BridgeData
+{
+    public string? bridgeName;
+    public Vector3 bridgePosition;
+    public Vector3 bridgeRoatation;
+}
+[Serializable]
+public class BridgeFromTo
+{
+    public int fromId;
+    public int toId;
+}
 /// <summary>
 /// 여러 Land들의 정보를 담을 List
 /// </summary>
 [Serializable]
 public class ArrayLandData
 {
-    public List<LandData>? LandLists=null;
-    public List<List<int>>? BridgeInfo;
+    public List<LandData>? landLists=null;
+    public List<BridgeData>? bridgeLists;
+    public List<BridgeFromTo>? bridgeInfo;
 }
