@@ -40,7 +40,7 @@ public class CharactorChoice : MonoBehaviour
         {
             curTime += Time.deltaTime;
             if (curTime > 1.2f)
-                SceneManager.LoadScene(3);
+                SceneManager.LoadScene(2);
         }
     }
     public IEnumerator AlphaText(int i)
