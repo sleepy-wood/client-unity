@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c2d98b7a4cb4a1d91cfe32c3c35964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: 0
   isActive: 1
   id: 9
@@ -27,9 +27,9 @@ MonoBehaviour:
   srcElementClassType: 12
   sinkElementClassType: 4
   nodePosition: {x: 33, y: 280.5}
-  windSpread: 1
-  windAmplitude: 0.8
-  sproutTurbulence: 0.76
+  windSpread: 0.31
+  windAmplitude: 0.5
+  sproutTurbulence: 0.34
   sproutSway: 1
   branchSway: 1
   windQuality: 3
@@ -72,8 +72,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f1dcfdfd32e4cb1b4ae1c2d6edc4d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: -1273847374
   isActive: 1
   id: 10
@@ -192,8 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f19121274faf2461f94ae70876de4337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: 0
   isActive: 0
   id: 4
@@ -227,8 +227,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55d61721113ae4bdd9477f4f20384c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: -1273847374
   isActive: 1
   id: 7
@@ -247,7 +247,7 @@ MonoBehaviour:
     meshingMode: 0
     shapeMode: 2
     horizontalAlignAtBase: 0.64
-    horizontalAlignAtTop: 0.97
+    horizontalAlignAtTop: 0.64
     horizontalAlignCurve:
       serializedVersion: 2
       m_Curve:
@@ -406,24 +406,24 @@ MonoBehaviour:
         time: 0
         value: 0
         inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    scaleAtBase: 1.6
+    scaleAtBase: 0.01
     scaleAtTop: 1.2
     scaleCurve:
       serializedVersion: 2
@@ -432,20 +432,20 @@ MonoBehaviour:
         time: 0
         value: 0
         inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -456,7 +456,7 @@ MonoBehaviour:
     pivotX: 0.5
     pivotY: 0
     overrideHeightWithTexture: 1
-    includeScaleFromAtlas: 0
+    includeScaleFromAtlas: 1
     meshGameObject: {fileID: 0}
     meshScale: {x: 1, y: 1, z: 1}
     meshRotation: {x: 0, y: 0, z: 0}
@@ -560,8 +560,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5807526cb0a4654bfa53c2f6cfa1fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: 0
   isActive: 1
   id: 8
@@ -677,8 +677,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac74e6fb3f1f04991839eaf6b28d74aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: -1273847374
   isActive: 1
   id: 3
@@ -704,22 +704,22 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -730,22 +730,22 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
-      outSlope: 1
-      tangentMode: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
+      inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -756,22 +756,22 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
-      outSlope: 1
-      tangentMode: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
+      inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -823,8 +823,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4769aef02bd642eeb50b021b91d49ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: 0
   isActive: 1
   id: 0
@@ -839,15 +839,15 @@ MonoBehaviour:
   sinkElementClassType: 11
   nodePosition: {x: -5.5, y: -31.5}
   rootMode: 1
-  minSpread: 0.06325446
-  maxSpread: 0.22848396
+  minSpread: 0.118
+  maxSpread: 0.118
   minDisplacementPoints: 5
-  maxDisplacementPoints: 7
-  minDisplacementAngleVariance: 0.25994438
+  maxDisplacementPoints: 5
+  minDisplacementAngleVariance: 0.4542026
   maxDisplacementAngleVariance: 0.4542026
-  minDisplacementTwirl: -0.15299028
+  minDisplacementTwirl: 0.139082
   maxDisplacementTwirl: 0.13908195
-  minDisplacementScaleAtBase: 1.5322444
+  minDisplacementScaleAtBase: 2.054311
   maxDisplacementScaleAtBase: 2.0543106
   scaleCurve:
     serializedVersion: 2
@@ -888,8 +888,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770e367948b91433083364e8aedb2369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: 0
   isActive: 1
   id: 5
@@ -928,8 +928,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40cce6b1921274ea9a741a82df45b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: -1273847374
   isActive: 1
   id: 12
@@ -949,7 +949,7 @@ MonoBehaviour:
     parentId: 0
     sharingGroupId: 0
     sharingNextId: 0
-    enabled: 1
+    enabled: 0
     isSprout: 0
     isRoot: 0
     isLocked: 0
@@ -984,7 +984,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    childrenPerNode: 3
+    childrenPerNode: 1
     minFrequency: 2
     maxFrequency: 2
     randomTwirlOffsetEnabled: 1
@@ -993,7 +993,7 @@ MonoBehaviour:
     minTwirl: 0.2
     maxParallelAlignAtTop: 0.3548175
     minParallelAlignAtTop: 0.3548175
-    maxParallelAlignAtBase: 0.29618245
+    maxParallelAlignAtBase: 0.2961825
     minParallelAlignAtBase: 0.2961825
     parallelAlignCurve:
       serializedVersion: 2
@@ -1077,8 +1077,8 @@ MonoBehaviour:
       m_RotationOrder: 4
     flipSproutAlign: 0
     flipSproutDirection: {x: 1, y: 0, z: 0}
-    maxLengthAtTop: 4
-    minLengthAtTop: 4
+    maxLengthAtTop: 2
+    minLengthAtTop: 2
     maxLengthAtBase: 2
     minLengthAtBase: 2
     lengthCurve:
@@ -1110,7 +1110,7 @@ MonoBehaviour:
     radius: 0
     fromBranchCenter: 0
     nodePosition: {x: -44, y: 8}
-    actionRangeEnabled: 1
+    actionRangeEnabled: 0
     minRange: 0
     maxRange: 1
     minMaskRange: 0.5
@@ -1185,15 +1185,15 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 2
-    maxFrequency: 2
+    minFrequency: 4
+    maxFrequency: 4
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0.17
     minTwirl: 0.17
-    maxParallelAlignAtTop: 0.45839417
+    maxParallelAlignAtTop: 0.1810219
     minParallelAlignAtTop: 0.1810219
-    maxParallelAlignAtBase: 0.61
+    maxParallelAlignAtBase: 0.4348176
     minParallelAlignAtBase: 0.43481755
     parallelAlignCurve:
       serializedVersion: 2
@@ -1219,7 +1219,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    maxGravityAlignAtTop: -0.13321166
+    maxGravityAlignAtTop: -0.3229927
     minGravityAlignAtTop: -0.32299268
     maxGravityAlignAtBase: 0.7
     minGravityAlignAtBase: 0.42262772
@@ -1277,8 +1277,8 @@ MonoBehaviour:
       m_RotationOrder: 4
     flipSproutAlign: 0
     flipSproutDirection: {x: 1, y: 0, z: 0}
-    maxLengthAtTop: 6.0503645
-    minLengthAtTop: 4.1620436
+    maxLengthAtTop: 2
+    minLengthAtTop: 2
     maxLengthAtBase: 2
     minLengthAtBase: 2
     lengthCurve:
@@ -1477,8 +1477,8 @@ MonoBehaviour:
       m_RotationOrder: 4
     flipSproutAlign: 0
     flipSproutDirection: {x: 1, y: 0, z: 0}
-    maxLengthAtTop: 2
-    minLengthAtTop: 2
+    maxLengthAtTop: 1
+    minLengthAtTop: 1
     maxLengthAtBase: 1
     minLengthAtBase: 1
     lengthCurve:
@@ -1585,8 +1585,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 1
-    maxFrequency: 1
+    minFrequency: 8
+    maxFrequency: 8
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -1677,10 +1677,10 @@ MonoBehaviour:
       m_RotationOrder: 4
     flipSproutAlign: 0
     flipSproutDirection: {x: 1, y: 0, z: 0}
-    maxLengthAtTop: 4
-    minLengthAtTop: 4
-    maxLengthAtBase: 1
-    minLengthAtBase: 1
+    maxLengthAtTop: 1
+    minLengthAtTop: 1
+    maxLengthAtBase: 3
+    minLengthAtBase: 3
     lengthCurve:
       serializedVersion: 2
       m_Curve:
@@ -1887,22 +1887,22 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 1
         inSlope: 0
-        outSlope: 1
-        tangentMode: 0
+        outSlope: 0
+        tangentMode: 34
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 1
+        inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 34
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1915,22 +1915,22 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 1
         inSlope: 0
-        outSlope: 1
-        tangentMode: 0
+        outSlope: 0
+        tangentMode: 34
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 1
+        inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 34
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1943,52 +1943,52 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 1
         inSlope: 0
-        outSlope: 1
-        tangentMode: 0
+        outSlope: 0
+        tangentMode: 34
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 1
+        inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 34
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     flipSproutAlign: 0
     flipSproutDirection: {x: 1, y: 0, z: 0}
-    maxLengthAtTop: 8
-    minLengthAtTop: 8
-    maxLengthAtBase: 6
-    minLengthAtBase: 6
+    maxLengthAtTop: 3
+    minLengthAtTop: 3
+    maxLengthAtBase: 3
+    minLengthAtBase: 3
     lengthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 1
         inSlope: 0
-        outSlope: 1
-        tangentMode: 0
+        outSlope: 0
+        tangentMode: 34
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 1
+        inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 34
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -2044,8 +2044,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71b3b56710c5470795bb8565a348b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: 0
   isActive: 1
   id: 1
@@ -2063,7 +2063,7 @@ MonoBehaviour:
   useBranchWelding: 0
   useBranchWeldingMeshCap: 0
   minBranchWeldingHierarchyRange: 0.3
-  maxBranchWeldingHierarchyRange: 0.4
+  maxBranchWeldingHierarchyRange: 0.3
   branchWeldingHierarchyRangeCurve:
     serializedVersion: 2
     m_Curve:
@@ -2115,7 +2115,7 @@ MonoBehaviour:
   minBranchWeldingDistance: 1.3
   maxBranchWeldingDistance: 1.3
   minAdditionalBranchWeldingSegments: 2
-  maxAdditionalBranchWeldingSegments: 3
+  maxAdditionalBranchWeldingSegments: 2
   minBranchWeldingUpperSpread: 1
   maxBranchWeldingUpperSpread: 1
   minBranchWeldingLowerSpread: 1.3
@@ -2123,7 +2123,7 @@ MonoBehaviour:
   useRootWelding: 0
   useRootWeldingMeshCap: 0
   minRootWeldingHierarchyRange: 0.3
-  maxRootWeldingHierarchyRange: 0.4
+  maxRootWeldingHierarchyRange: 0.3
   rootWeldingHierarchyRangeCurve:
     serializedVersion: 2
     m_Curve:
@@ -2175,7 +2175,7 @@ MonoBehaviour:
   minRootWeldingDistance: 1.3
   maxRootWeldingDistance: 1.3
   minAdditionalRootWeldingSegments: 2
-  maxAdditionalRootWeldingSegments: 3
+  maxAdditionalRootWeldingSegments: 2
   minRootWeldingUpperSpread: 1.3
   maxRootWeldingUpperSpread: 1.3
   minRootWeldingLowerSpread: 1
@@ -2186,7 +2186,7 @@ MonoBehaviour:
   meshRange: 0
   nodesMode: 0
   minNodes: 2
-  maxNodes: 3
+  maxNodes: 2
   minNodeLength: 1
   maxNodeLength: 1
   nodeLengthVariance: 0
@@ -2206,8 +2206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63a09d95354abd364ad824fa1c792b70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: 0
   isActive: 1
   id: 6
@@ -2245,8 +2245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c7ca66c238743c882e0f8b9b24644b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
+  isSeedFixed: 1
+  fixedSeed: 1
   seed: 0
   isActive: 1
   id: 2
@@ -2262,8 +2262,8 @@ MonoBehaviour:
   nodePosition: {x: 7, y: -355.5}
   minGirthAtTop: 0.04
   maxGirthAtTop: 0.04
-  minGirthAtBase: 0.4
-  maxGirthAtBase: 0.4
+  minGirthAtBase: 0.2
+  maxGirthAtBase: 0.2
   curve:
     serializedVersion: 2
     m_Curve:
@@ -2291,7 +2291,7 @@ MonoBehaviour:
   hierarchyScalingEnabled: 0
   minHierarchyScaling: 1
   maxHierarchyScaling: 1
-  girthAtRootBottom: 0.05
+  girthAtRootBottom: 0.5
   girthAtRootBase: 0.5
   rootCurve:
     serializedVersion: 2

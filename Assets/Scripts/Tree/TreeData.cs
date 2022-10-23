@@ -25,6 +25,13 @@ public class TreeData
         public int? treeDay;
         // 나무 정보
         public TreeGrowthData? treegrowthData;
+        // 현재 land  ID
+        public int ? landID;
+}
+
+public class ArrayTreeData
+{
+        public List<TreeData>? treeDatas;
 }
 
 
