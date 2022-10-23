@@ -25,30 +25,42 @@ public class LandDataManager : MonoBehaviour
     }
 
     private string landDataFileName = "LandData";
-    private BuildMode buildMode = BuildMode.None;
+    public BuildMode buildMode = BuildMode.None;
 
-    ////test
-    //private void Start()
-    //{
-    //    SaveLandData();
-    //}
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Alpha1))
-    //    {
-    //        Debug.Log("Load");
-    //        LoadLandData();
-    //    }
-    //}
+    //test
+    private void Start()
+    {
+        SaveLandData();
+    }
 
     private void Update()
     {
-        if(buildMode == BuildMode.Bridge)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Debug.Log("Load");
+            LoadLandData();
+        }
+        if (buildMode == BuildMode.Bridge)
             BuildBridge();
+        else if(buildMode == BuildMode.None)
+        {
+            for (int i = 0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
+            {
+                Transform bridge = transform.GetChild(transform.childCount - 1).GetChild(i);
+                if (bridge.GetComponent<Bridge>().currentBridgeType == Bridge.BridgeType.NotBuild)
+                {
+                    bridge.gameObject.SetActive(false);
+                }
+            }
+        }
     }
 
     public void BuildBridge()
     {
+        for(int i =0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
+        {
+            transform.GetChild(transform.childCount - 1).GetChild(i).gameObject.SetActive(true);
+        }
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit hit;
@@ -68,7 +80,7 @@ public class LandDataManager : MonoBehaviour
     public void SaveLandData()
     {
         List<LandData> landDataList = new List<LandData>();
-        for(int i = 0; i< transform.childCount; i++)
+        for(int i = 0; i< transform.childCount - 1; i++)
         {
             LandData landData = new LandData();
             List<ObjectsInfo> objectList = new List<ObjectsInfo>();
@@ -84,7 +96,7 @@ public class LandDataManager : MonoBehaviour
                 objectList.Add(objectsInfo);
             }
             ArrayObjectsOfLand arrayObjectsOfLand = new ArrayObjectsOfLand();
-            arrayObjectsOfLand.Objects = objectList;
+            arrayObjectsOfLand.objects = objectList;
 
             landData.arrayObjectsOfLand = arrayObjectsOfLand;
             landData.landNum = i+1;
@@ -94,8 +106,37 @@ public class LandDataManager : MonoBehaviour
 
             landDataList.Add(landData);
         }
+        List<BridgeData> bridgeDataList = new List<BridgeData>();
+        List< BridgeFromTo> bridgeList = new List<BridgeFromTo>();
+
+        //Bridge 정보 저장
+        for(int i = 0; i < transform.GetChild(transform.childCount -1).childCount; i++)
+        {
+            BridgeData bridgeData = new BridgeData();
+
+            Transform bridgeTransform = transform.GetChild(transform.childCount - 1).GetChild(i);
+            bridgeData.bridgePosition = bridgeTransform.localPosition;
+            bridgeData.bridgeRoatation = bridgeTransform.localEulerAngles;
+            bridgeData.bridgeName = bridgeTransform.name;
+            bridgeDataList.Add(bridgeData);
+
+            Bridge bridge = bridgeTransform.GetComponent<Bridge>();
+            //건설된 상태라면
+            if(bridge.currentBridgeType == Bridge.BridgeType.Build)
+            {
+                string[] bridgeStrings = bridgeTransform.name.Split('_')[1].Split('/');
+                BridgeFromTo bridgeId = new BridgeFromTo();
+                bridgeId.fromId = int.Parse(bridgeStrings[0]);
+                bridgeId.toId = int.Parse(bridgeStrings[1]);
+
+                bridgeList.Add(bridgeId);
+            }
+        }
         ArrayLandData arrayLandData = new ArrayLandData();
-        arrayLandData.LandLists = landDataList;
+        arrayLandData.landLists = landDataList;
+        arrayLandData.bridgeLists = bridgeDataList;
+        arrayLandData.bridgeInfo = bridgeList;
+        //bridge 연결 리스트 저장
 
         //DataTemporary에 Update or Save
         DataTemporary.MyLandData = arrayLandData;
@@ -109,13 +150,10 @@ public class LandDataManager : MonoBehaviour
     /// </summary>
     public void LoadLandData()
     {
-
         ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
         GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = false;
 
-        InitBridge(arrayLandData.BridgeInfo);
-
-       for(int i = 0; i < arrayLandData.LandLists.Count; i++)
+       for(int i = 0; i < arrayLandData.landLists.Count; i++)
         {
             //Land 자체를 생성
             GameObject landResource = Resources.Load<GameObject>("SkyLand");
@@ -123,29 +161,60 @@ public class LandDataManager : MonoBehaviour
             land.name = land.name.Split('(')[0];
             land.name += (i + 1).ToString();
             land.transform.parent = transform;
-            land.transform.localPosition = arrayLandData.LandLists[i].landPosition;
-            land.transform.localScale = arrayLandData.LandLists[i].landScale;
-            land.transform.localEulerAngles = arrayLandData.LandLists[i].landEulerAngle;
-            ArrayObjectsOfLand arrayObjectsOf = arrayLandData.LandLists[i].arrayObjectsOfLand;
+            land.transform.localPosition = arrayLandData.landLists[i].landPosition;
+            land.transform.localScale = arrayLandData.landLists[i].landScale;
+            land.transform.localEulerAngles = arrayLandData.landLists[i].landEulerAngle;
+            ArrayObjectsOfLand arrayObjectsOf = arrayLandData.landLists[i].arrayObjectsOfLand;
             
             //Land 위에 있는 것 Load 해서 발견하기
-            for(int j = 0; j < arrayObjectsOf.Objects.Count; j++)
+            for(int j = 0; j < arrayObjectsOf.objects.Count; j++)
             {
-                GameObject objResource = Resources.Load<GameObject>(arrayObjectsOf.Objects[j].path);
+                GameObject objResource = Resources.Load<GameObject>(arrayObjectsOf.objects[j].path);
                 GameObject obj = Instantiate(objResource);
                 obj.name = obj.name.Split('(')[0];
                 obj.transform.parent = land.transform;
-                obj.transform.localPosition = arrayObjectsOf.Objects[j].localPosition;
-                obj.transform.localScale = arrayObjectsOf.Objects[j].localScale;
-                obj.transform.localEulerAngles = arrayObjectsOf.Objects[j].localEulerAngle;
+                obj.transform.localPosition = arrayObjectsOf.objects[j].localPosition;
+                obj.transform.localScale = arrayObjectsOf.objects[j].localScale;
+                obj.transform.localEulerAngles = arrayObjectsOf.objects[j].localEulerAngle;
             }
        }
+
         GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = true;
+
+        LoadBridge(arrayLandData.bridgeInfo, arrayLandData.bridgeLists);
     }
 
-    public void InitBridge(List<List<int>> bridges)
+    /// <summary>
+    /// Bridge 정보 초기화
+    /// </summary>
+    /// <param name="bridges"></param>
+    public void LoadBridge(List<BridgeFromTo> bridges, List<BridgeData> bridgesData)
     {
+        GameObject bridgeResource = Resources.Load<GameObject>("Object/Bridge");
 
+        GameObject bridgeTemp = new GameObject("BridgeTemp");
+        bridgeTemp.transform.parent = transform;
+        for (int i = 0; i < bridgesData.Count; i++)
+        {
+            GameObject bridge = Instantiate(bridgeResource);
+            bridge.transform.parent = bridgeTemp.transform;
+            bridge.transform.localPosition = bridgesData[i].bridgePosition;    
+            bridge.transform.localEulerAngles = bridgesData[i].bridgeRoatation;    
+            bridge.name = bridgesData[i].bridgeName;
+            string[] bridgeStrings = bridge.name.Split('_')[1].Split('/');
+            for(int j = 0; j < bridges.Count; j++)
+            {
+                int a = int.Parse(bridgeStrings[0]);
+                int b = int.Parse(bridgeStrings[1]);
+                Debug.Log("a = "+ a);
+                Debug.Log("b = "+ b);
+                if (bridges[j].fromId == int.Parse(bridgeStrings[0]) &&
+                    bridges[j].toId == int.Parse(bridgeStrings[1]))
+                {
+                    bridge.GetComponent<Bridge>().currentBridgeType = Bridge.BridgeType.Build;
+                }
+            }
+        }
     }
 
     /// <summary>

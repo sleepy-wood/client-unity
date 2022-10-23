@@ -1,7 +1,6 @@
 {
-    "LandLists": [
+    "landLists": [
         {
-            "landNum": 0,
             "landPosition": {
                 "x": -100.0,
                 "y": 0.0,
@@ -18,11 +17,10 @@
                 "z": 0.0
             },
             "arrayObjectsOfLand": {
-                "Objects": []
+                "objects": []
             }
         },
         {
-            "landNum": 1,
             "landPosition": {
                 "x": 100.0,
                 "y": 0.0,
@@ -39,7 +37,7 @@
                 "z": 0.0
             },
             "arrayObjectsOfLand": {
-                "Objects": [
+                "objects": [
                     {
                         "path": "Object/Cube",
                         "localPosition": {
@@ -62,7 +60,6 @@
             }
         },
         {
-            "landNum": 2,
             "landPosition": {
                 "x": 0.0,
                 "y": 0.0,
@@ -79,11 +76,10 @@
                 "z": 0.0
             },
             "arrayObjectsOfLand": {
-                "Objects": []
+                "objects": []
             }
         },
         {
-            "landNum": 3,
             "landPosition": {
                 "x": -100.0,
                 "y": 0.0,
@@ -100,11 +96,10 @@
                 "z": 0.0
             },
             "arrayObjectsOfLand": {
-                "Objects": []
+                "objects": []
             }
         },
         {
-            "landNum": 4,
             "landPosition": {
                 "x": 100.0,
                 "y": 0.0,
@@ -121,8 +116,72 @@
                 "z": 0.0
             },
             "arrayObjectsOfLand": {
-                "Objects": []
+                "objects": []
             }
+        }
+    ],
+    "bridgeLists": [
+        {
+            "bridgeName": "Bridge_1/3",
+            "bridgePosition": {
+                "x": 45.0,
+                "y": 0.0,
+                "z": 45.0
+            },
+            "bridgeRoatation": {
+                "x": 0.0,
+                "y": 315.0,
+                "z": 0.0
+            }
+        },
+        {
+            "bridgeName": "Bridge_2/3",
+            "bridgePosition": {
+                "x": 45.0,
+                "y": 0.0,
+                "z": -45.0
+            },
+            "bridgeRoatation": {
+                "x": 0.0,
+                "y": 44.999996185302737,
+                "z": 0.0
+            }
+        },
+        {
+            "bridgeName": "Bridge_3/4",
+            "bridgePosition": {
+                "x": -45.0,
+                "y": 0.0,
+                "z": 45.0
+            },
+            "bridgeRoatation": {
+                "x": 0.0,
+                "y": 44.999996185302737,
+                "z": 0.0
+            }
+        },
+        {
+            "bridgeName": "Bridge_3/5",
+            "bridgePosition": {
+                "x": -45.0,
+                "y": 0.0,
+                "z": -45.0
+            },
+            "bridgeRoatation": {
+                "x": 0.0,
+                "y": 315.0,
+                "z": 0.0
+            }
+        }
+    ],
+    "bridgeInfo": [
+        {
+            "fromId": 3,
+            "toId": 4
+        },
+        {
+            "fromId": 3,
+            "toId": 5
         }
     ]
 }
