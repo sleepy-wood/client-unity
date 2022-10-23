@@ -156,6 +156,7 @@ namespace Broccoli.HCGL
         public Mesh ConvertToUnityMesh(bool generateNormals, string meshName = null)
         {
             Mesh mesh = new Mesh();
+            mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
 
             //MyVector3 to Vector3
             Vector3[] vertices_Unity = vertices.Select(x => MyVector3.ToVector3(x)).ToArray();

@@ -47,18 +47,19 @@ public class SceneController : MonoBehaviour
         void Start()
         {
                 // Build mesh 오류 해결 코드
-                string resPath = Application.dataPath + "/Resources/NewTreePipeline.asset";
+                string resPath = Application.dataPath + "/Resources/NewTreePipeline3.asset";
                 if (!File.Exists(resPath))
                 {
-                        path = Application.streamingAssetsPath + "/NewTreePipeline.asset";
+                        path = Application.streamingAssetsPath + "/NewTreePipeline3.asset";
                         byte[] data = File.ReadAllBytes(path);
                         File.WriteAllBytes(resPath, data);
                 }
 
+
                 // treeFactory
                 //treeFactory = TreeFactory.GetFactory();
                 // pipeline 로드
-                treePipeline = Resources.Load<Pipeline>("NewTreePipeline");
+                treePipeline = Resources.Load<Pipeline>("NewTreePipeline3");
                 #region 기존 코드
                 //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
                 //// pipeline에서 positioner 요소 가져오기(위치 동적 할당)
@@ -87,7 +88,7 @@ public class SceneController : MonoBehaviour
                         isOnce = true;
                         StartCoroutine(PlantSeed(sproutPrefab, 0.5f));
                 }
-                // 2. 발아
+                // 2. 작은 묘목
                 if (dayCount == 2 && isOnce)
                 {
                         isOnce = false;
@@ -98,21 +99,21 @@ public class SceneController : MonoBehaviour
                 if (dayCount == 3 && isOnce == false)
                 {
                         isOnce = true;
-                        TreeDataUpdate(2, 8, 1, 4, 0.2f);
+                        TreeDataUpdate(2, 8, 3, 10, 0.5f);
                         TreeReload();
                 }
                 // 4. 나무
                 if (dayCount == 4 && isOnce)
                 {
                         isOnce = false;
-                        TreeDataUpdate(10, 10, 10, 8, 0.5f);
+                        TreeDataUpdate(5, 10, 10, 20, 0.5f);
                         TreeReload();
                 }
                 // 5. 개화
                 if (dayCount == 5 && isOnce == false)
                 {
                         isOnce = true;
-                        TreeDataUpdate(15, 20, 15, 15, 0.8f);
+                        TreeDataUpdate(15, 20, 15, 25, 0.8f);
                         TreeReload();
                 }
 
@@ -176,8 +177,16 @@ public class SceneController : MonoBehaviour
                         yield return null;
                 }
                 go.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
+
                 // 카메라 줌 아웃
-                Camera.main.fieldOfView = Mathf.Lerp(targetFOV, defaultFOV,  t);
+                t = 0;
+                while (t < 1)
+                {
+                        t += Time.deltaTime*0.5f;
+                        Camera.main.fieldOfView = Mathf.Lerp(targetFOV, defaultFOV, t);
+                        yield return null;
+                }
+                Camera.main.fieldOfView = defaultFOV;
         }
         /// <summary>
         /// 나무 정보 업데이트
@@ -189,23 +198,34 @@ public class SceneController : MonoBehaviour
         /// <param name="abundance">나무 풍성함</param>
         public void TreeDataUpdate(int branchNum, int sproutFreq, int rootChild, int length, float thick)
         {
+                if (treePipeline == null) treePipeline = Resources.Load<Pipeline>("NewTreePipeline3");
+
                 // 가지 개수
                 int levelCount = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
-                for (int i=0; i< levelCount; i++)
+                for (int i = 0; i < levelCount; i++)
                 {
-                        if (dayCount == 3) treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].enabled = true;
-                        if (i < 3)
+                        if (dayCount == 3)
                         {
-                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency = branchNum;
-                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxFrequency = branchNum; ;
-                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxLengthAtBase = branchNum;
-                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minLengthAtBase = branchNum;
+                                if (treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].enabled == false)
+                                {
+                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].enabled = true;
+                                }
                         }
-                        // Sprout Level
                         else
                         {
-                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency = sproutFreq;
-                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxFrequency = sproutFreq;
+                                // Sprout Level
+                                if (treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].isSprout)
+                                {
+                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency = sproutFreq;
+                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxFrequency = sproutFreq;
+                                }
+                                else
+                                {
+                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency = branchNum;
+                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxFrequency = branchNum;
+                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxLengthAtBase = branchNum;
+                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minLengthAtBase = branchNum;
+                                }
                         }
                 }
 
@@ -216,9 +236,6 @@ public class SceneController : MonoBehaviour
                 // 나무 길이
                 treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxLengthAtBase = length;
                 treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase = length;
-
-               
-
 
                 // 나무 굵기
                 treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase = thick;
@@ -234,5 +251,6 @@ public class SceneController : MonoBehaviour
                 Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
                 treeFactory.UnloadAndClearPipeline();
                 treeFactory.LoadPipeline(loadedPipeline.Clone(), path, true, true);
+                treePipeline = Resources.Load<Pipeline>("NewTreePipeline3");
         }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -235,7 +235,8 @@ namespace Broccoli.Manager
 					combine[i].transform = Matrix4x4.identity;
 				}
 				Mesh mesh = new Mesh();
-				mesh.CombineMeshes (combine, false);
+                                mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+                                mesh.CombineMeshes (combine, false);
 				if (_branchDescriptorIdToMesh.ContainsKey (branchLOD)) {
 					UnityEngine.Object.DestroyImmediate (_branchDescriptorIdToMesh [branchLOD]);
 					_branchDescriptorIdToMesh.Remove (branchLOD);

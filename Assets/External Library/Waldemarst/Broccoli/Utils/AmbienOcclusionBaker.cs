@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +14,7 @@ namespace Broccoli.Utils
             }
 
             Mesh obstacle = new Mesh(); //Tree mesh used for collision detection
+            obstacle.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
 
             int n = branchTri.Length;
             int m = leafTri.Length;
