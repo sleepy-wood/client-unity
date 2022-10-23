@@ -58,10 +58,10 @@ public class SceneController : MonoBehaviour
         void Start()
         {
                 // Build mesh 오류 해결 코드
-                string resPath = Application.dataPath + "/Resources/NewTreePipeline3.asset";
+                string resPath = Application.dataPath + "/Resources/NewTreePipeline4.asset";
                 if (!File.Exists(resPath))
                 {
-                        path = Application.streamingAssetsPath + "/NewTreePipeline3.asset";
+                        path = Application.streamingAssetsPath + "/NewTreePipeline4.asset";
                         byte[] data = File.ReadAllBytes(path);
                         File.WriteAllBytes(resPath, data);
                 }
@@ -69,7 +69,7 @@ public class SceneController : MonoBehaviour
                 // treeFactory
                 //treeFactory = TreeFactory.GetFactory();
                 // pipeline 로드
-                treePipeline = Resources.Load<Pipeline>("NewTreePipeline3");
+                treePipeline = Resources.Load<Pipeline>("NewTreePipeline4");
 
                 // TreeData  객체 생성
                 data = new TreeData();
@@ -223,7 +223,7 @@ public class SceneController : MonoBehaviour
         /// <param name="abundance">나무 풍성함</param>
         public void TreeDataUpdate(int branchNum, int sproutFreq, int rootChild, int length, float thick)
         {
-                if (treePipeline == null) treePipeline = Resources.Load<Pipeline>("NewTreePipeline3");
+                if (treePipeline == null) treePipeline = Resources.Load<Pipeline>("NewTreePipeline4");
 
                 // 가지 개수
                 int levelCount = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
@@ -236,6 +236,11 @@ public class SceneController : MonoBehaviour
                                         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].enabled = true;
                                 }
                         }
+                        //if (dayCount == 5)
+                        //{
+                        //        // 꽃 텍스처 추가
+                        //        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[1].sproutAreas[2].enabled = true;
+                        //}
                         else
                         {
                                 // Sprout Level
