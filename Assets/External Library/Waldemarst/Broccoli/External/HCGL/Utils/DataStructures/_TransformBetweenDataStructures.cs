@@ -213,6 +213,8 @@ namespace Broccoli.HCGL
 
             //Step4. Create the final mesh
             Mesh mesh = new Mesh();
+            mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+            
 
             //From MyVector3 to Vector3
             Vector3[] meshVerticesArray = new Vector3[meshVertices.Count];
@@ -267,6 +269,8 @@ namespace Broccoli.HCGL
 
             //Create the final mesh
             Mesh mesh = new Mesh();
+            mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+            
 
             //From MyVector3 to Vector3
             Vector3[] meshVerticesArray = new Vector3[meshVertices.Count];

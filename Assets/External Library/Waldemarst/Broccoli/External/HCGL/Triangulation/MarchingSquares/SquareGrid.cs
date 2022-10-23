@@ -78,6 +78,7 @@ namespace Broccoli.HCGL.Marching_Squares
         public Mesh GenerateUnityMesh(float meshHeight)
         {
             Mesh mesh = new Mesh();
+            mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
 
             //Convert from 2d to 3d
             Vector3[] meshVertices = new Vector3[vertices.Count];

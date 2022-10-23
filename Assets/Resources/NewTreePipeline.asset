@@ -27,10 +27,10 @@ MonoBehaviour:
   srcElementClassType: 12
   sinkElementClassType: 4
   nodePosition: {x: 33, y: 280.5}
-  windSpread: 0.31
-  windAmplitude: 0.5
-  sproutTurbulence: 0.34
-  sproutSway: 1
+  windSpread: 0.19
+  windAmplitude: 0.13
+  sproutTurbulence: 0.11
+  sproutSway: 0.51
   branchSway: 1
   windQuality: 3
   useMultiPhaseOnTrunk: 1
@@ -456,7 +456,7 @@ MonoBehaviour:
     pivotX: 0.5
     pivotY: 0
     overrideHeightWithTexture: 1
-    includeScaleFromAtlas: 1
+    includeScaleFromAtlas: 0
     meshGameObject: {fileID: 0}
     meshScale: {x: 1, y: 1, z: 1}
     meshRotation: {x: 0, y: 0, z: 0}
@@ -949,7 +949,7 @@ MonoBehaviour:
     parentId: 0
     sharingGroupId: 0
     sharingNextId: 0
-    enabled: 0
+    enabled: 1
     isSprout: 0
     isRoot: 0
     isLocked: 0
@@ -958,8 +958,8 @@ MonoBehaviour:
     sharedProbability: 0.5
     distributionOrigin: 0
     distribution: 0
-    distributionSpacingVariance: 0
-    distributionAngleVariance: 0
+    distributionSpacingVariance: 0.143
+    distributionAngleVariance: 0.145
     distributionCurve:
       serializedVersion: 2
       m_Curve:
@@ -1966,8 +1966,8 @@ MonoBehaviour:
     flipSproutDirection: {x: 1, y: 0, z: 0}
     maxLengthAtTop: 3
     minLengthAtTop: 3
-    maxLengthAtBase: 3
-    minLengthAtBase: 3
+    maxLengthAtBase: 10
+    minLengthAtBase: 10
     lengthCurve:
       serializedVersion: 2
       m_Curve:
@@ -2069,19 +2069,19 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 0
-      outSlope: -1
-      tangentMode: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: -1
-      outSlope: 0
-      tangentMode: 0
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -2093,17 +2093,17 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
-      outSlope: -1
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: -1
+      value: 1
+      inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0

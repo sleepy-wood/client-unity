@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -1365,7 +1365,9 @@ namespace Broccoli.Builder {
 			tree.UpdateGirth ();
 			AnalyzeTree (tree);
 			Mesh treeMesh = new Mesh();
-			TreeFactory.GetActiveInstance ().BeginColliderUsage ();
+                        treeMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+
+                        TreeFactory.GetActiveInstance ().BeginColliderUsage ();
 
 			// Preprocess each branchskin and add its segments.
 			for (int i = 0; i < tree.branches.Count; i++) {
