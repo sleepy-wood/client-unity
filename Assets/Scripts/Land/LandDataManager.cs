@@ -151,6 +151,7 @@ public class LandDataManager : MonoBehaviour
     public void LoadLandData()
     {
         ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
+        //플레이어가 떨어지는 것을 방지
         GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = false;
 
        for(int i = 0; i < arrayLandData.landLists.Count; i++)
@@ -179,9 +180,10 @@ public class LandDataManager : MonoBehaviour
             }
        }
 
-        GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = true;
 
         LoadBridge(arrayLandData.bridgeInfo, arrayLandData.bridgeLists);
+
+        GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = true;
     }
 
     /// <summary>
