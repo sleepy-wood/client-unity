@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -499,8 +499,9 @@ namespace Broccoli.Manager
 			mergedMeshIndex.Clear ();
 			mergedMeshVertexOffset.Clear ();
 			Mesh mergingMesh = new Mesh ();
+                        mergingMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
 
-			mergingMesh.subMeshCount = meshesData.Count;
+                        mergingMesh.subMeshCount = meshesData.Count;
 			CombineInstance[] combine = new CombineInstance[meshesData.Count];
 			int i = 0;
 			int mergedMeshOffset = 0;
