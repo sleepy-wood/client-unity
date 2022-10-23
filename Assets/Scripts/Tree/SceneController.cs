@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 using Broccoli.Factory;
 using Broccoli.Pipe;
 using Broccoli.Generator;
 using System.IO;
-
+using UnityEngine.EventSystems;
 
 public class SceneController : MonoBehaviour
 {
@@ -41,6 +42,16 @@ public class SceneController : MonoBehaviour
         // FOV
         public float defaultFOV = 64.0f;
         public float targetFOV = 20.0f;
+        // TreeData
+        public TreeData data;
+        // leafTexture
+        public Texture2D leafText;
+        // 식물 이름 결정 UI
+        public GameObject plantNameUI;
+        // 식물 이름 InputField
+        public InputField inputPlantName;
+        // 식물 이름 결정 Button
+        public Button btnPlantName;
         #endregion
 
 
@@ -55,11 +66,18 @@ public class SceneController : MonoBehaviour
                         File.WriteAllBytes(resPath, data);
                 }
 
-
                 // treeFactory
                 //treeFactory = TreeFactory.GetFactory();
                 // pipeline 로드
                 treePipeline = Resources.Load<Pipeline>("NewTreePipeline3");
+
+                // TreeData  객체 생성
+                data = new TreeData();
+                data.leafTexture = leafText;
+                //data.landID = growPos.parent.gameObject.name;
+
+                inputPlantName.onEndEdit.AddListener(onEndEdit);
+
                 #region 기존 코드
                 //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
                 //// pipeline에서 positioner 요소 가져오기(위치 동적 할당)
@@ -76,10 +94,11 @@ public class SceneController : MonoBehaviour
         void Update()
         {
                 // Test용
-                if (Input.GetMouseButtonDown(0) && dayCount <6)
+                if (Input.GetMouseButtonDown(0) && dayCount <5 && !EventSystem.current.IsPointerOverGameObject())
                 {
                         dayCount++;
-                        txtDayCount.text = $"DayCount : {dayCount}";
+                        data.treeDay = dayCount;
+                        txtDayCount.text = $"Day{dayCount}";
                 }
 
                 // 1. 씨앗심기 & 새싹
@@ -99,21 +118,21 @@ public class SceneController : MonoBehaviour
                 if (dayCount == 3 && isOnce == false)
                 {
                         isOnce = true;
-                        TreeDataUpdate(2, 8, 3, 10, 0.5f);
+                        TreeDataUpdate(2, 3, 5, 10, 0.5f);
                         TreeReload();
                 }
                 // 4. 나무
                 if (dayCount == 4 && isOnce)
                 {
                         isOnce = false;
-                        TreeDataUpdate(5, 10, 10, 20, 0.5f);
+                        TreeDataUpdate(5, 10, 10, 20, 0.7f);
                         TreeReload();
                 }
                 // 5. 개화
                 if (dayCount == 5 && isOnce == false)
                 {
                         isOnce = true;
-                        TreeDataUpdate(15, 20, 15, 25, 0.8f);
+                        TreeDataUpdate(8, 15, 15, 25, 0.8f);
                         TreeReload();
                 }
 
@@ -177,6 +196,7 @@ public class SceneController : MonoBehaviour
                         yield return null;
                 }
                 go.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
+                yield return new WaitForSeconds(1);
 
                 // 카메라 줌 아웃
                 t = 0;
@@ -187,7 +207,12 @@ public class SceneController : MonoBehaviour
                         yield return null;
                 }
                 Camera.main.fieldOfView = defaultFOV;
+
+                // 식물 이름 UI 띄우기
+                plantNameUI.gameObject.SetActive(true);
         }
+
+
         /// <summary>
         /// 나무 정보 업데이트
         /// </summary>
@@ -217,7 +242,7 @@ public class SceneController : MonoBehaviour
                                 if (treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].isSprout)
                                 {
                                         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency = sproutFreq;
-                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxFrequency = sproutFreq;
+                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxFrequency = sproutFreq*2;
                                 }
                                 else
                                 {
@@ -231,7 +256,7 @@ public class SceneController : MonoBehaviour
 
                 // 나무 Root 자식 가지
                 treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = rootChild;
-                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = rootChild;
+                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = rootChild*2;
 
                 // 나무 길이
                 treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxLengthAtBase = length;
@@ -252,5 +277,23 @@ public class SceneController : MonoBehaviour
                 treeFactory.UnloadAndClearPipeline();
                 treeFactory.LoadPipeline(loadedPipeline.Clone(), path, true, true);
                 treePipeline = Resources.Load<Pipeline>("NewTreePipeline3");
+        }
+
+        /// <summary>
+        /// 식물 이름 정한 뒤 Enter치면 호출되는 함수
+        /// </summary>
+        /// <param name="s">식물 이름</param>
+        void onEndEdit(string s)
+        {
+                btnPlantName.interactable = true;
+                data.treeName = s;
+        }
+
+       /// <summary>
+       /// 식물 이름 결정 버튼
+       /// </summary>
+        public void onConfirmPlantName()
+        {
+                plantNameUI.SetActive(false);
         }
 }

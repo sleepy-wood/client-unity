@@ -20,7 +20,7 @@ public class TreeData
         // 나무 이름
         public string? treeName;
         // 잎 텍스처 
-        public Sprite ?leafTexture;
+        public Texture2D ?leafTexture;
         // DayCount
         public int? treeDay;
         // 나무 정보
