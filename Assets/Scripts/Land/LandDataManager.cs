@@ -56,7 +56,7 @@ public class LandDataManager : MonoBehaviour
             arrayObjectsOfLand.Objects = objectList;
 
             landData.arrayObjectsOfLand = arrayObjectsOfLand;
-            landData.landNum = i;
+            landData.landNum = i+1;
             landData.landPosition = transform.GetChild(i).localPosition;
             landData.landScale = transform.GetChild(i).localScale;
             landData.landEulerAngle = transform.GetChild(i).localEulerAngles;
