@@ -8,6 +8,15 @@ using Cysharp.Threading.Tasks.Triggers;
 public class LandDataManager : MonoBehaviour
 {
     public static LandDataManager Instance;
+    /// <summary>
+    /// Build하려고 했을때, 어떤 mode인가
+    /// </summary>
+    public enum BuildMode
+    {
+        None,
+        Bridge,
+        Object
+    }
 
     private void Awake()
     {
@@ -16,6 +25,7 @@ public class LandDataManager : MonoBehaviour
     }
 
     private string landDataFileName = "LandData";
+    private BuildMode buildMode = BuildMode.None;
 
     ////test
     //private void Start()
@@ -30,6 +40,27 @@ public class LandDataManager : MonoBehaviour
     //        LoadLandData();
     //    }
     //}
+
+    private void Update()
+    {
+        if(buildMode == BuildMode.Bridge)
+            BuildBridge();
+    }
+
+    public void BuildBridge()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        RaycastHit hit;
+        LayerMask layerMask = 1 << LayerMask.NameToLayer("Bridge");
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        {
+            if (hit.transform.GetComponent<IClickedObject>() != null)
+            {
+                hit.transform.GetComponent<IClickedObject>().StairMe();
+            }
+        }
+    }
 
     /// <summary>
     /// LandManager 하위에 있는 Land들의 정보를 저장하는 함수
@@ -78,8 +109,11 @@ public class LandDataManager : MonoBehaviour
     /// </summary>
     public void LoadLandData()
     {
+
         ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
         GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = false;
+
+        InitBridge(arrayLandData.BridgeInfo);
 
        for(int i = 0; i < arrayLandData.LandLists.Count; i++)
         {
@@ -105,8 +139,28 @@ public class LandDataManager : MonoBehaviour
                 obj.transform.localScale = arrayObjectsOf.Objects[j].localScale;
                 obj.transform.localEulerAngles = arrayObjectsOf.Objects[j].localEulerAngle;
             }
-        }
+       }
         GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = true;
+    }
 
+    public void InitBridge(List<List<int>> bridges)
+    {
+
+    }
+
+    /// <summary>
+    /// UI중에서 Bridge Build를 선택했을 경우
+    /// </summary>
+    public void SelectBuildMode()
+    {
+        buildMode = BuildMode.Bridge;
+    }
+    /// <summary>
+    /// UI중에서 Cancel Button을 누른 경우 
+    /// 초기화
+    /// </summary>
+    public void CancelButton()
+    {
+        buildMode = BuildMode.None;
     }
 }

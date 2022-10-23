@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IClickedObject
 {
     void ClickMe();
+    void StairMe();
 }

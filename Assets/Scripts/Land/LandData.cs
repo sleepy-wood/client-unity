@@ -44,4 +44,5 @@ public class LandData
 public class ArrayLandData
 {
     public List<LandData>? LandLists=null;
+    public List<List<int>>? BridgeInfo;
 }

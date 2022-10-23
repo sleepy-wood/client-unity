@@ -12,4 +12,9 @@ public class TestClicked : MonoBehaviour, IClickedObject
         //Debug.Log("나 클릭됐음: " + transform.gameObject);
         uiText.text = "나 클릭됐음: " + transform.gameObject;
     }
+
+    public void StairMe()
+    {
+        Debug.Log("나 가리킴");
+    }
 }
