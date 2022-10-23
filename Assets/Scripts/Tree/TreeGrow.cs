@@ -7,9 +7,6 @@ using UnityEngine.Profiling;
 using System.IO;
 using System;
 
-
-
-
 public class TreeGrow : MonoBehaviour
 {
         public GameObject tree;
