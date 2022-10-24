@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -1381,7 +1381,8 @@ namespace Broccoli.Factory
                 texture = UnityEditor.AssetDatabase.LoadAssetAtPath<Texture2D> (filename);
             }
             return texture;
-			#endif
+#endif
+            return null;
 		}
         void CleanTextures (List<Texture2D> texturesToClean) {
             for (int i = 0; i < texturesToClean.Count; i++) {

@@ -52,7 +52,7 @@ public class UserInput : MonoBehaviour
 
     /// <summary>
     /// Mouse Drag -> Rotate
-    /// </summary>
+    /// </summary>c
     public float Rotate { get; private set; }
 
 
