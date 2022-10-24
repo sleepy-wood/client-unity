@@ -13,5 +13,6 @@ public class GameManager : MonoBehaviour
         }
         User = GameObject.Find("User");
     }
+    
     public GameObject User { get; private set; }
 }

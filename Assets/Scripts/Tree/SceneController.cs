@@ -52,11 +52,17 @@ public class SceneController : MonoBehaviour
     public InputField inputPlantName;
     // 식물 이름 결정 Button
     public Button btnPlantName;
+
+    public GameObject user;
+
+    bool isControl = false;
     #endregion
 
 
     void Start()
     {
+        user = GameManager.Instance.User;
+        user.GetComponent<UserInput>().InputControl = true;
         // Build mesh 오류 해결 코드
         //string resPath = Application.persistentDataPath + "/Resources/NewTreePipeline4.asset";
         //if (!File.Exists(resPath))
@@ -97,7 +103,7 @@ public class SceneController : MonoBehaviour
     void Update()
     {
         // Test용
-        if (Input.GetMouseButtonDown(0) && dayCount < 5 && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0) && dayCount < 5 && !isControl && !plantNameUI.activeSelf)
         {
             dayCount++;
             data.treeDay = dayCount;
@@ -107,6 +113,7 @@ public class SceneController : MonoBehaviour
         // 1. 씨앗심기 & 새싹
         if (dayCount == 1 && isOnce == false)
         {
+            isControl = true;
             isOnce = true;
             StartCoroutine(PlantSeed(sproutPrefab, 0.5f));
         }
@@ -213,6 +220,7 @@ public class SceneController : MonoBehaviour
 
         // 식물 이름 UI 띄우기
         plantNameUI.gameObject.SetActive(true);
+       
     }
 
 
@@ -302,6 +310,8 @@ public class SceneController : MonoBehaviour
     /// </summary>
     public void onConfirmPlantName()
     {
+        isControl = false;
+        user.GetComponent<UserInput>().InputControl = false;
         plantNameUI.SetActive(false);
     }
 }

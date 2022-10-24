@@ -29,7 +29,7 @@ public class UserInput : MonoBehaviour
     /// <summary>
     /// InputCotrol = true => Control InputSystem
     /// </summary>
-    public bool InputControl { get;private set; }
+    public bool InputControl { get; set; }
 
     /// <summary>
     /// X축으로 이동

@@ -16,8 +16,8 @@ public static class FileManager
     public static T LoadDataFile<T>(string fileName)
     {
         string filePath = fileName;
-        
-        TextAsset jsonData = Resources.Load<TextAsset>(filePath);
+
+        TextAsset jsonData = Resources.Load<TextAsset>("Data/" + filePath);
 
         T data = JsonUtility.FromJson<T>(jsonData.text);
 
