@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Text;
+using Unity.VisualScripting.FullSerializer;
 
 public static class FileManager
 {
@@ -14,21 +15,11 @@ public static class FileManager
     /// <returns></returns>
     public static T LoadDataFile<T>(string fileName)
     {
-#if UNITY_STANDALONE
-        string filePath = Application.dataPath + "/Data/" + fileName + ".txt";
-        string jsonData = File.ReadAllText(filePath);
+        string filePath = fileName;
         
-#elif UNITY_IOS || UNITY_ANDROID
-        //FileStream fs = new FileStream(Application.streamingAssetsPath + "/Data/" + fileName + ".txt", FileMode.Create, FileAccess.Write);
-        FileStream fs = new FileStream(Application.persistentDataPath + "/Data/" + fileName + ".txt", FileMode.Create, FileAccess.Write);
+        TextAsset jsonData = Resources.Load<TextAsset>(filePath);
 
-        byte[] fileData = new UTF8Encoding(true).GetBytes(fileName);
-        fs.Write(fileData, 0, (int)fileData.Length);
-        fs.Close();
-        string jsonData = File.ReadAllText(fileData.ToString());
-
-#endif
-        T data = JsonUtility.FromJson<T>(jsonData);
+        T data = JsonUtility.FromJson<T>(jsonData.text);
 
         return data;
     }

@@ -1,0 +1,187 @@
+{
+    "landLists": [
+        {
+            "landPosition": {
+                "x": -100.0,
+                "y": 0.0,
+                "z": 100.0
+            },
+            "landScale": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": 2.5
+            },
+            "landEulerAngle": {
+                "x": 270.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "arrayObjectsOfLand": {
+                "objects": []
+            }
+        },
+        {
+            "landPosition": {
+                "x": 100.0,
+                "y": 0.0,
+                "z": 100.0
+            },
+            "landScale": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": 2.5
+            },
+            "landEulerAngle": {
+                "x": 270.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "arrayObjectsOfLand": {
+                "objects": [
+                    {
+                        "path": "Object/Cube",
+                        "localPosition": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.8159999847412109
+                        },
+                        "localScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "localEulerAngle": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "landPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "landScale": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": 2.5
+            },
+            "landEulerAngle": {
+                "x": 270.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "arrayObjectsOfLand": {
+                "objects": []
+            }
+        },
+        {
+            "landPosition": {
+                "x": -100.0,
+                "y": 0.0,
+                "z": -100.0
+            },
+            "landScale": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": 2.5
+            },
+            "landEulerAngle": {
+                "x": 270.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "arrayObjectsOfLand": {
+                "objects": []
+            }
+        },
+        {
+            "landPosition": {
+                "x": 100.0,
+                "y": 0.0,
+                "z": -100.0
+            },
+            "landScale": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": 2.5
+            },
+            "landEulerAngle": {
+                "x": 270.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "arrayObjectsOfLand": {
+                "objects": []
+            }
+        }
+    ],
+    "bridgeLists": [
+        {
+            "bridgeName": "Bridge_1/3",
+            "bridgePosition": {
+                "x": 45.0,
+                "y": 0.0,
+                "z": 45.0
+            },
+            "bridgeRoatation": {
+                "x": 0.0,
+                "y": 315.0,
+                "z": 0.0
+            }
+        },
+        {
+            "bridgeName": "Bridge_2/3",
+            "bridgePosition": {
+                "x": 45.0,
+                "y": 0.0,
+                "z": -45.0
+            },
+            "bridgeRoatation": {
+                "x": 0.0,
+                "y": 44.999996185302737,
+                "z": 0.0
+            }
+        },
+        {
+            "bridgeName": "Bridge_3/4",
+            "bridgePosition": {
+                "x": -45.0,
+                "y": 0.0,
+                "z": 45.0
+            },
+            "bridgeRoatation": {
+                "x": 0.0,
+                "y": 44.999996185302737,
+                "z": 0.0
+            }
+        },
+        {
+            "bridgeName": "Bridge_3/5",
+            "bridgePosition": {
+                "x": -45.0,
+                "y": 0.0,
+                "z": -45.0
+            },
+            "bridgeRoatation": {
+                "x": 0.0,
+                "y": 315.0,
+                "z": 0.0
+            }
+        }
+    ],
+    "bridgeInfo": [
+        {
+            "fromId": 3,
+            "toId": 4
+        },
+        {
+            "fromId": 3,
+            "toId": 5
+        }
+    ]
+}

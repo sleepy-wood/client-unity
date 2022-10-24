@@ -208,8 +208,6 @@ public class LandDataManager : MonoBehaviour
             {
                 int a = int.Parse(bridgeStrings[0]);
                 int b = int.Parse(bridgeStrings[1]);
-                Debug.Log("a = "+ a);
-                Debug.Log("b = "+ b);
                 if (bridges[j].fromId == int.Parse(bridgeStrings[0]) &&
                     bridges[j].toId == int.Parse(bridgeStrings[1]))
                 {
