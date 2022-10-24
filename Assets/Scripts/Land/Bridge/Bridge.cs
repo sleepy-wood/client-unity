@@ -28,11 +28,17 @@ public class Bridge : MonoBehaviour, IClickedObject
     {
         if(currentBridgeType == BridgeType.NotBuild)
         {
-            material.color = Color.black;
+            material.color = Color.red;
+            Color color = material.color;
+            color.a = 0.05f;
+            material.color = color;
         }
         else if(currentBridgeType == BridgeType.Build)
         {
-            material.color = Color.red;
+            material.color = Color.black;
+            Color color = material.color;
+            color.a = 1;
+            material.color = color;
         }
 
     }
