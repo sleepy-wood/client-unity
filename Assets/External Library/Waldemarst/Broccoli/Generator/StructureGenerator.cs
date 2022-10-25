@@ -713,20 +713,20 @@ namespace Broccoli.Generator
 			/// Id to the parent structure, if set it is used to flat serialization.
 			/// </summary>
 			public int structureId = -1;
-			/// <summary>
-			/// Children structures.
-			/// </summary>
-			/// <typeparam name="Structure"></typeparam>
-			/// <returns></returns>
-			[SerializeField]
-			public List<Structure> childrenStructures = new List<Structure> ();
-			/// <summary>
-			/// Children terminal structures.
-			/// </summary>
-			/// <typeparam name="TerminalStructure"></typeparam>
-			/// <returns></returns>
-			[SerializeField]
-			public List<TerminalStructure> childrenTerminalStructures = new List<TerminalStructure> ();
+                        /// <summary>
+                        /// Children structures.
+                        /// </summary>
+                        /// <typeparam name="Structure"></typeparam>
+                        /// <returns></returns>
+                        [System.NonSerialized]
+                        public List<Structure> childrenStructures = new List<Structure> ();
+                        /// <summary>
+                        /// Children terminal structures.
+                        /// </summary>
+                        /// <typeparam name="TerminalStructure"></typeparam>
+                        /// <returns></returns>
+                        [System.NonSerialized]
+                        public List<TerminalStructure> childrenTerminalStructures = new List<TerminalStructure> ();
 			#endregion
 			#region Clone
 			public Structure Clone () {

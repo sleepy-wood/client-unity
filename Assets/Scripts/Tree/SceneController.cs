@@ -13,16 +13,12 @@ using UnityEngine.EventSystems;
 public class SceneController : MonoBehaviour
 {
         #region 변수
-        // 나무 생성하는 파이프라인 경로 (Reosurces 폴더 내에 있어야함)
-        private static string runtimePipelineResourcePath = "BroccoliRuntimeExamplePipeline";
-        // path
+        // pipeline load path
         string path;
         // tree Factory
         public TreeFactory treeFactory = null;
         // The pipeline
         public Pipeline treePipeline;
-        // The positioner element 담는 변수
-        private PositionerElement positionerElement = null;
         // 나무 자라는 위치
         public Transform growPos;
         // DayCount
@@ -35,8 +31,6 @@ public class SceneController : MonoBehaviour
         public GameObject sproutPrefab;
         // Daycount Text
         public Text txtDayCount;
-        // tree
-        public GameObject tree;
         // sprout
         public GameObject sprout;
         // FOV
@@ -86,7 +80,8 @@ public class SceneController : MonoBehaviour
 
                 inputPlantName.onEndEdit.AddListener(onEndEdit);
 
-                treePipeline = Resources.Load<Pipeline>("Tree/NewTreePipeline5");
+                path = "Tree/NewTreePipeline5";
+                treePipeline = Resources.Load<Pipeline>(path);
 
                 #region 기존 코드
                 //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
@@ -106,48 +101,11 @@ public class SceneController : MonoBehaviour
                 // Test용
                 if (Input.GetMouseButtonDown(0) && dayCount < 5 && !isControl && !plantNameUI.activeSelf)
                 {
-                        dayCount += 2;
-                        isOnce = true;
+                        dayCount ++;
                         data.treeDay = dayCount;
                         txtDayCount.text = $"Day{dayCount}";
+                        LoadTree();
                 }
-
-                // 1. 씨앗심기 & 새싹
-                if (dayCount == 1 && isOnce == false)
-                {
-                        isControl = true;
-                        isOnce = true;
-                        StartCoroutine(PlantSeed(sproutPrefab, 0.5f));
-                }
-                // 2. 작은 묘목
-                if (dayCount == 2 && isOnce)
-                {
-                        isOnce = false;
-                        sprout.SetActive(false);
-                        tree.SetActive(true);
-                }
-                // 3. 묘목
-                if (dayCount == 3 && isOnce == false)
-                {
-                        isOnce = true;
-                        TreeDataUpdate(2, 3, 5, 10, 0.5f);
-                        TreeReload();
-                }
-                // 4. 나무
-                if (dayCount == 4 && isOnce)
-                {
-                        isOnce = false;
-                        TreeDataUpdate(5, 10, 10, 20, 0.7f);
-                        TreeReload();
-                }
-                // 5. 개화
-                if (dayCount == 5 && isOnce == false)
-                {
-                        isOnce = true;
-                        TreeDataUpdate(8, 15, 15, 25, 0.8f);
-                        TreeReload();
-                }
-
                 #region 가지 추가  Test Code
                 // TreePipeline - 가지 추가
                 //if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -237,7 +195,7 @@ public class SceneController : MonoBehaviour
         /// <param name="thick">나무 굵기</param>
         public void TreeDataUpdate(int branchNum, int sproutFreq, int rootChild, int length, float thick)
         {
-                if (treePipeline == null) treePipeline = Resources.Load<Pipeline>("Tree/NewTreePipeline5");
+                if (treePipeline == null) treePipeline = Resources.Load<Pipeline>(path);
 
                 // 가지 개수
                 int levelCount = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
@@ -295,11 +253,11 @@ public class SceneController : MonoBehaviour
                 Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
                 treeFactory.UnloadAndClearPipeline();
                 treeFactory.LoadPipeline(loadedPipeline.Clone(), path, true, true);
-                treePipeline = Resources.Load<Pipeline>("Tree/NewTreePipeline5");
+                treePipeline = Resources.Load<Pipeline>(path);
         }
 
         /// <summary>
-        /// 식물 이름 정한 뒤 Enter치면 호출되는 함수
+        /// 식물 이름 입력한 뒤 Enter
         /// </summary>
         /// <param name="s">식물 이름</param>
         void onEndEdit(string s)
@@ -314,7 +272,7 @@ public class SceneController : MonoBehaviour
         public void onConfirmPlantName()
         {
                 isControl = false;
-                user.GetComponent<UserInput>().InputControl = false;
+                //user.GetComponent<UserInput>().InputControl = false;
                 plantNameUI.SetActive(false);
         }
 
@@ -323,8 +281,36 @@ public class SceneController : MonoBehaviour
         /// </summary>
         public void LoadTree()
         {
-                // pipeline 로드
-                treePipeline = Resources.Load<Pipeline>("Tree/NewTreePipeline_Base");
+                // 1. 씨앗심기 & 새싹
+                if (dayCount == 1)
+                {
+                        isControl = true;
+                        StartCoroutine(PlantSeed(sproutPrefab, 0.5f));
+                }
+                // 2. 작은 묘목
+                if (dayCount == 2)
+                {
+                        sprout.SetActive(false);
+                        treeFactory.gameObject.SetActive(true);
+                }
+                // 3. 묘목
+                if (dayCount == 3)
+                {
+                        TreeDataUpdate(2, 3, 5, 10, 0.5f);
+                        TreeReload();
+                }
+                // 4. 나무
+                if (dayCount == 4)
+                {
+                        TreeDataUpdate(5, 10, 10, 20, 0.7f);
+                        TreeReload();
+                }
+                // 5. 개화
+                if (dayCount == 5)
+                {
+                        TreeDataUpdate(8, 15, 15, 25, 0.8f);
+                        TreeReload();
+                }
         }
 
         /// <summary>
