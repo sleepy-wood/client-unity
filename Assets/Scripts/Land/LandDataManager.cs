@@ -27,12 +27,14 @@ public class LandDataManager : MonoBehaviour
     private string landDataFileName = "LandData";
     public BuildMode buildMode = BuildMode.None;
     [SerializeField] private GameObject cancelButton;
+    [SerializeField] private GameObject buildBridgeCamera;
     private GameObject user;
 
     //test
     private void Start()
     {
         user = GameManager.Instance.User;
+        buildBridgeCamera.SetActive(false);
         cancelButton.SetActive(false);
         LoadLandData();
     }
@@ -44,11 +46,18 @@ public class LandDataManager : MonoBehaviour
             Debug.Log("Load");
             LoadLandData();
         }
+        //Build Mode - Bridge일때
         if (buildMode == BuildMode.Bridge)
             BuildBridge();
         else if(buildMode == BuildMode.None)
         {
-            user.GetComponent<UserInput>().InputControl = false;
+            //플레이어 활동 풀기
+            user.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            
+            //Bridge 건설용 카메라 끄기
+            buildBridgeCamera.SetActive(true);
+
+            //건설되지 않은 Bridge 안보여주기
             for (int i = 0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
             {
                 Transform bridge = transform.GetChild(transform.childCount - 1).GetChild(i);
@@ -62,11 +71,19 @@ public class LandDataManager : MonoBehaviour
 
     public void BuildBridge()
     {
-        user.GetComponent<UserInput>().InputControl = true;
-        for(int i =0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
+        //플레이어 Move 제어
+        user.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+        //Bridge 건설용 카메라 키기
+        buildBridgeCamera.SetActive(true);
+
+        //건설되지 않은 Bridge 보여주기
+        for (int i =0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
         {
             transform.GetChild(transform.childCount - 1).GetChild(i).gameObject.SetActive(true);
         }
+
+        //Bridge 선택
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit hit;
@@ -88,7 +105,10 @@ public class LandDataManager : MonoBehaviour
         List<LandData> landDataList = new List<LandData>();
         for(int i = 0; i< transform.childCount - 1; i++)
         {
+            //LandData
             LandData landData = new LandData();
+            
+            //Land 위에 있는 Object 정보 담기
             List<ObjectsInfo> objectList = new List<ObjectsInfo>();
             for(int j = 0; j < transform.GetChild(i).childCount; j++)
             {
@@ -104,6 +124,7 @@ public class LandDataManager : MonoBehaviour
             ArrayObjectsOfLand arrayObjectsOfLand = new ArrayObjectsOfLand();
             arrayObjectsOfLand.objects = objectList;
 
+            //LandData 담기
             landData.arrayObjectsOfLand = arrayObjectsOfLand;
             landData.landNum = i+1;
             landData.landPosition = transform.GetChild(i).localPosition;
@@ -112,6 +133,8 @@ public class LandDataManager : MonoBehaviour
 
             landDataList.Add(landData);
         }
+
+
         List<BridgeData> bridgeDataList = new List<BridgeData>();
         List< BridgeFromTo> bridgeList = new List<BridgeFromTo>();
 
@@ -127,7 +150,7 @@ public class LandDataManager : MonoBehaviour
             bridgeDataList.Add(bridgeData);
 
             Bridge bridge = bridgeTransform.GetComponent<Bridge>();
-            //건설된 상태라면
+            //건설된 상태라면 그래프 구조에 넣기
             if(bridge.currentBridgeType == Bridge.BridgeType.Build)
             {
                 string[] bridgeStrings = bridgeTransform.name.Split('_')[1].Split('/');
@@ -186,7 +209,7 @@ public class LandDataManager : MonoBehaviour
             }
        }
 
-        LoadBridge(arrayLandData.bridgeInfo, arrayLandData.bridgeLists);
+       LoadBridge(arrayLandData.bridgeInfo, arrayLandData.bridgeLists);
 
         user.GetComponent<Rigidbody>().useGravity = true;
     }
