@@ -61,6 +61,9 @@ public class DataModule
         
         //Body 정보 입력
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        //request.downloadHandler = (DownloadHandler)new DownloadHandlerTexture();
+        //request.downloadHandler = (DownloadHandler)new DownloadHandlerAssetBundle();
+        //request.downloadHandler = (DownloadHandler)new DownloadHandlerFile();
         if (data != null)
         {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(data);
