@@ -279,17 +279,6 @@ MonoBehaviour:
       normalMap: {fileID: 0}
       extraMap: {fileID: 0}
       subsurfaceMap: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
-    - enabled: 0
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-      pivotX: 0.337
-      pivotY: 0.323
-      texture: {fileID: 2800000, guid: db90f596d28644fd18cb9c382dfe0f67, type: 3}
-      normalMap: {fileID: 0}
-      extraMap: {fileID: 0}
-      subsurfaceMap: {fileID: 2800000, guid: db90f596d28644fd18cb9c382dfe0f67, type: 3}
     vector4UV0Enabled: 0
     selectedAreaIndex: 1
   selectedMapIndex: 1
@@ -303,7 +292,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c408808996a8a4812a415c43bab9974b, type: 3}
-  m_Name: NewTreePipeline4 1
+  m_Name: NewTreePipeline3 1
   m_EditorClassIdentifier: 
   _serializedPipeline:
     structureGenerators:
@@ -764,8 +753,8 @@ MonoBehaviour:
   nodePosition: {x: 7, y: -355.5}
   minGirthAtTop: 0.04
   maxGirthAtTop: 0.04
-  minGirthAtBase: 0.7
-  maxGirthAtBase: 0.7
+  minGirthAtBase: 0.2
+  maxGirthAtBase: 0.2
   curve:
     serializedVersion: 2
     m_Curve:
@@ -1221,8 +1210,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 10
-    maxFrequency: 20
+    minFrequency: 13
+    maxFrequency: 13
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -1385,7 +1374,7 @@ MonoBehaviour:
     parentId: 0
     sharingGroupId: 0
     sharingNextId: 0
-    enabled: 1
+    enabled: 0
     isSprout: 0
     isRoot: 0
     isLocked: 0
@@ -1421,8 +1410,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 5
-    maxFrequency: 5
+    minFrequency: 1
+    maxFrequency: 1
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: -0.1891184
@@ -1515,8 +1504,8 @@ MonoBehaviour:
     flipSproutDirection: {x: 1, y: 0, z: 0}
     maxLengthAtTop: 1.8287752
     minLengthAtTop: 1.8287752
-    maxLengthAtBase: 5
-    minLengthAtBase: 5
+    maxLengthAtBase: 4
+    minLengthAtBase: 4
     lengthCurve:
       serializedVersion: 2
       m_Curve:
@@ -1621,8 +1610,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 10
-    maxFrequency: 20
+    minFrequency: 4
+    maxFrequency: 4
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -1785,7 +1774,7 @@ MonoBehaviour:
     parentId: 0
     sharingGroupId: 0
     sharingNextId: 0
-    enabled: 1
+    enabled: 0
     isSprout: 0
     isRoot: 0
     isLocked: 0
@@ -1821,8 +1810,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 5
-    maxFrequency: 5
+    minFrequency: 1
+    maxFrequency: 1
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -1915,8 +1904,8 @@ MonoBehaviour:
     flipSproutDirection: {x: 1, y: 0, z: 0}
     maxLengthAtTop: 2.26302
     minLengthAtTop: 2.26302
-    maxLengthAtBase: 5
-    minLengthAtBase: 5
+    maxLengthAtBase: 4
+    minLengthAtBase: 2.8420134
     lengthCurve:
       serializedVersion: 2
       m_Curve:
@@ -2021,8 +2010,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 10
-    maxFrequency: 20
+    minFrequency: 1
+    maxFrequency: 1
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -2185,7 +2174,7 @@ MonoBehaviour:
     parentId: 0
     sharingGroupId: 0
     sharingNextId: 0
-    enabled: 1
+    enabled: 0
     isSprout: 0
     isRoot: 0
     isLocked: 0
@@ -2221,8 +2210,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 5
-    maxFrequency: 5
+    minFrequency: 1
+    maxFrequency: 1
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: -0.21093975
@@ -2315,8 +2304,8 @@ MonoBehaviour:
     flipSproutDirection: {x: 1, y: 0, z: 0}
     maxLengthAtTop: 4
     minLengthAtTop: 4
-    maxLengthAtBase: 5
-    minLengthAtBase: 5
+    maxLengthAtBase: 4
+    minLengthAtBase: 4
     lengthCurve:
       serializedVersion: 2
       m_Curve:
@@ -2421,8 +2410,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 10
-    maxFrequency: 20
+    minFrequency: 4
+    maxFrequency: 4
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -2621,8 +2610,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 10
-    maxFrequency: 20
+    minFrequency: 3
+    maxFrequency: 4
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -2821,8 +2810,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 10
-    maxFrequency: 20
+    minFrequency: 4
+    maxFrequency: 4
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -2985,7 +2974,7 @@ MonoBehaviour:
     parentId: 0
     sharingGroupId: 0
     sharingNextId: 0
-    enabled: 1
+    enabled: 0
     isSprout: 0
     isRoot: 0
     isLocked: 0
@@ -3021,8 +3010,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 5
-    maxFrequency: 5
+    minFrequency: 1
+    maxFrequency: 1
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -3115,8 +3104,8 @@ MonoBehaviour:
     flipSproutDirection: {x: 1, y: 0, z: 0}
     maxLengthAtTop: 4.072374
     minLengthAtTop: 3.9999998
-    maxLengthAtBase: 5
-    minLengthAtBase: 5
+    maxLengthAtBase: 4
+    minLengthAtBase: 4
     lengthCurve:
       serializedVersion: 2
       m_Curve:
@@ -3221,8 +3210,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 10
-    maxFrequency: 20
+    minFrequency: 4
+    maxFrequency: 4
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -3421,8 +3410,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 10
-    maxFrequency: 20
+    minFrequency: 4
+    maxFrequency: 4
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -3708,8 +3697,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 10
-    maxFrequency: 20
+    minFrequency: 1
+    maxFrequency: 1
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -3802,8 +3791,8 @@ MonoBehaviour:
     flipSproutDirection: {x: 1, y: 0, z: 0}
     maxLengthAtTop: 3
     minLengthAtTop: 3
-    maxLengthAtBase: 20
-    minLengthAtBase: 20
+    maxLengthAtBase: 4.9920883
+    minLengthAtBase: 4.9920883
     lengthCurve:
       serializedVersion: 2
       m_Curve:
