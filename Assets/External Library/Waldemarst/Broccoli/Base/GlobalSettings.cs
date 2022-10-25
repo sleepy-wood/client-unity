@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +23,7 @@ namespace Broccoli.Base
 		/// <summary>
 		/// Show the preview tree in the factory game object hierarchy.
 		/// </summary>
-		public static bool showPreviewTreeInHierarchy = false;
+		public static bool showPreviewTreeInHierarchy = true;
 		/// <summary>
 		/// Shows the tree with special materials to display the tree structure.
 		/// </summary>

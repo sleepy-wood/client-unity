@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -646,9 +646,9 @@ namespace Broccoli.Factory
 						CleanTreeGameObject (_previewTree);
 					}
 					_previewTree.obj.name = "previewTree";
-					_previewTree.obj.transform.SetParent (this.transform);
-					_previewTree.obj.transform.localPosition = Vector3.zero;
-					BroccoTreeController broccoTreeController = _previewTree.obj.AddComponent<Broccoli.Controller.BroccoTreeController> ();
+                                        //_previewTree.obj.transform.SetParent(this.transform);
+                                        //_previewTree.obj.transform.localPosition = Vector3.zero;
+                                        BroccoTreeController broccoTreeController = _previewTree.obj.AddComponent<Broccoli.Controller.BroccoTreeController> ();
 					broccoTreeController.shaderType = (BroccoTreeController.ShaderType)MaterialManager.leavesShaderType;
 					broccoTreeController.windScale = treeFactoryPreferences.factoryScale;
 
