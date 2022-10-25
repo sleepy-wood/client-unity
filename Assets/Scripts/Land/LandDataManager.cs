@@ -30,7 +30,6 @@ public class LandDataManager : MonoBehaviour
     public GameObject buildBridgeCamera;
     private GameObject user;
 
-    //test
     private void Start()
     {
         user = GameManager.Instance.User;
