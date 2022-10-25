@@ -26,10 +26,12 @@ public class LandDataManager : MonoBehaviour
 
     private string landDataFileName = "LandData";
     public BuildMode buildMode = BuildMode.None;
+    [SerializeField] private GameObject cancelButton;
 
     //test
     private void Start()
     {
+        cancelButton.SetActive(false);
         SaveLandData();
     }
 
@@ -180,7 +182,6 @@ public class LandDataManager : MonoBehaviour
             }
        }
 
-
         LoadBridge(arrayLandData.bridgeInfo, arrayLandData.bridgeLists);
 
         GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = true;
@@ -223,6 +224,7 @@ public class LandDataManager : MonoBehaviour
     public void SelectBuildMode()
     {
         buildMode = BuildMode.Bridge;
+        cancelButton.SetActive(true);
     }
     /// <summary>
     /// UI중에서 Cancel Button을 누른 경우 
@@ -231,5 +233,6 @@ public class LandDataManager : MonoBehaviour
     public void CancelButton()
     {
         buildMode = BuildMode.None;
+        cancelButton.SetActive(false);
     }
 }

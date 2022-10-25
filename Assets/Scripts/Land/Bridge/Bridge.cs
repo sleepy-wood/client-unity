@@ -18,6 +18,8 @@ public class Bridge : MonoBehaviour, IClickedObject
 
     private MeshRenderer meshRenderer;
     private Material material;
+    private bool isStair = true;
+
     private void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
@@ -26,30 +28,38 @@ public class Bridge : MonoBehaviour, IClickedObject
 
     private void Update()
     {
-        if(currentBridgeType == BridgeType.NotBuild)
-        {
-            material.color = Color.red;
-            Color color = material.color;
-            color.a = 0.05f;
-            material.color = color;
-        }
-        else if(currentBridgeType == BridgeType.Build)
+        if(currentBridgeType == BridgeType.Build)
         {
             material.color = Color.black;
             Color color = material.color;
             color.a = 1;
             material.color = color;
         }
-
+        else if(!isStair && currentBridgeType == BridgeType.NotBuild)
+        {
+            material.color = Color.red;
+            Color color = material.color;
+            color.a = 0.05f;
+            material.color = color;
+        }
+        isStair = false;
     }
     public void ClickMe()
     {
-        material.color = Color.green;
-        currentBridgeType = BridgeType.Build;
+        if (currentBridgeType == BridgeType.NotBuild)
+        {
+            currentBridgeType = BridgeType.Build;
+        }
     }
 
     public void StairMe()
     {
-        material.color = Color.yellow;
+        if (currentBridgeType == BridgeType.NotBuild)
+        {
+            isStair = true;
+            Color color = material.color;
+            color.a = 0.5f;
+            material.color = color;
+        }
     }
 }
