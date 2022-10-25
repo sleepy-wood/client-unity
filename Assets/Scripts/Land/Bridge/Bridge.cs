@@ -24,7 +24,7 @@ public class Bridge : MonoBehaviour, IClickedObject
 
     private void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = transform.parent.GetChild(1).GetComponent<MeshRenderer>();
         material = meshRenderer.material;
     }
 
@@ -32,23 +32,20 @@ public class Bridge : MonoBehaviour, IClickedObject
     {
         if(currentBridgeType == BridgeType.Build)
         {
-            material.color = Color.black;
             Color color = material.color;
             color.a = 1;
             material.color = color;
         }
         else if(!isStair && currentBridgeType == BridgeType.NotBuild)
         {
-            material.color = Color.red;
             Color color = material.color;
-            color.a = 0.05f;
+            color.a = 0.3f;
             material.color = color;
         }
         else if (!isStair && currentBridgeType == BridgeType.WillBuild)
         {
-            material.color = Color.green;
             Color color = material.color;
-            color.a = 0.05f;
+            color.a = 0.7f;
             material.color = color;
         }
         isStair = false;
@@ -70,17 +67,15 @@ public class Bridge : MonoBehaviour, IClickedObject
         if (currentBridgeType == BridgeType.NotBuild)
         {
             isStair = true;
-            material.color = Color.red;
             Color color = material.color;
-            color.a = 0.5f;
+            color.a = 0.7f;
             material.color = color;
         }
         else if (currentBridgeType == BridgeType.WillBuild)
         {
             isStair = true;
-            material.color = Color.green;
             Color color = material.color;
-            color.a = 0.5f;
+            color.a = 0.7f;
             material.color = color;
         }
     }

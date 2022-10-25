@@ -43,8 +43,8 @@ public class LandDataManager : MonoBehaviour
         {
             minimapObject[i].SetActive(false);
         }
-        //LoadLandData();
-        SaveLandData();
+        LoadLandData();
+        //SaveLandData();
     }
 
     private void Update()
@@ -69,7 +69,7 @@ public class LandDataManager : MonoBehaviour
             for (int i = 0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
             {
                 Transform bridge = transform.GetChild(transform.childCount - 1).GetChild(i);
-                if (bridge.GetComponent<Bridge>().currentBridgeType != Bridge.BridgeType.Build)
+                if (bridge.GetChild(0).GetComponent<Bridge>().currentBridgeType != Bridge.BridgeType.Build)
                 {
                     bridge.gameObject.SetActive(false);
                 }
@@ -148,7 +148,7 @@ public class LandDataManager : MonoBehaviour
             bridgeData.bridgeName = bridgeTransform.name;
             bridgeDataList.Add(bridgeData);
 
-            Bridge bridge = bridgeTransform.GetComponent<Bridge>();
+            Bridge bridge = bridgeTransform.GetChild(0).GetComponent<Bridge>();
             //건설된 상태라면 그래프 구조에 넣기
             if(bridge.currentBridgeType != Bridge.BridgeType.NotBuild)
             {
@@ -243,7 +243,7 @@ public class LandDataManager : MonoBehaviour
                 if (bridges[j].fromId == int.Parse(bridgeStrings[0]) &&
                     bridges[j].toId == int.Parse(bridgeStrings[1]))
                 {
-                    bridge.GetComponent<Bridge>().currentBridgeType = Bridge.BridgeType.Build;
+                    bridge.transform.GetChild(0).GetComponent<Bridge>().currentBridgeType = Bridge.BridgeType.Build;
                 }
             }
         }
