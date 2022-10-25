@@ -5,36 +5,43 @@ using UnityEngine;
 public class UserInteract : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    private UserInput userInput;
+        [SerializeField] private bool moveControl = false;
+        private UserInput userInput;
+      
 
     private void Start()
     {
         userInput = GetComponent<UserInput>();
-        
-        //userAvatar 생성
-        GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + DataTemporary.MyUserData.UserAvatar);
-        GameObject userAvatar = Instantiate(userAvatarResource);
-        userAvatar.name = userAvatar.name.Split("(")[0];
-        userAvatar.transform.parent = transform;
-        userAvatar.transform.localPosition = Vector3.zero;
+
+                if (!moveControl)
+                {
+                        //userAvatar 생성
+                        GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + DataTemporary.MyUserData.UserAvatar);
+                        GameObject userAvatar = Instantiate(userAvatarResource);
+                        userAvatar.name = userAvatar.name.Split("(")[0];
+                        userAvatar.transform.parent = transform;
+                        userAvatar.transform.localPosition = Vector3.zero;
+                }
     }
     private void Update()
     {
-        #region Player Move
+                if (!moveControl)
+                {
+                        #region Player Move
 
 #if UNITY_STANDALONE
-        Vector3 moveDir = userInput.MoveX * transform.right + userInput.MoveZ * transform.forward;
+                        Vector3 moveDir = userInput.MoveX * transform.right + userInput.MoveZ * transform.forward;
 #elif UNITY_IOS || UNITY_ANDROID
         Vector3 moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
 #endif
-        moveDir.Normalize();
-        transform.GetChild(1).LookAt(transform.position + moveDir * 10);
-        transform.position += moveSpeed * moveDir * Time.deltaTime;
+                        moveDir.Normalize();
+                        transform.GetChild(1).LookAt(transform.position + moveDir * 10);
+                        transform.position += moveSpeed * moveDir * Time.deltaTime;
 
-        //회전
-        transform.Rotate(transform.up, userInput.Rotate);
-
+                        //회전
+                        transform.Rotate(transform.up, userInput.Rotate);
 #endregion
+                }
 
         #region Player Click
         if (userInput.Interact)

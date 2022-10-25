@@ -64,25 +64,23 @@ public class SceneController : MonoBehaviour
                 user = GameManager.Instance.User;
                 user.GetComponent<UserInput>().InputControl = true;
 
-                #region 파일 코드
+                #region Build
                 // Build mesh 오류 해결 코드
-                //string resPath = Application.persistentDataPath + "/Resources/NewTreePipeline4.asset";
+                //print(Application.dataPath);
+                //string resPath = Application.dataPath + "/Resources/Tree/NewTreePipeline4.asset";
                 //if (!File.Exists(resPath))
                 //{
-
-                //    path = Application.persistentDataPath + "/NewTreePipeline4.asset";
-                //    byte[] data = File.ReadAllBytes(resPath);
-                //    File.WriteAllBytes(path, data);
-
-
+                //        path = Application.dataPath + "Tree/NewTreePipeline4.asset";
+                //        byte[] data = File.ReadAllBytes(resPath);
+                //        File.WriteAllBytes(path, data);
                 //}
 
-                // treeFactory
+                //// treeFactory
                 //treeFactory = TreeFactory.GetFactory();
                 #endregion
 
                 // pipeline 로드
-                treePipeline = Resources.Load<Pipeline>("NewTreePipeline4");
+                treePipeline = Resources.Load<Pipeline>("Tree/NewTreePipeline4");
 
                 // TreeData  객체 생성
                 data = new TreeData();
@@ -96,7 +94,7 @@ public class SceneController : MonoBehaviour
                 //// pipeline에서 positioner 요소 가져오기(위치 동적 할당)
                 //if (pipeline != null && pipeline.Validate())
                 //{
-                //        positionerElement = (PositionerElement)pipeline.root.GetDownstreamElement(PipelineElement.ClassType.Positioner);
+                //        positionerElement = (PositionerElemeft)pipeline.root.GetDownstreamElement(PipelineElement.ClassType.Positioner);
                 //        positionerElement.positions.Clear();
                 //}
                 #endregion
@@ -239,7 +237,7 @@ public class SceneController : MonoBehaviour
         /// <param name="thick">나무 굵기</param>
         public void TreeDataUpdate(int branchNum, int sproutFreq, int rootChild, int length, float thick)
         {
-                if (treePipeline == null) treePipeline = Resources.Load<Pipeline>("NewTreePipeline4");
+                if (treePipeline == null) treePipeline = Resources.Load<Pipeline>("Tree/NewTreePipeline4");
 
                 // 가지 개수
                 int levelCount = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
@@ -297,7 +295,7 @@ public class SceneController : MonoBehaviour
                 Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
                 treeFactory.UnloadAndClearPipeline();
                 treeFactory.LoadPipeline(loadedPipeline.Clone(), path, true, true);
-                treePipeline = Resources.Load<Pipeline>("NewTreePipeline4");
+                treePipeline = Resources.Load<Pipeline>("Tree/NewTreePipeline4");
         }
 
         /// <summary>
