@@ -37,15 +37,16 @@ public class LandDataManager : MonoBehaviour
         buildBridgeCamera.SetActive(false);
         cancelButton.SetActive(false);
         LoadLandData();
+        //SaveLandData();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Debug.Log("Load");
-            LoadLandData();
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    Debug.Log("Load");
+        //    LoadLandData();
+        //}
         //Build Mode - Bridge일때
         if (buildMode == BuildMode.Bridge)
             BuildBridge();
@@ -55,7 +56,7 @@ public class LandDataManager : MonoBehaviour
             user.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             
             //Bridge 건설용 카메라 끄기
-            buildBridgeCamera.SetActive(true);
+            buildBridgeCamera.SetActive(false);
 
             //건설되지 않은 Bridge 안보여주기
             for (int i = 0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
@@ -85,7 +86,7 @@ public class LandDataManager : MonoBehaviour
 
         //Bridge 선택
         Vector3 mousePos = Input.mousePosition;
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        Ray ray = buildBridgeCamera.GetComponent<Camera>().ScreenPointToRay(mousePos);
         RaycastHit hit;
         LayerMask layerMask = 1 << LayerMask.NameToLayer("Bridge");
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
