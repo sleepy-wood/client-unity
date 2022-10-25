@@ -43,8 +43,8 @@ public class LandDataManager : MonoBehaviour
         {
             minimapObject[i].SetActive(false);
         }
-        LoadLandData();
-        //SaveLandData();
+        //LoadLandData();
+        SaveLandData();
     }
 
     private void Update()
