@@ -27,12 +27,14 @@ public class LandDataManager : MonoBehaviour
     private string landDataFileName = "LandData";
     public BuildMode buildMode = BuildMode.None;
     [SerializeField] private GameObject cancelButton;
+    private GameObject user;
 
     //test
     private void Start()
     {
+        user = GameManager.Instance.User;
         cancelButton.SetActive(false);
-        SaveLandData();
+        LoadLandData();
     }
 
     private void Update()
@@ -46,6 +48,7 @@ public class LandDataManager : MonoBehaviour
             BuildBridge();
         else if(buildMode == BuildMode.None)
         {
+            user.GetComponent<UserInput>().InputControl = false;
             for (int i = 0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
             {
                 Transform bridge = transform.GetChild(transform.childCount - 1).GetChild(i);
@@ -59,6 +62,7 @@ public class LandDataManager : MonoBehaviour
 
     public void BuildBridge()
     {
+        user.GetComponent<UserInput>().InputControl = true;
         for(int i =0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
         {
             transform.GetChild(transform.childCount - 1).GetChild(i).gameObject.SetActive(true);
@@ -154,7 +158,7 @@ public class LandDataManager : MonoBehaviour
     {
         ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
         //플레이어가 떨어지는 것을 방지
-        GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = false;
+        user.GetComponent<Rigidbody>().useGravity = false;
 
        for(int i = 0; i < arrayLandData.landLists.Count; i++)
         {
@@ -184,7 +188,7 @@ public class LandDataManager : MonoBehaviour
 
         LoadBridge(arrayLandData.bridgeInfo, arrayLandData.bridgeLists);
 
-        GameManager.Instance.User.GetComponent<Rigidbody>().useGravity = true;
+        user.GetComponent<Rigidbody>().useGravity = true;
     }
 
     /// <summary>
@@ -234,5 +238,6 @@ public class LandDataManager : MonoBehaviour
     {
         buildMode = BuildMode.None;
         cancelButton.SetActive(false);
+        SaveLandData();
     }
 }

@@ -35,9 +35,9 @@ public static class FileManager
 
 #if UNITY_STANDALONE
         //Json을 txt 파일로 레지스트리에 저장
-        string filePath = Application.dataPath + "/Data";
+        string filePath = Application.dataPath + "/Resources/Data";
 #elif UNITY_IOS || UNITY_ANDROID
-        string filePath = Application.persistentDataPath + "/Data";
+        string filePath = Application.persistentDataPath + "/Resources/Data";
 
 #endif
         if (!Directory.Exists(filePath))
