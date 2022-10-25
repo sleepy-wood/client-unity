@@ -26,8 +26,12 @@ public class LandDataManager : MonoBehaviour
 
     private string landDataFileName = "LandData";
     public BuildMode buildMode = BuildMode.None;
+    [Header("껐다 킬 Cancel Object")]
     [SerializeField] private GameObject cancelButton;
+    [Header("껐다 킬 Minimap 오브젝트 할당")]
+    [SerializeField] private List<GameObject> minimapObject = new List<GameObject>();
     public GameObject buildBridgeCamera;
+    private bool isOnClickMinimap = false;
     private GameObject user;
 
     private void Start()
@@ -35,6 +39,10 @@ public class LandDataManager : MonoBehaviour
         user = GameManager.Instance.User;
         buildBridgeCamera.SetActive(false);
         cancelButton.SetActive(false);
+        for (int i = 0; i < minimapObject.Count; i++)
+        {
+            minimapObject[i].SetActive(false);
+        }
         LoadLandData();
         //SaveLandData();
     }
@@ -258,5 +266,19 @@ public class LandDataManager : MonoBehaviour
         buildMode = BuildMode.None;
         cancelButton.SetActive(false);
         SaveLandData();
+    }
+    /// <summary>
+    /// Minimap Button을 눌렀을 경우
+    /// </summary>
+    public void OnClickMinimapButton()
+    {
+        for(int i = 0; i < minimapObject.Count; i++)
+        {
+            if (!isOnClickMinimap)
+                minimapObject[i].SetActive(true);
+            else
+                minimapObject[i].SetActive(false);
+        }
+        isOnClickMinimap = isOnClickMinimap == true ? false : true;
     }
 }
