@@ -7,10 +7,12 @@ public class Bridge : MonoBehaviour, IClickedObject
 {
     /// <summary>
     /// Bridge가 건설된 상태니?
+    /// 건설된거니
     /// </summary>
     public enum BridgeType
     {
         Build,
+        WillBuild,
         NotBuild
     }
     
@@ -42,13 +44,24 @@ public class Bridge : MonoBehaviour, IClickedObject
             color.a = 0.05f;
             material.color = color;
         }
+        else if (!isStair && currentBridgeType == BridgeType.WillBuild)
+        {
+            material.color = Color.green;
+            Color color = material.color;
+            color.a = 0.05f;
+            material.color = color;
+        }
         isStair = false;
     }
     public void ClickMe()
     {
         if (currentBridgeType == BridgeType.NotBuild)
         {
-            currentBridgeType = BridgeType.Build;
+            currentBridgeType = BridgeType.WillBuild;
+        }
+        else if(currentBridgeType == BridgeType.WillBuild)
+        {
+            currentBridgeType = BridgeType.NotBuild;
         }
     }
 
@@ -57,6 +70,15 @@ public class Bridge : MonoBehaviour, IClickedObject
         if (currentBridgeType == BridgeType.NotBuild)
         {
             isStair = true;
+            material.color = Color.red;
+            Color color = material.color;
+            color.a = 0.5f;
+            material.color = color;
+        }
+        else if (currentBridgeType == BridgeType.WillBuild)
+        {
+            isStair = true;
+            material.color = Color.green;
             Color color = material.color;
             color.a = 0.5f;
             material.color = color;

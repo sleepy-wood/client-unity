@@ -5,7 +5,7 @@ using UnityEngine;
 public class UserInteract : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-        [SerializeField] private bool moveControl = false;
+        public bool moveControl = false;
         private UserInput userInput;
       
 
@@ -13,15 +13,15 @@ public class UserInteract : MonoBehaviour
     {
         userInput = GetComponent<UserInput>();
 
-                if (!moveControl)
-                {
-                        //userAvatar 생성
-                        GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + DataTemporary.MyUserData.UserAvatar);
-                        GameObject userAvatar = Instantiate(userAvatarResource);
-                        userAvatar.name = userAvatar.name.Split("(")[0];
-                        userAvatar.transform.parent = transform;
-                        userAvatar.transform.localPosition = Vector3.zero;
-                }
+        if (!moveControl)
+        {
+            //userAvatar 생성
+            GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + DataTemporary.MyUserData.UserAvatar);
+            GameObject userAvatar = Instantiate(userAvatarResource);
+            userAvatar.name = userAvatar.name.Split("(")[0];
+            userAvatar.transform.parent = transform;
+            userAvatar.transform.localPosition = Vector3.zero;
+        }
     }
     private void Update()
     {
@@ -46,18 +46,53 @@ public class UserInteract : MonoBehaviour
         #region Player Click
         if (userInput.Interact)
         {
-            Vector3 mousePos = Input.mousePosition;
-            Ray ray = Camera.main.ScreenPointToRay(mousePos);
-            RaycastHit hit;
-            LayerMask layerMask = 1 << LayerMask.NameToLayer("Ground");
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~layerMask))
+            if (LandDataManager.Instance.buildMode == LandDataManager.BuildMode.Bridge)
             {
-                if (hit.transform.GetComponent<IClickedObject>() != null)
-                {
-                    hit.transform.GetComponent<IClickedObject>().ClickMe();
-                }
+                LayerMask layerMask = 1 << LayerMask.NameToLayer("Bridge");
+                ScreenToRayClick(LandDataManager.Instance.buildBridgeCamera.GetComponent<Camera>(), layerMask);
+            }
+            else
+            {
+                LayerMask layerMask = 1 << LayerMask.NameToLayer("Ground");
+                ScreenToRayClick(Camera.main, ~layerMask);
             }
         }
         #endregion
+    }
+    /// <summary>
+    /// ClickMe 호출
+    /// </summary>
+    /// <param name="camera"></param>
+    /// <param name="layer"></param>
+    public void ScreenToRayClick(Camera camera, LayerMask layer)
+    {
+            Vector3 mousePos = Input.mousePosition;
+        Ray ray = camera.ScreenPointToRay(mousePos);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer))
+        {
+            if (hit.transform.GetComponent<IClickedObject>() != null)
+            {
+                hit.transform.GetComponent<IClickedObject>().ClickMe();
+            }
+        }
+    }
+    /// <summary>
+    /// StairMe 호출
+    /// </summary>
+    /// <param name="camera"></param>
+    /// <param name="layer"></param>
+    public void ScreenToRayStair(Camera camera, LayerMask layer)
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Ray ray = camera.ScreenPointToRay(mousePos);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer))
+        {
+            if (hit.transform.GetComponent<IClickedObject>() != null)
+            {
+                hit.transform.GetComponent<IClickedObject>().StairMe();
+            }
+        }
     }
 }
