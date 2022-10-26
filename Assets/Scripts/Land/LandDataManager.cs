@@ -49,18 +49,13 @@ public class LandDataManager : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
-        //{
-        //    Debug.Log("Load");
-        //    LoadLandData();
-        //}
         //Build Mode - Bridge일때
         if (buildMode == BuildMode.Bridge)
             BuildBridge();
         else if(buildMode == BuildMode.None)
         {
             //플레이어 활동 풀기
-            user.GetComponent<UserInteract>().moveControl = false;
+            //user.GetComponent<UserInteract>().moveControl = false;
 
             //Bridge 건설용 카메라 끄기
             buildBridgeCamera.SetActive(false);
@@ -275,9 +270,20 @@ public class LandDataManager : MonoBehaviour
         for(int i = 0; i < minimapObject.Count; i++)
         {
             if (!isOnClickMinimap)
+            {
                 minimapObject[i].SetActive(true);
+            }
             else
+            {
                 minimapObject[i].SetActive(false);
+            }
+        }
+        if (isOnClickMinimap)
+        {
+            for (int j = 0; j < transform.childCount - 1; j++)
+            {
+                transform.GetChild(j).GetChild(0).gameObject.SetActive(false);
+            }
         }
         isOnClickMinimap = isOnClickMinimap == true ? false : true;
     }

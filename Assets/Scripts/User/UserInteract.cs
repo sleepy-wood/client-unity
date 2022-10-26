@@ -5,7 +5,7 @@ using UnityEngine;
 public class UserInteract : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    public bool moveControl = false;
+    public bool moveControl;
     private UserInput userInput;
     private Animator animator;
 
