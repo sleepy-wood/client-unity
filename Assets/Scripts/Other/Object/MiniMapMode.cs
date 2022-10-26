@@ -21,6 +21,7 @@ public class MiniMapMode : MonoBehaviour
     {
         if (userInput.LongInteract)
         {
+            //Camera.main.gameObject.SetActive(false);
             Vector3 mousePos = Input.mousePosition;
             Ray ray = GetComponent<Camera>().ScreenPointToRay(mousePos);
             Debug.DrawRay(ray.origin, ray.direction * Mathf.Infinity, Color.red);
@@ -45,6 +46,11 @@ public class MiniMapMode : MonoBehaviour
                     ShowPath(path);
                 }
             }
+        }
+        else
+        {
+
+            //Camera.main.gameObject.SetActive(true);
         }
     }
     /// <summary>
