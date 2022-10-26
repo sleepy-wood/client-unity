@@ -76,6 +76,7 @@ public class UserInput : MonoBehaviour
 
             #region interact
             Interact = Input.GetButtonDown(LeftClickName);
+            LongInteract = Input.GetKey(KeyCode.LeftAlt);
             #endregion
 
             #region 줌인/줌아웃
@@ -94,6 +95,7 @@ public class UserInput : MonoBehaviour
             #endregion
 
 #elif UNITY_IOS || UNITY_ANDROID
+
             //현재 Touch를 한손가락으로 했을 경우 Move 상태인지, Touch상태인지 확인
             //Move 상태: 약간의 움직임이 감지가 된다면 Move
             //Touch 상태: 움직임이 감지가 되지 않은 상태에서 손가락을 뗐을 때
