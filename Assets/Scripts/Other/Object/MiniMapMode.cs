@@ -66,27 +66,23 @@ public class MiniMapMode : MonoBehaviour, IPointerClickHandler
 
         if (Physics.Raycast(MapRay, out hit, Mathf.Infinity))
         {
-            //Debug.Log("miniMapHit: " + hit.collider.gameObject);
-            GameObject Land = userInteract.OnLand();
-            if (Land &&
-                int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()) != int.Parse(Land.name[Land.name.Length - 1].ToString()))
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                //Debug.Log("click: "+ int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()));
-                //Debug.Log("Land: " + int.Parse(Land.name[Land.name.Length - 1].ToString()));
-                ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>("LandData");
-                List<int> path = AlgorithmUtility.BFS(
-                    arrayLandData.bridgeInfo, int.Parse(Land.name[Land.name.Length - 1].ToString()),
-                    int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()),
-                    LandDataManager.Instance.transform.childCount - 1);
-
-                //길을 찾았다면
-                if (path.Count > 1)
+                GameObject Land = userInteract.OnLand();
+                if (Land &&
+                    int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()) != int.Parse(Land.name[Land.name.Length - 1].ToString()))
                 {
-                    //for (int i = 0; i < path.Count; i++)
-                    //{
-                    //    print(path[i]);
-                    //}
-                    ShowPath(path);
+                    ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>("LandData");
+                    List<int> path = AlgorithmUtility.BFS(
+                        arrayLandData.bridgeInfo, int.Parse(Land.name[Land.name.Length - 1].ToString()),
+                        int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()),
+                        LandDataManager.Instance.transform.childCount - 1);
+
+                    //길을 찾았다면
+                    if (path.Count > 1)
+                    {
+                        ShowPath(path);
+                    }
                 }
             }
         }

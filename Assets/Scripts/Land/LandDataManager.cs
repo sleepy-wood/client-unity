@@ -54,9 +54,6 @@ public class LandDataManager : MonoBehaviour
             BuildBridge();
         else if(buildMode == BuildMode.None)
         {
-            //플레이어 활동 풀기
-            user.GetComponent<UserInteract>().moveControl = false;
-
             //Bridge 건설용 카메라 끄기
             buildBridgeCamera.SetActive(false);
 
@@ -75,7 +72,7 @@ public class LandDataManager : MonoBehaviour
     public void BuildBridge()
     {
         //플레이어 Move 제어
-        user.GetComponent<UserInteract>().moveControl = true;
+        //user.GetComponent<UserInteract>().moveControl = true;
 
         //Bridge 건설용 카메라 키기
         buildBridgeCamera.SetActive(true);
