@@ -9,8 +9,6 @@ public class UserInteract : MonoBehaviour
     private UserInput userInput;
     private Animator animator;
 
-      
-
     private void Start()
     {
         userInput = GetComponent<UserInput>();
@@ -106,6 +104,25 @@ public class UserInteract : MonoBehaviour
             {
                 hit.transform.GetComponent<IClickedObject>().StairMe();
             }
+        }
+    }
+
+    /// <summary>
+    /// Player가 서있는 땅을 return
+    /// </summary>
+    /// <returns></returns>
+    public GameObject OnLand()
+    {
+        RaycastHit hit;
+
+        Ray ray = new Ray(transform.position, -transform.up * 5f);
+        if (Physics.Raycast(ray, out hit, 5f, LayerMask.NameToLayer("Ground")))
+        {
+            return hit.transform.gameObject;
+        }
+        else
+        {
+            return null;
         }
     }
 }

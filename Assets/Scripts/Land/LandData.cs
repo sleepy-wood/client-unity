@@ -24,9 +24,9 @@ public class ArrayObjectsOfLand
 {
     public List<ObjectsInfo>? objects = null;
 }
-
 /// <summary>
 /// Land 하나에 있는 정보들
+/// TODO: 랜드구입 등 랜드가 존재하는 형태인지 정보 넣어야함
 /// </summary>
 [Serializable]
 public class LandData
