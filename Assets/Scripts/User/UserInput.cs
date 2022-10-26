@@ -6,6 +6,7 @@ public class UserInput : MonoBehaviour
 {
     public Text currentStateText;
     public Text clickText;
+    public Text timeText;
 
 #if UNITY_STANDALONE
     private const string MoveNameX = "Horizontal";
@@ -22,9 +23,11 @@ public class UserInput : MonoBehaviour
     {
         None,
         Move,
-        Touch
+        Touch,
+        LongTouch
     }
     TouchState currentState = TouchState.None;
+    private float curTime = 0;
 #endif
     /// <summary>
     /// InputCotrol = true => Control InputSystem
@@ -49,6 +52,11 @@ public class UserInput : MonoBehaviour
     /// Mouse Interact 마우스 좌클릭, 모바일 터치
     /// </summary>
     public bool Interact { get; private set; }
+
+    /// <summary>
+    /// Long Touch - 마우스 좌클릭, 모바일 터치
+    /// </summary>
+    public bool LongInteract { get; private set; }
 
     /// <summary>
     /// Mouse Drag -> Rotate
@@ -89,110 +97,133 @@ public class UserInput : MonoBehaviour
             //현재 Touch를 한손가락으로 했을 경우 Move 상태인지, Touch상태인지 확인
             //Move 상태: 약간의 움직임이 감지가 된다면 Move
             //Touch 상태: 움직임이 감지가 되지 않은 상태에서 손가락을 뗐을 때
-            if(currentStateText)
+            if (currentStateText)
                 currentStateText.text = "currentState: " + currentState.ToString();
             if (Input.touchCount == 1)
-        {
-            for (int i = 0; i < Input.touches.Length; i++)
             {
-                if (Input.touches[i].phase == TouchPhase.Moved)
+                if (timeText)
+                    timeText.text = curTime.ToString();
+                curTime += Time.deltaTime;
+                //LongTouch 설정
+                if (curTime > 1.5f && currentState == TouchState.None)
+                    currentState = TouchState.LongTouch;
+                
+                for (int i = 0; i < Input.touches.Length; i++)
                 {
-                    if (currentState == TouchState.None)
-                        currentState = TouchState.Move;
+                    if (Input.touches[i].phase == TouchPhase.Began)
+                    {
+                        curTime = 0;
+                    }
+                    else if (Input.touches[i].phase == TouchPhase.Moved)
+                    {
+                        if (currentState == TouchState.None)
+                            currentState = TouchState.Move;
+                    }
+                    else if (Input.touches[i].phase == TouchPhase.Ended)
+                    {
+                        currentState = currentState == TouchState.None ? TouchState.Touch : TouchState.None;
+                        curTime = 0;
+                    }
                 }
-                else if (Input.touches[i].phase == TouchPhase.Ended)
-                {
-                    currentState = currentState == TouchState.None ? TouchState.Touch : TouchState.None;
-                }
-            }
 
-            #region 이동 
-            if (currentState == TouchState.Move)
-            {
-                    if(clickText)
+                #region 이동 
+                if (currentState == TouchState.Move)
+                {
+                    if (clickText)
                         clickText.text = "\n클릭여부: 노노";
                     Vector3 mousePos = Input.mousePosition;
-                Ray ray = Camera.main.ScreenPointToRay(mousePos);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                {
-                    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                    Ray ray = Camera.main.ScreenPointToRay(mousePos);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                     {
-                        //맞은 곳과 플레이어의 방향 벡터 구하기
-                        Vector3 dir = hit.point - transform.position;
-                        dir.Normalize();
-                        MoveX = dir.x;
-                        MoveZ = dir.z;
-                        if(currentStateText)
+                        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                        {
+                            //맞은 곳과 플레이어의 방향 벡터 구하기
+                            Vector3 dir = hit.point - transform.position;
+                            dir.Normalize();
+                            MoveX = dir.x;
+                            MoveZ = dir.z;
+                            if (currentStateText)
                                 currentStateText.text = $"hit.point = {hit.point} \n transform.position = {transform.position}" +
                         $"\n dir = {dir}\n  MoveX = {MoveX} | MoveZ = {MoveZ}";
                         }
+                    }
+                }
+                else
+                {
+                    MoveX = 0;
+                    MoveZ = 0;
                 }
             }
-            else
-            {
-                MoveX = 0;
-                MoveZ = 0;
-            }
-        }
             #endregion
 
             #region interact
 
-        if (currentState == TouchState.Touch)
-        {
-            if(clickText)
-                clickText.text = "\n클릭여부: 클릭";
+            if (currentState == TouchState.Touch)
+            {
+                if (clickText)
+                    clickText.text = "\n클릭여부: 클릭";
                 Interact = true;
-            currentState = TouchState.None;
-        }
-        else
-            Interact = false;
+                currentState = TouchState.None;
+            }
+            else if (currentState == TouchState.LongTouch)
+            {
+                if (clickText)
+                    clickText.text = "\n클릭여부: 롱 클릭";
+                LongInteract = true;
+                currentState = TouchState.None;
+            }
+            else
+            {
+                LongInteract = false;
+                Interact = false;
+            }
             #endregion
 
 
-        if (Input.touchCount == 2)
-        {
-            #region 줌인/줌아웃
-            Touch touchFirstFinger = Input.GetTouch(0);
-            Touch touchSecondFinger = Input.GetTouch(1);
+            if (Input.touchCount == 2)
+            {
+                #region 줌인/줌아웃
+                Touch touchFirstFinger = Input.GetTouch(0);
+                Touch touchSecondFinger = Input.GetTouch(1);
 
-            //움직이기 전 손가락 위치 구하기
-            Vector2 touchFirstFingerPos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
-            Vector2 touchSecondFingerPos = touchSecondFinger.position - touchSecondFinger.deltaPosition;
+                //움직이기 전 손가락 위치 구하기
+                Vector2 touchFirstFingerPos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
+                Vector2 touchSecondFingerPos = touchSecondFinger.position - touchSecondFinger.deltaPosition;
 
-            float prevTwoFingerDist = (touchFirstFingerPos - touchSecondFingerPos).magnitude;
-            float curTwoFingerDist = (touchFirstFinger.position - touchSecondFinger.position).magnitude;
+                float prevTwoFingerDist = (touchFirstFingerPos - touchSecondFingerPos).magnitude;
+                float curTwoFingerDist = (touchFirstFinger.position - touchSecondFinger.position).magnitude;
 
                 //두 손가락의 간격이 달라졌을 경우 -> Zoom
                 //currnetStateText.text = Mathf.Abs(prevTwoFingerDist - curTwoFingerDist).ToString();
-                if (Mathf.Abs(prevTwoFingerDist - curTwoFingerDist) > 6) {
-
-                Zoom = (prevTwoFingerDist - curTwoFingerDist) * - 0.006f;
-
-            }
-            #endregion
-
-            #region 회전
-            //두 손가락의 간격이 같은 경우 -> Roate
-            else
-            {
-                for (int i = 0; i < Input.touches.Length; i++)
+                if (Mathf.Abs(prevTwoFingerDist - curTwoFingerDist) > 6)
                 {
-                    if (Input.touches[i].phase == TouchPhase.Moved)
+
+                    Zoom = (prevTwoFingerDist - curTwoFingerDist) * -0.006f;
+
+                }
+                #endregion
+
+                #region 회전
+                //두 손가락의 간격이 같은 경우 -> Roate
+                else
+                {
+                    for (int i = 0; i < Input.touches.Length; i++)
                     {
-                        Rotate = (touchFirstFingerPos.x - touchFirstFinger.position.x) * 0.07f; 
+                        if (Input.touches[i].phase == TouchPhase.Moved)
+                        {
+                            Rotate = (touchFirstFingerPos.x - touchFirstFinger.position.x) * 0.07f;
+                        }
                     }
                 }
-            }
-            #endregion
+                #endregion
 
-        }
-        else
-        {
-            Zoom = 0;
-            Rotate = 0;
-        }
+            }
+            else
+            {
+                Zoom = 0;
+                Rotate = 0;
+            }
 
 #endif
         }
