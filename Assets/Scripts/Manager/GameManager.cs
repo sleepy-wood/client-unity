@@ -15,4 +15,7 @@ public class GameManager : MonoBehaviour
     }
     
     public GameObject User { get; private set; }
+
+    // 플레이어 재방문 여부
+    public bool isFirstVisit;
 }
