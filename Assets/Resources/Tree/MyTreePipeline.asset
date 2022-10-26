@@ -66,8 +66,8 @@ MonoBehaviour:
   applyDirectionalBending: 1
   applyNoise: 1
   smoothJointStrength: 0
-  forceAtTips: 0.03
-  forceAtTrunk: -0.554
+  forceAtTips: 0.75
+  forceAtTrunk: 0.22
   direction: {x: 0, y: -1, z: 0}
   hierarchyDistributionCurve:
     serializedVersion: 2
@@ -126,10 +126,10 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
-      tangentMode: 34
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
       value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 34
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -2991,8 +2991,8 @@ MonoBehaviour:
     flipSproutDirection: {x: 1, y: 0, z: 0}
     maxLengthAtTop: 3
     minLengthAtTop: 3
-    maxLengthAtBase: 4.9920883
-    minLengthAtBase: 4.9920883
+    maxLengthAtBase: 2
+    minLengthAtBase: 2
     lengthCurve:
       serializedVersion: 2
       m_Curve:
