@@ -21,19 +21,30 @@ public class MiniMapMode : MonoBehaviour
     {
         if (userInput.LongInteract)
         {
-            List<int> path = AlgorithmUtility.BFS(arrayLandData.bridgeInfo, 1, 4, LandDataManager.Instance.transform.childCount - 1);
-            ShowPath(path);
-            //GameObject Land = userInteract.OnLand();
-            //if (Land)
-            //{
-            //    Debug.Log("시작2");
-            //    ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>("LandData");
-            //    List<int> path = AlgorithmUtility.Start_DFS(arrayLandData.bridgeInfo, 1, 4, 5);
-            //    for(int i = 0; i < path.Count; i++)
-            //    {
-            //        print(path[i]);
-            //    }
-            //}
+            Vector3 mousePos = Input.mousePosition;
+            Ray ray = GetComponent<Camera>().ScreenPointToRay(mousePos);
+            Debug.DrawRay(ray.origin, ray.direction * Mathf.Infinity, Color.red);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.NameToLayer("Ground")))
+            {
+                GameObject Land = userInteract.OnLand();
+                Debug.Log(Land);
+                if (Land && 
+                    int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()) != int.Parse(Land.name[Land.name.Length - 1].ToString()))
+                {
+                    ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>("LandData");
+                    List<int> path = AlgorithmUtility.BFS(
+                        arrayLandData.bridgeInfo, int.Parse(Land.name[Land.name.Length - 1].ToString()),
+                        int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()),
+                        LandDataManager.Instance.transform.childCount - 1);
+
+                    for (int i = 0; i < path.Count; i++)
+                    {
+                        print(path[i]);
+                    }
+                    ShowPath(path);
+                }
+            }
         }
     }
     /// <summary>

@@ -21,8 +21,8 @@ public class UserInteract : MonoBehaviour
             userAvatar.name = userAvatar.name.Split("(")[0];
             userAvatar.transform.parent = transform;
             userAvatar.transform.localPosition = Vector3.zero;
+            animator = transform.GetChild(2).GetComponent<Animator>();
         }
-        animator = transform.GetChild(2).GetComponent<Animator>();
     }
     private void Update()
     {
@@ -114,9 +114,9 @@ public class UserInteract : MonoBehaviour
     public GameObject OnLand()
     {
         RaycastHit hit;
-
-        Ray ray = new Ray(transform.position, -transform.up * 5f);
-        if (Physics.Raycast(ray, out hit, 5f, LayerMask.NameToLayer("Ground")))
+        Ray ray = new Ray(new Vector3(transform.position.x, transform.position.y * 2, transform.position.z), -transform.up * 10);
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
+        if (Physics.Raycast(ray, out hit, 10f))
         {
             return hit.transform.gameObject;
         }
