@@ -23,12 +23,8 @@ public class SceneController : MonoBehaviour
         public Transform growPos;
         // DayCount
         public int dayCount;
-        // 씨앗 Prefab
-        public GameObject seedPrefab;
         // 씨앗 하강 속도
         public float downSpeed = 0.5f;
-        // 새싹 Prefab
-        public GameObject sproutPrefab;
         // Daycount Text
         public Text txtDayCount;
         // sprout
@@ -46,11 +42,19 @@ public class SceneController : MonoBehaviour
         public InputField inputPlantName;
         // 식물 이름 결정 Button
         public Button btnPlantName;
-
+        // 방문 타입
+        public VisitType visitType;
+        // user
         public GameObject user;
-
-        bool isControl = false;
+        
         #endregion
+
+        public enum VisitType
+        {
+                None,
+                First,
+                ReVisit
+        }
 
 
         void Start()
@@ -78,12 +82,20 @@ public class SceneController : MonoBehaviour
                 data.leafTexture = leafText;
                 //data.landID = growPos.parent.gameObject.name;
 
-                inputPlantName.onEndEdit.AddListener(onEndEdit);
-
-                path = "Tree/NewTreePipeline5_Base1";
+                path = "Tree/MyTreePipeline";
+                // treePipeline 초기화
+                InitTree();
+                // treePipeline 로드
                 treePipeline = Resources.Load<Pipeline>(path);
-               // TextAsset b = Resources.Load<TextAsset>(path);
-                
+                // TextAsset b = Resources.Load<TextAsset>(path);
+
+                sprout = (GameObject)Resources.Load("Prefabs/Sprout");
+
+                // 방문 타입 결정
+                if (visitType == VisitType.None) visitType = VisitType.First;
+                else visitType = VisitType.ReVisit;
+
+                inputPlantName.onEndEdit.AddListener(onEndEdit);
                 #region 기존 코드
                 //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
                 //// pipeline에서 positioner 요소 가져오기(위치 동적 할당)
@@ -132,7 +144,7 @@ public class SceneController : MonoBehaviour
         }
 
 
-        IEnumerator PlantSeed(GameObject sproutGo, float targetScale)
+        IEnumerator PlantSeed(float targetScale)
         {
                 #region 카메라 줌인
                 float t = 0;
@@ -146,8 +158,8 @@ public class SceneController : MonoBehaviour
                 #endregion
 
                 // 씨앗 심기
-                GameObject s = Instantiate(seedPrefab);
-                s.transform.position = growPos.position + new Vector3(0, 4, 0);
+                GameObject s = (GameObject)Resources.Load("Prefabs/Seed");
+                s.transform.position = growPos.position + new Vector3(0, 2, 0);
                 s.gameObject.SetActive(true);
                 yield return new WaitForSeconds(0.5f);
                 while (s.transform.position.y >= -1)
@@ -155,20 +167,18 @@ public class SceneController : MonoBehaviour
                         s.transform.position += Vector3.down * downSpeed * Time.deltaTime;
                         yield return null;
                 }
-                Destroy(s);
+                DestroyImmediate(s, true);
 
                 // 새싹 나타나기
                 t = 0;
-                GameObject go = Instantiate(sproutGo);
-                sprout = go;
-                go.transform.position = new Vector3(0, 1, 0);
+                sprout.transform.position = new Vector3(0, 1, 0);
                 while (t <= targetScale)
                 {
                         t += Time.deltaTime * 0.5f;
-                        go.transform.localScale = new Vector3(t, t, t);
+                        sprout.transform.localScale = new Vector3(t, t, t);
                         yield return null;
                 }
-                go.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
+                sprout.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
                 yield return new WaitForSeconds(1);
 
                 #region 카메라 줌 아웃
@@ -277,15 +287,20 @@ public class SceneController : MonoBehaviour
                 plantNameUI.SetActive(false);
         }
 
+        public void InitTree()
+        {
+
+        }
+
         /// <summary>
-        /// 
+        /// 일수에 맞게 Tree 업데이트
         /// </summary>
         public void LoadTree()
         {
                 // 1. 씨앗심기 & 새싹
                 if (dayCount == 1)
                 {
-                        StartCoroutine(PlantSeed(sproutPrefab, 0.5f));
+                        StartCoroutine(PlantSeed(0.5f));
                 }
                 // 2. 작은 묘목
                 if (dayCount == 2)
