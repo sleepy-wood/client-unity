@@ -46,7 +46,24 @@ public class SceneController : MonoBehaviour
         public VisitType visitType;
         // user
         public GameObject user;
-        
+        // Element별 FlatFrequency Min/Max값 저장소
+        [System.Serializable]
+        public struct minMax
+        {
+                public int min;
+                public int max;
+        }
+        [System.Serializable]
+        public class twin { public List<minMax> minMaxList = new List<minMax>(); };
+        [System.Serializable]
+        public class flatFreq
+        {
+                public twin flatFreqMinMax;
+                public int rootFreq;
+                public int rootBaseLength;
+                public float girthBase;
+        }
+        // DayCount에 따라 변하는 나무 관련 변수 저장소
         #endregion
 
         public enum VisitType
@@ -84,7 +101,7 @@ public class SceneController : MonoBehaviour
 
                 path = "Tree/MyTreePipeline";
                 // treePipeline 초기화
-                InitTree();
+                //InitTree();
                 // treePipeline 로드
                 treePipeline = Resources.Load<Pipeline>(path);
                 // TextAsset b = Resources.Load<TextAsset>(path);
@@ -108,7 +125,7 @@ public class SceneController : MonoBehaviour
 
         }
 
-        bool isOnce;
+
         void Update()
         {
                 // Test용
@@ -196,65 +213,65 @@ public class SceneController : MonoBehaviour
                 #endregion
         }
 
-
+        
         /// <summary>
-        /// 나무 정보 업데이트
+        /// 나무 Pipeline 업데이트
         /// </summary>
-        /// <param name="branchNum">가지 개수</param>
-        /// <param name="sproutFreq">잎 Freq</param>
-        /// <param name="rootChild">자식 개수</param>
-        /// <param name="length">나무 길이</param>
-        /// <param name="thick">나무 굵기</param>
-        public void TreeDataUpdate(int branchNum, int sproutFreq, int rootChild, int length, float thick)
-        {
-                if (treePipeline == null) treePipeline = Resources.Load<Pipeline>(path);
+        /// <param name="flatFreqMinMax">Element Frequency</param>
+        /// <param name="rootFreq">Root Min/Max Freqency</param>
+        /// <param name="rootChild">Min/Max Length At Base</param>
+        /// <param name="length">Min/Max Girth At Base</param>
+        /// <param name="thick">Min/Max Girth At Base</param>
+        //public void TreeDataUpdate()
+        //{
+        //        if (treePipeline == null) treePipeline = Resources.Load<Pipeline>(path);
 
-                // 가지 개수
-                int levelCount = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
-                for (int i = 0; i < levelCount; i++)
-                {
-                        if (dayCount == 3)
-                        {
-                                if (treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].enabled == false)
-                                {
-                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].enabled = true;
-                                }
-                        }
-                        //if (dayCount == 5)
-                        //{
-                        //        // 꽃 텍스처 추가
-                        //        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[1].sproutAreas[2].enabled = true;
-                        //}
-                        else
-                        {
-                                // Sprout Level
-                                if (treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].isSprout)
-                                {
-                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency = sproutFreq;
-                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxFrequency = sproutFreq * 2;
-                                }
-                                else
-                                {
-                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency = branchNum;
-                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxFrequency = branchNum;
-                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxLengthAtBase = branchNum;
-                                        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minLengthAtBase = branchNum;
-                                }
-                        }
-                }
+        //        // 가지 개수
+        //        int levelCount = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
+        //        for (int i = 0; i < levelCount; i++)
+        //        {
+        //                if (dayCount == 3)
+        //                {
+        //                        if (treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].enabled == false)
+        //                        {
+        //                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].enabled = true;
+        //                        }
+        //                }
+        //                //if (dayCount == 5)
+        //                //{
+        //                //        // 꽃 텍스처 추가
+        //                //        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[1].sproutAreas[2].enabled = true;
+        //                //}
+        //                else
+        //                {
+        //                        // Sprout Level
+        //                        if (treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].isSprout)
+        //                        {
+        //                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency = sproutFreq;
+        //                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxFrequency = sproutFreq * 2;
+        //                        }
+        //                        else
+        //                        {
+        //                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency = branchNum;
+        //                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxFrequency = branchNum;
+        //                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxLengthAtBase = branchNum;
+        //                                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minLengthAtBase = branchNum;
+        //                        }
+        //                }
+        //        }
 
-                // 나무 Root 자식 가지
-                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = rootChild;
-                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = rootChild * 2;
+        //        // 나무 Root 자식 가지
+        //        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = rootChild;
+        //        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = rootChild * 2;
 
-                // 나무 길이
-                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxLengthAtBase = length;
-                treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase = length;
+        //        // 나무 길이
+        //        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxLengthAtBase = length;
+        //        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase = length;
 
-                // 나무 굵기
-                treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase = thick;
-                treePipeline._serializedPipeline.girthTransforms[0].maxGirthAtBase = thick;
-        }
+        //        // 나무 굵기
+        //        treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase = thick;
+        //        treePipeline._serializedPipeline.girthTransforms[0].maxGirthAtBase = thick;
+        //}
 
         /// <summary>
         /// 업데이트한 나무 정보를 기반으로 나무 다시 로드
@@ -289,6 +306,15 @@ public class SceneController : MonoBehaviour
 
         public void InitTree()
         {
+                #region Positioner Element
+                treePipeline._serializedPipeline.positioners[0].positions[0].rootPosition = new Vector3(0, 0, 0);
+                treePipeline._serializedPipeline.positioners[0].positions[0].enabled = true;
+                #endregion
+
+                #region BranchBenderElement
+
+                #endregion
+
 
         }
 
@@ -311,19 +337,19 @@ public class SceneController : MonoBehaviour
                 // 3. 묘목
                 if (dayCount == 3)
                 {
-                        TreeDataUpdate(2, 3, 5, 10, 0.5f);
+                        //TreeDataUpdate(2, 3, 5, 10, 0.5f);
                         TreeReload();
                 }
                 // 4. 나무
                 if (dayCount == 4)
                 {
-                        TreeDataUpdate(5, 10, 10, 20, 0.7f);
+                        //TreeDataUpdate(5, 10, 10, 20, 0.7f);
                         TreeReload();
                 }
                 // 5. 개화
                 if (dayCount == 5)
                 {
-                        TreeDataUpdate(8, 15, 15, 25, 0.8f);
+                        //TreeDataUpdate(8, 15, 15, 25, 0.8f);
                         TreeReload();
                 }
         }
