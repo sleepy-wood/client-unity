@@ -1,22 +1,54 @@
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 public class AlgorithmUtility
 {
-    public static List<int> DFS(List<BridgeFromTo> bridgeFroms, int startId, int endId, int landCount)
+    public static List<int> BFS(List<BridgeFromTo> bridgeFroms, int startId, int endId, int landCount)
     {
         bool[] visited = new bool[landCount];
 
-        List<int> path = new List<int>();
-        path.Add(startId);
-
-        for (int i = 0; i < bridgeFroms.Count; i++)
+        List<int> paths = new List<int>();
+        List<List<int>> nodes = new List<List<int>>();
+        //초기화
+        for (int i = 0; i < landCount + 1; i++)
         {
-            //if()
+            List<int> list = new List<int>();
+            nodes.Add(list);
         }
-        return null;
+        //연결 노드 간의 관계 설정 
+        for(int i = 0; i < bridgeFroms.Count; i++)
+        {
+            nodes[bridgeFroms[i].fromId].Add(bridgeFroms[i].toId);
+            nodes[bridgeFroms[i].toId].Add(bridgeFroms[i].fromId);
+        }
+
+        //BFS를 사용한 길찾기
+        Queue<int> queue = new Queue<int>();
+        queue.Enqueue(startId);
+        visited[startId] = true;
+
+        while(queue.Count > 0)
+        {
+            var node = queue.Dequeue();
+            paths.Add(node);
+            if (node == endId)
+                break;
+            for (int i = 0; i < nodes[node].Count; i++)
+            {
+                if (visited[nodes[node][i]] == false)
+                {
+                    visited[nodes[node][i]] = true;
+                    queue.Enqueue(nodes[node][i]);
+                }
+            }
+        }
+
+        return paths;
     }
+    
 }
