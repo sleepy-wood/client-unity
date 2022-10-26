@@ -80,9 +80,10 @@ public class SceneController : MonoBehaviour
 
                 inputPlantName.onEndEdit.AddListener(onEndEdit);
 
-                path = "Tree/NewTreePipeline5";
+                path = "Tree/NewTreePipeline5_Base1";
                 treePipeline = Resources.Load<Pipeline>(path);
-
+               // TextAsset b = Resources.Load<TextAsset>(path);
+                
                 #region 기존 코드
                 //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
                 //// pipeline에서 positioner 요소 가져오기(위치 동적 할당)
@@ -99,7 +100,7 @@ public class SceneController : MonoBehaviour
         void Update()
         {
                 // Test용
-                if (Input.GetMouseButtonDown(0) && dayCount < 5 && !isControl && !plantNameUI.activeSelf)
+                if (Input.GetMouseButtonDown(0) && dayCount < 5 && !plantNameUI.activeSelf)
                 {
                         dayCount ++;
                         data.treeDay = dayCount;
@@ -133,15 +134,16 @@ public class SceneController : MonoBehaviour
 
         IEnumerator PlantSeed(GameObject sproutGo, float targetScale)
         {
-                // 카메라 줌인
+                #region 카메라 줌인
                 float t = 0;
-                while (t < 1)
-                {
-                        t += Time.deltaTime;
-                        Camera.main.fieldOfView = Mathf.Lerp(defaultFOV, targetFOV, t);
-                        yield return null;
-                }
-                Camera.main.fieldOfView = targetFOV;
+                //while (t < 1)
+                //{
+                //        t += Time.deltaTime;
+                //        Camera.main.fieldOfView = Mathf.Lerp(defaultFOV, targetFOV, t);
+                //        yield return null;
+                //}
+                //Camera.main.fieldOfView = targetFOV;
+                #endregion
 
                 // 씨앗 심기
                 GameObject s = Instantiate(seedPrefab);
@@ -169,19 +171,19 @@ public class SceneController : MonoBehaviour
                 go.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
                 yield return new WaitForSeconds(1);
 
-                // 카메라 줌 아웃
-                t = 0;
-                while (t < 1)
-                {
-                        t += Time.deltaTime * 0.5f;
-                        Camera.main.fieldOfView = Mathf.Lerp(targetFOV, defaultFOV, t);
-                        yield return null;
-                }
-                Camera.main.fieldOfView = defaultFOV;
+                #region 카메라 줌 아웃
+                //t = 0;
+                //while (t < 1)
+                //{
+                //        t += Time.deltaTime * 0.5f;
+                //        Camera.main.fieldOfView = Mathf.Lerp(targetFOV, defaultFOV, t);
+                //        yield return null;
+                //}
+                //Camera.main.fieldOfView = defaultFOV;
 
-                // 식물 이름 UI 띄우기
-                plantNameUI.gameObject.SetActive(true);
-
+                //// 식물 이름 UI 띄우기
+                //plantNameUI.gameObject.SetActive(true);
+                #endregion
         }
 
 
@@ -271,7 +273,6 @@ public class SceneController : MonoBehaviour
         /// </summary>
         public void onConfirmPlantName()
         {
-                isControl = false;
                 //user.GetComponent<UserInput>().InputControl = false;
                 plantNameUI.SetActive(false);
         }
@@ -284,7 +285,6 @@ public class SceneController : MonoBehaviour
                 // 1. 씨앗심기 & 새싹
                 if (dayCount == 1)
                 {
-                        isControl = true;
                         StartCoroutine(PlantSeed(sproutPrefab, 0.5f));
                 }
                 // 2. 작은 묘목
