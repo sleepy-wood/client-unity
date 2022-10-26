@@ -55,7 +55,7 @@ public class LandDataManager : MonoBehaviour
         else if(buildMode == BuildMode.None)
         {
             //플레이어 활동 풀기
-            //user.GetComponent<UserInteract>().moveControl = false;
+            user.GetComponent<UserInteract>().moveControl = false;
 
             //Bridge 건설용 카메라 끄기
             buildBridgeCamera.SetActive(false);
@@ -278,12 +278,19 @@ public class LandDataManager : MonoBehaviour
                 minimapObject[i].SetActive(false);
             }
         }
-        if (isOnClickMinimap)
+
+        for (int j = 0; j < transform.childCount - 1; j++)
         {
-            for (int j = 0; j < transform.childCount - 1; j++)
-            {
-                transform.GetChild(j).GetChild(0).gameObject.SetActive(false);
-            }
+            transform.GetChild(j).GetChild(0).gameObject.SetActive(false);
+        }
+
+        if (!isOnClickMinimap)
+        {
+            user.GetComponent<UserInteract>().moveControl = true;
+        }
+        else
+        {
+            user.GetComponent<UserInteract>().moveControl = false;
         }
         isOnClickMinimap = isOnClickMinimap == true ? false : true;
     }

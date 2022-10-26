@@ -138,7 +138,8 @@ public class UserInput : MonoBehaviour
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                     {
-                        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground") ||
+                            hit.transform.gameObject.layer == LayerMask.NameToLayer("Bridge"))
                         {
                             //맞은 곳과 플레이어의 방향 벡터 구하기
                             Vector3 dir = hit.point - transform.position;

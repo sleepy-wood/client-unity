@@ -10,7 +10,8 @@ public class AlgorithmUtility
 {
     public static List<int> BFS(List<BridgeFromTo> bridgeFroms, int startId, int endId, int landCount)
     {
-        bool[] visited = new bool[landCount];
+        bool[] visited = new bool[landCount + 1];
+        int[] parent  = new int[landCount + 1];
 
         List<int> paths = new List<int>();
         List<List<int>> nodes = new List<List<int>>();
@@ -31,22 +32,31 @@ public class AlgorithmUtility
         Queue<int> queue = new Queue<int>();
         queue.Enqueue(startId);
         visited[startId] = true;
+        parent[startId] = startId;
 
-        while(queue.Count > 0)
+        while (queue.Count > 0)
         {
             var node = queue.Dequeue();
-            paths.Add(node);
-            if (node == endId)
-                break;
             for (int i = 0; i < nodes[node].Count; i++)
             {
                 if (visited[nodes[node][i]] == false)
                 {
                     visited[nodes[node][i]] = true;
                     queue.Enqueue(nodes[node][i]);
+                    parent[nodes[node][i]] = node;
                 }
             }
         }
+
+        //Calculate Path
+        int nodeId = endId;
+        while (parent[nodeId] != nodeId)
+        {
+            paths.Add(nodeId);
+            nodeId = parent[nodeId];
+        }
+        paths.Add(nodeId);
+        paths.Reverse();
 
         return paths;
     }
