@@ -113,13 +113,16 @@ public class CharactorChoice : MonoBehaviour
             {
                 transform.GetChild(i).transform.eulerAngles = new Vector3(0, 180, 0);
                 transform.GetChild(i).gameObject.SetActive(true);
-                content.GetChild(i).GetComponent<Image>().color = Color.gray;
+                content.GetChild(i).GetChild(1).gameObject.SetActive(true);
+                //content.GetChild(i).GetComponent<Image>().color = Color.gray;
                 selectedIndex = i;
+                print(i);
             }
             else
             {
                 transform.GetChild(i).gameObject.SetActive(false);
-                content.GetChild(i).GetComponent<Image>().color = Color.white;
+                content.GetChild(i).GetChild(1).gameObject.SetActive(false);
+                //content.GetChild(i).GetComponent<Image>().color = Color.white;
             }
         }
     }
