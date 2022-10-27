@@ -103,14 +103,17 @@ public class LandDataManager : MonoBehaviour
             List<ObjectsInfo> objectList = new List<ObjectsInfo>();
             for(int j = 0; j < transform.GetChild(i).childCount; j++)
             {
-                ObjectsInfo objectsInfo = new ObjectsInfo();
-                string dataPath = "Object/" + transform.GetChild(i).GetChild(j).name;
-                objectsInfo.path = dataPath;
-                objectsInfo.localPosition = transform.GetChild(i).GetChild(j).localPosition;
-                objectsInfo.localScale = transform.GetChild(i).GetChild(j).localScale;
-                objectsInfo.localEulerAngle = transform.GetChild(i).GetChild(j).localEulerAngles;
+                if (transform.GetChild(i).GetChild(j).gameObject.layer != LayerMask.NameToLayer("Mark"))
+                {
+                    ObjectsInfo objectsInfo = new ObjectsInfo();
+                    string dataPath = "Object/" + transform.GetChild(i).GetChild(j).name;
+                    objectsInfo.path = dataPath;
+                    objectsInfo.localPosition = transform.GetChild(i).GetChild(j).localPosition;
+                    objectsInfo.localScale = transform.GetChild(i).GetChild(j).localScale;
+                    objectsInfo.localEulerAngle = transform.GetChild(i).GetChild(j).localEulerAngles;
 
-                objectList.Add(objectsInfo);
+                    objectList.Add(objectsInfo);
+                }
             }
             ArrayObjectsOfLand arrayObjectsOfLand = new ArrayObjectsOfLand();
             arrayObjectsOfLand.objects = objectList;

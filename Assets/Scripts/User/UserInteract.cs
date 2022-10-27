@@ -77,7 +77,7 @@ public class UserInteract : MonoBehaviour
     /// <param name="layer"></param>
     public void ScreenToRayClick(Camera camera, LayerMask layer)
     {
-            Vector3 mousePos = Input.mousePosition;
+        Vector3 mousePos = Input.mousePosition;
         Ray ray = camera.ScreenPointToRay(mousePos);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer))
