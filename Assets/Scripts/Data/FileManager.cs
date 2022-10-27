@@ -17,9 +17,9 @@ public static class FileManager
     {
         string filePath = fileName;
 
-        TextAsset jsonData = Resources.Load<TextAsset>("Data/" + filePath);
-
-        T data = JsonUtility.FromJson<T>(jsonData.text);
+       // TextAsset jsonData = Resources.Load<TextAsset>("Data/" + filePath);
+        string s = File.ReadAllText(Application.dataPath + "/Resources/Data/" + filePath + ".txt");
+        T data = JsonUtility.FromJson<T>(s);
 
         return data;
     }
