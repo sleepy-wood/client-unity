@@ -27,6 +27,7 @@ namespace Broccoli.TreeNodeEditor
 	/// all the available tree factory commands.
 	/// </summary>
 	public class TreeFactoryEditorWindow : EditorWindow 
+
 	{
 		#region Vars
 		/// <summary>
