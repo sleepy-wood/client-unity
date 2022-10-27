@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.Playables;
 
 using Broccoli.Factory;
 using Broccoli.Pipe;
 using Broccoli.Generator;
 using System.IO;
 using UnityEngine.EventSystems;
+
 
 public class TreeController : MonoBehaviour
 {
@@ -42,16 +44,17 @@ public class TreeController : MonoBehaviour
         // 나무 자라는 위치
         public Transform growPos;
         // DayCount
-        public static int dayCount;
+        public int dayCount;
         // 씨앗 하강 속도
         public float downSpeed = 0.5f;
         // Daycount Text
         public Text txtDayCount;
         // sprout
         public GameObject sprout;
-        public GameObject sproutFactory;
+        //public GameObject sproutFactory;
         // seed
-        public GameObject seedFactory;
+        public GameObject seed;
+        //public GameObject seedFactory;
         // soil
         public GameObject soil;
         // FOV
@@ -73,6 +76,8 @@ public class TreeController : MonoBehaviour
         public GameObject user;
         // previewTree Scale Value
         float scaleTo;
+        // Playable Director
+        public PlayableDirector pd;
         
         #endregion
 
@@ -109,14 +114,13 @@ public class TreeController : MonoBehaviour
                 data.leafTexture = leafText;
                 //data.landID = growPos.parent.gameObject.name;
 
-                path = "Tree/MapleTree1";
-                // treePipeline 초기화
-                //InitTree();
+                // TreePipeline path
+                path = "Tree/MyTreePipeline";
 
                 // treePipeline 로드
                 treePipeline = Resources.Load<Pipeline>(path);
                 // TextAsset b = Resources.Load<TextAsset>(path);
-
+                
                 // 방문 타입 결정
                 if (visitType == VisitType.None) visitType = VisitType.First;
                 else visitType = VisitType.ReVisit;
@@ -124,7 +128,7 @@ public class TreeController : MonoBehaviour
                 inputPlantName.onValueChanged.AddListener(onValueChanged);
 
                 // 방문 타입 &  DayCount에 따라 다르게 나무 Load
-                LoadTree();
+                //LoadTree();
 
 
                 #region 기존 코드
@@ -142,92 +146,105 @@ public class TreeController : MonoBehaviour
 
         void Update()
         {
+                if (Input.GetKeyDown(KeyCode.Alpha1)&& dayCount < 5 && !plantNameUI.activeSelf)
+                {
+                        dayCount++;
+                        data.treeDay = dayCount;
+                        txtDayCount.text = $"Day{dayCount}";
+                        LoadTree();
+                }
+
+
                 // Test용
-                //if (Input.GetMouseButtonDown(1) && dayCount < 5 && !plantNameUI.activeSelf)
+                //if (Input.touchCount > 0)
                 //{
-                //        dayCount ++;
-                //        data.treeDay = dayCount;
-                //        txtDayCount.text = $"Day{dayCount}";
-                //        LoadTree();
+                //        for (int i = 0; i < Input.touches.Length; i++)
+                //        {
+                //                if (Input.touches[i].phase == TouchPhase.Ended && dayCount < 5 && !plantNameUI.activeSelf)
+                //                {
+                //                        dayCount++;
+                //                        data.treeDay = dayCount;
+                //                        txtDayCount.text = $"Day{dayCount}";
+                //                        LoadTree();
+                //                }
+                //        }
+                //        #region 가지 추가  Test Code
+                //        // TreePipeline - 가지 추가
+                //        //if (Input.GetKeyDown(KeyCode.Alpha2))
+                //        //{
+                //        //    print("가지 추가");
+                //        //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = 20;
+                //        //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = 20;
+                //        //    // Tree 다시 Load
+                //        //    Debug.Log("LoadPipelineAsset");
+                //        //    string pathToAsset = Application.streamingAssetsPath + "/TreePipeline.asset";
+                //        //    Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
+                //        //    treeFactory.UnloadAndClearPipeline();  // pipeline 초기화
+                //        //    treeFactory.LoadPipeline(loadedPipeline.Clone(), pathToAsset, true, true);
+                //        //    Resources.UnloadAsset(loadedPipeline);
+                //        //    // 이전 Tree 삭제
+                //        //    Destroy(growPos.GetChild(0).gameObject);
+                //        //    // 새로 Load한 Tree 위치시키기
+                //        //    //treeFactory.gameObject.transform.localPosition = new Vector3(0, 0, 0);
+                //        //    //treeFactory.gameObject.transform.Rotate(new Vector3(0, 0, 0));
+                //        //    treeFactory.gameObject.transform.parent = growPos;
+                //        //}
+                //        #endregion
                 //}
-                #region 가지 추가  Test Code
-                // TreePipeline - 가지 추가
-                //if (Input.GetKeyDown(KeyCode.Alpha2))
-                //{
-                //    print("가지 추가");
-                //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = 20;
-                //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = 20;
-                //    // Tree 다시 Load
-                //    Debug.Log("LoadPipelineAsset");
-                //    string pathToAsset = Application.streamingAssetsPath + "/TreePipeline.asset";
-                //    Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
-                //    treeFactory.UnloadAndClearPipeline();  // pipeline 초기화
-                //    treeFactory.LoadPipeline(loadedPipeline.Clone(), pathToAsset, true, true);
-                //    Resources.UnloadAsset(loadedPipeline);
-                //    // 이전 Tree 삭제
-                //    Destroy(growPos.GetChild(0).gameObject);
-                //    // 새로 Load한 Tree 위치시키기
-                //    //treeFactory.gameObject.transform.localPosition = new Vector3(0, 0, 0);
-                //    //treeFactory.gameObject.transform.Rotate(new Vector3(0, 0, 0));
-                //    treeFactory.gameObject.transform.parent = growPos;
-                //}
-                #endregion
         }
+        #region 씨앗 심기 코루틴
+        //IEnumerator PlantSeed(float targetScale)
+        //{
+        //        #region 카메라 줌인
+        //        float t = 0;
+        //        //while (t < 1)
+        //        //{
+        //        //        t += Time.deltaTime;
+        //        //        Camera.main.fieldOfView = Mathf.Lerp(defaultFOV, targetFOV, t);
+        //        //        yield return null;
+        //        //}
+        //        //Camera.main.fieldOfView = targetFOV;
+        //        #endregion
 
-        
-        IEnumerator PlantSeed(float targetScale)
-        {
-                #region 카메라 줌인
-                float t = 0;
-                //while (t < 1)
-                //{
-                //        t += Time.deltaTime;
-                //        Camera.main.fieldOfView = Mathf.Lerp(defaultFOV, targetFOV, t);
-                //        yield return null;
-                //}
-                //Camera.main.fieldOfView = targetFOV;
-                #endregion
+        //        // 씨앗 심기
+        //        GameObject s = Instantiate(seedFactory);
+        //        s.transform.position = growPos.position + new Vector3(0, 2, 0);
+        //        s.gameObject.SetActive(true);
+        //        yield return new WaitForSeconds(0.5f);
+        //        while (s.transform.position.y >= -1)
+        //        {
+        //                s.transform.position += Vector3.down * downSpeed * Time.deltaTime;
+        //                yield return null;
+        //        }
+        //        DestroyImmediate(s, true);
 
-                // 씨앗 심기
-                GameObject s = Instantiate(seedFactory);
-                s.transform.position = growPos.position + new Vector3(0, 2, 0);
-                s.gameObject.SetActive(true);
-                yield return new WaitForSeconds(0.5f);
-                while (s.transform.position.y >= -1)
-                {
-                        s.transform.position += Vector3.down * downSpeed * Time.deltaTime;
-                        yield return null;
-                }
-                DestroyImmediate(s, true);
+        //        // 새싹 나타나기
+        //        t = 0;
+        //        s = Instantiate(sproutFactory);
+        //        sprout = s;
+        //        s.transform.parent = growPos;
+        //        s.transform.localPosition = new Vector3(0,0.15f, 0);
+        //        while (t <= targetScale)
+        //        {
+        //                t += Time.deltaTime * 0.5f;
+        //                s.transform.localScale = new Vector3(t, t, t);
+        //                yield return null;
+        //        }
+        //        s.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
+        //        yield return new WaitForSeconds(1);
 
-                // 새싹 나타나기
-                t = 0;
-                s = Instantiate(sproutFactory);
-                sprout = s;
-                s.transform.parent = growPos;
-                s.transform.localPosition = new Vector3(0,0.15f, 0);
-                while (t <= targetScale)
-                {
-                        t += Time.deltaTime * 0.5f;
-                        s.transform.localScale = new Vector3(t, t, t);
-                        yield return null;
-                }
-                s.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
-                yield return new WaitForSeconds(1);
-
-                #region 카메라 줌 아웃
-                //t = 0;
-                //while (t < 1)
-                //{
-                //        t += Time.deltaTime * 0.5f;
-                //        Camera.main.fieldOfView = Mathf.Lerp(targetFOV, defaultFOV, t);
-                //        yield return null;
-                //}
-                //Camera.main.fieldOfView = defaultFOV;
-                #endregion
-                // 식물 이름 UI 띄우기
-                plantNameUI.gameObject.SetActive(true);
-        }
+        //        #region 카메라 줌 아웃
+        //        //t = 0;
+        //        //while (t < 1)
+        //        //{
+        //        //        t += Time.deltaTime * 0.5f;
+        //        //        Camera.main.fieldOfView = Mathf.Lerp(targetFOV, defaultFOV, t);
+        //        //        yield return null;
+        //        //}
+        //        //Camera.main.fieldOfView = defaultFOV;
+        //        #endregion
+        //}
+        #endregion
 
         /// <summary>
         /// 나무 Pipeline 업데이트
@@ -335,7 +352,11 @@ public class TreeController : MonoBehaviour
                 // 1. 씨앗심기 & 새싹
                 if (dayCount == 1)
                 {
-                        StartCoroutine(PlantSeed(0.5f));
+                        //StartCoroutine(PlantSeed(0.5f));
+                        seed.SetActive(true);
+                        pd.Play();
+                        // 식물 이름 UI 띄우기
+                        //plantNameUI.gameObject.SetActive(true);
                 }
                 // 2. 작은 묘목
                 if (dayCount == 2)
