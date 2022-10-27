@@ -326,9 +326,9 @@ public class TreeController : MonoBehaviour
                 treeFactory.LoadPipeline(loadedPipeline.Clone(), path, true, true);
 
                 //#if UNITY_STANDALONE
-                //                string filePath = Application.dataPath + "/ " + "TreeTest" + ".asset";
+                //                string filePath = Application.dataPath + "/TreeTest.asset";
                 //#elif UNITY_IOS || UNITY_ANDROID
-                //                string filePath = Application.persistentDataPath + "/ " + "TreeTest" + ".asset";
+                //                string filePath = Application.persistentDataPath + "/TreeTest.asset";
                 //#endif
                 //                Debug.Log(filePath);
                 //                 TreeSystem.Save(treePipeline, filePath);
