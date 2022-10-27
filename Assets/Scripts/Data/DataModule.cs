@@ -1,3 +1,5 @@
+//#define USE_LOCAL
+
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
@@ -10,6 +12,7 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
+
 
 
 class ResultTemp<T>
@@ -48,6 +51,10 @@ public class DataModule
     /// <returns></returns>
     public static async UniTask<T> WebRequest<T>(string _url, NetworkType networkType, string data = null)
     {
+#if USE_LOCAL
+
+        return default;
+#else
         //네트워크 체킹
         await CheckNetwork();
         //API URL 생성
@@ -102,6 +109,7 @@ public class DataModule
             return default;
         }
         return default;
+#endif
     }
 
     private static async UniTask CheckNetwork()

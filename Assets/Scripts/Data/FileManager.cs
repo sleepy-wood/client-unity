@@ -4,6 +4,9 @@ using UnityEngine;
 using System.IO;
 using System.Text;
 using Unity.VisualScripting.FullSerializer;
+using System;
+using System.Net;
+using UnityEngine.Networking;
 
 public static class FileManager
 {
@@ -15,14 +18,16 @@ public static class FileManager
     /// <returns></returns>
     public static T LoadDataFile<T>(string fileName)
     {
-        string filePath = fileName;
+        string filePath = Application.persistentDataPath + "/Data/" + fileName + ".txt";
+        
+        string s = File.ReadAllText(filePath);
 
-       // TextAsset jsonData = Resources.Load<TextAsset>("Data/" + filePath);
-        string s = File.ReadAllText(Application.dataPath + "/Resources/Data/" + filePath + ".txt");
         T data = JsonUtility.FromJson<T>(s);
 
         return data;
     }
+
+    
     /// <summary>
     /// Data를 받아서 Json으로 변환 후 File로 저장
     /// </summary>
@@ -37,8 +42,8 @@ public static class FileManager
         //Json을 txt 파일로 레지스트리에 저장
         string filePath = Application.dataPath + "/Resources/Data";
 #elif UNITY_IOS || UNITY_ANDROID
-        string filePath = Application.persistentDataPath + "/Resources/Data";
-
+        string filePath = Application.persistentDataPath + "/Data";
+        Debug.Log(filePath);
 #endif
         if (!Directory.Exists(filePath))
         {

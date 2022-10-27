@@ -3,6 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.SceneManagement;
+using UnityEngine.Android;
+using System;
+using UnityEngine.Networking;
+using System.Net.NetworkInformation;
 
 public class CharactorChoice : MonoBehaviour
 {
@@ -15,7 +19,31 @@ public class CharactorChoice : MonoBehaviour
     private bool isNextScene = false;
     private float curTime = 0;
 
-    private UserInput userInput;    
+    private UserInput userInput;
+
+    private void Awake()
+    {
+        Permission.RequestUserPermission(Permission.ExternalStorageWrite);
+        StartCoroutine(CopyToPersistent());
+    }
+
+    IEnumerator CopyToPersistent()
+    {
+        string filePath = Application.streamingAssetsPath + "/Data/" + "LandData" + ".txt";
+        Uri uri = new Uri(filePath);
+        UnityWebRequest request = UnityWebRequest.Get(uri.AbsoluteUri);
+        yield return request.SendWebRequest();
+        print(Application.persistentDataPath + ", " + request.downloadHandler.text);
+
+        filePath = Application.persistentDataPath + "/Data";
+        if (!Directory.Exists(filePath))
+        {
+            Directory.CreateDirectory(filePath);
+        }
+
+        File.WriteAllText(filePath + "/LandData" + ".txt", request.downloadHandler.text);
+    }
+
     private void Start()
     {
         OnClickPreviewCharactor(0);
