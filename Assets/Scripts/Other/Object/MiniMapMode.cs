@@ -73,9 +73,6 @@ public class MiniMapMode : MonoBehaviour, IPointerClickHandler
                     int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()) != int.Parse(Land.name[Land.name.Length - 1].ToString()))
                 {
                     ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>("LandData");
-                    print(arrayLandData.landLists.Count);
-                    print(arrayLandData.bridgeLists.Count);
-                    print(arrayLandData.bridgeInfo.Count);
 
                     List<int> path = AlgorithmUtility.BFS(
                         arrayLandData.bridgeInfo, int.Parse(Land.name[Land.name.Length - 1].ToString()),
