@@ -1672,10 +1672,7 @@ MonoBehaviour:
     bakers:
     - {fileID: 2110237885}
   _sproutGroups:
-    _sproutGroups:
-    - id: 1
-      branchCollection: {fileID: 0}
-      colorIndex: 0
+    _sproutGroups: []
   treeFactoryPreferences:
     factoryScale: 0.4
     lods: []
@@ -1703,6 +1700,9 @@ MonoBehaviour:
   undoControl:
     undoCount: 0
     canvasUndoCount: 0
+  checkedElementsOnValidation: 
+  toDeletePipelineElements: []
+  srcElements: []
   seed: 1
   randomState:
     s0: 0

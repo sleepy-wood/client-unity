@@ -10,7 +10,8 @@ using Broccoli.Pipe;
 using Broccoli.Generator;
 using System.IO;
 using UnityEngine.EventSystems;
-
+using System;
+using UnityEngine.Networking;
 
 public class TreeController : MonoBehaviour
 {
@@ -156,42 +157,44 @@ public class TreeController : MonoBehaviour
 
 
                 // Test용
-                //if (Input.touchCount > 0)
-                //{
-                //        for (int i = 0; i < Input.touches.Length; i++)
-                //        {
-                //                if (Input.touches[i].phase == TouchPhase.Ended && dayCount < 5 && !plantNameUI.activeSelf)
-                //                {
-                //                        dayCount++;
-                //                        data.treeDay = dayCount;
-                //                        txtDayCount.text = $"Day{dayCount}";
-                //                        LoadTree();
-                //                }
-                //        }
-                //        #region 가지 추가  Test Code
-                //        // TreePipeline - 가지 추가
-                //        //if (Input.GetKeyDown(KeyCode.Alpha2))
-                //        //{
-                //        //    print("가지 추가");
-                //        //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = 20;
-                //        //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = 20;
-                //        //    // Tree 다시 Load
-                //        //    Debug.Log("LoadPipelineAsset");
-                //        //    string pathToAsset = Application.streamingAssetsPath + "/TreePipeline.asset";
-                //        //    Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
-                //        //    treeFactory.UnloadAndClearPipeline();  // pipeline 초기화
-                //        //    treeFactory.LoadPipeline(loadedPipeline.Clone(), pathToAsset, true, true);
-                //        //    Resources.UnloadAsset(loadedPipeline);
-                //        //    // 이전 Tree 삭제
-                //        //    Destroy(growPos.GetChild(0).gameObject);
-                //        //    // 새로 Load한 Tree 위치시키기
-                //        //    //treeFactory.gameObject.transform.localPosition = new Vector3(0, 0, 0);
-                //        //    //treeFactory.gameObject.transform.Rotate(new Vector3(0, 0, 0));
-                //        //    treeFactory.gameObject.transform.parent = growPos;
-                //        //}
-                //        #endregion
-                //}
-        }
+                if (Input.touchCount > 0)
+                {
+                        for (int i = 0; i < Input.touches.Length; i++)
+                        {
+                                if (Input.touches[i].phase == TouchPhase.Ended && dayCount < 5 && !plantNameUI.activeSelf)
+                                {
+                                        dayCount++;
+                                        data.treeDay = dayCount;
+                                        txtDayCount.text = $"Day{dayCount}";
+                                        LoadTree();
+                                }
+                        }
+                }
+
+                        //        #region 가지 추가  Test Code
+                        //        // TreePipeline - 가지 추가
+                        //        //if (Input.GetKeyDown(KeyCode.Alpha2))
+                        //        //{
+                        //        //    print("가지 추가");
+                        //        //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = 20;
+                        //        //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = 20;
+                        //        //    // Tree 다시 Load
+                        //        //    Debug.Log("LoadPipelineAsset");
+                        //        //    string pathToAsset = Application.streamingAssetsPath + "/TreePipeline.asset";
+                        //        //    Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
+                        //        //    treeFactory.UnloadAndClearPipeline();  // pipeline 초기화
+                        //        //    treeFactory.LoadPipeline(loadedPipeline.Clone(), pathToAsset, true, true);
+                        //        //    Resources.UnloadAsset(loadedPipeline);
+                        //        //    // 이전 Tree 삭제
+                        //        //    Destroy(growPos.GetChild(0).gameObject);
+                        //        //    // 새로 Load한 Tree 위치시키기
+                        //        //    //treeFactory.gameObject.transform.localPosition = new Vector3(0, 0, 0);
+                        //        //    //treeFactory.gameObject.transform.Rotate(new Vector3(0, 0, 0));
+                        //        //    treeFactory.gameObject.transform.parent = growPos;
+                        //        //}
+                        //        #endregion
+                        //}
+                }
         #region 씨앗 심기 코루틴
         //IEnumerator PlantSeed(float targetScale)
         //{
@@ -321,7 +324,19 @@ public class TreeController : MonoBehaviour
                 Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
                 treeFactory.UnloadAndClearPipeline();
                 treeFactory.LoadPipeline(loadedPipeline.Clone(), path, true, true);
-                treePipeline = Resources.Load<Pipeline>(path);                
+
+                //#if UNITY_STANDALONE
+                //                string filePath = Application.dataPath + "/ " + "TreeTest" + ".asset";
+                //#elif UNITY_IOS || UNITY_ANDROID
+                //                string filePath = Application.persistentDataPath + "/ " + "TreeTest" + ".asset";
+                //#endif
+                //                Debug.Log(filePath);
+                //                 TreeSystem.Save(treePipeline, filePath);
+
+                //                treePipeline = TreeSystem.Load(filePath);
+
+                treePipeline = Resources.Load<Pipeline>(path);
+
                 treeFactory.transform.GetChild(0).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         }
 

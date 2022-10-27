@@ -47,12 +47,12 @@ namespace Broccoli.Pipe {
 		/// Elements used to create a tree.
 		/// </summary>
 		[System.NonSerialized]
-		List<PipelineElement> elements = new List<PipelineElement> (); // TODO: 05/04/2017 make it private
-		/// <summary>
-		/// Dictionary for the relationship between ids and elements.
-		/// </summary>
-		[System.NonSerialized]
-		Dictionary<int, PipelineElement> idToElement = new Dictionary<int, PipelineElement> ();
+		public List<PipelineElement> elements = new List<PipelineElement> (); // TODO: 05/04/2017 make it private
+                /// <summary>
+                /// Dictionary for the relationship between ids and elements.
+                /// </summary>
+                [System.NonSerialized]
+                public Dictionary<int, PipelineElement> idToElement = new Dictionary<int, PipelineElement> ();
 		/// <summary>
 		/// On a single valid sequence of connected elements the first element of them.
 		/// </summary>
@@ -82,7 +82,7 @@ namespace Broccoli.Pipe {
 		/// Sprout groups on the pipeline, used to create leafs and other offspring from the branches.
 		/// </summary>
 		[SerializeField]
-		SproutGroups _sproutGroups = new SproutGroups ();
+		public SproutGroups _sproutGroups = new SproutGroups ();
 		/// <summary>
 		/// Accessor for sprout groups.
 		/// </summary>
@@ -103,15 +103,15 @@ namespace Broccoli.Pipe {
 		/// <summary>
 		/// The checked elements already checked when validating the pipeline.
 		/// </summary>
-		List<int> checkedElementsOnValidation = new List<int> ();
+		public List<int> checkedElementsOnValidation = new List<int> ();
 		/// <summary>
 		/// To delete pipeline elements.
 		/// </summary>
-		List<PipelineElement> toDeletePipelineElements = new List<PipelineElement> ();
+		public List<PipelineElement> toDeletePipelineElements = new List<PipelineElement> ();
 		/// <summary>
 		/// The source elements.
 		/// </summary>
-		List<PipelineElement> srcElements = new List<PipelineElement>();
+		public List<PipelineElement> srcElements = new List<PipelineElement>();
 		/// <summary>
 		/// The seed used to process the pipeline.
 		/// </summary>
@@ -126,7 +126,7 @@ namespace Broccoli.Pipe {
 		/// <typeparam name="string">Pipeline element keyname.</typeparam>
 		/// <typeparam name="PipelineElement">Pipeline element.</typeparam>
 		/// <returns>Pipeline element.</returns>
-		Dictionary<string, PipelineElement> keyNameToPipelineElement = new Dictionary<string, PipelineElement> ();
+		public Dictionary<string, PipelineElement> keyNameToPipelineElement = new Dictionary<string, PipelineElement> ();
 		#endregion
 
 		#region Events
