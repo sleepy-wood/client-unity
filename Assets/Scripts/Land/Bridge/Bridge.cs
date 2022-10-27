@@ -52,6 +52,7 @@ public class Bridge : MonoBehaviour, IClickedObject
     }
     public void ClickMe()
     {
+        Debug.Log("Click: " + transform);
         if (currentBridgeType == BridgeType.NotBuild)
         {
             currentBridgeType = BridgeType.WillBuild;
