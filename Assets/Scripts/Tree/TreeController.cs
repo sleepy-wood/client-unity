@@ -116,7 +116,7 @@ public class TreeController : MonoBehaviour
                 //data.landID = growPos.parent.gameObject.name;
 
                 // TreePipeline path
-                path = "Tree/MyTreePipeline";
+                path = "Tree/MyTreePipeline_2";
 
                 // treePipeline 로드
                 treePipeline = Resources.Load<Pipeline>(path);
@@ -149,6 +149,7 @@ public class TreeController : MonoBehaviour
         {
                 if (Input.GetKeyDown(KeyCode.Alpha1)&& dayCount < 5 && !plantNameUI.activeSelf)
                 {
+                        print("alpha1");
                         dayCount++;
                         data.treeDay = dayCount;
                         txtDayCount.text = $"Day{dayCount}";
@@ -171,30 +172,30 @@ public class TreeController : MonoBehaviour
                         }
                 }
 
-                        //        #region 가지 추가  Test Code
-                        //        // TreePipeline - 가지 추가
-                        //        //if (Input.GetKeyDown(KeyCode.Alpha2))
-                        //        //{
-                        //        //    print("가지 추가");
-                        //        //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = 20;
-                        //        //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = 20;
-                        //        //    // Tree 다시 Load
-                        //        //    Debug.Log("LoadPipelineAsset");
-                        //        //    string pathToAsset = Application.streamingAssetsPath + "/TreePipeline.asset";
-                        //        //    Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
-                        //        //    treeFactory.UnloadAndClearPipeline();  // pipeline 초기화
-                        //        //    treeFactory.LoadPipeline(loadedPipeline.Clone(), pathToAsset, true, true);
-                        //        //    Resources.UnloadAsset(loadedPipeline);
-                        //        //    // 이전 Tree 삭제
-                        //        //    Destroy(growPos.GetChild(0).gameObject);
-                        //        //    // 새로 Load한 Tree 위치시키기
-                        //        //    //treeFactory.gameObject.transform.localPosition = new Vector3(0, 0, 0);
-                        //        //    //treeFactory.gameObject.transform.Rotate(new Vector3(0, 0, 0));
-                        //        //    treeFactory.gameObject.transform.parent = growPos;
-                        //        //}
-                        //        #endregion
-                        //}
-                }
+                #region 가지 추가  Test Code
+                // TreePipeline - 가지 추가
+                //if (Input.GetKeyDown(KeyCode.Alpha2))
+                //{
+                //    print("가지 추가");
+                //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = 20;
+                //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = 20;
+                //    // Tree 다시 Load
+                //    Debug.Log("LoadPipelineAsset");
+                //    string pathToAsset = Application.streamingAssetsPath + "/TreePipeline.asset";
+                //    Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
+                //    treeFactory.UnloadAndClearPipeline();  // pipeline 초기화
+                //    treeFactory.LoadPipeline(loadedPipeline.Clone(), pathToAsset, true, true);
+                //    Resources.UnloadAsset(loadedPipeline);
+                //    // 이전 Tree 삭제
+                //    Destroy(growPos.GetChild(0).gameObject);
+                //    // 새로 Load한 Tree 위치시키기
+                //    //treeFactory.gameObject.transform.localPosition = new Vector3(0, 0, 0);
+                //    //treeFactory.gameObject.transform.Rotate(new Vector3(0, 0, 0));
+                //    treeFactory.gameObject.transform.parent = growPos;
+                //}
+                #endregion
+        }
+
         #region 씨앗 심기 코루틴
         //IEnumerator PlantSeed(float targetScale)
         //{
