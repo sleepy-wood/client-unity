@@ -130,6 +130,7 @@ public class TreeController : MonoBehaviour
 
                 // 방문 타입 &  DayCount에 따라 다르게 나무 Load
                 //LoadTree();
+                pd.Play();
 
 
                 #region 기존 코드
@@ -149,7 +150,6 @@ public class TreeController : MonoBehaviour
         {
                 if (Input.GetKeyDown(KeyCode.Alpha1)&& dayCount < 5 && !plantNameUI.activeSelf)
                 {
-                        print("alpha1");
                         dayCount++;
                         data.treeDay = dayCount;
                         txtDayCount.text = $"Day{dayCount}";
@@ -259,7 +259,7 @@ public class TreeController : MonoBehaviour
         /// "scale" > Object scale
         /// </summary>
         /// <param name="dayCount"></param>
-        public void TreeUpdate(int dayCount)
+        public void TreeUpdate(int dayCount)  
         {
                 // 날짜에 맞춘 정보를 가지고 있는 요소
                 flatFreq element = flatFreqencyList[dayCount-2];
