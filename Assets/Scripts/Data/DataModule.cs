@@ -146,7 +146,7 @@ public class DataModule
         {
             Debug.LogError("Manifast Error");
         }
-        string CRCNum = manifastText.Substring(crcStartIdx + 5, );
+        //string CRCNum = manifastText.Substring(crcStartIdx + 5, );
 
         //Body 정보 입력
         request.downloadHandler = DownHandlerFactory(dataType, filePath, requestURL);
