@@ -37,7 +37,7 @@ public class TreeController : MonoBehaviour
         // DayCount에 따라 변하는 나무 관련 변수 저장소
         public List<flatFreq> flatFreqencyList = new List<flatFreq>();
         // pipeline load path
-        string path;
+        //string path;/
         // tree Factory
         public TreeFactory treeFactory = null;
         // The pipeline
@@ -117,7 +117,7 @@ public class TreeController : MonoBehaviour
                 //data.landID = growPos.parent.gameObject.name;
 
                 // TreePipeline path
-                path = "Tree/MyTreePipeline_2";
+                //path = "Tree/MyTreePipeline_2";
 
                 // treePipeline 로드
                 //treePipeline = Resources.Load<Pipeline>(path);
@@ -324,15 +324,9 @@ public class TreeController : MonoBehaviour
         public void TreeReload()
         {
                 Debug.Log("TreeReload");
-<<<<<<< Updated upstream
-                Pipeline loadedPipeline = Resources.Load<Pipeline>(path);
-                Debug.Log("1");
-                //treeFactory.UnloadAndClearPipeline();
-=======
                 //Pipeline loadedPipeline = Resources.Load<Pipeline>(path);
                 Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2"); ;
                 treeFactory.UnloadAndClearPipeline();
->>>>>>> Stashed changes
                 treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
                 Debug.Log("2");
 
@@ -347,10 +341,7 @@ public class TreeController : MonoBehaviour
                 //                treePipeline = TreeSystem.Load(filePath);
 
                 Resources.UnloadAsset(loadedPipeline);
-<<<<<<< Updated upstream
-                Debug.Log("3");
-=======
->>>>>>> Stashed changes
+
                 //treePipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2");
                 treeFactory.transform.GetChild(0).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
                 Debug.Log(treeFactory.transform.GetChild(0).localScale);
