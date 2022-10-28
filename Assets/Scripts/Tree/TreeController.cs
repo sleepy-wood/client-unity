@@ -52,15 +52,15 @@ public class TreeController : MonoBehaviour
         public Text txtDayCount;
         // sprout
         public GameObject sprout;
-        //public GameObject sproutFactory;
+        public GameObject sproutFactory;
         // seed
         public GameObject seed;
-        //public GameObject seedFactory;
+        public GameObject seedFactory;
         // soil
         public GameObject soil;
         // FOV
-        //public float defaultFOV = 64.0f;
-        //public float targetFOV = 20.0f;
+        public float defaultFOV = 10.29f;
+        public float targetFOV = 3.11f;
         // TreeData
         public TreeData data;
         // leafTexture
@@ -132,7 +132,7 @@ public class TreeController : MonoBehaviour
 
                 // 방문 타입 &  DayCount에 따라 다르게 나무 Load
                 //LoadTree();
-                pd.Play();
+
 
 
                 #region 기존 코드
@@ -199,57 +199,61 @@ public class TreeController : MonoBehaviour
         }
 
         #region 씨앗 심기 코루틴
-        //IEnumerator PlantSeed(float targetScale)
-        //{
-        //        #region 카메라 줌인
-        //        float t = 0;
-        //        //while (t < 1)
-        //        //{
-        //        //        t += Time.deltaTime;
-        //        //        Camera.main.fieldOfView = Mathf.Lerp(defaultFOV, targetFOV, t);
-        //        //        yield return null;
-        //        //}
-        //        //Camera.main.fieldOfView = targetFOV;
-        //        #endregion
+        IEnumerator PlantSeed(float targetScale)
+        {
+                #region 카메라 줌인
+                float t = 0;
+                //while (t < 1)
+                //{
+                //        t += Time.deltaTime;
+                //        Camera.main.fieldOfView = Mathf.Lerp(defaultFOV, targetFOV, t);
+                //        yield return null;
+                //}
+                //Camera.main.fieldOfView = targetFOV;
+                #endregion
 
-        //        // 씨앗 심기
-        //        GameObject s = Instantiate(seedFactory);
-        //        s.transform.position = growPos.position + new Vector3(0, 2, 0);
-        //        s.gameObject.SetActive(true);
-        //        yield return new WaitForSeconds(0.5f);
-        //        while (s.transform.position.y >= -1)
-        //        {
-        //                s.transform.position += Vector3.down * downSpeed * Time.deltaTime;
-        //                yield return null;
-        //        }
-        //        DestroyImmediate(s, true);
+                // 씨앗 심기
+                float acc = 0;
+                GameObject s = Instantiate(seedFactory);
+                s.transform.localPosition = new Vector3(0, 2, 0);
+                s.gameObject.SetActive(true);
+                yield return new WaitForSeconds(0.5f);
+                while (s.transform.localPosition.y >= 0.82)
+                {
+                        acc += Time.deltaTime;
+                        s.transform.position += Vector3.down * (downSpeed + acc) * Time.deltaTime;
+                        yield return null;
+                }
+                s.transform.localPosition = new Vector3(0, 0.82f, 0);
+                DestroyImmediate(s, true);
 
-        //        // 새싹 나타나기
-        //        t = 0;
-        //        s = Instantiate(sproutFactory);
-        //        sprout = s;
-        //        s.transform.parent = growPos;
-        //        s.transform.localPosition = new Vector3(0,0.15f, 0);
-        //        while (t <= targetScale)
-        //        {
-        //                t += Time.deltaTime * 0.5f;
-        //                s.transform.localScale = new Vector3(t, t, t);
-        //                yield return null;
-        //        }
-        //        s.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
-        //        yield return new WaitForSeconds(1);
+                // 새싹 자라기
+                t = 0;
+                s = Instantiate(sproutFactory);
+                sprout = s;
+                s.transform.parent = growPos;
+                s.transform.localPosition = new Vector3(0, 0.15f, 0);
+                while (t <= targetScale)
+                {
+                        t += Time.deltaTime * 0.5f;
+                        s.transform.localScale = new Vector3(t, t, t);
+                        yield return null;
 
-        //        #region 카메라 줌 아웃
-        //        //t = 0;
-        //        //while (t < 1)
-        //        //{
-        //        //        t += Time.deltaTime * 0.5f;
-        //        //        Camera.main.fieldOfView = Mathf.Lerp(targetFOV, defaultFOV, t);
-        //        //        yield return null;
-        //        //}
-        //        //Camera.main.fieldOfView = defaultFOV;
-        //        #endregion
-        //}
+                }
+                s.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
+                yield return new WaitForSeconds(1);
+
+                #region 카메라 줌 아웃
+                //t = 0;
+                //while (t < 1)
+                //{
+                //        t += Time.deltaTime * 0.5f;
+                //        Camera.main.fieldOfView = Mathf.Lerp(targetFOV, defaultFOV, t);
+                //        yield return null;
+                //}
+                //Camera.main.fieldOfView = defaultFOV;
+                #endregion
+        }
         #endregion
 
         /// <summary>
@@ -328,7 +332,6 @@ public class TreeController : MonoBehaviour
                 Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2"); ;
                 treeFactory.UnloadAndClearPipeline();
                 treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
-                Debug.Log("2");
 
                 //#if UNITY_STANDALONE
                 //                string filePath = Application.dataPath + "/TreeTest.asset";
@@ -374,11 +377,11 @@ public class TreeController : MonoBehaviour
                 // 1. 씨앗심기 & 새싹
                 if (dayCount == 1)
                 {
-                        //StartCoroutine(PlantSeed(0.5f));
+                        StartCoroutine(PlantSeed(0.5f));
                         seed.SetActive(true);
-                        pd.Play();
+                        //pd.Play();
                         // 식물 이름 UI 띄우기
-                        //plantNameUI.gameObject.SetActive(true);
+                        plantNameUI.gameObject.SetActive(true);
                         TreeReload();
                 }
                 // 2. 작은 묘목
