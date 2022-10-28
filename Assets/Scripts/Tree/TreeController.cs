@@ -120,7 +120,8 @@ public class TreeController : MonoBehaviour
                 path = "Tree/MyTreePipeline_2";
 
                 // treePipeline 로드
-                treePipeline = Resources.Load<Pipeline>(path);
+                //treePipeline = Resources.Load<Pipeline>(path);
+                treePipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2");
                 // TextAsset b = Resources.Load<TextAsset>(path);
                 
                 // 방문 타입 결정
@@ -264,7 +265,7 @@ public class TreeController : MonoBehaviour
         {
                 // 날짜에 맞춘 정보를 가지고 있는 요소
                 flatFreq element = flatFreqencyList[dayCount-2];
-
+                
                 #region 1. Element FlatFreqMinMax
                 int idx = element.flatFreqMinMax.minMaxList.Count;
                 // 각 요소 for문 돌리며 세팅
@@ -275,7 +276,7 @@ public class TreeController : MonoBehaviour
                         // 저장값
                         minMax store1 = flatFreqencyList[dayCount - 2].flatFreqMinMax.minMaxList[i];
 
-                        // Min Frequency
+                        // Min Frequenc
                         pipe1.minFrequency = store1.min;
                         // Max Frequency
                         pipe1.maxFrequency = store1.max;
@@ -323,9 +324,15 @@ public class TreeController : MonoBehaviour
         public void TreeReload()
         {
                 Debug.Log("TreeReload");
+<<<<<<< Updated upstream
                 Pipeline loadedPipeline = Resources.Load<Pipeline>(path);
                 Debug.Log("1");
                 //treeFactory.UnloadAndClearPipeline();
+=======
+                //Pipeline loadedPipeline = Resources.Load<Pipeline>(path);
+                Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2"); ;
+                treeFactory.UnloadAndClearPipeline();
+>>>>>>> Stashed changes
                 treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
                 Debug.Log("2");
 
@@ -340,7 +347,10 @@ public class TreeController : MonoBehaviour
                 //                treePipeline = TreeSystem.Load(filePath);
 
                 Resources.UnloadAsset(loadedPipeline);
+<<<<<<< Updated upstream
                 Debug.Log("3");
+=======
+>>>>>>> Stashed changes
                 //treePipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2");
                 treeFactory.transform.GetChild(0).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
                 Debug.Log(treeFactory.transform.GetChild(0).localScale);
@@ -378,6 +388,7 @@ public class TreeController : MonoBehaviour
                         pd.Play();
                         // 식물 이름 UI 띄우기
                         //plantNameUI.gameObject.SetActive(true);
+                        TreeReload();
                 }
                 // 2. 작은 묘목
                 if (dayCount == 2)
@@ -385,6 +396,7 @@ public class TreeController : MonoBehaviour
                         sprout.SetActive(false);
                         soil.SetActive(false);
                         TreeUpdate(dayCount);
+                        TreeReload();
                         treeFactory.gameObject.SetActive(true);
                 }
                 // 3. 묘목
