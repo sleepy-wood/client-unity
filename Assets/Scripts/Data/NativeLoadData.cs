@@ -41,8 +41,13 @@ public class NativeLoadData
             foreach (var sample in samples)
             {
                 Debug.Log("Start:QuerySleepSamplesCompleted: " + sample.ToString());
-                
             }
+
+            SleepDataStruct sleepDataStruct = new SleepDataStruct();
+            sleepDataStruct.StartDate = samples[0].StartDate;
+            sleepDataStruct.EndDate = samples[0].EndDate;
+            sleepDataStruct.Type = samples[0].Type;
+            DataTemporary.MyUserData.SleepData = sleepDataStruct;
         }
     }
 

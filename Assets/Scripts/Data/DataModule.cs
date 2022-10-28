@@ -146,6 +146,8 @@ public class DataModule
         {
             Debug.LogError("Manifast Error");
         }
+
+
         //string CRCNum = manifastText.Substring(crcStartIdx + 5, );
 
         //Body 정보 입력
