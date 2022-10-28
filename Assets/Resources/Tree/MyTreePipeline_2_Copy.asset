@@ -275,8 +275,8 @@ MonoBehaviour:
   nodePosition: {x: 64, y: -347.5}
   minGirthAtTop: 0.05
   maxGirthAtTop: 0.05
-  minGirthAtBase: 1
-  maxGirthAtBase: 1
+  minGirthAtBase: 0.7
+  maxGirthAtBase: 0.7
   curve:
     serializedVersion: 2
     m_Curve:
@@ -784,7 +784,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c408808996a8a4812a415c43bab9974b, type: 3}
-  m_Name: MyTreePipeline_2 1
+  m_Name: MyTreePipeline_2_Copy
   m_EditorClassIdentifier: 
   _serializedPipeline:
     structureGenerators:
@@ -927,7 +927,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     childrenPerNode: 1
     minFrequency: 1
-    maxFrequency: 5
+    maxFrequency: 2
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -1126,8 +1126,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 4
-    maxFrequency: 6
+    minFrequency: 0
+    maxFrequency: 0
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0.2
@@ -1326,8 +1326,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 3
-    maxFrequency: 4
+    minFrequency: 0
+    maxFrequency: 0
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -1526,8 +1526,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 5
-    minFrequency: 4
-    maxFrequency: 5
+    minFrequency: 2
+    maxFrequency: 3
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -3720,8 +3720,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     childrenPerNode: 1
-    minFrequency: 2
-    maxFrequency: 2
+    minFrequency: 1
+    maxFrequency: 1
     randomTwirlOffsetEnabled: 1
     twirlOffset: 0
     maxTwirl: 0
@@ -3814,8 +3814,8 @@ MonoBehaviour:
     flipSproutDirection: {x: 1, y: 0, z: 0}
     maxLengthAtTop: 4
     minLengthAtTop: 4
-    maxLengthAtBase: 8
-    minLengthAtBase: 8
+    maxLengthAtBase: 9
+    minLengthAtBase: 9
     lengthCurve:
       serializedVersion: 2
       m_Curve:
