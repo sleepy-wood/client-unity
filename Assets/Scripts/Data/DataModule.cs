@@ -26,7 +26,7 @@ class Token
 public class DataModule
 {
     private const string DOMAIN = "https://team-buildup.shop";
-    public static string REPLACE_BEARER_TOKEN = "";
+    public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY2OTIxNDYxLCJleHAiOjMzMjI0NTIxNDYxfQ.StLy7Saq0POUCxfhdktNHb6lffA9pQtNvM0zF5DtjgA";
 
     /// <summary>
     /// Network Type 설정
