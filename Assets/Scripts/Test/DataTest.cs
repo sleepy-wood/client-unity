@@ -1,3 +1,4 @@
+using Broccoli.Pipe;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
@@ -7,14 +8,22 @@ using UnityEngine;
 
 public class DataTest : MonoBehaviour
 {
+
+    //private async void Start()
+    //{
+    //    AssetBundle result = await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
+
+    //    Debug.Log(DataTemporary.assetBundle.LoadAllAssets<Pipeline>()[0]);
+    //}
+
+    //NativeLoadData nativeLoad = new NativeLoadData();
+
+    //private void Start()
+    //{
+    //    nativeLoad.LoadNativeData();
+    //}
+
     //UserData userData = new UserData();
-    NativeLoadData nativeLoad = new NativeLoadData();
-
-    private void Start()
-    {
-        nativeLoad.LoadNativeData();
-    }
-
     //private async void Start()
     //{
     //    // IOS에서 기져올 데이터
@@ -48,9 +57,6 @@ public class DataTest : MonoBehaviour
 
     //        // token은 WebRequest Header에 들어가야함.
     //        UserData user = await DataModule.WebRequest<UserData>("/api/v1/user", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-
-
-
     //    }
     //}
 }
