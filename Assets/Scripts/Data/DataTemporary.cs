@@ -9,4 +9,5 @@ public class DataTemporary
 {
     public static UserData MyUserData = new UserData();
     public static ArrayLandData MyLandData = new ArrayLandData();
+    public static AssetBundle assetBundle;
 }

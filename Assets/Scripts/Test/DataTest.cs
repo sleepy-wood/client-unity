@@ -21,7 +21,7 @@ public class DataTest : MonoBehaviour
         //userData.UserAvatar = "Julia";
         //userData.SleepData = sleepDataStruct;
 
-        ResultTemp<Token> data = await DataModule.WebRequest<ResultTemp<Token>>("/api/v1/auth/login/temp", DataModule.NetworkType.POST);
+        ResultTemp<Token> data = await DataModule.WebRequest<ResultTemp<Token>>("/api/v1/auth/login/temp", DataModule.NetworkType.POST, DataModule.DataType.BUFFER);
 
         Debug.Log(data.result);
 
@@ -40,7 +40,7 @@ public class DataTest : MonoBehaviour
             PlayerPrefs.SetString("Bearer", token);
             
             // token은 WebRequest Header에 들어가야함.
-            UserData user = await DataModule.WebRequest<UserData>("/api/v1/user", DataModule.NetworkType.GET);
+            UserData user = await DataModule.WebRequest<UserData>("/api/v1/user", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
 
             
