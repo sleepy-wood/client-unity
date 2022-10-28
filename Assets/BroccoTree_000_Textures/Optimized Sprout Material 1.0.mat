@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Optimized Sprout Material 1.0
+  m_Shader: {fileID: 14002, guid: 0000000000000000f000000000000000, type: 0}
+  m_ValidKeywords:
+  - EFFECT_SUBSURFACE
+  - _WINDQUALITY_BEST
+  m_InvalidKeywords:
+  - EFFECT_BACKSIDE_NORMALS
+  - GEOM_TYPE_LEAF
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 1
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ExtraTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SubsurfaceTex:
+        m_Texture: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BillboardKwToggle: 0
+    - _BillboardShadowFade: 0.5
+    - _Glossiness: 0.2
+    - _HueVariationKwToggle: 0
+    - _Metallic: 0.55
+    - _NormalMapKwToggle: 0
+    - _SubsurfaceIndirect: 0.5
+    - _SubsurfaceKwToggle: 1
+    - _TwoSided: 0
+    - _WindQuality: 4
+    m_Colors:
+    - _Color: {r: 0.9264706, g: 0.9264706, b: 0.9264706, a: 0.75}
+    - _HueVariationColor: {r: 0.9264706, g: 0.9264706, b: 0.9264706, a: 1}
+    - _SubsurfaceColor: {r: 0.79907924, g: 0.990566, b: 0.7756319, a: 1}
+  m_BuildTextureStacks: []

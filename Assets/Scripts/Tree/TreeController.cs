@@ -323,10 +323,11 @@ public class TreeController : MonoBehaviour
         public void TreeReload()
         {
                 Debug.Log("TreeReload");
-                Broccoli.Pipe.Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2");
-
-                treeFactory.UnloadAndClearPipeline();
+                Pipeline loadedPipeline = Resources.Load<Pipeline>(path);
+                Debug.Log("1");
+                //treeFactory.UnloadAndClearPipeline();
                 treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
+                Debug.Log("2");
 
                 //#if UNITY_STANDALONE
                 //                string filePath = Application.dataPath + "/TreeTest.asset";
@@ -338,11 +339,11 @@ public class TreeController : MonoBehaviour
 
                 //                treePipeline = TreeSystem.Load(filePath);
 
-                //treePipeline = Resources.Load(path, typeof(Pipeline)) as Pipeline;
                 Resources.UnloadAsset(loadedPipeline);
-                //treePipeline = assetBundle.LoadAllAssets<Pipeline>()[0];
-                //treeFactory.LoadPipeline(treePipeline.Clone(), true);
+                Debug.Log("3");
+                //treePipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2");
                 treeFactory.transform.GetChild(0).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
+                Debug.Log(treeFactory.transform.GetChild(0).localScale);
         }
 
         /// <summary>
