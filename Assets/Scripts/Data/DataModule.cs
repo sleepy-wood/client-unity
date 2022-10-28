@@ -125,7 +125,7 @@ public class DataModule
     /// <param name="data"></param>
     /// <param name="filePath"></param>
     /// <returns></returns>
-    public static async UniTask<AssetBundle> WebRequestAssetBundle(string _url,string manifastUrl , NetworkType networkType, DataType dataType, string filePath = null)
+    public static async UniTask<AssetBundle> WebRequestAssetBundle(string _url, NetworkType networkType, DataType dataType, string filePath = null)
     {
         //네트워크 체킹
         await CheckNetwork();
@@ -138,15 +138,6 @@ public class DataModule
         //웹 요청 생성(Get,Post,Delete,Update)
         UnityWebRequest request = new UnityWebRequest(requestURL, networkType.ToString());
 
-        //manifast받음 -> CRC를 받아오기 위함
-        TextAsset manifast = await WebRequest<TextAsset>(manifastUrl, NetworkType.GET, DataType.BUFFER);
-        string manifastText = manifast.text;
-        int crcStartIdx = manifastText.IndexOf("CRC:");
-        if (crcStartIdx != -1)
-        {
-            Debug.LogError("Manifast Error");
-        }
-        //string CRCNum = manifastText.Substring(crcStartIdx + 5, );
 
         //Body 정보 입력
         request.downloadHandler = DownHandlerFactory(dataType, filePath, requestURL);
@@ -164,6 +155,7 @@ public class DataModule
         {
             var res = await request.SendWebRequest().WithCancellation(cts.Token);
             AssetBundle result = DownloadHandlerAssetBundle.GetContent(request);
+           
             //temporary에 저장
             DataTemporary.assetBundle = result;
             return result;
@@ -176,7 +168,7 @@ public class DataModule
                 //TODO: 네트워크 재시도 팝업 호출.
 
                 //재시도
-                return await WebRequestAssetBundle(_url, manifastUrl, networkType, dataType);
+                return await WebRequestAssetBundle(_url, networkType, dataType);
             }
         }
         catch (Exception e)

@@ -1,3 +1,5 @@
+using NativePlugin.HealthData;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +16,7 @@ public class UserData
 [System.Serializable]
 public class SleepDataStruct
 {
-    public string? SleepAt;
-    public string? WakeAt;
+    public DateTime StartDate;
+    public DateTime EndDate;
+    public SleepType Type;
 }
