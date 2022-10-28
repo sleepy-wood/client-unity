@@ -14,9 +14,16 @@ public class CreateAssetBundles
         {
             Directory.CreateDirectory(assetBundleDirectory);
         }
-        BuildPipeline.BuildAssetBundles(
-            assetBundleDirectory,
-            BuildAssetBundleOptions.None,
-            EditorUserBuildSettings.activeBuildTarget);
-    }
+#if UNITY_STANDALONE
+                BuildPipeline.BuildAssetBundles(
+                      assetBundleDirectory,
+                      BuildAssetBundleOptions.None,
+                     EditorUserBuildSettings.activeBuildTarget);
+#elif UNITY_IOS || UNITY_ANDROID
+                BuildPipeline.BuildAssetBundles(
+                        assetBundleDirectory,
+                        BuildAssetBundleOptions.None,
+                        BuildTarget.Android);
+#endif
+        }
 }

@@ -89,12 +89,13 @@ public class TreeController : MonoBehaviour
                 ReVisit
         }
 
-
+        AssetBundle assetBundle;
         void Start()
         {
                 //user = GameManager.Instance.User;
                 //user.GetComponent<UserInput>().InputControl = true;
 
+                assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/newtreebundle");
                 #region Build
                 // Build mesh 오류 해결 코드
                 //print(Application.dataPath);
@@ -322,9 +323,10 @@ public class TreeController : MonoBehaviour
         public void TreeReload()
         {
                 Debug.Log("TreeReload");
-                Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
+                Broccoli.Pipe.Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2");
+
                 treeFactory.UnloadAndClearPipeline();
-                treeFactory.LoadPipeline(loadedPipeline.Clone(), path, true, true);
+                treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
 
                 //#if UNITY_STANDALONE
                 //                string filePath = Application.dataPath + "/TreeTest.asset";
@@ -336,8 +338,10 @@ public class TreeController : MonoBehaviour
 
                 //                treePipeline = TreeSystem.Load(filePath);
 
-                treePipeline = Resources.Load<Pipeline>(path);
-
+                //treePipeline = Resources.Load(path, typeof(Pipeline)) as Pipeline;
+                Resources.UnloadAsset(loadedPipeline);
+                //treePipeline = assetBundle.LoadAllAssets<Pipeline>()[0];
+                //treeFactory.LoadPipeline(treePipeline.Clone(), true);
                 treeFactory.transform.GetChild(0).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         }
 

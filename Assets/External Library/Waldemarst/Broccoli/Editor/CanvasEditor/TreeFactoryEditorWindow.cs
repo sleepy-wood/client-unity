@@ -679,7 +679,7 @@ namespace Broccoli.TreeNodeEditor
 		/// </summary>
 		/// <param name="pathToAsset">Path to asset.</param>
 		private void LoadPipelineAsset (string pathToAsset) {
-			if (!pathToAsset.Contains (Application.dataPath)) {
+                        if (!pathToAsset.Contains (Application.dataPath)) {
 				if (!string.IsNullOrEmpty (pathToAsset))
 					ShowNotification (
 						new GUIContent ("You should select an asset inside your project folder!"));

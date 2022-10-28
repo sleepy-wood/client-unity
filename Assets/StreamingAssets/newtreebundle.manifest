@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1330768517
+CRC: 3622494933
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d51ff258bc4585a032362193cdfe3d93
+    Hash: 5897934e12bf74af155ce3a0d0a908b0
   TypeTreeHash:
     serializedVersion: 2
-    Hash: d2c354677fda64b0cbfa95871ca6e52e
+    Hash: ea485259df1b69e9c5de5c7564cb6750
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -28,6 +28,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 63a09d95354abd364ad824fa1c792b70, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 634c9aac0d20b4bcdbf2528edff22f8e, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 55d61721113ae4bdd9477f4f20384c27, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: f0f1dcfdfd32e4cb1b4ae1c2d6edc4d4, type: 3}
@@ -35,8 +37,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 30c7ca66c238743c882e0f8b9b24644b, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: ec5807526cb0a4654bfa53c2f6cfa1fc, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: f4769aef02bd642eeb50b021b91d49ad, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
@@ -70,22 +70,10 @@ SerializeReferenceClassIdentifiers:
   ClassName: Broccoli.Pipe.SproutMap/SproutMapArea
 - AssemblyName: Assembly-CSharp
   ClassName: Broccoli.Pipe.SproutMesh
+- AssemblyName: Assembly-CSharp
+  ClassName: Broccoli.Pipe.SproutSeed
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Random/State
 Assets:
-- Assets/AssetBundles/testbundle/TreePipeline5.asset
-- Assets/AssetBundles/testbundle/NewTreePipeline3.asset
-- Assets/AssetBundles/testbundle/NewTreePipeline5_Base.asset
-- Assets/AssetBundles/testbundle/TreePipeline3.asset
-- Assets/AssetBundles/testbundle/TreePipeline8.asset
-- Assets/AssetBundles/testbundle/NewTreePipeline5.asset
-- Assets/AssetBundles/testbundle/TreePipeline7.asset
-- Assets/AssetBundles/testbundle/NewTreePipeline5_My.asset
-- Assets/AssetBundles/testbundle/TreePipeline2.asset
-- Assets/AssetBundles/testbundle/MyTreePipeline.asset
-- Assets/AssetBundles/testbundle/NewTreePipeline.asset
-- Assets/AssetBundles/testbundle/TreePipeline6.asset
-- Assets/AssetBundles/testbundle/TreePipeline.asset
-- Assets/AssetBundles/testbundle/NewTreePipeline5_Base 2.asset
-- Assets/AssetBundles/testbundle/TreePipeline4.asset
+- Assets/AssetBundles/newtreebundle/MyTreePipeline_2.asset
 Dependencies: []
