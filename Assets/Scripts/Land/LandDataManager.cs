@@ -5,6 +5,11 @@ using UnityEngine;
 using System.IO;
 using Cysharp.Threading.Tasks.Triggers;
 
+class ResultTemp
+{
+    public bool result;
+}
+
 public class LandDataManager : MonoBehaviour
 {
     public static LandDataManager Instance;
@@ -108,9 +113,17 @@ public class LandDataManager : MonoBehaviour
                     ObjectsInfo objectsInfo = new ObjectsInfo();
                     string dataPath = "Object/" + transform.GetChild(i).GetChild(j).name;
                     objectsInfo.path = dataPath;
-                    objectsInfo.localPosition = transform.GetChild(i).GetChild(j).localPosition;
-                    objectsInfo.localScale = transform.GetChild(i).GetChild(j).localScale;
-                    objectsInfo.localEulerAngle = transform.GetChild(i).GetChild(j).localEulerAngles;
+                    objectsInfo.localPositionX = transform.GetChild(i).GetChild(j).localPosition.x;
+                    objectsInfo.localPositionY = transform.GetChild(i).GetChild(j).localPosition.y;
+                    objectsInfo.localPositionZ = transform.GetChild(i).GetChild(j).localPosition.z;
+
+                    objectsInfo.localScaleX = transform.GetChild(i).GetChild(j).localScale.x;
+                    objectsInfo.localScaleY = transform.GetChild(i).GetChild(j).localScale.y;
+                    objectsInfo.localScaleZ = transform.GetChild(i).GetChild(j).localScale.z;
+
+                    objectsInfo.localEulerAngleX = transform.GetChild(i).GetChild(j).localEulerAngles.x;
+                    objectsInfo.localEulerAngleY = transform.GetChild(i).GetChild(j).localEulerAngles.y;
+                    objectsInfo.localEulerAngleZ = transform.GetChild(i).GetChild(j).localEulerAngles.z;
 
                     objectList.Add(objectsInfo);
                 }
@@ -121,13 +134,20 @@ public class LandDataManager : MonoBehaviour
             //LandData 담기
             landData.arrayObjectsOfLand = arrayObjectsOfLand;
             landData.landNum = i+1;
-            landData.landPosition = transform.GetChild(i).localPosition;
-            landData.landScale = transform.GetChild(i).localScale;
-            landData.landEulerAngle = transform.GetChild(i).localEulerAngles;
+            landData.landPositionX = transform.GetChild(i).localPosition.x;
+            landData.landPositionY = transform.GetChild(i).localPosition.y;
+            landData.landPositionZ = transform.GetChild(i).localPosition.z;
+
+            landData.landScaleX = transform.GetChild(i).localScale.x;
+            landData.landScaleY = transform.GetChild(i).localScale.y;
+            landData.landScaleZ = transform.GetChild(i).localScale.z;
+            
+            landData.landEulerAngleX = transform.GetChild(i).localEulerAngles.x;
+            landData.landEulerAngleY = transform.GetChild(i).localEulerAngles.y;
+            landData.landEulerAngleZ = transform.GetChild(i).localEulerAngles.z;
 
             landDataList.Add(landData);
         }
-
 
         List<BridgeData> bridgeDataList = new List<BridgeData>();
         List< BridgeFromTo> bridgeList = new List<BridgeFromTo>();
@@ -138,8 +158,13 @@ public class LandDataManager : MonoBehaviour
             BridgeData bridgeData = new BridgeData();
 
             Transform bridgeTransform = transform.GetChild(transform.childCount - 1).GetChild(i);
-            bridgeData.bridgePosition = bridgeTransform.localPosition;
-            bridgeData.bridgeRoatation = bridgeTransform.localEulerAngles;
+            bridgeData.bridgePositionX = bridgeTransform.localPosition.x;
+            bridgeData.bridgePositionY = bridgeTransform.localPosition.y;
+            bridgeData.bridgePositionZ = bridgeTransform.localPosition.z;
+
+            bridgeData.bridgeRoatationX = bridgeTransform.localEulerAngles.x;
+            bridgeData.bridgeRoatationY = bridgeTransform.localEulerAngles.y;
+            bridgeData.bridgeRoatationZ = bridgeTransform.localEulerAngles.z;
             bridgeData.bridgeName = bridgeTransform.name;
             bridgeDataList.Add(bridgeData);
 
@@ -169,6 +194,15 @@ public class LandDataManager : MonoBehaviour
         //DataTemporary에 Update or Save
         DataTemporary.MyLandData = arrayLandData;
 
+        //if (DataModule.WebRequest<ResultTemp>(""))
+        //{
+        //    Debug.Log("LandData 저장 성공");
+        //}
+        //else
+        //{
+        //    Debug.LogError("LandData 저장 실패");
+        //}
+
         //File 형식으로 Update or Save
         FileManager.SaveDataFile(landDataFileName, arrayLandData);
     }
@@ -178,6 +212,8 @@ public class LandDataManager : MonoBehaviour
     /// </summary>
     public void LoadLandData()
     {
+        //ArrayLandData arrayLandData = DataTemporary.MyLandData;
+        //Web 하기 전 준비
         ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
         //플레이어가 떨어지는 것을 방지
         user.GetComponent<Rigidbody>().useGravity = false;
@@ -190,9 +226,16 @@ public class LandDataManager : MonoBehaviour
             land.name = land.name.Split('(')[0];
             land.name += (i + 1).ToString();
             land.transform.parent = transform;
-            land.transform.localPosition = arrayLandData.landLists[i].landPosition;
-            land.transform.localScale = arrayLandData.landLists[i].landScale;
-            land.transform.localEulerAngles = arrayLandData.landLists[i].landEulerAngle;
+            Vector3 localPosition = new Vector3((float)arrayLandData.landLists[i].landPositionX, (float)arrayLandData.landLists[i].landPositionY, (float)arrayLandData.landLists[i].landPositionZ);
+            land.transform.localPosition = localPosition;
+
+
+            Vector3 localScale = new Vector3((float)arrayLandData.landLists[i].landScaleX, (float)arrayLandData.landLists[i].landScaleY, (float)arrayLandData.landLists[i].landScaleZ);
+            land.transform.localScale = localScale;
+
+            Vector3 localEulerAngles = new Vector3((float)arrayLandData.landLists[i].landEulerAngleX, (float)arrayLandData.landLists[i].landEulerAngleY, (float)arrayLandData.landLists[i].landEulerAngleZ);
+            land.transform.localEulerAngles = localEulerAngles;
+
             ArrayObjectsOfLand arrayObjectsOf = arrayLandData.landLists[i].arrayObjectsOfLand;
             
             //Land 위에 있는 것 Load 해서 발견하기
@@ -202,9 +245,14 @@ public class LandDataManager : MonoBehaviour
                 GameObject obj = Instantiate(objResource);
                 obj.name = obj.name.Split('(')[0];
                 obj.transform.parent = land.transform;
-                obj.transform.localPosition = arrayObjectsOf.objects[j].localPosition;
-                obj.transform.localScale = arrayObjectsOf.objects[j].localScale;
-                obj.transform.localEulerAngles = arrayObjectsOf.objects[j].localEulerAngle;
+
+                Vector3 objPosition = new Vector3((float)arrayObjectsOf.objects[j].localPositionX, (float)arrayObjectsOf.objects[j].localPositionY, (float)arrayObjectsOf.objects[j].localPositionZ);
+                Vector3 objScale = new Vector3((float)arrayObjectsOf.objects[j].localScaleX, (float)arrayObjectsOf.objects[j].localScaleY, (float)arrayObjectsOf.objects[j].localScaleZ);
+                Vector3 objEulerAngles = new Vector3((float)arrayObjectsOf.objects[j].localEulerAngleX, (float)arrayObjectsOf.objects[j].localEulerAngleY, (float)arrayObjectsOf.objects[j].localEulerAngleZ);
+                
+                obj.transform.localPosition = objPosition;
+                obj.transform.localScale = objScale;
+                obj.transform.localEulerAngles = objEulerAngles;
             }
        }
 
@@ -227,8 +275,12 @@ public class LandDataManager : MonoBehaviour
         {
             GameObject bridge = Instantiate(bridgeResource);
             bridge.transform.parent = bridgeTemp.transform;
-            bridge.transform.localPosition = bridgesData[i].bridgePosition;    
-            bridge.transform.localEulerAngles = bridgesData[i].bridgeRoatation;    
+
+            Vector3 bridgePosition = new Vector3((float)bridgesData[i].bridgePositionX, (float)bridgesData[i].bridgePositionY, (float)bridgesData[i].bridgePositionZ);
+            Vector3 bridgeScale = new Vector3((float)bridgesData[i].bridgeRoatationX, (float)bridgesData[i].bridgeRoatationY, (float)bridgesData[i].bridgeRoatationZ);
+            
+            bridge.transform.localPosition = bridgePosition;    
+            bridge.transform.localEulerAngles = bridgeScale;    
             bridge.name = bridgesData[i].bridgeName;
             string[] bridgeStrings = bridge.name.Split('_')[1].Split('/');
             for(int j = 0; j < bridges.Count; j++)

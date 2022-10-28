@@ -12,16 +12,6 @@ using UnityEngine.Android;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
 
-class ResultTemp<T>
-{
-    public bool result;
-    public T data;
-}
-
-class Token
-{
-    public string token;
-}
 
 public class DataModule
 {

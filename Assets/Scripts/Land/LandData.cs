@@ -11,9 +11,15 @@ using JetBrains.Annotations;
 public class ObjectsInfo
 {
     public string? path;
-    public Vector3 localPosition;
-    public Vector3 localScale;
-    public Vector3 localEulerAngle;
+    public float localPositionX;
+    public float localPositionY;
+    public float localPositionZ;
+    public float localScaleX;
+    public float localScaleY;
+    public float localScaleZ;
+    public float localEulerAngleX;
+    public float localEulerAngleY;
+    public float localEulerAngleZ;
 }
 
 /// <summary>
@@ -31,18 +37,29 @@ public class ArrayObjectsOfLand
 [Serializable]
 public class LandData
 {
+    public int? landId;
     public int? landNum;
-    public Vector3 landPosition;
-    public Vector3 landScale;
-    public Vector3 landEulerAngle;
+    public float landPositionX;
+    public float landPositionY;
+    public float landPositionZ;
+    public float landScaleX;
+    public float landScaleY;
+    public float landScaleZ;
+    public float landEulerAngleX;
+    public float landEulerAngleY;
+    public float landEulerAngleZ;
     public ArrayObjectsOfLand? arrayObjectsOfLand;
 }
 [Serializable]
 public class BridgeData
 {
     public string? bridgeName;
-    public Vector3 bridgePosition;
-    public Vector3 bridgeRoatation;
+    public float bridgePositionX;
+    public float bridgePositionY;
+    public float bridgePositionZ;
+    public float bridgeRoatationX;
+    public float bridgeRoatationY;
+    public float bridgeRoatationZ;
 }
 [Serializable]
 public class BridgeFromTo
@@ -50,7 +67,7 @@ public class BridgeFromTo
     public int fromId;
     public int toId;
 }
-/// <summary>
+/// <summary>             
 /// 여러 Land들의 정보를 담을 List
 /// </summary>
 [Serializable]
