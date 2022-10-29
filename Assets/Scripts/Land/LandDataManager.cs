@@ -34,6 +34,8 @@ public class LandDataManager : MonoBehaviour
 
         ArrayBridgeData arrayBridgeData = FileManager.LoadDataFile<ArrayBridgeData>(bridgeFileName);
         DataTemporary.MyBridgeData = arrayBridgeData;
+
+
     }
 
     private string landDataFileName = "LandData";
@@ -310,7 +312,9 @@ public class LandDataManager : MonoBehaviour
     {
         ArrayBridgeData arrayBridgeData = FileManager.LoadDataFile<ArrayBridgeData>(bridgeFileName);
         List<BridgeData> bridgesData = arrayBridgeData.bridgeLists;
-        
+
+        List<BridgeFromTo> bridgeList = new List<BridgeFromTo>();
+
         GameObject bridgeResource = Resources.Load<GameObject>("Object/Bridge");
 
         GameObject bridgeTemp = new GameObject("BridgeTemp");
@@ -331,7 +335,11 @@ public class LandDataManager : MonoBehaviour
                 
                 bridge.transform.GetChild(0).GetComponent<Bridge>().currentBridgeType = Bridge.BridgeType.Build;
 
-                //string[] bridgeStrings = bridge.name.Split('_')[1].Split('/');
+                string[] bridgeStrings = bridge.name.Split('_')[1].Split('/');
+                BridgeFromTo bridgeFromTo = new BridgeFromTo();
+                bridgeFromTo.fromId = int.Parse(bridgeStrings[0]);
+                bridgeFromTo.toId = int.Parse(bridgeStrings[1]);
+
                 //for (int j = 0; j < bridges.Count; j++)
                 //{
                 //    int a = int.Parse(bridgeStrings[0]);
@@ -342,8 +350,11 @@ public class LandDataManager : MonoBehaviour
                 //        bridge.transform.GetChild(0).GetComponent<Bridge>().currentBridgeType = Bridge.BridgeType.Build;
                 //    }
                 //}
+
+                bridgeList.Add(bridgeFromTo);
             }
         }
+        DataTemporary.BridgeConnection = bridgeList;
     }
 
     /// <summary>

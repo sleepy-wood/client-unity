@@ -70,20 +70,23 @@ public class MiniMapMode : MonoBehaviour, IPointerClickHandler
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 GameObject Land = userInteract.OnLand();
-                if (Land &&
-                    int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()) != int.Parse(Land.name[Land.name.Length - 1].ToString()))
+                if (hit.transform.name.Length > "Bridge".Length)
                 {
-                    //ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>("LandData");
-
-                    List<int> path = AlgorithmUtility.BFS(
-                        DataTemporary.BridgeConnection, int.Parse(Land.name[Land.name.Length - 1].ToString()),
-                        int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()),
-                        LandDataManager.Instance.transform.childCount - 1);
-
-                    //길을 찾았다면
-                    if (path.Count > 1)
+                    if (Land &&
+                        int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()) != int.Parse(Land.name[Land.name.Length - 1].ToString()))
                     {
-                        ShowPath(path);
+                        //ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>("LandData");
+
+                        List<int> path = AlgorithmUtility.BFS(
+                            DataTemporary.BridgeConnection, int.Parse(Land.name[Land.name.Length - 1].ToString()),
+                            int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()),
+                            LandDataManager.Instance.transform.childCount - 1);
+
+                        //길을 찾았다면
+                        if (path.Count > 1)
+                        {
+                            ShowPath(path);
+                        }
                     }
                 }
             }
