@@ -37,7 +37,7 @@ public class TreeController : MonoBehaviour
         // DayCount에 따라 변하는 나무 관련 변수 저장소
         public List<flatFreq> flatFreqencyList = new List<flatFreq>();
         // pipeline load path
-        //string path;/
+        //string path;
         // tree Factory
         public TreeFactory treeFactory = null;
         // The pipeline
@@ -52,10 +52,10 @@ public class TreeController : MonoBehaviour
         public Text txtDayCount;
         // sprout
         public GameObject sprout;
-        public GameObject sproutFactory;
+        //public GameObject sproutFactory;
         // seed
         public GameObject seed;
-        public GameObject seedFactory;
+        //public GameObject seedFactory;
         // soil
         public GameObject soil;
         // FOV
@@ -77,8 +77,6 @@ public class TreeController : MonoBehaviour
         public GameObject user;
         // previewTree Scale Value
         float scaleTo;
-        // Playable Director
-        public PlayableDirector pd;
         
         #endregion
 
@@ -152,6 +150,7 @@ public class TreeController : MonoBehaviour
         {
                 if (Input.GetKeyDown(KeyCode.Alpha1)&& dayCount < 5 && !plantNameUI.activeSelf)
                 {
+                        print("push");
                         dayCount++;
                         data.treeDay = dayCount;
                         txtDayCount.text = $"Day{dayCount}";
@@ -213,34 +212,23 @@ public class TreeController : MonoBehaviour
                 #endregion
 
                 // 씨앗 심기
-                float acc = 0;
-                GameObject s = Instantiate(seedFactory);
-                s.transform.localPosition = new Vector3(0, 2, 0);
-                s.gameObject.SetActive(true);
-                yield return new WaitForSeconds(0.5f);
-                while (s.transform.localPosition.y >= 0.82)
-                {
-                        acc += Time.deltaTime;
-                        s.transform.position += Vector3.down * (downSpeed + acc) * Time.deltaTime;
-                        yield return null;
-                }
-                s.transform.localPosition = new Vector3(0, 0.82f, 0);
-                DestroyImmediate(s, true);
+                seed.transform.localPosition = new Vector3(0, 2.5f, 0);
+                seed.gameObject.SetActive(true);
+                yield return new WaitForSeconds(2);
+                DestroyImmediate(seed, true);
 
                 // 새싹 자라기
                 t = 0;
-                s = Instantiate(sproutFactory);
-                sprout = s;
-                s.transform.parent = growPos;
-                s.transform.localPosition = new Vector3(0, 0.15f, 0);
+                sprout.transform.localScale = new Vector3(0, 0, 0);
+                sprout.SetActive(true);
                 while (t <= targetScale)
                 {
                         t += Time.deltaTime * 0.5f;
-                        s.transform.localScale = new Vector3(t, t, t);
+                        sprout.transform.localScale = new Vector3(t, t, t);
                         yield return null;
 
                 }
-                s.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
+                sprout.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
                 yield return new WaitForSeconds(1);
 
                 #region 카메라 줌 아웃
@@ -253,6 +241,9 @@ public class TreeController : MonoBehaviour
                 //}
                 //Camera.main.fieldOfView = defaultFOV;
                 #endregion
+
+                // 식물 이름 UI 띄우기
+                plantNameUI.gameObject.SetActive(true);
         }
         #endregion
 
@@ -379,9 +370,6 @@ public class TreeController : MonoBehaviour
                 {
                         StartCoroutine(PlantSeed(0.5f));
                         seed.SetActive(true);
-                        //pd.Play();
-                        // 식물 이름 UI 띄우기
-                        plantNameUI.gameObject.SetActive(true);
                         TreeReload();
                 }
                 // 2. 작은 묘목
