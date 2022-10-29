@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,6 +22,12 @@ public class AlgorithmUtility
             List<int> list = new List<int>();
             nodes.Add(list);
         }
+        //parent는 자기 자신으로 초기화
+        for(int i = 0; i < landCount +1; i++)
+        {
+            parent[i] = i;
+        }
+
         //연결 노드 간의 관계 설정 
         for(int i = 0; i < bridgeFroms.Count; i++)
         {

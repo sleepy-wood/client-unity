@@ -70,23 +70,20 @@ public class MiniMapMode : MonoBehaviour, IPointerClickHandler
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 GameObject Land = userInteract.OnLand();
-                if (hit.transform.name.Length > "Bridge".Length)
+                if (Land &&
+                    int.Parse(hit.transform.name.Split('d')[1].ToString()) != int.Parse(Land.name.Split('d')[1].ToString()))
                 {
-                    if (Land &&
-                        int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()) != int.Parse(Land.name[Land.name.Length - 1].ToString()))
+                    //ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>("LandData");
+
+                    List<int> path = AlgorithmUtility.BFS(
+                        DataTemporary.BridgeConnection, int.Parse(Land.name[Land.name.Length - 1].ToString()),
+                        int.Parse(hit.transform.name.Split('d')[1].ToString()),
+                        LandDataManager.Instance.transform.childCount - 1);
+
+                    //길을 찾았다면
+                    if (path.Count > 1)
                     {
-                        //ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>("LandData");
-
-                        List<int> path = AlgorithmUtility.BFS(
-                            DataTemporary.BridgeConnection, int.Parse(Land.name[Land.name.Length - 1].ToString()),
-                            int.Parse(hit.transform.name[hit.transform.name.Length - 1].ToString()),
-                            LandDataManager.Instance.transform.childCount - 1);
-
-                        //길을 찾았다면
-                        if (path.Count > 1)
-                        {
-                            ShowPath(path);
-                        }
+                        ShowPath(path);
                     }
                 }
             }
@@ -105,10 +102,11 @@ public class MiniMapMode : MonoBehaviour, IPointerClickHandler
         {
             LandDataManager.Instance.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
         }
-        lineRenderer.SetPositions(new Vector3[10]);
+        lineRenderer.SetPositions(new Vector3[30]);
 
         //다음 기록 그리기
         Vector3[] positions = new Vector3[path.Count];
+        lineRenderer.positionCount = path.Count;
         for (int i = 0; i < path.Count; i++)
         {
             LandDataManager.Instance.transform.GetChild(path[i] - 1).GetChild(0).gameObject.SetActive(true);

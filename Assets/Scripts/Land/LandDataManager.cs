@@ -37,15 +37,17 @@ public class LandDataManager : MonoBehaviour
 
 
     }
-
-    private string landDataFileName = "LandData";
-    private string bridgeFileName = "BridgeData";
-    public BuildMode buildMode = BuildMode.None;
     [Header("껐다 킬 Cancel Object")]
     [SerializeField] private GameObject cancelButton;
     [Header("껐다 킬 Minimap 오브젝트 할당")]
     [SerializeField] private List<GameObject> minimapObject = new List<GameObject>();
+
+    public string landDataFileName = "LandData";
+    public string bridgeFileName = "BridgeData";
+    public BuildMode buildMode = BuildMode.None;
     public GameObject buildBridgeCamera;
+    public bool testMode = false;
+
     private bool isOnClickMinimap = false;
     private GameObject user;
 
@@ -199,12 +201,22 @@ public class LandDataManager : MonoBehaviour
             Bridge bridge = bridgeTransform.GetChild(0).GetComponent<Bridge>();
 
             BridgeFromTo bridgeFromTo1 = new BridgeFromTo();
+            if (testMode)
+            {
+                string[] bridgeStrings = bridgeTransform.name.Split('_')[1].Split('/');
+                bridgeFromTo1.fromId = int.Parse(bridgeStrings[0]);
+                bridgeFromTo1.toId = int.Parse(bridgeStrings[1]);
+                bridgeFromTo1.bridgeId = i;
+            }
+            else
+            {
+                bridgeFromTo1.fromId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId;
+                bridgeFromTo1.toId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
+                bridgeFromTo1.bridgeId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.bridgeId;
+            }
 
-            bridgeFromTo1.fromId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId;
-            bridgeFromTo1.toId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
-            bridgeFromTo1.bridgeId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.bridgeId;
+
             bridgeData.bridgeInfo = bridgeFromTo1;
-
 
             bridgeData.bridgePositionX = bridgeTransform.localPosition.x;
             bridgeData.bridgePositionY = bridgeTransform.localPosition.y;
@@ -214,7 +226,6 @@ public class LandDataManager : MonoBehaviour
             bridgeData.bridgeRoatationY = bridgeTransform.localEulerAngles.y;
             bridgeData.bridgeRoatationZ = bridgeTransform.localEulerAngles.z;
 
-            bridgeData.name = bridgeTransform.name;
 
             //건설된 상태라면 그래프 구조에 넣기
             if (bridge.currentBridgeType != Bridge.BridgeType.NotBuild)
@@ -224,18 +235,27 @@ public class LandDataManager : MonoBehaviour
                 {
                     bridge.currentBridgeType = Bridge.BridgeType.Build;
                 }
-                //BridgeFromTo bridgeFromTo = new BridgeFromTo();
-                //bridgeFromTo.fromId = 1;
-                //bridgeFromTo.toId = 1;
-
-                bridgeData.name = bridgeTransform.name
-                    + "_" + DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId
-                    + "/" + DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
                 BridgeFromTo bridgeFromTo = new BridgeFromTo();
-                bridgeFromTo.fromId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId;
-                bridgeFromTo.toId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
-
+                if (testMode)
+                {
+                    bridgeData.name = bridgeTransform.name;
+                    bridgeFromTo.fromId = 1;
+                    bridgeFromTo.toId = 1;
+                }
+                else
+                {
+                    bridgeData.name = "Bridge"
+                        + "_" + DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId
+                        + "/" + DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
+                    bridgeFromTo.fromId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId;
+                    bridgeFromTo.toId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
+                }
                 bridgeList.Add(bridgeFromTo);
+            }
+            else
+            {
+
+                bridgeData.name = "Bridge";
             }
 
             bridgeDataList.Add(bridgeData);
@@ -360,7 +380,7 @@ public class LandDataManager : MonoBehaviour
     /// <summary>
     /// UI중에서 Bridge Build를 선택했을 경우
     /// </summary>
-    public void SelectBuildMode()
+    public void OnClickSelectBuildMode()
     {
         buildMode = BuildMode.Bridge;
         cancelButton.SetActive(true);
@@ -369,7 +389,7 @@ public class LandDataManager : MonoBehaviour
     /// UI중에서 Cancel Button을 누른 경우 
     /// 초기화
     /// </summary>
-    public void CancelButton()
+    public void OnClickCancelButton()
     {
         buildMode = BuildMode.None;
         cancelButton.SetActive(false);
@@ -398,14 +418,14 @@ public class LandDataManager : MonoBehaviour
             transform.GetChild(j).GetChild(0).gameObject.SetActive(false);
         }
 
-        if (!isOnClickMinimap)
-        {
-            user.GetComponent<UserInteract>().moveControl = true;
-        }
-        else
-        {
-            user.GetComponent<UserInteract>().moveControl = false;
-        }
+        //if (!isOnClickMinimap)
+        //{
+        //    user.GetComponent<UserInteract>().moveControl = true;
+        //}
+        //else
+        //{
+        //    user.GetComponent<UserInteract>().moveControl = false;
+        //}
         isOnClickMinimap = isOnClickMinimap == true ? false : true;
     }
 }
