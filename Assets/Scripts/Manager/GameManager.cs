@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class GameManager : MonoBehaviour
     
     public GameObject User { get; private set; }
 
-    // 플레이어 재방문 여부
-    public bool isFirstVisit;
+    // 나무 처음 심은 시간
+    public DateTime firstPlantTime;
+
+    // TreeController
+    public GameObject TreeController;
 }
