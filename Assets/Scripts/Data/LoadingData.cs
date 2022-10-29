@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Defective.JSON;
 
 public class LoadingData : MonoBehaviour
 {
@@ -21,17 +20,17 @@ public class LoadingData : MonoBehaviour
 
         //LandData Load
         //TODO: Land Data 구조 수정s
-        string landData = await DataModule.WebRequest("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-        JSONObject obj = new JSONObject(landData);
-        Dictionary<string, string> dic = obj.ToDictionary();
-        JSONObject j = new JSONObject(JSONObject.Type.Object);
-        JSONObject arr = new JSONObject(JSONObject.Type.Array);
-        j.AddField("field2", "SampleText");
-        j.AddField("field2", arr);
+        ArrayLandData landData = await DataModule.WebRequest<ArrayLandData>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        //JSONObject obj = new JSONObject(landData);
+        //Dictionary<string, string> dic = obj.ToDictionary();
+        //JSONObject j = new JSONObject(JSONObject.Type.Object);
+        //JSONObject arr = new JSONObject(JSONObject.Type.Array);
+        //j.AddField("field2", "SampleText");
+        //j.AddField("field2", arr);
 
-        string encodedString = j.Print();
-        Debug.Log(encodedString);
-        
+        //string encodedString = j.Print();
+        //Debug.Log(encodedString);
+
         //DataTemporary.MyLandData = landData;
 
     }
