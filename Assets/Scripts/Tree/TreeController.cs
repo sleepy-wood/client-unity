@@ -77,7 +77,6 @@ public class TreeController : MonoBehaviour
         public GameObject user;
         // previewTree Scale Value
         float scaleTo;
-        
         #endregion
 
         public enum VisitType
@@ -128,11 +127,6 @@ public class TreeController : MonoBehaviour
 
                 inputPlantName.onValueChanged.AddListener(onValueChanged);
 
-                // 방문 타입 &  DayCount에 따라 다르게 나무 Load
-                //LoadTree();
-
-
-
                 #region 기존 코드
                 //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
                 //// pipeline에서 positioner 요소 가져오기(위치 동적 할당)
@@ -142,23 +136,21 @@ public class TreeController : MonoBehaviour
                 //        positionerElement.positions.Clear();
                 //}
                 #endregion
-
         }
 
 
         void Update()
         {
-                if (Input.GetKeyDown(KeyCode.Alpha1)&& dayCount < 5 && !plantNameUI.activeSelf)
-                {
-                        print("push");
-                        dayCount++;
-                        data.treeDay = dayCount;
-                        txtDayCount.text = $"Day{dayCount}";
-                        LoadTree();
-                }
+                //if (Input.GetKeyDown(KeyCode.Alpha1)&& dayCount < 5 && !plantNameUI.activeSelf)
+                //{
+                //        dayCount++;
+                //        data.treeDay = dayCount;
+                //        txtDayCount.text = $"Day{dayCount}";
+                //        LoadTree();
+                //}
 
 
-                // Test용
+                // Android Test용
                 if (Input.touchCount > 0)
                 {
                         for (int i = 0; i < Input.touches.Length; i++)
@@ -256,7 +248,7 @@ public class TreeController : MonoBehaviour
         /// "scale" > Object scale
         /// </summary>
         /// <param name="dayCount"></param>
-        public void TreeUpdate(int dayCount)  
+        public void PipelineUpdate(int dayCount)  
         {
                 // 날짜에 맞춘 정보를 가지고 있는 요소
                 flatFreq element = flatFreqencyList[dayCount-2];
@@ -371,34 +363,46 @@ public class TreeController : MonoBehaviour
                         StartCoroutine(PlantSeed(0.5f));
                         seed.SetActive(true);
                         TreeReload();
+                        // 나무 심은 시간 저장
+                        GameManager.Instance.firstPlantTime = DateTime.Now;
                 }
                 // 2. 작은 묘목
                 if (dayCount == 2)
                 {
                         sprout.SetActive(false);
                         soil.SetActive(false);
-                        TreeUpdate(dayCount);
+                        PipelineUpdate(dayCount);
                         TreeReload();
                         treeFactory.gameObject.SetActive(true);
                 }
                 // 3. 묘목
                 if (dayCount == 3)
                 {
-                        TreeUpdate(dayCount);
+                        PipelineUpdate(dayCount);
                         TreeReload();
                 }
                 // 4. 나무
                 if (dayCount == 4)
                 {
-                        TreeUpdate(dayCount);
+                        PipelineUpdate(dayCount);
                         TreeReload();
                 }
-                // 5. 개화
+                // 5. 열매
                 if (dayCount == 5)
                 {
-                        TreeUpdate(dayCount);
+                        PipelineUpdate(dayCount);
                         TreeReload();
                 }
+        }
+
+        /// <summary>
+        ///  TimeManager로부터 신호받아 TreeUpdate
+        /// </summary>
+        public void TreeUpdate()
+        {
+                dayCount++;
+                data.treeDay = dayCount;
+                LoadTree();
         }
 
         /// <summary>
