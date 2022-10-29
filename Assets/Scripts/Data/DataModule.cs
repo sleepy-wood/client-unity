@@ -1,5 +1,6 @@
 using Broccoli.Pipe;
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ using UnityEngine.Rendering;
 public class DataModule
 {
     private const string DOMAIN = "https://team-buildup.shop";
-    public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY2OTIxNDYxLCJleHAiOjMzMjI0NTIxNDYxfQ.StLy7Saq0POUCxfhdktNHb6lffA9pQtNvM0zF5DtjgA";
+    public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3MDIzMTUxLCJleHAiOjMzMjI0NjIzMTUxfQ.IpoJLMIXTzv7l_0jUH1juv3PwyGXCH5hIG-ujIvmHtE";
 
     /// <summary>
     /// Network Type 설정
@@ -49,7 +50,7 @@ public class DataModule
     /// <param name="networkType">어떻게 Request 할 것인가</param>
     /// <param name="data">보낼 데이터</param>
     /// <returns></returns>
-    public static async UniTask<T> WebRequest<T>(string _url, NetworkType networkType, DataType dataType ,  string data = null, string filePath = null)
+    public static async UniTask<string> WebRequest(string _url, NetworkType networkType, DataType dataType ,  string data = null, string filePath = null)
     {
         //네트워크 체킹
         await CheckNetwork();
@@ -83,21 +84,27 @@ public class DataModule
 
         try
         {
+            
             var res = await request.SendWebRequest().WithCancellation(cts.Token);
-            T result = JsonUtility.FromJson<T>(res.downloadHandler.text);
-            return result;
+            
+            //이거 아녀?
+            //var result = JsonConvert.DeserializeObject(res.downloadHandler.text);
+            //return이 제네릭이라서 그런지 
+            //일단 파싱하지 말고 string으로 보내볼까
+            //T result = JsonUtility.FromJson<T>(res.downloadHandler.text);
+            return res.downloadHandler.text;
         }
-        catch (OperationCanceledException ex)
-        {
-            if (ex.CancellationToken == cts.Token)
-            {
-                Debug.Log("Timeout");
-                //TODO: 네트워크 재시도 팝업 호출.
+        //catch (OperationCanceledException ex)
+        //{
+        //    if (ex.CancellationToken == cts.Token)
+        //    {
+        //        Debug.Log("Timeout");
+        //        //TODO: 네트워크 재시도 팝업 호출.
 
-                //재시도
-                return await WebRequest<T>(_url, networkType,dataType , data);
-            }
-        }
+        //        //재시도
+        //        return await WebRequest<T>(_url, networkType,dataType , data);
+        //    }
+        //}
         catch (Exception e)
         {
             Debug.Log(e.Message);
