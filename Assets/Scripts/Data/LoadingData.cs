@@ -21,17 +21,15 @@ public class LoadingData : MonoBehaviour
         //LandData Load
         //TODO: Land Data 구조 수정s
         ArrayLandData landData = await DataModule.WebRequest<ArrayLandData>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-        //JSONObject obj = new JSONObject(landData);
-        //Dictionary<string, string> dic = obj.ToDictionary();
-        //JSONObject j = new JSONObject(JSONObject.Type.Object);
-        //JSONObject arr = new JSONObject(JSONObject.Type.Array);
-        //j.AddField("field2", "SampleText");
-        //j.AddField("field2", arr);
 
-        //string encodedString = j.Print();
-        //Debug.Log(encodedString);
+        //이거 한번 해야한다.
+        //ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
+        //DataTemporary.MyLandData = arrayLandData;
 
-        //DataTemporary.MyLandData = landData;
+        //ArrayBridgeData arrayBridgeData = FileManager.LoadDataFile<ArrayBridgeData>(bridgeFileName);
+        //DataTemporary.MyBridgeData = arrayBridgeData;
+
+        DataTemporary.MyLandData = landData;
 
     }
 }

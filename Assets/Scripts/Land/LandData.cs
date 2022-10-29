@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 [Serializable]
 public class ObjectsInfo
 {
+    public int id;
     public string? path;
     public float localPositionX;
     public float localPositionY;
@@ -37,8 +38,8 @@ public class ArrayObjectsOfLand
 [Serializable]
 public class LandData
 {
-    public int? landId;
-    public int? landNum;
+    public int? id;
+    public int? unityLandId;
     public float landPositionX;
     public float landPositionY;
     public float landPositionZ;
@@ -48,12 +49,13 @@ public class LandData
     public float landEulerAngleX;
     public float landEulerAngleY;
     public float landEulerAngleZ;
-    public ArrayObjectsOfLand? arrayObjectsOfLand;
+    public ArrayObjectsOfLand? landDecorations;
 }
 [Serializable]
 public class BridgeData
 {
-    public string? bridgeName;
+    public BridgeFromTo? bridgeInfo;
+    public string? name;
     public float bridgePositionX;
     public float bridgePositionY;
     public float bridgePositionZ;
@@ -61,9 +63,12 @@ public class BridgeData
     public float bridgeRoatationY;
     public float bridgeRoatationZ;
 }
+//TODO: 섬들의 연결 관계를 담아줄 리스트 만들어야함
+//          => 알고리즘에 써야해
 [Serializable]
 public class BridgeFromTo
 {
+    public int bridgeId;
     public int fromId;
     public int toId;
 }
@@ -74,6 +79,12 @@ public class BridgeFromTo
 public class ArrayLandData
 {
     public List<LandData>? landLists=null;
-    public List<BridgeData>? bridgeLists;
-    public List<BridgeFromTo>? bridgeInfo;
+}
+/// <summary>
+/// 여러 Bridge 정보를 담을 List
+/// </summary>
+[Serializable]
+public class ArrayBridgeData
+{
+    public List<BridgeData>? bridgeLists = null;
 }

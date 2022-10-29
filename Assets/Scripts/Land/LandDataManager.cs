@@ -27,9 +27,17 @@ public class LandDataManager : MonoBehaviour
     {
         if (!Instance)
             Instance = this;
+
+
+        ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
+        DataTemporary.MyLandData = arrayLandData;
+
+        ArrayBridgeData arrayBridgeData = FileManager.LoadDataFile<ArrayBridgeData>(bridgeFileName);
+        DataTemporary.MyBridgeData = arrayBridgeData;
     }
 
     private string landDataFileName = "LandData";
+    private string bridgeFileName = "BridgeData";
     public BuildMode buildMode = BuildMode.None;
     [Header("껐다 킬 Cancel Object")]
     [SerializeField] private GameObject cancelButton;
@@ -49,7 +57,9 @@ public class LandDataManager : MonoBehaviour
             minimapObject[i].SetActive(false);
         }
         LoadLandData();
+        LoadBridge();
         //SaveLandData();
+        //SaveBridgeData();
     }
 
     private void Update()
@@ -94,7 +104,8 @@ public class LandDataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// LandManager 하위에 있는 Land들의 정보를 저장하는 함수
+    /// LandManager 하위에 있는 Land들의 정보를 수정하는 함수
+    /// 웹에 수정 요청을 할것
     /// </summary>
     public void SaveLandData()
     {
@@ -132,8 +143,8 @@ public class LandDataManager : MonoBehaviour
             arrayObjectsOfLand.objects = objectList;
 
             //LandData 담기
-            landData.arrayObjectsOfLand = arrayObjectsOfLand;
-            landData.landNum = i+1;
+            landData.landDecorations = arrayObjectsOfLand;
+            landData.unityLandId = i+1;
             landData.landPositionX = transform.GetChild(i).localPosition.x;
             landData.landPositionY = transform.GetChild(i).localPosition.y;
             landData.landPositionZ = transform.GetChild(i).localPosition.z;
@@ -149,47 +160,10 @@ public class LandDataManager : MonoBehaviour
             landDataList.Add(landData);
         }
 
-        List<BridgeData> bridgeDataList = new List<BridgeData>();
-        List< BridgeFromTo> bridgeList = new List<BridgeFromTo>();
-
-        //Bridge 정보 저장
-        for(int i = 0; i < transform.GetChild(transform.childCount -1).childCount; i++)
-        {
-            BridgeData bridgeData = new BridgeData();
-
-            Transform bridgeTransform = transform.GetChild(transform.childCount - 1).GetChild(i);
-            bridgeData.bridgePositionX = bridgeTransform.localPosition.x;
-            bridgeData.bridgePositionY = bridgeTransform.localPosition.y;
-            bridgeData.bridgePositionZ = bridgeTransform.localPosition.z;
-
-            bridgeData.bridgeRoatationX = bridgeTransform.localEulerAngles.x;
-            bridgeData.bridgeRoatationY = bridgeTransform.localEulerAngles.y;
-            bridgeData.bridgeRoatationZ = bridgeTransform.localEulerAngles.z;
-            bridgeData.bridgeName = bridgeTransform.name;
-            bridgeDataList.Add(bridgeData);
-
-            Bridge bridge = bridgeTransform.GetChild(0).GetComponent<Bridge>();
-            //건설된 상태라면 그래프 구조에 넣기
-            if(bridge.currentBridgeType != Bridge.BridgeType.NotBuild)
-            {
-                //건설 예정이면 건설 상태로 변경
-                if(bridge.currentBridgeType == Bridge.BridgeType.WillBuild)
-                {
-                    bridge.currentBridgeType = Bridge.BridgeType.Build;
-                }
-                string[] bridgeStrings = bridgeTransform.name.Split('_')[1].Split('/');
-                BridgeFromTo bridgeId = new BridgeFromTo();
-                bridgeId.fromId = int.Parse(bridgeStrings[0]);
-                bridgeId.toId = int.Parse(bridgeStrings[1]);
-
-                bridgeList.Add(bridgeId);
-            }
-        }
         ArrayLandData arrayLandData = new ArrayLandData();
         arrayLandData.landLists = landDataList;
-        arrayLandData.bridgeLists = bridgeDataList;
-        arrayLandData.bridgeInfo = bridgeList;
-        //bridge 연결 리스트 저장
+
+       
 
         //DataTemporary에 Update or Save
         DataTemporary.MyLandData = arrayLandData;
@@ -206,7 +180,74 @@ public class LandDataManager : MonoBehaviour
         //File 형식으로 Update or Save
         FileManager.SaveDataFile(landDataFileName, arrayLandData);
     }
+    /// <summary>
+    /// Bridge정보 저장 및 수정
+    /// </summary>
+    public void SaveBridgeData()
+    {
+        List<BridgeData> bridgeDataList = new List<BridgeData>();
+        List<BridgeFromTo> bridgeList = new List<BridgeFromTo>();
 
+        //Bridge 정보 저장
+        for (int i = 0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
+        {
+            BridgeData bridgeData = new BridgeData();
+
+            Transform bridgeTransform = transform.GetChild(transform.childCount - 1).GetChild(i);
+            Bridge bridge = bridgeTransform.GetChild(0).GetComponent<Bridge>();
+
+            BridgeFromTo bridgeFromTo1 = new BridgeFromTo();
+
+            bridgeFromTo1.fromId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId;
+            bridgeFromTo1.toId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
+            bridgeFromTo1.bridgeId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.bridgeId;
+            bridgeData.bridgeInfo = bridgeFromTo1;
+
+
+            bridgeData.bridgePositionX = bridgeTransform.localPosition.x;
+            bridgeData.bridgePositionY = bridgeTransform.localPosition.y;
+            bridgeData.bridgePositionZ = bridgeTransform.localPosition.z;
+
+            bridgeData.bridgeRoatationX = bridgeTransform.localEulerAngles.x;
+            bridgeData.bridgeRoatationY = bridgeTransform.localEulerAngles.y;
+            bridgeData.bridgeRoatationZ = bridgeTransform.localEulerAngles.z;
+
+            bridgeData.name = bridgeTransform.name;
+
+            //건설된 상태라면 그래프 구조에 넣기
+            if (bridge.currentBridgeType != Bridge.BridgeType.NotBuild)
+            {
+                //건설 예정이면 건설 상태로 변경
+                if (bridge.currentBridgeType == Bridge.BridgeType.WillBuild)
+                {
+                    bridge.currentBridgeType = Bridge.BridgeType.Build;
+                }
+                //BridgeFromTo bridgeFromTo = new BridgeFromTo();
+                //bridgeFromTo.fromId = 1;
+                //bridgeFromTo.toId = 1;
+
+                bridgeData.name = bridgeTransform.name
+                    + "_" + DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId
+                    + "/" + DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
+                BridgeFromTo bridgeFromTo = new BridgeFromTo();
+                bridgeFromTo.fromId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId;
+                bridgeFromTo.toId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
+
+                bridgeList.Add(bridgeFromTo);
+            }
+
+            bridgeDataList.Add(bridgeData);
+        }
+        ArrayBridgeData arrayBridgeData = new ArrayBridgeData();
+        //TODO: 수정
+        arrayBridgeData.bridgeLists = bridgeDataList;
+
+        //bridge 연결 리스트 저장
+        DataTemporary.BridgeConnection = bridgeList;
+
+        DataTemporary.MyBridgeData = arrayBridgeData;
+        FileManager.SaveDataFile(bridgeFileName, arrayBridgeData);
+    }
     /// <summary>
     /// Load Land Data and Create Object of Land
     /// </summary>
@@ -236,7 +277,7 @@ public class LandDataManager : MonoBehaviour
             Vector3 localEulerAngles = new Vector3((float)arrayLandData.landLists[i].landEulerAngleX, (float)arrayLandData.landLists[i].landEulerAngleY, (float)arrayLandData.landLists[i].landEulerAngleZ);
             land.transform.localEulerAngles = localEulerAngles;
 
-            ArrayObjectsOfLand arrayObjectsOf = arrayLandData.landLists[i].arrayObjectsOfLand;
+            ArrayObjectsOfLand arrayObjectsOf = arrayLandData.landLists[i].landDecorations;
             
             //Land 위에 있는 것 Load 해서 발견하기
             for(int j = 0; j < arrayObjectsOf.objects.Count; j++)
@@ -256,17 +297,20 @@ public class LandDataManager : MonoBehaviour
             }
        }
 
-       LoadBridge(arrayLandData.bridgeInfo, arrayLandData.bridgeLists);
-
         user.GetComponent<Rigidbody>().useGravity = true;
     }
+
+
 
     /// <summary>
     /// Bridge 정보 초기화
     /// </summary>
     /// <param name="bridges"></param>
-    public void LoadBridge(List<BridgeFromTo> bridges, List<BridgeData> bridgesData)
+    public void LoadBridge()
     {
+        ArrayBridgeData arrayBridgeData = FileManager.LoadDataFile<ArrayBridgeData>(bridgeFileName);
+        List<BridgeData> bridgesData = arrayBridgeData.bridgeLists;
+        
         GameObject bridgeResource = Resources.Load<GameObject>("Object/Bridge");
 
         GameObject bridgeTemp = new GameObject("BridgeTemp");
@@ -281,17 +325,23 @@ public class LandDataManager : MonoBehaviour
             
             bridge.transform.localPosition = bridgePosition;    
             bridge.transform.localEulerAngles = bridgeScale;    
-            bridge.name = bridgesData[i].bridgeName;
-            string[] bridgeStrings = bridge.name.Split('_')[1].Split('/');
-            for(int j = 0; j < bridges.Count; j++)
+            bridge.name = bridgesData[i].name;
+            if (bridge.name.Length > "Bridge".Length)
             {
-                int a = int.Parse(bridgeStrings[0]);
-                int b = int.Parse(bridgeStrings[1]);
-                if (bridges[j].fromId == int.Parse(bridgeStrings[0]) &&
-                    bridges[j].toId == int.Parse(bridgeStrings[1]))
-                {
-                    bridge.transform.GetChild(0).GetComponent<Bridge>().currentBridgeType = Bridge.BridgeType.Build;
-                }
+                
+                bridge.transform.GetChild(0).GetComponent<Bridge>().currentBridgeType = Bridge.BridgeType.Build;
+
+                //string[] bridgeStrings = bridge.name.Split('_')[1].Split('/');
+                //for (int j = 0; j < bridges.Count; j++)
+                //{
+                //    int a = int.Parse(bridgeStrings[0]);
+                //    int b = int.Parse(bridgeStrings[1]);
+                //    if (bridges[j].fromId == int.Parse(bridgeStrings[0]) &&
+                //        bridges[j].toId == int.Parse(bridgeStrings[1]))
+                //    {
+                //        bridge.transform.GetChild(0).GetComponent<Bridge>().currentBridgeType = Bridge.BridgeType.Build;
+                //    }
+                //}
             }
         }
     }
@@ -313,6 +363,7 @@ public class LandDataManager : MonoBehaviour
         buildMode = BuildMode.None;
         cancelButton.SetActive(false);
         SaveLandData();
+        SaveBridgeData();
     }
     /// <summary>
     /// Minimap Button을 눌렀을 경우

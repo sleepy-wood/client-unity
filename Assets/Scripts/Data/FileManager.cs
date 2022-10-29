@@ -18,8 +18,12 @@ public static class FileManager
     /// <returns></returns>
     public static T LoadDataFile<T>(string fileName)
     {
+#if UNITY_STANDALONE
+        string filePath = Application.dataPath + "/Resources/Data/" + fileName + ".txt";
+#elif UNITY_IOS || UNITY_ANDROID
         string filePath = Application.persistentDataPath + "/Data/" + fileName + ".txt";
-        
+#endif
+
         string s = File.ReadAllText(filePath);
 
         T data = JsonUtility.FromJson<T>(s);
