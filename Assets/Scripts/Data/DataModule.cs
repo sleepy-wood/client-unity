@@ -17,7 +17,7 @@ using UnityEngine.Rendering;
 public class DataModule
 {
     private const string DOMAIN = "https://team-buildup.shop";
-    public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3MDIzMTUxLCJleHAiOjMzMjI0NjIzMTUxfQ.IpoJLMIXTzv7l_0jUH1juv3PwyGXCH5hIG-ujIvmHtE";
+    public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3MDYyMDkwLCJleHAiOjMzMjI0NjYyMDkwfQ.6PArGCYdEe4pmn3gI4NEYL-6a59uQlosOweLn-NM2O4";
 
     /// <summary>
     /// Network Type 설정
