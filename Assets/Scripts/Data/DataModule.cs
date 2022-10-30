@@ -181,8 +181,10 @@ public class DataModule
         catch (Exception e)
         {
             Debug.Log(e.Message);
+            request.Dispose();
             return default;
         }
+        request.Dispose();
         return default;
     }
     /// <summary>
