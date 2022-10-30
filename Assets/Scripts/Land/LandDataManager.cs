@@ -37,8 +37,6 @@ public class LandDataManager : MonoBehaviour
 
 
     }
-    [Header("껐다 킬 Cancel Object")]
-    [SerializeField] private GameObject cancelButton;
     [Header("껐다 킬 Minimap 오브젝트 할당")]
     [SerializeField] private List<GameObject> minimapObject = new List<GameObject>();
 
@@ -49,13 +47,13 @@ public class LandDataManager : MonoBehaviour
     public bool testMode = false;
 
     private bool isOnClickMinimap = false;
+    private bool isOnClickBuildMode = false;
     private GameObject user;
 
     private void Start()
     {
         user = GameManager.Instance.User;
         buildBridgeCamera.SetActive(false);
-        cancelButton.SetActive(false);
         for (int i = 0; i < minimapObject.Count; i++)
         {
             minimapObject[i].SetActive(false);
@@ -358,17 +356,6 @@ public class LandDataManager : MonoBehaviour
                 bridgeFromTo.fromId = int.Parse(bridgeStrings[0]);
                 bridgeFromTo.toId = int.Parse(bridgeStrings[1]);
 
-                //for (int j = 0; j < bridges.Count; j++)
-                //{
-                //    int a = int.Parse(bridgeStrings[0]);
-                //    int b = int.Parse(bridgeStrings[1]);
-                //    if (bridges[j].fromId == int.Parse(bridgeStrings[0]) &&
-                //        bridges[j].toId == int.Parse(bridgeStrings[1]))
-                //    {
-                //        bridge.transform.GetChild(0).GetComponent<Bridge>().currentBridgeType = Bridge.BridgeType.Build;
-                //    }
-                //}
-
                 bridgeList.Add(bridgeFromTo);
             }
         }
@@ -380,25 +367,21 @@ public class LandDataManager : MonoBehaviour
     /// </summary>
     public void OnClickSelectBuildMode()
     {
-
         for (int i = 0; i < minimapObject.Count; i++)
         {
             if (minimapObject[i].activeSelf)
                 return;
         }
-        buildMode = BuildMode.Bridge;
-        cancelButton.SetActive(true);
-    }
-    /// <summary>
-    /// UI중에서 Cancel Button을 누른 경우 
-    /// 초기화
-    /// </summary>
-    public void OnClickCancelButton()
-    {
-        buildMode = BuildMode.None;
-        cancelButton.SetActive(false);
-        SaveLandData();
-        SaveBridgeData();
+        if (!isOnClickBuildMode)
+        {
+            buildMode = BuildMode.Bridge;
+            isOnClickBuildMode = true;
+        }
+        else
+        {
+            buildMode = BuildMode.None;
+            isOnClickBuildMode = false;
+        }
     }
     /// <summary>
     /// Minimap Button을 눌렀을 경우
