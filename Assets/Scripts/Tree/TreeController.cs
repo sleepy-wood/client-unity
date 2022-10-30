@@ -303,6 +303,7 @@ public class TreeController : MonoBehaviour
 
         #region 5. Object scale
         scaleTo = element.scale;
+        print($"object scale : {scaleTo}");
         #endregion
     }
 
@@ -330,7 +331,7 @@ public class TreeController : MonoBehaviour
         Resources.UnloadAsset(loadedPipeline);
 
         //treePipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2");
-        treeFactory.transform.GetChild(0).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
+        treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         Debug.Log(treeFactory.transform.GetChild(0).localScale);
     }
 

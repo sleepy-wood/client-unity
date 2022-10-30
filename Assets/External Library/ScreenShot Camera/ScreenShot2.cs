@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 
 
@@ -11,6 +12,7 @@ using UnityEditor;
 public class ScreenShot2 : MonoBehaviour
 {
     public GameObject previewTree;
+    public Image treeCaptureImg;
     //[SerializeField] string fileName;
     /// <summary>
     /// 사용자가 프로필 버튼 누르면 그 즉시 스크린샷해서 트리 리스트 이미지 업데이트
@@ -26,8 +28,14 @@ public class ScreenShot2 : MonoBehaviour
         RenderTexture.active = renderTexture;
         texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         texture.Apply();
-
-        File.WriteAllBytes($"{Application.dataPath}/ScreenShot/TreeCapture.png", texture.EncodeToPNG());
+        
+        // Update TreeList Image 
+        Sprite s = Sprite.Create(texture, new Rect(0, 0, renderTexture.width, renderTexture.height), new Vector2(0.5f, 0.5f));
+        treeCaptureImg.sprite = s;
+        
+        // Save Image File
+        File.WriteAllBytes($"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png", texture.EncodeToPNG());
+        
     }
 }
 
