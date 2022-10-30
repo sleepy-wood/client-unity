@@ -7115,63 +7115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1daa2df0b930bb34089f5d36564c39d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flatFreqencyList:
-  - flatFreqMinMax:
-      minMaxList:
-      - min: 1
-        max: 2
-      - min: 0
-        max: 0
-      - min: 0
-        max: 0
-      - min: 2
-        max: 3
-    rootFreq: 1
-    rootBaseLength: 9
-    girthBase: 0.7
-    scale: 0.24
-  - flatFreqMinMax:
-      minMaxList:
-      - min: 1
-        max: 3
-      - min: 2
-        max: 4
-      - min: 1
-        max: 2
-      - min: 2
-        max: 3
-    rootFreq: 1
-    rootBaseLength: 6
-    girthBase: 0.8
-    scale: 0.27
-  - flatFreqMinMax:
-      minMaxList:
-      - min: 1
-        max: 4
-      - min: 3
-        max: 5
-      - min: 2
-        max: 3
-      - min: 3
-        max: 4
-    rootFreq: 1
-    rootBaseLength: 7
-    girthBase: 1
-    scale: 0.35
-  - flatFreqMinMax:
-      minMaxList:
-      - min: 1
-        max: 5
-      - min: 4
-        max: 6
-      - min: 3
-        max: 4
-      - min: 4
-        max: 5
-    rootFreq: 2
-    rootBaseLength: 8
-    girthBase: 1.5
-    scale: 0.5
+  treeList: []
   treeFactory: {fileID: 1982778472}
   treePipeline: {fileID: 0}
   growPos: {fileID: 1222843485}
@@ -7179,16 +7123,16 @@ MonoBehaviour:
   downSpeed: 2
   txtDayCount: {fileID: 1260548100}
   sprout: {fileID: 3646425417215389602}
-  sproutFactory: {fileID: 0}
   seed: {fileID: 5075279767317591782}
-  seedFactory: {fileID: 0}
   soil: {fileID: 1921048842}
   defaultFOV: 10.29
   targetFOV: 3.11
   data:
     treeName: 
-    leafTexture: {fileID: 0}
-    treegrowthData:
+    leafTextures: []
+    branchTextures: []
+    flowerTextures: []
+    treeGrowthData:
       trunkThick: 0
   leafText: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
   plantNameUI: {fileID: 854454703}
@@ -7196,7 +7140,6 @@ MonoBehaviour:
   btnPlantName: {fileID: 433748131}
   visitType: 0
   user: {fileID: 0}
-  pd: {fileID: 1769098319}
 --- !u!114 &1190364638
 MonoBehaviour:
   m_ObjectHideFlags: 0
