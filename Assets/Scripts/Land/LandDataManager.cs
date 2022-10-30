@@ -50,7 +50,7 @@ public class LandDataManager : MonoBehaviour
     private bool isOnClickMinimap = false;
     private bool isOnClickBuildMode = false;
     private GameObject user;
-    public bool isLoad = false;
+    //public bool isLoad = false;
 
     private void Start()
     {
@@ -60,16 +60,16 @@ public class LandDataManager : MonoBehaviour
         {
             minimapObject[i].SetActive(false);
         }
-        //LoadLandData();
-        //LoadBridge();
+        LoadLandData();
+        LoadBridge();
         //SaveLandData();
         //SaveBridgeData();
     }
 
     private void Update()
     {
-        if (isLoad)
-        {
+        //if (isLoad)
+        //{
             //Build Mode - Bridge일때
             if (buildMode == BuildMode.Bridge)
                 BuildBridge();
@@ -88,7 +88,7 @@ public class LandDataManager : MonoBehaviour
                     }
                 }
             }
-        }
+        //}
     }
 
     public void BuildBridge()

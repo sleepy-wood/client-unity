@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 
 public class LoadingData : MonoBehaviour
 {
     NativeLoadData nativeLoad = new NativeLoadData();
+    public GameObject startButton;
     private async void Start()
     {
         //Native Data Load
@@ -26,13 +28,6 @@ public class LoadingData : MonoBehaviour
         //Root landData = await DataModule.WebRequest<Root>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         ResultGet<LandData> landData = await DataModule.WebRequest<ResultGet<LandData>>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         ResultGet<BridgeData> bridgeData = await DataModule.WebRequest<ResultGet<BridgeData>>("/api/v1/bridges", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-
-        //이거 한번 해야한다.
-        //ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
-        //DataTemporary.MyLandData = arrayLandData;
-
-        //ArrayBridgeData arrayBridgeData = FileManager.LoadDataFile<ArrayBridgeData>(bridgeFileName);
-        //DataTemporary.MyBridgeData = arrayBridgeData;
 
         ArrayLandData arrayLandData = new ArrayLandData();
         arrayLandData.landLists = landData.data;
@@ -56,9 +51,14 @@ public class LoadingData : MonoBehaviour
 
         if (landData.result && bridgeData.result)
         {
-            LandDataManager.Instance.LoadLandData();
-            LandDataManager.Instance.LoadBridge();
-            LandDataManager.Instance.isLoad = true;
+            //LandDataManager.Instance.LoadLandData();
+            //LandDataManager.Instance.LoadBridge();
+            //LandDataManager.Instance.isLoad = true;
+            startButton.SetActive(true);
         }
+    }
+    public void OnClickStartButton()
+    {
+        SceneManager.LoadScene(1);
     }
 }
