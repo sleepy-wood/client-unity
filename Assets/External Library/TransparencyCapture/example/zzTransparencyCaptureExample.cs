@@ -21,7 +21,7 @@ public class zzTransparencyCaptureExample:MonoBehaviour
         yield return new WaitForEndOfFrame();
         //After Unity4,you have to do this function after WaitForEndOfFrame in Coroutine
         //Or you will get the error:"ReadPixels was called to read pixels from system frame buffer, while not inside drawing frame"
-        capturedImage = zzTransparencyCapture.capture(lRect);
+        capturedImage = TransparencyCapture.capture(lRect);
     }
 
     Vector3 lastMousePosition;
