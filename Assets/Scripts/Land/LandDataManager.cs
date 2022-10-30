@@ -298,7 +298,7 @@ public class LandDataManager : MonoBehaviour
             List<ObjectsInfo> arrayObjectsOf = arrayLandData.landLists[i].landDecorations;
             
             //Land 위에 있는 것 Load 해서 발견하기
-            for(int j = 0; j < arrayObjectsOf.Count; j++)
+            for(int j = 1; j < arrayObjectsOf.Count; j++)
             {
                 GameObject objResource = Resources.Load<GameObject>(arrayObjectsOf[j].path);
                 GameObject obj = Instantiate(objResource);
