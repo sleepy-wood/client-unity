@@ -26,7 +26,7 @@ public class ObjectsInfo
     public int userId;
     public DateTime createdAt;
     public DateTime updatedAt;
-    public object deletedAt;
+    public object? deletedAt;
 }
 /// <summary>
 /// Land 하나에 있는 정보들
@@ -49,13 +49,13 @@ public class LandData
     public int userId;
     public DateTime createdAt;
     public DateTime updatedAt;
-    public object deletedAt;
-    public List<ObjectsInfo> landDecorations;
+    public object? deletedAt;
+    public List<ObjectsInfo>? landDecorations;
 }
 [Serializable]
 public class BridgeData
 {
-    public BridgeFromTo? bridgeInfo;
+    public int? id;
     public string? name;
     public float bridgePositionX;
     public float bridgePositionY;
@@ -63,6 +63,11 @@ public class BridgeData
     public float bridgeRoatationX;
     public float bridgeRoatationY;
     public float bridgeRoatationZ;
+    public int userId;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+    public object? deletedAt;
+    public BridgeFromTo? bridgeInfo;
 }
 //TODO: 섬들의 연결 관계를 담아줄 리스트 만들어야함
 //          => 알고리즘에 써야해
@@ -72,6 +77,9 @@ public class BridgeFromTo
     public int bridgeId;
     public int fromId;
     public int toId;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+    public object? deletedAt;
 }
 /// <summary>             
 /// 여러 Land들의 정보를 담을 List
@@ -79,7 +87,7 @@ public class BridgeFromTo
 [Serializable]
 public class ArrayLandData
 {
-    public List<LandData> landLists;
+    public List<LandData>? landLists;
 }
 /// <summary>
 /// 여러 Bridge 정보를 담을 List
@@ -87,5 +95,5 @@ public class ArrayLandData
 [Serializable]
 public class ArrayBridgeData
 {
-    public List<BridgeData> bridgeLists;
+    public List<BridgeData>? bridgeLists;
 }
