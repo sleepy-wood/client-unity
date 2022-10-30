@@ -380,6 +380,7 @@ public class LandDataManager : MonoBehaviour
         else
         {
             buildMode = BuildMode.None;
+            SaveBridgeData();
             isOnClickBuildMode = false;
         }
     }
