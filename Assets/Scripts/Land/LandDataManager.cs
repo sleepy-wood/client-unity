@@ -380,6 +380,12 @@ public class LandDataManager : MonoBehaviour
     /// </summary>
     public void OnClickSelectBuildMode()
     {
+
+        for (int i = 0; i < minimapObject.Count; i++)
+        {
+            if (minimapObject[i].activeSelf)
+                return;
+        }
         buildMode = BuildMode.Bridge;
         cancelButton.SetActive(true);
     }
@@ -399,6 +405,8 @@ public class LandDataManager : MonoBehaviour
     /// </summary>
     public void OnClickMinimapButton()
     {
+        if (buildBridgeCamera.activeSelf)
+            return;
         for(int i = 0; i < minimapObject.Count; i++)
         {
             if (!isOnClickMinimap)
