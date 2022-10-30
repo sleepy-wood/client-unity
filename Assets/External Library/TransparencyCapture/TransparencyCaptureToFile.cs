@@ -8,7 +8,7 @@ public class TransparencyCaptureToFile:MonoBehaviour
         yield return new WaitForEndOfFrame();
         //After Unity4,you have to do this function after WaitForEndOfFrame in Coroutine
         //Or you will get the error:"ReadPixels was called to read pixels from system frame buffer, while not inside drawing frame"
-        TransparencyCapture.captureScreenshot("capture.png");
+        TransparencyCapture.captureScreenshot("TreeScreenShot.png");
         print("Capture Complete");
     }
 
