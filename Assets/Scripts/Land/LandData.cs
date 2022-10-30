@@ -35,7 +35,7 @@ public class ObjectsInfo
 public class LandData
 {
     public int? id;
-    public int? unityLandId;
+    public int unityLandId;
     public float landPositionX;
     public float landPositionY;
     public float landPositionZ;
