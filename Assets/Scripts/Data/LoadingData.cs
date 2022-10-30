@@ -1,23 +1,18 @@
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Result<T>
 {
     public bool result;
     public int count;
-    public Data<T> data;
-}
-public class Data<T>
-{
-    T data;
+    public List<T> data;
 }
 
 public class LoadingData : MonoBehaviour
 {
-
-
     NativeLoadData nativeLoad = new NativeLoadData();
     private async void Start()
     {
@@ -33,7 +28,8 @@ public class LoadingData : MonoBehaviour
 
         //LandData Load
         //TODO: Land Data 구조 수정s
-        Result<ArrayLandDataSever> landData = await DataModule.WebRequest<Result<ArrayLandDataSever>>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        //Root landData = await DataModule.WebRequest<Root>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        Result<LandData> landData = await DataModule.WebRequest<Result<LandData>>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         //이거 한번 해야한다.
         //ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
@@ -43,7 +39,7 @@ public class LoadingData : MonoBehaviour
         //DataTemporary.MyBridgeData = arrayBridgeData;
 
         //DataTemporary.MyLandData = landData;
-        if(landData.result)
+        if (landData.result)
             Debug.Log(landData.data);
 
     }

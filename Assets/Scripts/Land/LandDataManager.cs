@@ -143,11 +143,9 @@ public class LandDataManager : MonoBehaviour
                     objectList.Add(objectsInfo);
                 }
             }
-            ArrayObjectsOfLand arrayObjectsOfLand = new ArrayObjectsOfLand();
-            arrayObjectsOfLand.objects = objectList;
 
             //LandData 담기
-            landData.landDecorations = arrayObjectsOfLand;
+            landData.landDecorations = objectList;
             landData.unityLandId = i+1;
             landData.landPositionX = transform.GetChild(i).localPosition.x;
             landData.landPositionY = transform.GetChild(i).localPosition.y;
@@ -299,19 +297,19 @@ public class LandDataManager : MonoBehaviour
             Vector3 localEulerAngles = new Vector3((float)arrayLandData.landLists[i].landEulerAngleX, (float)arrayLandData.landLists[i].landEulerAngleY, (float)arrayLandData.landLists[i].landEulerAngleZ);
             land.transform.localEulerAngles = localEulerAngles;
 
-            ArrayObjectsOfLand arrayObjectsOf = arrayLandData.landLists[i].landDecorations;
+            List<ObjectsInfo> arrayObjectsOf = arrayLandData.landLists[i].landDecorations;
             
             //Land 위에 있는 것 Load 해서 발견하기
-            for(int j = 0; j < arrayObjectsOf.objects.Count; j++)
+            for(int j = 0; j < arrayObjectsOf.Count; j++)
             {
-                GameObject objResource = Resources.Load<GameObject>(arrayObjectsOf.objects[j].path);
+                GameObject objResource = Resources.Load<GameObject>(arrayObjectsOf[j].path);
                 GameObject obj = Instantiate(objResource);
                 obj.name = obj.name.Split('(')[0];
                 obj.transform.parent = land.transform;
 
-                Vector3 objPosition = new Vector3((float)arrayObjectsOf.objects[j].localPositionX, (float)arrayObjectsOf.objects[j].localPositionY, (float)arrayObjectsOf.objects[j].localPositionZ);
-                Vector3 objScale = new Vector3((float)arrayObjectsOf.objects[j].localScaleX, (float)arrayObjectsOf.objects[j].localScaleY, (float)arrayObjectsOf.objects[j].localScaleZ);
-                Vector3 objEulerAngles = new Vector3((float)arrayObjectsOf.objects[j].localEulerAngleX, (float)arrayObjectsOf.objects[j].localEulerAngleY, (float)arrayObjectsOf.objects[j].localEulerAngleZ);
+                Vector3 objPosition = new Vector3((float)arrayObjectsOf[j].localPositionX, (float)arrayObjectsOf[j].localPositionY, (float)arrayObjectsOf[j].localPositionZ);
+                Vector3 objScale = new Vector3((float)arrayObjectsOf[j].localScaleX, (float)arrayObjectsOf[j].localScaleY, (float)arrayObjectsOf[j].localScaleZ);
+                Vector3 objEulerAngles = new Vector3((float)arrayObjectsOf[j].localEulerAngleX, (float)arrayObjectsOf[j].localEulerAngleY, (float)arrayObjectsOf[j].localEulerAngleZ);
                 
                 obj.transform.localPosition = objPosition;
                 obj.transform.localScale = objScale;
