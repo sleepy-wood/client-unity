@@ -15,7 +15,7 @@ using UnityEngine.Networking;
 
 public class TreeController : MonoBehaviour
 {
-    #region 변수
+    #region Variable
     // Pipeline Element별 dayuency Min/Max값 저장소
     [System.Serializable]
     public class MinMax
@@ -78,6 +78,8 @@ public class TreeController : MonoBehaviour
     public GameObject user;
     // previewTree Scale Value
     float scaleTo;
+    // TreeList Tree Name
+    public Text treeName;
     #endregion
 
     public enum VisitType
@@ -348,6 +350,7 @@ public class TreeController : MonoBehaviour
     {
         //user.GetComponent<UserInput>().InputControl = false;
         inputPlantName.text = data.treeName;
+        treeName.text = inputPlantName.text;
         plantNameUI.SetActive(false);
     }
 
@@ -364,6 +367,7 @@ public class TreeController : MonoBehaviour
             TreeReload();
             // 나무 심은 시간 저장
             GameManager.Instance.firstPlantTime = DateTime.Now;
+            treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
         // 2. 작은 묘목
         if (dayCount == 2)
@@ -373,24 +377,28 @@ public class TreeController : MonoBehaviour
             PipelineUpdate(dayCount);
             TreeReload();
             treeFactory.gameObject.SetActive(true);
+            treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
         // 3. 묘목
         if (dayCount == 3)
         {
             PipelineUpdate(dayCount);
             TreeReload();
+            treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
         // 4. 나무
         if (dayCount == 4)
         {
             PipelineUpdate(dayCount);
             TreeReload();
+            treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
         // 5. 열매
         if (dayCount == 5)
         {
             PipelineUpdate(dayCount);
             TreeReload();
+            treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
     }
 
