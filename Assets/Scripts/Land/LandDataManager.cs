@@ -381,6 +381,7 @@ public class LandDataManager : MonoBehaviour
         {
             buildMode = BuildMode.None;
             SaveBridgeData();
+            SaveLandData();
             isOnClickBuildMode = false;
         }
     }
