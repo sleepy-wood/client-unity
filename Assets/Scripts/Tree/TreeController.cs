@@ -111,7 +111,6 @@ public class TreeController : MonoBehaviour
 
         // TreeData  객체 생성
         data = new TreeData();
-        data.leafTexture = leafText;
         //data.landID = growPos.parent.gameObject.name;
 
         // TreePipeline path
@@ -159,7 +158,6 @@ public class TreeController : MonoBehaviour
                 if (Input.touches[i].phase == TouchPhase.Ended && dayCount < 5 && !plantNameUI.activeSelf)
                 {
                     dayCount++;
-                    data.treeDay = dayCount;
                     txtDayCount.text = $"Day{dayCount}";
                     LoadTree();
                 }
@@ -252,7 +250,7 @@ public class TreeController : MonoBehaviour
     public void PipelineUpdate(int dayCount)
     {
         // 날짜에 맞춘 정보를 가지고 있는 요소
-        Day element = treeList[dayCount - 2];
+        dayTreeData element = treeList[dayCount - 2];
 
         #region 1. Element MinMax
         int idx = element.minMaxList.Count;
@@ -402,7 +400,6 @@ public class TreeController : MonoBehaviour
     public void TreeUpdate()
     {
         dayCount++;
-        data.treeDay = dayCount;
         LoadTree();
     }
 
