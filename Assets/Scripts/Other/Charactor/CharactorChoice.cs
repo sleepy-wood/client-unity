@@ -68,7 +68,7 @@ public class CharactorChoice : MonoBehaviour
         {
             curTime += Time.deltaTime;
             if (curTime > 1.2f)
-                SceneManager.LoadScene(2);
+                SceneManager.LoadScene("MyWorld");
         }
     }
     public IEnumerator AlphaText(int i)

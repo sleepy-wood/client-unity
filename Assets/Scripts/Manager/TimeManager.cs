@@ -17,12 +17,15 @@ public class TimeManager : MonoBehaviour
     public UDateTime testFirstDay;
     // ChangeSky Script
     public ChangeSky sky;
+    // test 현재 날짜
+    public UDateTime testDate;
 
     private void Start()
     {
         // Test : 현재 시간 저장
         testFirstDay = DateTime.Now;
-    }
+        testDate = DateTime.Now;
+}
 
     /// <summary>
     /// 사용자가 MyRoom에 들어왔을 때 나무 심은 누적 Day Count해주는 함수
@@ -40,7 +43,7 @@ public class TimeManager : MonoBehaviour
     }
 
 
-    public UDateTime testDate = DateTime.Now;
+    
     public Text txtDayCount;
     /// <summary>
     /// Test : 버튼 누르면 Plus Day
