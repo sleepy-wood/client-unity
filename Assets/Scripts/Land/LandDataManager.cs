@@ -407,14 +407,15 @@ public class LandDataManager : MonoBehaviour
             transform.GetChild(j).GetChild(0).gameObject.SetActive(false);
         }
 
-        //if (!isOnClickMinimap)
-        //{
-        //    user.GetComponent<UserInteract>().moveControl = true;
-        //}
-        //else
-        //{
-        //    user.GetComponent<UserInteract>().moveControl = false;
-        //}
+        if (!isOnClickMinimap)
+        {
+            user.GetComponent<UserInteract>().moveControl = true;
+        }
+        else
+        {
+            user.GetComponent<UserInteract>().moveControl = false;
+        }
+
         isOnClickMinimap = isOnClickMinimap == true ? false : true;
     }
 }
