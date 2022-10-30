@@ -17,8 +17,10 @@ public class ScreenShot2 : MonoBehaviour
     /// </summary>
     public void ScreenShotUpdate()
     {
-        if (previewTree == null) GameObject.Find("previewTree");
+        if (previewTree == null) GameObject.Find("preview Tree");
         previewTree.layer = 11;  // Tree Layer
+        transform.parent = previewTree.transform;
+        transform.localPosition = new Vector3(0, 6.27f, -12.72f);
         RenderTexture renderTexture = GetComponent<Camera>().targetTexture;
         Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.ARGB32, false);
         RenderTexture.active = renderTexture;
