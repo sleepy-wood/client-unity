@@ -3045,12 +3045,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d7a256588215b478b82b8aef538701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildMode: 0
   cancelButton: {fileID: 947163733}
   minimapObject:
   - {fileID: 545215221}
   - {fileID: 1656948644}
+  landDataFileName: LandData
+  bridgeFileName: BridgeData
+  buildMode: 0
   buildBridgeCamera: {fileID: 263136505}
+  testMode: 0
 --- !u!1 &789131119
 GameObject:
   m_ObjectHideFlags: 0
@@ -5160,12 +5163,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d7a256588215b478b82b8aef538701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildMode: 0
   cancelButton: {fileID: 947163733}
   minimapObject:
   - {fileID: 545215221}
   - {fileID: 1656948644}
+  landDataFileName: LandData
+  bridgeFileName: BridgeData
+  buildMode: 0
   buildBridgeCamera: {fileID: 263136505}
+  testMode: 0
 --- !u!4 &1293964087
 Transform:
   m_ObjectHideFlags: 0
@@ -5350,8 +5356,10 @@ MonoBehaviour:
   targetFOV: 3.11
   data:
     treeName: 
-    leafTexture: {fileID: 0}
-    treegrowthData:
+    leafTextures: []
+    branchTextures: []
+    flowerTextures: []
+    treeGrowthData:
       trunkThick: 0
   leafText: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
   plantNameUI: {fileID: 1436896945}
@@ -7362,8 +7370,8 @@ MonoBehaviour:
       forward: {x: 0.8869165, y: 0, z: 0.46192968}
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -0.000012772158, y: 9.000027, z: -0.0002995208}
-      positionFromRoot: {x: -0.000012772158, y: 9.000027, z: -0.0002995208}
+      positionFromBranch: {x: 0, y: 9, z: -0.00000094583146}
+      positionFromRoot: {x: 0, y: 9, z: -0.00000094583146}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -7463,8 +7471,8 @@ MonoBehaviour:
       forward: {x: -0.8869165, y: -0.00000017427557, z: -0.46192956}
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: 0.0012103952, y: 8.997408, z: 0.00033753738}
-      positionFromRoot: {x: 0.0012103952, y: 8.997408, z: 0.00033753738}
+      positionFromBranch: {x: 0, y: 9, z: -0.00000094583146}
+      positionFromRoot: {x: 0, y: 9, z: -0.00000094583146}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
