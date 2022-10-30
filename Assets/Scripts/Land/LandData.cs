@@ -70,8 +70,8 @@ public class BridgeData
 public class BridgeFromTo
 {
     public int bridgeId;
-    public int fromId;
-    public int toId;
+    public int fromLandId;
+    public int toLandId;
     public DateTime createdAt;
     public DateTime updatedAt;
 }

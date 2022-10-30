@@ -64,8 +64,8 @@ public class MiniMapMode : MonoBehaviour, IPointerClickHandler
             vec.y * cam.pixelHeight));
 
         RaycastHit hit;
-
-        if (Physics.Raycast(MapRay, out hit, Mathf.Infinity))
+        LayerMask layer = 1 << LayerMask.NameToLayer("Portal");
+        if (Physics.Raycast(MapRay, out hit, Mathf.Infinity, ~layer))
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {

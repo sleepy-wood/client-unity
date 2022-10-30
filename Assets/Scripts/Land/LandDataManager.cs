@@ -207,14 +207,14 @@ public class LandDataManager : MonoBehaviour
             if (testMode)
             {
                 string[] bridgeStrings = bridgeTransform.name.Split('_')[1].Split('/');
-                bridgeFromTo1.fromId = int.Parse(bridgeStrings[0]);
-                bridgeFromTo1.toId = int.Parse(bridgeStrings[1]);
+                bridgeFromTo1.fromLandId = int.Parse(bridgeStrings[0]);
+                bridgeFromTo1.toLandId = int.Parse(bridgeStrings[1]);
                 bridgeFromTo1.bridgeId = i;
             }
             else
             {
-                bridgeFromTo1.fromId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId;
-                bridgeFromTo1.toId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
+                bridgeFromTo1.fromLandId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromLandId;
+                bridgeFromTo1.toLandId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toLandId;
                 bridgeFromTo1.bridgeId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.bridgeId;
             }
 
@@ -242,16 +242,16 @@ public class LandDataManager : MonoBehaviour
                 if (testMode)
                 {
                     bridgeData.name = bridgeTransform.name;
-                    bridgeFromTo.fromId = 1;
-                    bridgeFromTo.toId = 1;
+                    bridgeFromTo.fromLandId = 1;
+                    bridgeFromTo.toLandId = 1;
                 }
                 else
                 {
                     bridgeData.name = "Bridge"
-                        + "_" + DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId
-                        + "/" + DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
-                    bridgeFromTo.fromId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromId;
-                    bridgeFromTo.toId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toId;
+                        + "_" + DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromLandId
+                        + "/" + DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toLandId;
+                    bridgeFromTo.fromLandId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.fromLandId;
+                    bridgeFromTo.toLandId = DataTemporary.MyBridgeData.bridgeLists[i].bridgeInfo.toLandId;
                 }
                 bridgeList.Add(bridgeFromTo);
             }
@@ -378,8 +378,8 @@ public class LandDataManager : MonoBehaviour
 
                 string[] bridgeStrings = bridge.name.Split('_')[1].Split('/');
                 BridgeFromTo bridgeFromTo = new BridgeFromTo();
-                bridgeFromTo.fromId = int.Parse(bridgeStrings[0]);
-                bridgeFromTo.toId = int.Parse(bridgeStrings[1]);
+                bridgeFromTo.fromLandId = int.Parse(bridgeStrings[0]);
+                bridgeFromTo.toLandId = int.Parse(bridgeStrings[1]);
 
                 bridgeList.Add(bridgeFromTo);
             }

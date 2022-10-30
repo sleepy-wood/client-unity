@@ -64,7 +64,7 @@ public class LoadingData : MonoBehaviour
             //LandDataManager.Instance.LoadLandData();
             //LandDataManager.Instance.LoadBridge();
             //LandDataManager.Instance.isLoad = true;
-            //SceneManager.LoadScene(1);
+            SceneManager.LoadScene(1);
         }
     }
     public IEnumerator StartLoading()
