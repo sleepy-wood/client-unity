@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 #nullable enable
 /// <summary>
 /// 땅 위에 있는 오브젝트들의 정보를 저장하는 구조체
+/// List로 담아야함
 /// </summary>
 [Serializable]
 public class ObjectsInfo
@@ -21,15 +22,11 @@ public class ObjectsInfo
     public float localEulerAngleX;
     public float localEulerAngleY;
     public float localEulerAngleZ;
-}
-
-/// <summary>
-/// 땅위에 있는 오브젝트들의 List
-/// </summary>
-[Serializable]
-public class ArrayObjectsOfLand
-{
-    public List<ObjectsInfo>? objects = null;
+    public int landId;
+    public int userId;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+    public object deletedAt;
 }
 /// <summary>
 /// Land 하나에 있는 정보들
@@ -49,7 +46,11 @@ public class LandData
     public float landEulerAngleX;
     public float landEulerAngleY;
     public float landEulerAngleZ;
-    public ArrayObjectsOfLand? landDecorations;
+    public int userId;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+    public object deletedAt;
+    public List<ObjectsInfo> landDecorations;
 }
 [Serializable]
 public class BridgeData
@@ -78,7 +79,7 @@ public class BridgeFromTo
 [Serializable]
 public class ArrayLandData
 {
-    public List<LandData>? landLists=null;
+    public List<LandData> landLists;
 }
 /// <summary>
 /// 여러 Bridge 정보를 담을 List
@@ -86,5 +87,5 @@ public class ArrayLandData
 [Serializable]
 public class ArrayBridgeData
 {
-    public List<BridgeData>? bridgeLists = null;
+    public List<BridgeData> bridgeLists;
 }
