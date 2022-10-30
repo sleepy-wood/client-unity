@@ -163,7 +163,6 @@ public class LandDataManager : MonoBehaviour
             landData.landEulerAngleZ = transform.GetChild(i).localEulerAngles.z;
 
             string landJsonData = JsonUtility.ToJson(landData);
-
             //Web에 데이터 수정
             ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
                 "/api/v1/lands/" + DataTemporary.MyLandData.landLists[i].id, 
@@ -226,9 +225,9 @@ public class LandDataManager : MonoBehaviour
             bridgeData.bridgePositionY = bridgeTransform.localPosition.y;
             bridgeData.bridgePositionZ = bridgeTransform.localPosition.z;
 
-            bridgeData.bridgeRoatationX = bridgeTransform.localEulerAngles.x;
-            bridgeData.bridgeRoatationY = bridgeTransform.localEulerAngles.y;
-            bridgeData.bridgeRoatationZ = bridgeTransform.localEulerAngles.z;
+            bridgeData.bridgeRotationX = bridgeTransform.localEulerAngles.x;
+            bridgeData.bridgeRotationY = bridgeTransform.localEulerAngles.y;
+            bridgeData.bridgeRotationZ = bridgeTransform.localEulerAngles.z;
 
 
             //건설된 상태라면 그래프 구조에 넣기
@@ -367,10 +366,10 @@ public class LandDataManager : MonoBehaviour
             bridge.transform.parent = bridgeTemp.transform;
 
             Vector3 bridgePosition = new Vector3((float)bridgesData[i].bridgePositionX, (float)bridgesData[i].bridgePositionY, (float)bridgesData[i].bridgePositionZ);
-            Vector3 bridgeScale = new Vector3((float)bridgesData[i].bridgeRoatationX, (float)bridgesData[i].bridgeRoatationY, (float)bridgesData[i].bridgeRoatationZ);
+            Vector3 bridgeRotation = new Vector3((float)bridgesData[i].bridgeRotationX, (float)bridgesData[i].bridgeRotationY, (float)bridgesData[i].bridgeRotationZ);
             
             bridge.transform.localPosition = bridgePosition;    
-            bridge.transform.localEulerAngles = bridgeScale;    
+            bridge.transform.localEulerAngles = bridgeRotation;    
             bridge.name = bridgesData[i].name;
             if (bridge.name.Length > "Bridge".Length)
             {

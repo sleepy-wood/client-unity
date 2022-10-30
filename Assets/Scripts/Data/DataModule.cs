@@ -164,6 +164,7 @@ public class DataModule
            
             //temporary에 저장
             DataTemporary.assetBundle = result;
+            request.Dispose();
             return result;
         }
         catch (OperationCanceledException ex)

@@ -34,7 +34,7 @@ public class ObjectsInfo
 [Serializable]
 public class LandData
 {
-    public int? id;
+    public int id;
     public int unityLandId;
     public float landPositionX;
     public float landPositionY;
@@ -53,14 +53,14 @@ public class LandData
 [Serializable]
 public class BridgeData
 {
-    public int? id;
+    public int id;
     public string? name;
     public float bridgePositionX;
     public float bridgePositionY;
     public float bridgePositionZ;
-    public float bridgeRoatationX;
-    public float bridgeRoatationY;
-    public float bridgeRoatationZ;
+    public float bridgeRotationX;
+    public float bridgeRotationY;
+    public float bridgeRotationZ;
     public int userId;
     public DateTime createdAt;
     public DateTime updatedAt;
