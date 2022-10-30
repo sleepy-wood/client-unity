@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class ChangeSky : MonoBehaviour
 {
-        public Material daySky;
-        public Material nightSky;
-        
-        public void Day()
-        {
-                RenderSettings.skybox = daySky;
-        }
+    public Material daySky;
+    public Material nightSky;
 
-        public void Night()
-        {
-                RenderSettings.skybox = nightSky;
-        }
+    public void Day()
+    {
+        RenderSettings.skybox = daySky;
+    }
+
+    public void Night()
+    {
+        RenderSettings.skybox = nightSky;
+    }
 }
