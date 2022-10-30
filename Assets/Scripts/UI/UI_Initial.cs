@@ -4,15 +4,43 @@ using UnityEngine;
 
 public class UI_Initial : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Variable
+
+    public GameObject profile;
+    public GameObject TreeList;
+
+    #endregion
+
+
+    /// <summary>
+    /// 프로필 UI 활성화
+    /// </summary>
+    public void onProfile()
     {
-        
+        profile.gameObject.SetActive(true);
+    }
+    /// <summary>
+    /// 프로필 UI 비활성화
+    /// </summary>
+    public void onProfileOff()
+    {
+        profile.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    /// <summary>
+    /// TreeList UI 활성화
+    /// </summary>
+    public void onTreeList()
     {
-        
+
     }
+    /// <summary>
+    /// TreeList UI 비활성화
+    /// </summary>
+    public void onTreeListOff()
+    {
+
+    }
+
 }
