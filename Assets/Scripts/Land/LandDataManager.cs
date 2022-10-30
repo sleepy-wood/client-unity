@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Cysharp.Threading.Tasks.Triggers;
+using System.Net;
 
 class ResultTemp
 {
@@ -29,11 +30,11 @@ public class LandDataManager : MonoBehaviour
             Instance = this;
 
 
-        ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
-        DataTemporary.MyLandData = arrayLandData;
+        //ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
+        //DataTemporary.MyLandData = arrayLandData;
 
-        ArrayBridgeData arrayBridgeData = FileManager.LoadDataFile<ArrayBridgeData>(bridgeFileName);
-        DataTemporary.MyBridgeData = arrayBridgeData;
+        //ArrayBridgeData arrayBridgeData = FileManager.LoadDataFile<ArrayBridgeData>(bridgeFileName);
+        //DataTemporary.MyBridgeData = arrayBridgeData;
 
 
     }
@@ -49,6 +50,7 @@ public class LandDataManager : MonoBehaviour
     private bool isOnClickMinimap = false;
     private bool isOnClickBuildMode = false;
     private GameObject user;
+    public bool isLoad = false;
 
     private void Start()
     {
@@ -58,29 +60,32 @@ public class LandDataManager : MonoBehaviour
         {
             minimapObject[i].SetActive(false);
         }
-        LoadLandData();
-        LoadBridge();
+        //LoadLandData();
+        //LoadBridge();
         //SaveLandData();
         //SaveBridgeData();
     }
 
     private void Update()
     {
-        //Build Mode - Bridge일때
-        if (buildMode == BuildMode.Bridge)
-            BuildBridge();
-        else if(buildMode == BuildMode.None)
+        if (isLoad)
         {
-            //Bridge 건설용 카메라 끄기
-            buildBridgeCamera.SetActive(false);
-
-            //건설되지 않은 Bridge 안보여주기
-            for (int i = 0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
+            //Build Mode - Bridge일때
+            if (buildMode == BuildMode.Bridge)
+                BuildBridge();
+            else if (buildMode == BuildMode.None)
             {
-                Transform bridge = transform.GetChild(transform.childCount - 1).GetChild(i);
-                if (bridge.GetChild(0).GetComponent<Bridge>().currentBridgeType != Bridge.BridgeType.Build)
+                //Bridge 건설용 카메라 끄기
+                buildBridgeCamera.SetActive(false);
+
+                //건설되지 않은 Bridge 안보여주기
+                for (int i = 0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
                 {
-                    bridge.gameObject.SetActive(false);
+                    Transform bridge = transform.GetChild(transform.childCount - 1).GetChild(i);
+                    if (bridge.GetChild(0).GetComponent<Bridge>().currentBridgeType != Bridge.BridgeType.Build)
+                    {
+                        bridge.gameObject.SetActive(false);
+                    }
                 }
             }
         }
@@ -109,7 +114,7 @@ public class LandDataManager : MonoBehaviour
     /// LandManager 하위에 있는 Land들의 정보를 수정하는 함수
     /// 웹에 수정 요청을 할것
     /// </summary>
-    public void SaveLandData()
+    public async void SaveLandData()
     {
         List<LandData> landDataList = new List<LandData>();
         for(int i = 0; i< transform.childCount - 1; i++)
@@ -157,25 +162,28 @@ public class LandDataManager : MonoBehaviour
             landData.landEulerAngleY = transform.GetChild(i).localEulerAngles.y;
             landData.landEulerAngleZ = transform.GetChild(i).localEulerAngles.z;
 
+            string landJsonData = JsonUtility.ToJson(landData);
+
+            //Web에 데이터 수정
+            ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
+                "/api/v1/lands/" + DataTemporary.MyLandData.landLists[i].id, 
+                DataModule.NetworkType.PUT, 
+                DataModule.DataType.BUFFER, 
+                landJsonData);
+
+            if (!resultPut.result)
+            {
+                Debug.LogError("WebRequestError: NetworkType[Put]");
+            }
+
             landDataList.Add(landData);
         }
 
         ArrayLandData arrayLandData = new ArrayLandData();
         arrayLandData.landLists = landDataList;
 
-       
-
         //DataTemporary에 Update or Save
         DataTemporary.MyLandData = arrayLandData;
-
-        //if (DataModule.WebRequest<ResultTemp>(""))
-        //{
-        //    Debug.Log("LandData 저장 성공");
-        //}
-        //else
-        //{
-        //    Debug.LogError("LandData 저장 실패");
-        //}
 
         //File 형식으로 Update or Save
         FileManager.SaveDataFile(landDataFileName, arrayLandData);
@@ -183,7 +191,7 @@ public class LandDataManager : MonoBehaviour
     /// <summary>
     /// Bridge정보 저장 및 수정
     /// </summary>
-    public void SaveBridgeData()
+    public async void SaveBridgeData()
     {
         List<BridgeData> bridgeDataList = new List<BridgeData>();
         List<BridgeFromTo> bridgeList = new List<BridgeFromTo>();
@@ -254,26 +262,43 @@ public class LandDataManager : MonoBehaviour
                 bridgeData.name = "Bridge";
             }
 
+            //Web에 데이터 수정
+            string bridgeJsonData = JsonUtility.ToJson(bridgeData);
+
+            ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
+                "/api/v1/bridges/" + DataTemporary.MyBridgeData.bridgeLists[i].id,
+                DataModule.NetworkType.PUT,
+                DataModule.DataType.BUFFER,
+                bridgeJsonData);
+
+            if (!resultPut.result)
+            {
+                Debug.LogError("WebRequestError: NetworkType[Put]");
+            }
+
             bridgeDataList.Add(bridgeData);
         }
         ArrayBridgeData arrayBridgeData = new ArrayBridgeData();
-        //TODO: 수정
+
         arrayBridgeData.bridgeLists = bridgeDataList;
 
         //bridge 연결 리스트 저장
         DataTemporary.BridgeConnection = bridgeList;
 
         DataTemporary.MyBridgeData = arrayBridgeData;
+        //파일로 저장
         FileManager.SaveDataFile(bridgeFileName, arrayBridgeData);
+        //Web으로 저장
+
     }
     /// <summary>
     /// Load Land Data and Create Object of Land
     /// </summary>
     public void LoadLandData()
     {
-        //ArrayLandData arrayLandData = DataTemporary.MyLandData;
+        ArrayLandData arrayLandData = DataTemporary.MyLandData;
         //Web 하기 전 준비
-        ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
+        //ArrayLandData arrayLandData = FileManager.LoadDataFile<ArrayLandData>(landDataFileName);
         //플레이어가 떨어지는 것을 방지
         user.GetComponent<Rigidbody>().useGravity = false;
 
@@ -326,7 +351,8 @@ public class LandDataManager : MonoBehaviour
     /// <param name="bridges"></param>
     public void LoadBridge()
     {
-        ArrayBridgeData arrayBridgeData = FileManager.LoadDataFile<ArrayBridgeData>(bridgeFileName);
+        ArrayBridgeData arrayBridgeData = DataTemporary.MyBridgeData;
+        //ArrayBridgeData arrayBridgeData = FileManager.LoadDataFile<ArrayBridgeData>(bridgeFileName);
         List<BridgeData> bridgesData = arrayBridgeData.bridgeLists;
 
         List<BridgeFromTo> bridgeList = new List<BridgeFromTo>();

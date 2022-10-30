@@ -779,7 +779,7 @@ RectTransform:
   - {fileID: 743012986}
   - {fileID: 53673836}
   m_Father: {fileID: 271676548}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1283,7 +1283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d7a256588215b478b82b8aef538701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cancelButton: {fileID: 1772210560}
   minimapObject:
   - {fileID: 1985161162}
   - {fileID: 557946190}
@@ -1292,6 +1291,7 @@ MonoBehaviour:
   buildMode: 0
   buildBridgeCamera: {fileID: 1327393234}
   testMode: 1
+  isLoad: 0
 --- !u!4 &235392407
 Transform:
   m_ObjectHideFlags: 0
@@ -1319,7 +1319,7 @@ Transform:
   - {fileID: 358762426}
   - {fileID: 201004044}
   m_Father: {fileID: 271676548}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &258287955
 GameObject:
@@ -1432,14 +1432,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 663874295}
   - {fileID: 1985161167}
   - {fileID: 142791562}
   - {fileID: 557946192}
   - {fileID: 1327393236}
   - {fileID: 235392407}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &273345116
 GameObject:
@@ -2831,7 +2830,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 271676548}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 82.656, y: 90, z: -0.058}
 --- !u!1001 &607835219
 PrefabInstance:
@@ -2846,11 +2845,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1318336463538375760, guid: e3f47896172b77946bcbb7b632baf696, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1318336463538375761, guid: e3f47896172b77946bcbb7b632baf696, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1318336463538375761, guid: e3f47896172b77946bcbb7b632baf696, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3286,7 +3285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &663874294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3299,15 +3298,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d7a256588215b478b82b8aef538701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cancelButton: {fileID: 1772210560}
   minimapObject:
   - {fileID: 1985161162}
   - {fileID: 557946190}
-  landDataFileName: LandData_Test2
-  bridgeFileName: BridgeData_Test2
+  landDataFileName: LandData
+  bridgeFileName: BridgeData
   buildMode: 0
   buildBridgeCamera: {fileID: 1327393234}
   testMode: 0
+  isLoad: 0
 --- !u!4 &663874295
 Transform:
   m_ObjectHideFlags: 0
@@ -3320,8 +3319,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 271676548}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &678150816
 GameObject:
@@ -5955,7 +5954,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 271676548}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 82.656, y: 90, z: -0.058}
 --- !u!1 &1327641449
 GameObject:
@@ -8264,7 +8263,7 @@ RectTransform:
   - {fileID: 816055916}
   - {fileID: 291052874}
   m_Father: {fileID: 271676548}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9118,7 +9117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8652748969013887312, guid: ad6594edb2c7ba441b4ae75e665b569b, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8652748969013887312, guid: ad6594edb2c7ba441b4ae75e665b569b, type: 3}
       propertyPath: m_AnchorMax.x

@@ -14,6 +14,19 @@ using UnityEngine.Networking;
 using UnityEngine.Rendering;
 
 
+[Serializable]
+public class ResultGet<T>
+{
+    public bool result;
+    public int count;
+    public List<T> data;
+}
+
+[Serializable]
+public class ResultPut
+{
+    public bool result;
+}
 public class DataModule
 {
     private const string DOMAIN = "https://team-buildup.shop";
