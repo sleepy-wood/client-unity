@@ -34,14 +34,14 @@ public class UI_Initial : MonoBehaviour
     /// </summary>
     public void onTreeList()
     {
-
+        TreeList.gameObject.SetActive(true);
     }
     /// <summary>
     /// TreeList UI 비활성화
     /// </summary>
     public void onTreeListOff()
     {
-
+        TreeList.gameObject.SetActive(false);
     }
 
 }
