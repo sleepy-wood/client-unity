@@ -133,7 +133,7 @@ public class CharactorChoice : MonoBehaviour
         
         //데이터 저장
         DataTemporary.MyUserData.UserAvatar = transform.GetChild(selectedIndex).name;
-        string jsonData = FileManager.SaveDataFile<UserData>(userDataFileName, DataTemporary.MyUserData);
+        //string jsonData = FileManager.SaveDataFile<UserData>(userDataFileName, DataTemporary.MyUserData);
 
         //TODO: 데이터 수정
         //ResultTemp<Token> data = await DataModule.WebRequest<ResultTemp<Token>>(
