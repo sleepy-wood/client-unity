@@ -8006,7 +8006,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 909601215}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1151855020}
+        m_TargetAssemblyTypeName: UI_Initial, Assembly-CSharp
+        m_MethodName: OnClickToWorld
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &909601215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9283,6 +9295,10 @@ MonoBehaviour:
   TreeList: {fileID: 887736539}
   screenShotCam: {fileID: 0}
   previewTreePos: {fileID: 0}
+  SleepData: {fileID: 0}
+  sleepDataText: {fileID: 0}
+  txtAge: {fileID: 1491165108}
+  timeManager: {fileID: 1812715643}
 --- !u!1 &1153228107
 GameObject:
   m_ObjectHideFlags: 0
@@ -11785,8 +11801,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1.1989071}
   m_AnchorMax: {x: 0.5, y: 1.1989071}
-  m_AnchoredPosition: {x: -186, y: 141.99998}
-  m_SizeDelta: {x: 407.218, y: 407.218}
+  m_AnchoredPosition: {x: -184.34258, y: 153.65741}
+  m_SizeDelta: {x: 297.9587, y: 297.9587}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1422473105
 MonoBehaviour:
@@ -13334,6 +13350,7 @@ MonoBehaviour:
   testDate:
     _dateTime: "2022-10-30 \uC624\uC804 8:42:56"
   txtDayCount: {fileID: 1440088847}
+  txtAge: {fileID: 0}
 --- !u!4 &1812715644
 Transform:
   m_ObjectHideFlags: 0
@@ -14562,7 +14579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1318336463538375766, guid: e3f47896172b77946bcbb7b632baf696, type: 3}
       propertyPath: moveControl
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4928004722057848840, guid: e3f47896172b77946bcbb7b632baf696, type: 3}
       propertyPath: m_LocalPosition.y

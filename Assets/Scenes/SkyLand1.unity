@@ -8011,7 +8011,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 909601215}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1151855020}
+        m_TargetAssemblyTypeName: UI_Initial, Assembly-CSharp
+        m_MethodName: OnClickToWorld
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &909601215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9288,6 +9300,10 @@ MonoBehaviour:
   TreeList: {fileID: 887736539}
   screenShotCam: {fileID: 381406361}
   previewTreePos: {fileID: 498458427}
+  SleepData: {fileID: 0}
+  sleepDataText: {fileID: 0}
+  txtAge: {fileID: 1491165108}
+  timeManager: {fileID: 1812715643}
 --- !u!1 &1153228107
 GameObject:
   m_ObjectHideFlags: 0
