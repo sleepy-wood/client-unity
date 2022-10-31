@@ -20,22 +20,28 @@ public class ScreenShot2 : MonoBehaviour
     /// </summary>
     public void ScreenShotUpdate()
     {
-        if (previewTree == null) previewTree = GameObject.Find("previewTree");
-        previewTree.layer = 11;  // Tree Layer
-        transform.parent = previewTreePos;
-        transform.localPosition = new Vector3(0.42f, 13.73f, -26.06f);
+        
         RenderTexture renderTexture = GetComponent<Camera>().targetTexture;
         Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.ARGB32, false);
         RenderTexture.active = renderTexture;
         texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         texture.Apply();
-        
+        // Save Image File
+        File.WriteAllBytes($"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png", texture.EncodeToPNG());
         // Update TreeList Image 
         Sprite s = Sprite.Create(texture, new Rect(0, 0, renderTexture.width, renderTexture.height), new Vector2(0.5f, 0.5f));
         treeCaptureImg.sprite = s;
-        
-        // Save Image File
-        File.WriteAllBytes($"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png", texture.EncodeToPNG());
+    }
+
+
+
+    private void Update()
+    {
+        if (previewTree == null)
+        {
+            previewTree = GameObject.Find("previewTree");
+            previewTree.layer = 11;  // Tree Layer
+        }
     }
 }
 
