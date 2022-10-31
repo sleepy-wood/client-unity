@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Initial : MonoBehaviour
 {
@@ -8,7 +10,8 @@ public class UI_Initial : MonoBehaviour
 
     public GameObject profile;
     public GameObject TreeList;
-    
+    public GameObject SleepData;
+    public Text sleepDataText;
 
     #endregion
 
@@ -44,4 +47,20 @@ public class UI_Initial : MonoBehaviour
         TreeList.gameObject.SetActive(false);
     }
 
+
+    /// <summary>
+    /// SleepData UI 활성화
+    /// </summary>
+    public void OnClickSleepDataOn()
+    {
+            sleepDataText.text = DataTemporary.MyUserData.SleepData.ToString();
+            SleepData.SetActive(true);
+    }
+    /// <summary>
+    /// SleepData UI 비활성화
+    /// </summary>
+    public void OnClickSleepDataOff()
+    {
+        SleepData.SetActive(false);
+    }
 }
