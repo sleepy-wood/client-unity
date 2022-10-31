@@ -378,7 +378,7 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// dayCount에 맞게 Tree 업데이트
     /// </summary>
-    public float camMoveSpeed = 0.8f;
+    public float camMoveSpeed = 0.5f;
     Transform campos;
     public void LoadTree()
     {
