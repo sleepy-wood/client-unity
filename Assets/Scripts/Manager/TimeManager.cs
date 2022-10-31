@@ -45,7 +45,7 @@ public class TimeManager : MonoBehaviour
 
     
     public Text txtDayCount;
-    
+    public Text txtAge;
     /// <summary>
     /// Test : 버튼 누르면 Plus Day
     /// </summary>
@@ -58,6 +58,8 @@ public class TimeManager : MonoBehaviour
         GameManager.Instance.treeController.GetComponent<TreeController>().TreeUpdate();
         // DayCount Text 변경
         txtDayCount.text = $"Day{totalPlantDay}";
+        // Tree Age 변경
+        txtAge.text = $"{totalPlantDay}세";
     }
 
 
