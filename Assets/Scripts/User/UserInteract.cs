@@ -21,6 +21,7 @@ public class UserInteract : MonoBehaviour
             userAvatar.name = userAvatar.name.Split("(")[0];
             userAvatar.transform.parent = transform;
             userAvatar.transform.localPosition = Vector3.zero;
+            userAvatar.transform.localEulerAngles = Vector3.zero;
             animator = transform.GetChild(2).GetComponent<Animator>();
         }
     }

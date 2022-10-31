@@ -142,7 +142,7 @@ public class TreeController : MonoBehaviour
         #endregion
     }
 
-
+    
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.Alpha1)&& dayCount < 5 && !plantNameUI.activeSelf)
@@ -169,21 +169,26 @@ public class TreeController : MonoBehaviour
         //    }
         //}
 
-        // 1. 씨앗심기 & 새싹
+        // 2. 작은 묘목
+        if (dayCount == 2)
+        {
+            
+            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(-0.4f, 3.59f, 9.09f), camMoveSpeed * Time.deltaTime);
+        }
         // 3. 묘목
         if (dayCount == 3)
         {
-            Camera.main.gameObject.transform.position = Vector3.Lerp( Camera.main.gameObject.transform.position, new Vector3(0.13f, 3.64f, -12.39f), camMoveSpeed * Time.deltaTime);
+            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(-0.4f, 4.67f, 11.43f), camMoveSpeed * Time.deltaTime);
         }
         // 4. 나무
         if (dayCount == 4)
         {
-            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.13f, 5.7f, -18.73f), camMoveSpeed * Time.deltaTime);
+            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.44f, 6.89f, 20.19f), camMoveSpeed * Time.deltaTime);
         }
         // 5. 열매
         if (dayCount == 5)
         {
-            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.13f, 6.9f, -27.11f), camMoveSpeed * Time.deltaTime);
+            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.36f, 8.6f, 26.07f), camMoveSpeed * Time.deltaTime);
         }
         #region 가지 추가  Test Code
         // TreePipeline - 가지 추가
