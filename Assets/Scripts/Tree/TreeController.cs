@@ -189,6 +189,9 @@ public class TreeController : MonoBehaviour
         {
             Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.36f, 8.6f, 26.07f), camMoveSpeed * Time.deltaTime);
         }
+
+        
+
         #region 가지 추가  Test Code
         // TreePipeline - 가지 추가
         //if (Input.GetKeyDown(KeyCode.Alpha2))

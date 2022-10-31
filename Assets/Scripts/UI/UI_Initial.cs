@@ -10,6 +10,8 @@ public class UI_Initial : MonoBehaviour
 
     public GameObject profile;
     public GameObject TreeList;
+    public GameObject screenShotCam;
+    public Transform previewTreePos;
     public GameObject SleepData;
     public Text sleepDataText;
 
@@ -22,6 +24,8 @@ public class UI_Initial : MonoBehaviour
     public void onProfile()
     {
         profile.gameObject.SetActive(true);
+        //screenShotCam.transform.parent = previewTreePos;
+        //screenShotCam.transform.localPosition = new Vector3(0.42f, 13.73f, -26.06f);
     }
     /// <summary>
     /// 프로필 UI 비활성화
