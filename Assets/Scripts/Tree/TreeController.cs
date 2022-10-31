@@ -156,19 +156,35 @@ public class TreeController : MonoBehaviour
 
 
         // Android Test용
-        if (Input.touchCount > 0)
-        {
-            for (int i = 0; i < Input.touches.Length; i++)
-            {
-                if (Input.touches[i].phase == TouchPhase.Ended && dayCount < 5 && !plantNameUI.activeSelf)
-                {
-                    dayCount++;
-                    txtDayCount.text = $"Day{dayCount}";
-                    LoadTree();
-                }
-            }
-        }
+        //if (Input.touchCount > 0)
+        //{
+        //    for (int i = 0; i < Input.touches.Length; i++)
+        //    {
+        //        if (Input.touches[i].phase == TouchPhase.Ended && dayCount < 5 && !plantNameUI.activeSelf)
+        //        {
+        //            dayCount++;
+        //            txtDayCount.text = $"Day{dayCount}";
+        //            LoadTree();
+        //        }
+        //    }
+        //}
 
+        // 1. 씨앗심기 & 새싹
+        // 3. 묘목
+        if (dayCount == 3)
+        {
+            Camera.main.gameObject.transform.position = Vector3.Lerp( Camera.main.gameObject.transform.position, new Vector3(0.13f, 3.64f, -12.39f), camMoveSpeed * Time.deltaTime);
+        }
+        // 4. 나무
+        if (dayCount == 4)
+        {
+            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.13f, 5.7f, -18.73f), camMoveSpeed * Time.deltaTime);
+        }
+        // 5. 열매
+        if (dayCount == 5)
+        {
+            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.13f, 6.9f, -27.11f), camMoveSpeed * Time.deltaTime);
+        }
         #region 가지 추가  Test Code
         // TreePipeline - 가지 추가
         //if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -362,6 +378,8 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// dayCount에 맞게 Tree 업데이트
     /// </summary>
+    public float camMoveSpeed = 0.8f;
+    Transform campos;
     public void LoadTree()
     {
         // 1. 씨앗심기 & 새싹
@@ -373,6 +391,7 @@ public class TreeController : MonoBehaviour
             // 나무 심은 시간 저장
             GameManager.Instance.firstPlantTime = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
+            
         }
         // 2. 작은 묘목
         if (dayCount == 2)
@@ -383,6 +402,7 @@ public class TreeController : MonoBehaviour
             TreeReload();
             treeFactory.gameObject.SetActive(true);
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
+            
         }
         // 3. 묘목
         if (dayCount == 3)
@@ -390,6 +410,7 @@ public class TreeController : MonoBehaviour
             PipelineUpdate(dayCount);
             TreeReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
+            campos = Camera.main.gameObject.transform;
         }
         // 4. 나무
         if (dayCount == 4)

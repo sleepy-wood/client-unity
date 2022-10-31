@@ -50,6 +50,7 @@ public class TimeManager : MonoBehaviour
     /// </summary>
     public void onPlusDay()
     {
+        Debug.Log("Plus");
         testDate = testDate.dateTime.AddHours(25);
         CalculatePlantDays(testDate);
         // Tree Update
@@ -65,16 +66,19 @@ public class TimeManager : MonoBehaviour
     /// </summary>
     public void onChangeSky()
     {
+        Debug.Log("Change");
         // 실제 구현용
         //if (now.dateTime.ToString("tt") == "오전")
         // Test
         if (!isDay)
         {
+            Debug.Log("Day");
             sky.Day();
             isDay = true;
         }
         else
         {
+            Debug.Log("Night");
             sky.Night();
             isDay = false;
         }
