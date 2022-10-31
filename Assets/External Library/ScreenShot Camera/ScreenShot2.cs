@@ -20,7 +20,7 @@ public class ScreenShot2 : MonoBehaviour
     /// </summary>
     public void ScreenShotUpdate()
     {
-        if (previewTree == null) previewTree = GameObject.Find("preview Tree");
+        if (previewTree == null) previewTree = GameObject.Find("previewTree");
         previewTree.layer = 11;  // Tree Layer
         transform.parent = previewTreePos;
         transform.localPosition = new Vector3(0.42f, 13.73f, -26.06f);
