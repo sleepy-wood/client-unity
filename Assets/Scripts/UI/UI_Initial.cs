@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI_Initial : MonoBehaviour
@@ -14,7 +15,8 @@ public class UI_Initial : MonoBehaviour
     public Transform previewTreePos;
     public GameObject SleepData;
     public Text sleepDataText;
-
+    public Text txtAge;
+    public TimeManager timeManager;
     #endregion
 
 
@@ -24,6 +26,8 @@ public class UI_Initial : MonoBehaviour
     public void onProfile()
     {
         profile.gameObject.SetActive(true);
+        // Tree Age 변경
+        txtAge.text = $"{timeManager.totalPlantDay}세";
         //screenShotCam.transform.parent = previewTreePos;
         //screenShotCam.transform.localPosition = new Vector3(0.42f, 13.73f, -26.06f);
     }
@@ -66,5 +70,13 @@ public class UI_Initial : MonoBehaviour
     public void OnClickSleepDataOff()
     {
         SleepData.SetActive(false);
+    }
+
+    /// <summary>
+    /// MyWorld Scene으로 이동
+    /// </summary>
+    public void OnClickToWorld()
+    {
+        SceneManager.LoadScene("MyWorld");
     }
 }
