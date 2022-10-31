@@ -354,11 +354,12 @@ public class TreeController : MonoBehaviour
 
         //                treePipeline = TreeSystem.Load(filePath);
 
-        Resources.UnloadAsset(loadedPipeline);
 
         //treePipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2");
         treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         Debug.Log(treeFactory.transform.GetChild(0).localScale);
+
+        Resources.UnloadAsset(loadedPipeline);
     }
 
     /// <summary>
@@ -434,6 +435,7 @@ public class TreeController : MonoBehaviour
             PipelineUpdate(dayCount);
             TreeReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
+            assetBundle.Unload(false);
         }
     }
 
