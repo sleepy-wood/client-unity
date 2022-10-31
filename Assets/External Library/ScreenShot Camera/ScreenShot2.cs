@@ -11,6 +11,7 @@ using UnityEditor;
 
 public class ScreenShot2 : MonoBehaviour
 {
+    public Transform previewTreePos;
     public GameObject previewTree;
     public Image treeCaptureImg;
     //[SerializeField] string fileName;
@@ -19,10 +20,10 @@ public class ScreenShot2 : MonoBehaviour
     /// </summary>
     public void ScreenShotUpdate()
     {
-        if (previewTree == null) GameObject.Find("preview Tree");
+        if (previewTree == null) previewTree = GameObject.Find("preview Tree");
         previewTree.layer = 11;  // Tree Layer
-        transform.parent = previewTree.transform;
-        transform.localPosition = new Vector3(0, 6.27f, -12.72f);
+        transform.parent = previewTreePos;
+        transform.localPosition = new Vector3(0.42f, 13.73f, -26.06f);
         RenderTexture renderTexture = GetComponent<Camera>().targetTexture;
         Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.ARGB32, false);
         RenderTexture.active = renderTexture;
@@ -35,7 +36,6 @@ public class ScreenShot2 : MonoBehaviour
         
         // Save Image File
         File.WriteAllBytes($"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png", texture.EncodeToPNG());
-        
     }
 }
 
