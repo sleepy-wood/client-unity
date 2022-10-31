@@ -42,7 +42,7 @@ public class ScreenShot2 : MonoBehaviour
         texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         texture.Apply();
         // Save Image File
-        File.WriteAllBytes($"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png", texture.EncodeToPNG());
+        File.WriteAllBytes($"{Application.persistentDataPath}/Resources/ScreenShot/TreeCapture.png", texture.EncodeToPNG());
         // Update TreeList Image 
         Sprite s = Sprite.Create(texture, new Rect(0, 0, renderTexture.width, renderTexture.height), new Vector2(0.5f, 0.5f));
         treeCaptureImg.sprite = s;
