@@ -172,7 +172,6 @@ public class TreeController : MonoBehaviour
         // 2. 작은 묘목
         if (dayCount == 2)
         {
-            
             Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(-0.4f, 3.59f, 9.09f), camMoveSpeed * Time.deltaTime);
         }
         // 3. 묘목
@@ -368,6 +367,7 @@ public class TreeController : MonoBehaviour
         btnPlantName.interactable = true;
     }
 
+    //public bool isUIfinish;
     /// <summary>
     /// 식물 이름 결정 버튼 누르면 나무 이름 저장 & UI 비활성화
     /// </summary>
@@ -378,6 +378,7 @@ public class TreeController : MonoBehaviour
         treeName.text = txtPlantName.text;
         inputPlantName.text = data.treeName;
         plantNameUI.SetActive(false);
+        //isUIfinish = true;
     }
 
     /// <summary>

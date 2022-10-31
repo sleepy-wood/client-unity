@@ -21,5 +21,5 @@ public class GameManager : MonoBehaviour
     public DateTime firstPlantTime;
 
     // TreeController
-    public GameObject TreeController;
+    public GameObject treeController;
 }

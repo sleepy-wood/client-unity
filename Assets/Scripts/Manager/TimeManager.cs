@@ -45,16 +45,17 @@ public class TimeManager : MonoBehaviour
 
     
     public Text txtDayCount;
+    
     /// <summary>
     /// Test : 버튼 누르면 Plus Day
     /// </summary>
     public void onPlusDay()
     {
-        Debug.Log("Plus");
+        //if (!GameManager.Instance.treeController.GetComponent<TreeController>().isUIfinish) return;
         testDate = testDate.dateTime.AddHours(25);
         CalculatePlantDays(testDate);
         // Tree Update
-        GameManager.Instance.TreeController.GetComponent<TreeController>().TreeUpdate();
+        GameManager.Instance.treeController.GetComponent<TreeController>().TreeUpdate();
         // DayCount Text 변경
         txtDayCount.text = $"Day{totalPlantDay}";
     }
@@ -66,19 +67,16 @@ public class TimeManager : MonoBehaviour
     /// </summary>
     public void onChangeSky()
     {
-        Debug.Log("Change");
         // 실제 구현용
         //if (now.dateTime.ToString("tt") == "오전")
         // Test
         if (!isDay)
         {
-            Debug.Log("Day");
             sky.Day();
             isDay = true;
         }
         else
         {
-            Debug.Log("Night");
             sky.Night();
             isDay = false;
         }
