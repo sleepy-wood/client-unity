@@ -23,6 +23,7 @@ public class LoadingData : MonoBehaviour
     {
         scrollbar_left.SetActive(false);
         StartCoroutine(StartLoading());
+
         //Native Data Load
         nativeLoad.LoadNativeData();
 
@@ -34,7 +35,7 @@ public class LoadingData : MonoBehaviour
         //DataTemporary.MyUserData = userData;
 
         //LandData Load
-        //TODO: Land Data 구조 수정s
+        //TODO: Land Data 구조 수정
         //Root landData = await DataModule.WebRequest<Root>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         ResultGet<LandData> landData = await DataModule.WebRequest<ResultGet<LandData>>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         ResultGet<BridgeData> bridgeData = await DataModule.WebRequest<ResultGet<BridgeData>>("/api/v1/bridges", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
