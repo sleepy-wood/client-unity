@@ -20,6 +20,11 @@ public class UI_Initial : MonoBehaviour
     public GameObject sleepDataUI;
     #endregion
 
+    NativeLoadData nativeLoad = new NativeLoadData();
+    private void Start()
+    {
+        nativeLoad.LoadNativeData();
+    }
 
     /// <summary>
     /// 프로필 UI 활성화
