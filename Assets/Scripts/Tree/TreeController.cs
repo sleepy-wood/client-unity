@@ -70,8 +70,6 @@ public class TreeController : MonoBehaviour
     public GameObject plantNameUI;
     // 식물 이름 InputField
     public InputField inputPlantName;
-    public Text txtPlantName;
-    // 식물 이름
     // 식물 이름 결정 Button
     public Button btnPlantName;
     // 방문 타입
@@ -378,9 +376,9 @@ public class TreeController : MonoBehaviour
     public void onConfirmPlantName()
     {
         //user.GetComponent<UserInput>().InputControl = false;
-        print(txtPlantName.text);
-        treeName.text = txtPlantName.text;
-        inputPlantName.text = data.treeName;
+        print(inputPlantName.text);
+        treeName.text = inputPlantName.text;
+        data.treeName = inputPlantName.text;
         plantNameUI.SetActive(false);
         //isUIfinish = true;
     }
