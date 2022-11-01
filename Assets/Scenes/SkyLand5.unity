@@ -5769,6 +5769,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 34.214, y: -219.484, z: -130.21}
+--- !u!1 &744827913 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9098596863892221337, guid: 0cd04027e04b9854c8ed9e07c7836cb1, type: 3}
+  m_PrefabInstance: {fileID: 1845263923}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &747160505
 GameObject:
   m_ObjectHideFlags: 0
@@ -6729,6 +6734,17 @@ Transform:
   m_Father: {fileID: 892188608}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1037827236 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9098596864564485284, guid: 0cd04027e04b9854c8ed9e07c7836cb1, type: 3}
+  m_PrefabInstance: {fileID: 1845263923}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1056535614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9617,6 +9633,17 @@ Transform:
   m_Father: {fileID: 1246400119}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1685230533 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9098596863690536089, guid: 0cd04027e04b9854c8ed9e07c7836cb1, type: 3}
+  m_PrefabInstance: {fileID: 1845263923}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1728521227
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9926,12 +9953,12 @@ MonoBehaviour:
     treeGrowthData:
       trunkThick: 0
   leafText: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
-  plantNameUI: {fileID: 0}
-  inputPlantName: {fileID: 0}
-  btnPlantName: {fileID: 0}
+  plantNameUI: {fileID: 744827913}
+  inputPlantName: {fileID: 1979128102}
+  btnPlantName: {fileID: 1685230533}
   visitType: 0
   user: {fileID: 0}
-  treeName: {fileID: 0}
+  treeName: {fileID: 1037827236}
   camMoveSpeed: 0.8
 --- !u!4 &1776528701
 Transform:
@@ -9978,13 +10005,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   now:
-    _dateTime: "0001-01-01 \uC624\uC804 12:00:00"
+    _dateTime: 1/1/0001 12:00:00 AM
   totalPlantDay: 0
   testFirstDay:
-    _dateTime: "0001-01-01 \uC624\uC804 12:00:00"
+    _dateTime: 1/1/0001 12:00:00 AM
   sky: {fileID: 1753319098}
   testDate:
-    _dateTime: "0001-01-01 \uC624\uC804 12:00:00"
+    _dateTime: 1/1/0001 12:00:00 AM
   txtDayCount: {fileID: 0}
   txtAge: {fileID: 0}
 --- !u!4 &1812715644
@@ -10043,7 +10070,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1709053598, guid: 0cd04027e04b9854c8ed9e07c7836cb1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1709053599, guid: 0cd04027e04b9854c8ed9e07c7836cb1, type: 3}
       propertyPath: m_AnchorMax.x
@@ -10125,6 +10152,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Land
       objectReference: {fileID: 0}
+    - target: {fileID: 9098596864342628503, guid: 0cd04027e04b9854c8ed9e07c7836cb1, type: 3}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1812715643}
     - target: {fileID: 9098596864342628503, guid: 0cd04027e04b9854c8ed9e07c7836cb1, type: 3}
       propertyPath: screenShotCam
       value: 
@@ -10802,6 +10833,17 @@ MonoBehaviour:
     twirlSparsingValue: 0
     level: 0
   selectedSparseLevelIndex: 0
+--- !u!114 &1979128102 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9098596864919341979, guid: 0cd04027e04b9854c8ed9e07c7836cb1, type: 3}
+  m_PrefabInstance: {fileID: 1845263923}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1986377965
 GameObject:
   m_ObjectHideFlags: 0
