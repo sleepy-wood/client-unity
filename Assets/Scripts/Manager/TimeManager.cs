@@ -58,7 +58,7 @@ public class TimeManager : MonoBehaviour
         // Tree Update
         GameManager.Instance.treeController.GetComponent<TreeController>().TreeUpdate();
         // DayCount Text 변경
-        txtDayCount.text = $"Day{totalPlantDay}";
+        //txtDayCount.text = $"Day{totalPlantDay}";
     }
 
 
