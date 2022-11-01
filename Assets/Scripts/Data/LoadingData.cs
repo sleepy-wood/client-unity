@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LoadingData : MonoBehaviour
 {
-    NativeLoadData nativeLoad = new NativeLoadData();
+    //NativeLoadData nativeLoad = new NativeLoadData();
     [SerializeField] private GameObject scrollbar_right;
     [SerializeField] private GameObject scrollbar_left;
     [SerializeField] private float scrollbarSpeed = 2;
@@ -25,7 +25,7 @@ public class LoadingData : MonoBehaviour
         StartCoroutine(StartLoading());
 
         //Native Data Load
-        nativeLoad.LoadNativeData();
+        //nativeLoad.LoadNativeData();
 
         //AssetBundle Load
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
