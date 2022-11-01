@@ -19,11 +19,16 @@ public class CreateAssetBundles
                       assetBundleDirectory,
                       BuildAssetBundleOptions.None,
                      EditorUserBuildSettings.activeBuildTarget);
-#elif UNITY_IOS || UNITY_ANDROID
+#elif UNITY_ANDROID
                 BuildPipeline.BuildAssetBundles(
                         assetBundleDirectory,
                         BuildAssetBundleOptions.None,
                         BuildTarget.Android);
+#elif UNITY_IOS
+                BuildPipeline.BuildAssetBundles(
+                        assetBundleDirectory,
+                        BuildAssetBundleOptions.None,
+                        EditorUserBuildSettings.activeBuildTarget);
 #endif
-        }
+    }
 }
