@@ -49,6 +49,7 @@ public class ScreenShot2 : MonoBehaviour
 #elif UNITY_IOS || UNITY_ANDROID
         path = $"{Application.persistentDataPath}/TreeCapture.png";
 #endif
+print("111111111 /= + " + path);
         File.WriteAllBytes(path, texture.EncodeToPNG());
         byte[] data = File.ReadAllBytes(path);
 
