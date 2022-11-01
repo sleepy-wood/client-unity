@@ -58,10 +58,18 @@ public class UserInteract : MonoBehaviour
         #region Player Click
         if (userInput.Interact)
         {
-            if (LandDataManager.Instance.buildMode == LandDataManager.BuildMode.Bridge)
+            if (LandDataManager.Instance)
             {
-                LayerMask layerMask = 1 << LayerMask.NameToLayer("Bridge");
-                ScreenToRayClick(LandDataManager.Instance.buildBridgeCamera.GetComponent<Camera>(), layerMask);
+                if (LandDataManager.Instance.buildMode == LandDataManager.BuildMode.Bridge)
+                {
+                    LayerMask layerMask = 1 << LayerMask.NameToLayer("Bridge");
+                    ScreenToRayClick(LandDataManager.Instance.buildBridgeCamera.GetComponent<Camera>(), layerMask);
+                }
+                else
+                {
+                    LayerMask layerMask = 1 << LayerMask.NameToLayer("Ground");
+                    ScreenToRayClick(Camera.main, ~layerMask);
+                }
             }
             else
             {
