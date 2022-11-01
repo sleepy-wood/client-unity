@@ -28,7 +28,7 @@ public class CreateAssetBundles
                 BuildPipeline.BuildAssetBundles(
                         assetBundleDirectory,
                         BuildAssetBundleOptions.None,
-                        EditorUserBuildSettings.activeBuildTarget);
+                        BuildTarget.iOS);
 #endif
     }
 }
