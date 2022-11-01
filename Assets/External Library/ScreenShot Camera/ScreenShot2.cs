@@ -37,8 +37,9 @@ public class ScreenShot2 : MonoBehaviour
         //Sprite s = Sprite.Create(texture, new Rect(0, 0, renderTexture.width, renderTexture.height), new Vector2(0.5f, 0.5f));
         //treeCaptureImg.sprite = s;
         RenderTexture renderTexture = GetComponent<Camera>().targetTexture;
-        Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, true, false);
+        Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, true, true);
         RenderTexture.active = renderTexture;
+        texture.alphaIsTransparency = true;
         texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         texture.Apply();
             

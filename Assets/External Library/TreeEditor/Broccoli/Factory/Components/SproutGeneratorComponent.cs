@@ -1,4 +1,4 @@
-﻿using Broccoli.Pipe;
+using Broccoli.Pipe;
 using Broccoli.Generator;
 using Broccoli.Factory;
 
@@ -123,6 +123,7 @@ namespace Broccoli.Component
 		/// </summary>
 		/// <param name="useCache">If set to <c>true</c> use cache.</param>
 		private void SpawnSprouts (bool useCache) {
+            
 			if (sproutGeneratorElement.isSeedFixed) {
 				sproutGenerator.randomSeed = sproutGeneratorElement.seed;
 				sproutGenerator.enableRandom = false;
@@ -131,6 +132,7 @@ namespace Broccoli.Component
 			}
 			if (sproutGeneratorElement.sproutSeeds.Count > 0) {
 				sproutGenerator.SpawnSprouts (tree);
+                
 			}
 		}
 		#endregion

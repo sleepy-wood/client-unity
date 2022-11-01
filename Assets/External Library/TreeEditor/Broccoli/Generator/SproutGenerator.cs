@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -204,7 +204,7 @@ namespace Broccoli.Generator
 		/// </summary>
 		public bool fromBranchCenter = false;
 		/// <summary>
-		/// The distribution origin mode.
+		/// The distribution origin mode
 		/// </summary>
 		public DistributionOrigin distributionOrigin = 
 			DistributionOrigin.FromTipBranches;
@@ -229,6 +229,7 @@ namespace Broccoli.Generator
 		/// <summary>
 		/// List of seed origins.
 		/// </summary>
+        [SerializeField]
 		List<SeedOrigin> seedOrigins = new List<SeedOrigin> ();
 		/// <summary>
 		/// The length of the max seed origin.
