@@ -42,14 +42,15 @@ public class ScreenShot2 : MonoBehaviour
         //texture.alphaIsTransparency = true;
         texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         texture.Apply();
-            
+
+        string path = $"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png";
         // Save Image File
 #if UNITY_STANDALONE
-        File.WriteAllBytes($"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png", texture.EncodeToPNG());
 #elif UNITY_IOS || UNITY_ANDROID
-        File.WriteAllBytes($"{Application.persistentDataPath}/Resources/ScreenShot/TreeCapture.png", texture.EncodeToPNG());
+        path = $"{Application.persistentDataPath}/TreeCapture.png";
 #endif
-        byte[] data = File.ReadAllBytes($"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png");
+        File.WriteAllBytes(path, texture.EncodeToPNG());
+        byte[] data = File.ReadAllBytes(path);
 
         // Create the texture
         Texture2D screenshotTexture = new Texture2D(renderTexture.width, renderTexture.height);
