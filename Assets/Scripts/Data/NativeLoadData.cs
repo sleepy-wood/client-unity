@@ -47,6 +47,7 @@ public class NativeLoadData
             sleepDataStruct.StartDate = samples[0].StartDate;
             sleepDataStruct.EndDate = samples[0].EndDate;
             sleepDataStruct.Type = samples[0].Type;
+            DataTemporary.samples = samples;
             DataTemporary.MyUserData.SleepData = sleepDataStruct;
         }
     }
