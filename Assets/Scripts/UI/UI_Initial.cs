@@ -62,7 +62,9 @@ public class UI_Initial : MonoBehaviour
     /// </summary>
     public void OnClickSleepDataOn()
     {
-            sleepDataText.text = DataTemporary.MyUserData.SleepData.ToString();
+            sleepDataText.text = DataTemporary.MyUserData.SleepData.StartDate.ToString();
+            sleepDataText.text += DataTemporary.MyUserData.SleepData.EndDate.ToString();
+            sleepDataText.text += DataTemporary.MyUserData.SleepData.Type.ToString();
             SleepData.SetActive(true);
     }
     /// <summary>
