@@ -9,14 +9,15 @@ public class UI_Initial : MonoBehaviour
 {
     #region Variable
 
-    public GameObject profile;
-    public GameObject TreeList;
+    public GameObject profileUI;
+    public GameObject TreeListUI;
     public GameObject screenShotCam;
     public Transform previewTreePos;
     public GameObject SleepData;
     public Text sleepDataText;
     public Text txtAge;
     public TimeManager timeManager;
+    public GameObject sleepDataUI;
     #endregion
 
 
@@ -25,7 +26,7 @@ public class UI_Initial : MonoBehaviour
     /// </summary>
     public void onProfile()
     {
-        profile.gameObject.SetActive(true);
+        profileUI.gameObject.SetActive(true);
         // Tree Age 변경
         txtAge.text = $"{timeManager.totalPlantDay}세";
         //screenShotCam.transform.parent = previewTreePos;
@@ -36,7 +37,7 @@ public class UI_Initial : MonoBehaviour
     /// </summary>
     public void onProfileOff()
     {
-        profile.gameObject.SetActive(false);
+        profileUI.gameObject.SetActive(false);
     }
 
 
@@ -45,14 +46,14 @@ public class UI_Initial : MonoBehaviour
     /// </summary>
     public void onTreeList()
     {
-        TreeList.gameObject.SetActive(true);
+        TreeListUI.gameObject.SetActive(true);
     }
     /// <summary>
     /// TreeList UI 비활성화
     /// </summary>
     public void onTreeListOff()
     {
-        TreeList.gameObject.SetActive(false);
+        TreeListUI.gameObject.SetActive(false);
     }
 
 
@@ -78,5 +79,20 @@ public class UI_Initial : MonoBehaviour
     public void OnClickToWorld()
     {
         SceneManager.LoadScene("MyWorld");
+    }
+
+    /// <summary>
+    /// 수면데이터 분석 UI 활성화
+    /// </summary>
+    public void OnSleepData()
+    {
+        sleepDataUI.SetActive(true);
+    }
+    /// <summary>
+    /// 수면데이터 분석 UI 비활성화
+    /// </summary>
+    public void OnSleepDataOff()
+    {
+        sleepDataUI.SetActive(false);
     }
 }
