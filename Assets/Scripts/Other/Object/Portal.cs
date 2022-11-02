@@ -29,11 +29,8 @@ public class Portal : MonoBehaviour
     }
     public void OnClickNextSceneButton()
     {
-        Debug.Log("1");
-        GameObject land = user.OnLand();
-
-        Debug.Log("2");
-        SceneManager.LoadScene(land.name);
-        Debug.Log("3");
+        //한개의 땅으로 데이터를 로드해서 하는 방식
+        //문제점: Land 입장 시 딜레이가 발생하긴한다.
+        SceneManager.LoadScene("SkyLand");
     }
 }

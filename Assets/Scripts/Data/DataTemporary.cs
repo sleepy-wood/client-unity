@@ -14,5 +14,5 @@ public class DataTemporary
     //알고리즘에 활용할 Connection 정보
     public static List<BridgeFromTo> BridgeConnection = new List<BridgeFromTo>();
     public static AssetBundle assetBundle;
-    public static SleepSample[] samples;
+    public static SleepSample[] samples = new SleepSample[100];
 }
