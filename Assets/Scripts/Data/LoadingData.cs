@@ -16,6 +16,7 @@ public class LoadingData : MonoBehaviour
     private Scrollbar left;
     private void Awake()
     {
+        Debug.Log("-1");
         if (!m_testMode)
         {
             right = scrollbar_right.GetComponent<Scrollbar>();
@@ -25,6 +26,7 @@ public class LoadingData : MonoBehaviour
 
     private async void Start()
     {
+        Debug.Log("0");
         if (!m_testMode)
         {
             scrollbar_left.SetActive(false);
