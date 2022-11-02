@@ -33,6 +33,8 @@ public class UI_SleepGraph : MonoBehaviour
             Debug.Log($"endDate.Hour = {endDate.Hour}\n endDate.Minute = {endDate.Minute}\nendDate.Second = {endDate.Second}");
             Debug.Log($"start = {start}\n end = {end}");
             sliders[i].value = end - start;
+            content.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = $"{endDate.Year}³â\n{endDate.Month}¿ù\n{endDate.Day}ÀÏ";
+
         }
     }
 }
