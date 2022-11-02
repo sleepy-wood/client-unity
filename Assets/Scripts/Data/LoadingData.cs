@@ -31,7 +31,9 @@ public class LoadingData : MonoBehaviour
             StartCoroutine(StartLoading());
         }
         //Native Data Load
+        Debug.Log("1");
         nativeLoad.LoadNativeData();
+        Debug.Log("2");
 
         //AssetBundle Load
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);

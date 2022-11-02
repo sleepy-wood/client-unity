@@ -12,6 +12,7 @@ public class UI_SleepGraph : MonoBehaviour
     public SleepSample[] samplesData;
     private void Start()
     {
+        Debug.Log("3");
         if (DataTemporary.samples.Length <= 0) return;
         samplesData = DataTemporary.samples;
         for (int i = 0; i < content.transform.childCount; i++)
@@ -24,7 +25,9 @@ public class UI_SleepGraph : MonoBehaviour
             int start = startDate.Hour * 3600 * startDate.Minute * 60 * startDate.Second;
             DateTime endDate = samplesData[samplesData.Length - 1 - i].EndDate;
             int end = endDate.Hour * 3600 * endDate.Minute * 60 * endDate.Second;
+            Debug.Log($"start = {start}\n end = {end}");
             sliders[i].value = end - start;
         }
+        Debug.Log("4");
     }
 }
