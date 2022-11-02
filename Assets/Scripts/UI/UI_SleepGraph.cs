@@ -27,9 +27,9 @@ public class UI_SleepGraph : MonoBehaviour
             sliders.Add(content.transform.GetChild(i).GetComponent<Slider>());
             sliders[i].maxValue = 86400;
             DateTime startDate = samplesData[samplesData.Length - 1 - i].StartDate;
-            int start = startDate.Hour * 3600 * startDate.Minute * 60 * startDate.Second;
+            int start = startDate.Hour * 3600 + startDate.Minute * 60 + startDate.Second;
             DateTime endDate = samplesData[samplesData.Length - 1 - i].EndDate;
-            int end = endDate.Hour * 3600 * endDate.Minute * 60 * endDate.Second;
+            int end = endDate.Hour * 3600 + endDate.Minute * 60 + endDate.Second;
             Debug.Log($"endDate.Hour = {endDate.Hour}\n endDate.Minute = {endDate.Minute}\nendDate.Second = {endDate.Second}");
             Debug.Log($"start = {start}\n end = {end}");
             sliders[i].value = end - start;
