@@ -44,15 +44,17 @@ public class NativeLoadData
             }
 
             SleepDataStruct sleepDataStruct = new SleepDataStruct();
-            sleepDataStruct.StartDate = samples[samples.Length - 1 ].StartDate;
-            sleepDataStruct.EndDate = samples[samples.Length - 1].EndDate;
-            sleepDataStruct.Type = samples[samples.Length - 1].Type;
-            DataTemporary.samples = samples;
-            DataTemporary.MyUserData.SleepData = sleepDataStruct;
-            Debug.Log(DataTemporary.MyUserData.SleepData.Type);
-            Debug.Log(DataTemporary.MyUserData.SleepData.StartDate);
-            Debug.Log(DataTemporary.MyUserData.SleepData.EndDate);
+            if (samples.Length >= 1)
+            {
+                sleepDataStruct.StartDate = samples[samples.Length - 1].StartDate;
+                sleepDataStruct.EndDate = samples[samples.Length - 1].EndDate;
+                sleepDataStruct.Type = samples[samples.Length - 1].Type;
+                DataTemporary.samples = samples;
+                DataTemporary.MyUserData.SleepData = sleepDataStruct;
+                Debug.Log(DataTemporary.MyUserData.SleepData.Type);
+                Debug.Log(DataTemporary.MyUserData.SleepData.StartDate);
+                Debug.Log(DataTemporary.MyUserData.SleepData.EndDate);
+            }
         }
     }
-
 }

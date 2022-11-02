@@ -13,18 +13,10 @@ public class UI_Initial : MonoBehaviour
     public GameObject TreeListUI;
     public GameObject screenShotCam;
     public Transform previewTreePos;
-    public GameObject SleepData;
-    public Text sleepDataText;
     public Text txtAge;
     public TimeManager timeManager;
     public GameObject sleepDataUI;
     #endregion
-
-    NativeLoadData nativeLoad = new NativeLoadData();
-    private void Start()
-    {
-        nativeLoad.LoadNativeData();
-    }
 
     /// <summary>
     /// 프로필 UI 활성화
@@ -59,25 +51,6 @@ public class UI_Initial : MonoBehaviour
     public void onTreeListOff()
     {
         TreeListUI.gameObject.SetActive(false);
-    }
-
-
-    /// <summary>
-    /// SleepData UI 활성화
-    /// </summary>
-    public void OnClickSleepDataOn()
-    {
-            SleepData.SetActive(true);
-            sleepDataText.text = DataTemporary.MyUserData.SleepData.StartDate.ToString();
-            sleepDataText.text += DataTemporary.MyUserData.SleepData.EndDate.ToString();
-            sleepDataText.text += DataTemporary.MyUserData.SleepData.Type.ToString();
-    }
-    /// <summary>
-    /// SleepData UI 비활성화
-    /// </summary>
-    public void OnClickSleepDataOff()
-    {
-        SleepData.SetActive(false);
     }
 
     /// <summary>
