@@ -15,6 +15,9 @@ public class UI_SleepGraph : MonoBehaviour
     {
         nativeLoad.LoadNativeData();
 
+    }
+    public void OnClick()
+    {
         if (DataTemporary.samples.Length <= 0) return;
         samplesData = DataTemporary.samples;
         for (int i = 0; i < content.transform.childCount; i++)
