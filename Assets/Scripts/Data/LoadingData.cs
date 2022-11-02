@@ -6,26 +6,32 @@ using UnityEngine.UI;
 
 public class LoadingData : MonoBehaviour
 {
-    //NativeLoadData nativeLoad = new NativeLoadData();
+    NativeLoadData nativeLoad = new NativeLoadData();
     [SerializeField] private GameObject scrollbar_right;
     [SerializeField] private GameObject scrollbar_left;
     [SerializeField] private float scrollbarSpeed = 2;
 
+    public bool m_testMode = false;
     private Scrollbar right;
     private Scrollbar left;
     private void Awake()
     {
-        right = scrollbar_right.GetComponent<Scrollbar>();
-        left = scrollbar_left.GetComponent<Scrollbar>();
+        if (!m_testMode)
+        {
+            right = scrollbar_right.GetComponent<Scrollbar>();
+            left = scrollbar_left.GetComponent<Scrollbar>();
+        }
     }
 
     private async void Start()
     {
-        scrollbar_left.SetActive(false);
-        StartCoroutine(StartLoading());
-
+        if (!m_testMode)
+        {
+            scrollbar_left.SetActive(false);
+            StartCoroutine(StartLoading());
+        }
         //Native Data Load
-        //nativeLoad.LoadNativeData();
+        nativeLoad.LoadNativeData();
 
         //AssetBundle Load
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
@@ -54,18 +60,18 @@ public class LoadingData : MonoBehaviour
             Debug.Log(landData.data);
             DataTemporary.MyLandData = arrayLandData;
         }
-        if(landData.result)
+        if(bridgeData.result)
         {
             Debug.Log(bridgeData.data);
             DataTemporary.MyBridgeData = arrayBridgeData;
         }
 
-        if (landData.result && bridgeData.result)
+        if (!m_testMode)
         {
-            //LandDataManager.Instance.LoadLandData();
-            //LandDataManager.Instance.LoadBridge();
-            //LandDataManager.Instance.isLoad = true;
-            SceneManager.LoadScene(1);
+            if (landData.result && bridgeData.result)
+            {
+                SceneManager.LoadScene(1);
+            }
         }
     }
     public IEnumerator StartLoading()
