@@ -10,9 +10,11 @@ public class UI_SleepGraph : MonoBehaviour
     [SerializeField] private GameObject content;
     private List<Slider> sliders = new List<Slider>();
     public SleepSample[] samplesData;
+    NativeLoadData nativeLoad = new NativeLoadData();
     private void Start()
     {
-        Debug.Log("3");
+        nativeLoad.LoadNativeData();
+
         if (DataTemporary.samples.Length <= 0) return;
         samplesData = DataTemporary.samples;
         for (int i = 0; i < content.transform.childCount; i++)
@@ -28,6 +30,5 @@ public class UI_SleepGraph : MonoBehaviour
             Debug.Log($"start = {start}\n end = {end}");
             sliders[i].value = end - start;
         }
-        Debug.Log("4");
     }
 }
