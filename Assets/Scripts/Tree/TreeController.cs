@@ -16,28 +16,14 @@ using UnityEngine.Networking;
 public class TreeController : MonoBehaviour
 {
     // Test
-    private void OnToGray()
+    public void OnToGray()
     {
-        
+        count += 1;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     #region Variable
+    // Load할 Pipeline 이름
+    string pipeName = "badTree"; //("MyTreePipeline_2");
     // Pipeline Element별 dayuency Min/Max값 저장소
     [System.Serializable]
     public class MinMax
@@ -142,7 +128,7 @@ public class TreeController : MonoBehaviour
 
         // treePipeline 로드
         //treePipeline = Resources.Load<Pipeline>(path);
-        treePipeline = assetBundle.LoadAsset<Pipeline>("badTree");//("MyTreePipeline_2");
+        treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
         // TextAsset b = Resources.Load<TextAsset>(path);
 
         // 방문 타입 결정
@@ -162,32 +148,36 @@ public class TreeController : MonoBehaviour
         #endregion
     }
 
-    
+    bool isOnce;
+    bool isOnce2;
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Alpha1)&& dayCount < 5 && !plantNameUI.activeSelf)
+        #region 썩은잎 만들기 Test
+        //if (count == 1 && !isOnce)
         //{
-        //        dayCount++;
-        //        data.treeDay = dayCount;
-        //        txtDayCount.text = $"Day{dayCount}";
-        //        LoadTree();
+        //    // sprout areas enabled true;
+        //    SproutMap.SproutMapArea pipe0 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[1];
+        //    pipe0.enabled = true;
+        //    Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>("badTree");
+        //    treeFactory.UnloadAndClearPipeline();
+        //    treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
+        //    treeFactory.transform.GetChild(1).localScale = new Vector3(1, 1, 1);
+        //    Resources.UnloadAsset(loadedPipeline);
+        //    isOnce = true;
         //}
-
-
-
-        // Android Test용
-        //if (Input.touchCount > 0)
+        //if (count == 2 && !isOnce2)
         //{
-        //    for (int i = 0; i < Input.touches.Length; i++)
-        //    {
-        //        if (Input.touches[i].phase == TouchPhase.Ended && dayCount < 5 && !plantNameUI.activeSelf)
-        //        {
-        //            dayCount++;
-        //            txtDayCount.text = $"Day{dayCount}";
-        //            LoadTree();
-        //        }
-        //    }
+        //    SproutMap.SproutMapArea pipe01 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[2];
+        //    pipe01.enabled = true;
+        //    pipe01.enabled = true;
+        //    Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>("badTree");
+        //    treeFactory.UnloadAndClearPipeline();
+        //    treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
+        //    treeFactory.transform.GetChild(1).localScale = new Vector3(1, 1, 1);
+        //    Resources.UnloadAsset(loadedPipeline);
+        //    isOnce2 = true;
         //}
+        #endregion
 
         // 2. 작은 묘목
         if (dayCount == 2)
@@ -362,9 +352,10 @@ public class TreeController : MonoBehaviour
     {
         Debug.Log("TreeReload");
         //Pipeline loadedPipeline = Resources.Load<Pipeline>(path);
-        Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2"); ;
+        Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>(pipeName); ;
         treeFactory.UnloadAndClearPipeline();
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
+
 
         //#if UNITY_STANDALONE
         //                string filePath = Application.dataPath + "/TreeTest.asset";
@@ -412,17 +403,9 @@ public class TreeController : MonoBehaviour
     /// </summary>
     public float camMoveSpeed = 0.5f;
     Transform campos;
+    int count=0;
     public void LoadTree()
     {
-        if (dayCount == 0)
-        {
-            // sprout areas enabled true;
-            SproutMap.SproutMapArea pipe0 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[0];
-            pipe0.enabled = true;
-
-        }
-
-
         // 1. 씨앗심기 & 새싹
         if (dayCount == 1)
         {
