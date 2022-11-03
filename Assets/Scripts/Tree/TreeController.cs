@@ -308,7 +308,7 @@ public class TreeController : MonoBehaviour
             // pipeline
             StructureGenerator.StructureLevel pipe1 = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
             // 저장값
-            MinMax store1 = dayList[dayCount - 2].minMaxList[i];
+            MinMax store1 = ts.dayList[dayCount - 2].minMaxList[i];
 
             // Min Frequenc
             pipe1.minFrequency = store1.min;
