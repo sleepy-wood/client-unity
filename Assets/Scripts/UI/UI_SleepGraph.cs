@@ -26,6 +26,7 @@ public struct SleepSampleTest
 public class UI_SleepGraph : MonoBehaviour
 {
     [SerializeField] private GameObject content;
+    [SerializeField] private Image pi;
     [SerializeField] private List<SleepSampleTest> time = new List<SleepSampleTest>();
     [SerializeField] private float upSpeed = 5;
     [SerializeField] private UILineRenderer lineRenderer;
@@ -101,6 +102,10 @@ public class UI_SleepGraph : MonoBehaviour
             //Debug.Log($"value = {Mathf.Abs(end - start)}");
             content.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = $"{time[i].EndYear}년\n{time[i].EndMonth}월\n{time[i].EndDay}일";
         }
+    }
+    public IEnumerator PiMove()
+    {
+
     }
     public IEnumerator GraphMove(int val, int idx)
     {
