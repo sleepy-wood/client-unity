@@ -27,6 +27,7 @@ namespace Broccoli.Factory
 	[AddComponentMenu("Broccoli/Factory/TreeFactory")]
 	[ExecuteInEditMode]
 	public class TreeFactory : MonoBehaviour {
+
 		#region Delegates and Events
 		public delegate bool ProcessPipelineDelegate (Broccoli.Pipe.Pipeline pipeline, 
 			BroccoTree tree, 

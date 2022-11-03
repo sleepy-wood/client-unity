@@ -19,11 +19,11 @@ public class TreeController : MonoBehaviour
     public void OnToGray()
     {
         count += 1;
-    }
+    } 
 
     #region Variable
     // Load할 Pipeline 이름
-    string pipeName = "badTree"; //("MyTreePipeline_2");
+    string pipeName = "MyTreePipeline_2";
     // Pipeline Element별 dayuency Min/Max값 저장소
     [System.Serializable]
     public class MinMax
@@ -44,7 +44,15 @@ public class TreeController : MonoBehaviour
         public float scale;
     }
     // DayCount에 따라 변하는 나무 관련 변수 저장소
-    public List<dayTreeData> treeList = new List<dayTreeData>();
+    //public List<dayTreeData> dayList = new List<dayTreeData>();
+    // 나무 종류별 관련 변수 리스트 저장소
+    [System.Serializable]
+    public class treeStore
+    {
+        public string seedType;
+        // DayCount에 따라 변하는 나무 관련 변수 저장소
+        public List<dayTreeData> dayList = new List<dayTreeData>();
+    }
     // pipeline load path
     //string path;
     // tree Factory
@@ -287,8 +295,10 @@ public class TreeController : MonoBehaviour
     /// <param name="dayCount"></param>
     public void PipelineUpdate(int dayCount)
     {
+        // 씨앗 종류에 따라 나무 변수 리스트 선택
+        treeStore ts = new treeStore();
         // 날짜에 맞춘 정보를 가지고 있는 요소
-        dayTreeData element = treeList[dayCount - 2];
+        dayTreeData element = ts.dayList[dayCount - 2];
 
         #region 1. Element MinMax
         int idx = element.minMaxList.Count;
@@ -298,7 +308,7 @@ public class TreeController : MonoBehaviour
             // pipeline
             StructureGenerator.StructureLevel pipe1 = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
             // 저장값
-            MinMax store1 = treeList[dayCount - 2].minMaxList[i];
+            MinMax store1 = dayList[dayCount - 2].minMaxList[i];
 
             // Min Frequenc
             pipe1.minFrequency = store1.min;
@@ -350,28 +360,10 @@ public class TreeController : MonoBehaviour
     /// </summary>
     public void TreeReload()
     {
-        Debug.Log("TreeReload");
-        //Pipeline loadedPipeline = Resources.Load<Pipeline>(path);
-        Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>(pipeName); ;
-        treeFactory.UnloadAndClearPipeline();
+        Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
-
-
-        //#if UNITY_STANDALONE
-        //                string filePath = Application.dataPath + "/TreeTest.asset";
-        //#elif UNITY_IOS || UNITY_ANDROID
-        //                string filePath = Application.persistentDataPath + "/TreeTest.asset";
-        //#endif
-        //                Debug.Log(filePath);
-        //                 TreeSystem.Save(treePipeline, filePath);
-
-        //                treePipeline = TreeSystem.Load(filePath);
-
-
-        //treePipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2");
+        treeFactory.UnloadAndClearPipeline();
         treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
-        Debug.Log(treeFactory.transform.GetChild(0).localScale);
-
         Resources.UnloadAsset(loadedPipeline);
     }
 
@@ -411,7 +403,7 @@ public class TreeController : MonoBehaviour
         {
             StartCoroutine(PlantSeed(0.5f));
             seed.SetActive(true);
-            TreeReload();
+            //TreeReload();
             // 나무 심은 시간 저장
             GameManager.Instance.firstPlantTime = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
