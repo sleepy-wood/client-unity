@@ -16,7 +16,10 @@ using UnityEngine.Networking;
 public class TreeController : MonoBehaviour
 {
     // Test
-    
+    private void OnToGray()
+    {
+        
+    }
 
 
 
@@ -139,7 +142,7 @@ public class TreeController : MonoBehaviour
 
         // treePipeline 로드
         //treePipeline = Resources.Load<Pipeline>(path);
-        treePipeline = assetBundle.LoadAsset<Pipeline>("MyTreePipeline_2");
+        treePipeline = assetBundle.LoadAsset<Pipeline>("badTree");//("MyTreePipeline_2");
         // TextAsset b = Resources.Load<TextAsset>(path);
 
         // 방문 타입 결정
@@ -350,6 +353,8 @@ public class TreeController : MonoBehaviour
         #endregion
     }
 
+    
+
     /// <summary>
     /// 업데이트한 나무 정보를 기반으로 나무 다시 로드
     /// </summary>
@@ -409,6 +414,15 @@ public class TreeController : MonoBehaviour
     Transform campos;
     public void LoadTree()
     {
+        if (dayCount == 0)
+        {
+            // sprout areas enabled true;
+            SproutMap.SproutMapArea pipe0 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[0];
+            pipe0.enabled = true;
+
+        }
+
+
         // 1. 씨앗심기 & 새싹
         if (dayCount == 1)
         {
