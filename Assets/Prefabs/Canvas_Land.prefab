@@ -1622,7 +1622,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -31.33496, y: 38.00598}
+  m_AnchoredPosition: {x: -31.335083, y: 38.00598}
   m_SizeDelta: {x: 980, y: 1820}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2869967555699187420
@@ -2856,8 +2856,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -233.79291, y: 300.30508}
-  m_SizeDelta: {x: -763.5037, y: -1506.168}
+  m_AnchoredPosition: {x: -134.2143, y: 300.30505}
+  m_SizeDelta: {x: -565.2075, y: -1506.168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9098596863643184705
 CanvasRenderer:
@@ -4116,12 +4116,14 @@ MonoBehaviour:
   profileUI: {fileID: 1709053598}
   TreeListUI: {fileID: 9098596863654676435}
   screenShotCam: {fileID: 0}
-  previewTreePos: {fileID: 0}
-  SleepData: {fileID: 0}
-  sleepDataText: {fileID: 0}
-  txtAge: {fileID: 9098596863286789450}
-  timeManager: {fileID: 0}
   sleepDataUI: {fileID: 1797212334}
+  plantNameUI: {fileID: 9098596863892221337}
+  previewTreePos: {fileID: 0}
+  txtAge: {fileID: 9098596863286789450}
+  treeName: {fileID: 9098596864564485284}
+  btnPlantName: {fileID: 9098596863690536089}
+  inputPlantName: {fileID: 9098596864919341979}
+  timeManager: {fileID: 0}
 --- !u!1 &9098596864370843058
 GameObject:
   m_ObjectHideFlags: 0
@@ -4347,7 +4349,7 @@ GameObject:
   - component: {fileID: 9098596864564485285}
   - component: {fileID: 9098596864564485284}
   m_Layer: 5
-  m_Name: Txt_Name (1)
+  m_Name: Txt_TreeName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

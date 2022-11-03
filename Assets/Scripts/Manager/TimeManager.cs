@@ -51,8 +51,6 @@ public class TimeManager : MonoBehaviour
     /// </summary>
     public void onPlusDay()
     {
-        print("PlusDay");
-        //if (!GameManager.Instance.treeController.GetComponent<TreeController>().isUIfinish) return;
         testDate = testDate.dateTime.AddHours(25);
         CalculatePlantDays(testDate);
         // Tree Update

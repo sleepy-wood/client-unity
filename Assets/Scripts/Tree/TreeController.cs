@@ -19,14 +19,31 @@ public class TreeController : MonoBehaviour
     public void OnToGray()
     {
         count += 1;
-    } 
+    }
 
     #region Variable
-    // Load할 Pipeline 이름
-    string pipeName = "MyTreePipeline_2";
 
-    // 선택된 Seed
+    // Load할 Pipeline 이름
+    string pipeName;
+
+    // 방문 타입
+    public enum VisitType
+    {
+        None,
+        First,
+        ReVisit
+    }
+    public VisitType visitType;
+
+    // User가 선택한 Seed
     public SeedType selectedSeed;
+    // Seed별 pipeName
+    Dictionary<SeedType, string> pipeNameDict = new Dictionary<SeedType, string>()
+    {
+        { SeedType.Basic, "BasicTree"},
+        { SeedType.Oak, "BigOakTree" },
+        { SeedType.Sakura, "SakuraTree" }
+    };
 
     // 선택된 treeGrowDatas
     List<TreeGrowData> selectedtreeGrowDatas;
@@ -94,36 +111,22 @@ public class TreeController : MonoBehaviour
     public TreeData data;
     // leafTexture
     public Texture2D leafText;
-    // 식물 이름 결정 UI
-    public GameObject plantNameUI;
-    // 식물 이름 InputField
-    public InputField inputPlantName;
-    // 식물 이름 결정 Button
-    public Button btnPlantName;
-    // 방문 타입
-    public VisitType visitType;
     // user
     public GameObject user;
     // previewTree Scale Value
     float scaleTo;
-    // TreeList Tree Name
-    public Text treeName;
+    // AssetBundle
+    AssetBundle assetBundle;
+    // 식물 이름 입력 UI
+    public GameObject plantNameUI;
+
     #endregion
 
-    public enum VisitType
-    {
-        None,
-        First,
-        ReVisit
-    }
 
-    AssetBundle assetBundle;
     void Start()
     {
-        //user = GameManager.Instance.User;
-        //user.GetComponent<UserInput>().InputControl = true;
-
         assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/newtreebundle");
+
         #region Build
         // Build mesh 오류 해결 코드
         //print(Application.dataPath);
@@ -139,18 +142,24 @@ public class TreeController : MonoBehaviour
         //treeFactory = TreeFactory.GetFactory();
         #endregion
 
-        // TreeData  객체 생성
+        // TreeData 객체 생성
         data = new TreeData();
-
-        // treePipeline 로드
-        //treePipeline = Resources.Load<Pipeline>(path);
-        treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 
         // 방문 타입 결정
         if (visitType == VisitType.None) visitType = VisitType.First;
         else visitType = VisitType.ReVisit;
 
-        inputPlantName.onValueChanged.AddListener(onValueChanged);
+        
+
+        // Test : 씨앗이 선택되었다면 그 씨앗에 맞는 pipeline name 저장
+        if (selectedSeed != SeedType.None)
+        {
+            pipeName = pipeNameDict[selectedSeed];
+        }
+        FindtreeGrowDatas();
+
+        // Tree Pipeline 로드
+        treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 
         #region 기존 코드
         //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
@@ -383,27 +392,6 @@ public class TreeController : MonoBehaviour
         Resources.UnloadAsset(loadedPipeline);
     }
 
-    /// <summary>
-    /// 식물 이름 입력하면 다음 버튼 활성화
-    /// </summary>
-    /// <param name="s">식물 이름</param>
-    void onValueChanged(string s)
-    {
-        btnPlantName.interactable = true;
-    }
-
-    //public bool isUIfinish;
-    /// <summary>
-    /// 식물 이름 결정 버튼 누르면 나무 이름 저장 & UI 비활성화
-    /// </summary>
-    public void onConfirmPlantName()
-    {
-        //user.GetComponent<UserInput>().InputControl = false;
-        treeName.text = inputPlantName.text;
-        data.treeName = inputPlantName.text;
-        plantNameUI.SetActive(false);
-        //isUIfinish = true;
-    }
 
     /// <summary>
     /// dayCount에 맞게 Tree 업데이트
@@ -413,7 +401,7 @@ public class TreeController : MonoBehaviour
     int count=0;
     public void LoadTree()
     {
-        // 1. 씨앗심기 & 새싹
+        // 1일차
         if (dayCount == 1)
         {
             StartCoroutine(PlantSeed(0.5f));
@@ -422,9 +410,8 @@ public class TreeController : MonoBehaviour
             // 나무 심은 시간 저장
             GameManager.Instance.firstPlantTime = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
-            
         }
-        // 2. 작은 묘목
+        // 2일차
         if (dayCount == 2)
         {
             sprout.SetActive(false);
@@ -433,9 +420,8 @@ public class TreeController : MonoBehaviour
             TreeReload();
             treeFactory.gameObject.SetActive(true);
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
-            
         }
-        // 3. 묘목
+        // 3일차
         if (dayCount == 3)
         {
             PipelineUpdate(dayCount);
@@ -443,14 +429,14 @@ public class TreeController : MonoBehaviour
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             campos = Camera.main.gameObject.transform;
         }
-        // 4. 나무
+        // 4일차
         if (dayCount == 4)
         {
             PipelineUpdate(dayCount);
             TreeReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
-        // 5. 열매
+        // 5일차
         if (dayCount == 5)
         {
             PipelineUpdate(dayCount);
@@ -470,7 +456,7 @@ public class TreeController : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// 현재 User의 Tree Data 저장
     /// </summary>
     public void SaveTreeData()
     {
