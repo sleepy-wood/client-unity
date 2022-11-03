@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -124,7 +124,8 @@ namespace Broccoli.Pipe {
 				}
 			}
 			if (enabledPositions.Count > 0) {
-				position = enabledPositions [Random.Range(0, enabledPositions.Count)];
+                position = enabledPositions[selectedPositionIndex];//[Random.Range(0, enabledPositions.Count)];
+                Debug.Log(position);
 				enabledPositions.Clear ();
 			} else {
 				position = defaultPosition;

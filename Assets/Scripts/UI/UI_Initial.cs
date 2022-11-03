@@ -12,11 +12,30 @@ public class UI_Initial : MonoBehaviour
     public GameObject profileUI;
     public GameObject TreeListUI;
     public GameObject screenShotCam;
-    public Transform previewTreePos;
-    public Text txtAge;
-    public TimeManager timeManager;
     public GameObject sleepDataUI;
+    public GameObject plantNameUI;
+
+    public Transform previewTreePos;
+
+    public Text txtAge;
+    public Text treeName;
+
+    public Button btnPlantName;
+
+    public InputField inputPlantName;
+
+    public TimeManager timeManager;
+
+
+
     #endregion
+
+
+
+    private void Start()
+    {
+        inputPlantName.onValueChanged.AddListener(onValueChanged);
+    }
 
     /// <summary>
     /// 프로필 UI 활성화
@@ -74,5 +93,23 @@ public class UI_Initial : MonoBehaviour
     public void OnSleepDataOff()
     {
         sleepDataUI.SetActive(false);
+    }
+
+    /// <summary>
+    /// 식물 이름 입력하면 다음 버튼 활성화
+    /// </summary>
+    /// <param name="s">식물 이름</param>
+    void onValueChanged(string s)
+    {
+        btnPlantName.interactable = true;
+    }
+
+    /// <summary>
+    /// 식물 이름 결정 버튼 누르면 나무 이름 저장 & UI 비활성화
+    /// </summary>
+    public void onConfirmPlantName()
+    {
+        treeName.text = inputPlantName.text;
+        plantNameUI.SetActive(false);
     }
 }
