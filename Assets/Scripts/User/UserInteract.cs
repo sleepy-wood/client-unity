@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Realtime;
+using Photon.Pun;
 
-public class UserInteract : MonoBehaviour
+public class UserInteract : MonoBehaviourPun, IPunObservable
 {
     [SerializeField] private float moveSpeed = 3f;
     public bool moveControl;
     private UserInput userInput;
     private Animator animator;
 
+    private Vector3 receivePos;
+    private Quaternion receiveRot;
     private void Start()
     {
         userInput = GetComponent<UserInput>();
@@ -31,27 +35,37 @@ public class UserInteract : MonoBehaviour
         {
             #region Player Move
 
+            if (photonView.IsMine)
+            {
 #if UNITY_STANDALONE
             Vector3 moveDir = userInput.MoveX * transform.right + userInput.MoveZ * transform.forward;
 #elif UNITY_IOS || UNITY_ANDROID
-        Vector3 moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
+                Vector3 moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
 #endif
-            moveDir.Normalize();
-            
-            if(moveDir.magnitude != 0)
-            {
-                animator.SetBool("Walk", true);
+                moveDir.Normalize();
+
+                if (moveDir.magnitude != 0)
+                {
+                    animator.SetBool("Walk", true);
+                }
+                else
+                {
+                    animator.SetBool("Walk", false);
+                }
+
+                transform.GetChild(2).LookAt(transform.position + moveDir * 10);
+                transform.position += moveSpeed * moveDir * Time.deltaTime;
+
+                //회전
+                transform.Rotate(transform.up, userInput.Rotate);
             }
             else
             {
-                animator.SetBool("Walk", false);
+                transform.position =
+                    Vector3.Lerp(transform.position, receivePos, Time.deltaTime * 5);
+                transform.rotation =
+                    Quaternion.Lerp(transform.rotation, receiveRot, Time.deltaTime * 5);
             }
-
-            transform.GetChild(2).LookAt(transform.position + moveDir * 10);
-            transform.position += moveSpeed * moveDir * Time.deltaTime;
-
-            //회전
-            transform.Rotate(transform.up, userInput.Rotate);
             #endregion
         }
 
@@ -132,6 +146,20 @@ public class UserInteract : MonoBehaviour
         else
         {
             return null;
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else
+        {
+            receivePos = (Vector3)stream.ReceiveNext();
+            receiveRot = (Quaternion)stream.ReceiveNext();
         }
     }
 }
