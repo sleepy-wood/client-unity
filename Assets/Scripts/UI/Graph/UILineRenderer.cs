@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -9,7 +11,6 @@ public class UILineRenderer : Graphic
     public Vector2Int gridSize;
     public List<Vector2> points;
     public UIGridRenderer grid;
-
     float width;
     float height;
     float unitWidth;
@@ -46,6 +47,7 @@ public class UILineRenderer : Graphic
             vh.AddTriangle(index + 0, index + 1, index + 3);
             vh.AddTriangle(index + 3, index + 2, index + 0);
         }
+
     }
     public float GetAngle(Vector2 me, Vector2 target)
     {

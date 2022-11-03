@@ -48,11 +48,11 @@ public class LoadingData : MonoBehaviour
 
         ArrayLandData arrayLandData = new ArrayLandData();
         arrayLandData.landLists = landData.data;
-        DataTemporary.MyLandData = arrayLandData;
+        //DataTemporary.MyLandData = arrayLandData;
 
         ArrayBridgeData arrayBridgeData = new ArrayBridgeData();
         arrayBridgeData.bridgeLists = bridgeData.data;
-        DataTemporary.MyBridgeData = arrayBridgeData;
+        //DataTemporary.MyBridgeData = arrayBridgeData;
 
 
         if (landData.result)

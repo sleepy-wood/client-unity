@@ -28,7 +28,15 @@ public class UI_SleepGraph : MonoBehaviour
     [SerializeField] private GameObject content;
     [SerializeField] private List<SleepSampleTest> time = new List<SleepSampleTest>();
     [SerializeField] private float upSpeed = 5;
+    [SerializeField] private UILineRenderer lineRenderer;
+
     private List<Slider> sliders = new List<Slider>();
+    private List<bool> VisitedList = new List<bool>();
+    List<Vector2> graphPoints = new List<Vector2>();
+
+    private float loadingTime = 1.5f;
+    private float curTime = 0;
+    private bool isOnce = false;
     //NativeLoadData nativeLoad = new NativeLoadData();
     private void Start()
     {
@@ -37,11 +45,42 @@ public class UI_SleepGraph : MonoBehaviour
         for (int i = 0; i < content.transform.childCount; i++)
         {
             sliders.Add(content.transform.GetChild(i).GetComponent<Slider>());
+            VisitedList.Add(false);
+        }
+        for (int i = 0; i < time.Count; i++)
+        {
+            graphPoints.Add(Vector2.zero);
         }
     }
-    public void OnClick()
+    private void Update()
     {
-        //Date time week Day ¾Ë¾Æ³»´Â ÇÔ¼ö => DateTime.DayOfWeek
+        curTime += Time.deltaTime;
+        if (curTime > loadingTime & !isOnce)
+        {
+            isOnce = true;
+            OnDrawGraph();
+        }
+        if (!lineRenderer.gameObject.activeSelf)
+        {
+            CheckVisited();
+        }
+    }
+    public void CheckVisited()
+    {
+        for (int i = 0; i < time.Count; i++)
+        {
+            if (!VisitedList[i])
+            {
+                return;
+            }
+        }
+
+        lineRenderer.points = graphPoints;
+        lineRenderer.gameObject.SetActive(true);
+    }
+    public void OnDrawGraph()
+    {
+        //Date time week Day ì•Œì•„ë‚´ëŠ” í•¨ìˆ˜ => DateTime.DayOfWeek
         if (time.Count <= 0) return;
         for (int i = 0; i < content.transform.childCount; i++)
         {
@@ -54,13 +93,13 @@ public class UI_SleepGraph : MonoBehaviour
             //Debug.Log($"endDate.Hour = {time[i].EndHour}\n endDate.Minute = {time[i].EndMinute}\nendDate.Second = {time[i].EndSecond}");
             //Debug.Log($"start = {start}\n end = {end}");
 
-            //ÃÊ±âÈ­
+            //ì´ˆê¸°í™”
             sliders[i].value = 0;
-            //±×·¡ÇÁ ¿òÁ÷ÀÌ±â
+            //ê·¸ëž˜í”„ ì›€ì§ì´ê¸°
             StartCoroutine(GraphMove(Mathf.Abs(end - start), i));
 
             //Debug.Log($"value = {Mathf.Abs(end - start)}");
-            content.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = $"{time[i].EndYear}³â\n{time[i].EndMonth}¿ù\n{time[i].EndDay}ÀÏ";
+            content.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = $"{time[i].EndYear}ë…„\n{time[i].EndMonth}ì›”\n{time[i].EndDay}ì¼";
         }
     }
     public IEnumerator GraphMove(int val, int idx)
@@ -69,8 +108,18 @@ public class UI_SleepGraph : MonoBehaviour
         {
             sliders[idx].value = Mathf.Lerp(sliders[idx].value, val, Time.deltaTime * upSpeed);
             if (sliders[idx].value >= val - 1)
+            {
+                //lineRenderer.points
+                Vector2 position;
+                position.x = content.transform.GetChild(idx).GetComponent<RectTransform>().anchoredPosition.x + 50;
+                position.y = 380 + 640 * content.transform.GetChild(idx).GetChild(2).GetChild(0).GetComponent<RectTransform>().anchorMax.x;
+                graphPoints[idx] = position;
+                VisitedList[idx] = true;
+                
                 yield break;
+            }
             yield return null;  
         }
+
     }
 }
