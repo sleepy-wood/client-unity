@@ -102,11 +102,36 @@ public class UI_SleepGraph : MonoBehaviour
             //Debug.Log($"value = {Mathf.Abs(end - start)}");
             content.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = $"{time[i].EndYear}년\n{time[i].EndMonth}월\n{time[i].EndDay}일";
         }
-    }
-    //public IEnumerator PiMove()
-    //{
 
-    //}
+
+        int starthour = time[time.Count - 1].StartHour > 12 ? time[time.Count - 1].StartHour - 12 : time[time.Count - 1].StartHour;
+        int endhour = time[time.Count - 1].EndHour > 12 ? time[time.Count - 1].EndHour - 12 : time[time.Count - 1].EndHour;
+
+        starthour = time[time.Count - 1].StartHour == 0 ? 24 : time[time.Count - 1].StartHour;
+        endhour = time[time.Count - 1].EndHour == 0 ? 24 : time[time.Count - 1].EndHour;
+
+        Debug.Log($"starthour = {starthour}");
+        Debug.Log($"endhour = {endhour}");
+
+        int startStartDay = starthour * 3600 + time[time.Count - 1].StartMinute * 60 + time[time.Count - 1].StartSecond;
+        int endEndDay = endhour * 3600 + time[time.Count - 1].EndMinute * 60 + time[time.Count - 1].EndSecond;
+
+        int startStartDay1 = time[time.Count - 1].StartHour * 3600 + time[time.Count - 1].StartMinute * 60 + time[time.Count - 1].StartSecond;
+        int endEndDay1 = time[time.Count - 1].EndHour * 3600 + time[time.Count - 1].EndMinute * 60 + time[time.Count - 1].EndSecond;
+
+        pi.gameObject.GetComponent<RectTransform>().localEulerAngles = new Vector3(180, 180, ((float)startStartDay / 46860f) * 360f);
+        Debug.Log(24 * 3600 + 60 * 60 + 60);
+        Debug.Log(((float)startStartDay / 46860f) * 360f);
+        Debug.Log(((float)Mathf.Abs(startStartDay1 - endEndDay1) / 90060f));
+        Debug.Log(((float)Mathf.Abs(startStartDay1 - endEndDay1)));
+        Debug.Log(startStartDay1);
+        Debug.Log(endEndDay1);
+        pi.fillAmount = (((float)Mathf.Abs(startStartDay1 - endEndDay1) / 90060f));
+    }
+    public IEnumerator PiMove(int val)
+    {
+        yield return null;
+    }
     public IEnumerator GraphMove(int val, int idx)
     {
         while (true)
@@ -117,7 +142,7 @@ public class UI_SleepGraph : MonoBehaviour
                 //lineRenderer.points
                 Vector2 position;
                 position.x = content.transform.GetChild(idx).GetComponent<RectTransform>().anchoredPosition.x + 50;
-                position.y = 520 + transform.GetChild(1).GetComponent<RectTransform>().anchoredPosition.y + 480 * content.transform.GetChild(idx).GetChild(2).GetChild(0).GetComponent<RectTransform>().anchorMax.x;
+                position.y = 600 + transform.GetChild(1).GetComponent<RectTransform>().anchoredPosition.y + 480 * content.transform.GetChild(idx).GetChild(2).GetChild(0).GetComponent<RectTransform>().anchorMax.x;
                 graphPoints[idx] = position;
                 VisitedList[idx] = true;
                 
