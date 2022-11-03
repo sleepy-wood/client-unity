@@ -24,6 +24,14 @@ public class TreeController : MonoBehaviour
     #region Variable
     // Load할 Pipeline 이름
     string pipeName = "MyTreePipeline_2";
+
+    // 선택된 Seed
+    public SeedType selectedSeed;
+
+    // 선택된 treeGrowDatas
+    List<TreeGrowData> selectedtreeGrowDatas;
+
+    #region 기본 5일 성장 변수 저장소
     // Pipeline Element별 dayuency Min/Max값 저장소
     [System.Serializable]
     public class MinMax
@@ -31,30 +39,34 @@ public class TreeController : MonoBehaviour
         public int min;
         public int max;
     }
-    //[System.Serializable]
-    //public class ElementsList { public List<minMax> minMaxList = new List<minMax>(); };
     [System.Serializable]
-    public class dayTreeData
+    public class TreeGrowData
     {
-        //public ElementsList dayMinMax;
         public List<MinMax> minMaxList = new List<MinMax>();
         public int rootFreq;
         public int rootBaseLength;
         public float girthBase;
         public float scale;
     }
-    // DayCount에 따라 변하는 나무 관련 변수 저장소
-    //public List<dayTreeData> dayList = new List<dayTreeData>();
-    // 나무 종류별 관련 변수 리스트 저장소
-    [System.Serializable]
-    public class treeStore
+    public enum SeedType
     {
-        public string seedType;
-        // DayCount에 따라 변하는 나무 관련 변수 저장소
-        public List<dayTreeData> dayList = new List<dayTreeData>();
+        None,
+        Basic,
+        Oak,
+        Sakura
     }
-    // pipeline load path
-    //string path;
+    // 나무 종류별 관련 변수 클래스
+    [System.Serializable]
+    public class TreeStore
+    {
+        public SeedType seedType = SeedType.None;
+        // DayCount에 따라 변하는 나무 관련 변수 저장소
+        public List<TreeGrowData> treeGrowDatas = new List<TreeGrowData>();
+    }
+    // 나무 종류별 관련 변수 클래스의 모음 리스트
+    public List<TreeStore> treeStores = new List<TreeStore>();
+    #endregion
+
     // tree Factory
     public TreeFactory treeFactory = null;
     // The pipeline
@@ -129,15 +141,10 @@ public class TreeController : MonoBehaviour
 
         // TreeData  객체 생성
         data = new TreeData();
-        //data.landID = growPos.parent.gameObject.name;
-
-        // TreePipeline path
-        //path = "Tree/MyTreePipeline_2";
 
         // treePipeline 로드
         //treePipeline = Resources.Load<Pipeline>(path);
         treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
-        // TextAsset b = Resources.Load<TextAsset>(path);
 
         // 방문 타입 결정
         if (visitType == VisitType.None) visitType = VisitType.First;
@@ -207,8 +214,6 @@ public class TreeController : MonoBehaviour
         {
             Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.36f, 8.6f, 26.07f), camMoveSpeed * Time.deltaTime);
         }
-
-        
 
         #region 가지 추가  Test Code
         // TreePipeline - 가지 추가
@@ -295,24 +300,20 @@ public class TreeController : MonoBehaviour
     /// <param name="dayCount"></param>
     public void PipelineUpdate(int dayCount)
     {
-        // 씨앗 종류에 따라 나무 변수 리스트 선택
-        treeStore ts = new treeStore();
-        // 날짜에 맞춘 정보를 가지고 있는 요소
-        dayTreeData element = ts.dayList[dayCount - 2];
+        // 날짜에 맞춘 성장 데이터 정보 지닌 요소
+        TreeGrowData element = selectedtreeGrowDatas[dayCount - 2];
 
         #region 1. Element MinMax
         int idx = element.minMaxList.Count;
-        // 각 요소 for문 돌리며 세팅
+        // pipeline element 개수만큼 설정
         for (int i = 0; i < idx; i++)
         {
             // pipeline
             StructureGenerator.StructureLevel pipe1 = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
             // 저장값
-            MinMax store1 = ts.dayList[dayCount - 2].minMaxList[i];
+            MinMax store1 = element.minMaxList[i];
 
-            // Min Frequenc
             pipe1.minFrequency = store1.min;
-            // Max Frequency
             pipe1.maxFrequency = store1.max;
         }
         #endregion
@@ -354,6 +355,21 @@ public class TreeController : MonoBehaviour
     }
 
     
+    /// <summary>
+    /// treeStores에서 씨앗 종류에 맞는 treeGrowDatas 찾는 함수
+    /// </summary>
+    public void FindtreeGrowDatas()
+    {
+        for (int i=0; i < treeStores.Count; i++)
+        {
+            if (treeStores[i].seedType == selectedSeed)
+            {
+                selectedtreeGrowDatas = treeStores[i].treeGrowDatas;
+            }
+        }
+         
+    }
+    
 
     /// <summary>
     /// 업데이트한 나무 정보를 기반으로 나무 다시 로드
@@ -383,7 +399,6 @@ public class TreeController : MonoBehaviour
     public void onConfirmPlantName()
     {
         //user.GetComponent<UserInput>().InputControl = false;
-        print(inputPlantName.text);
         treeName.text = inputPlantName.text;
         data.treeName = inputPlantName.text;
         plantNameUI.SetActive(false);
