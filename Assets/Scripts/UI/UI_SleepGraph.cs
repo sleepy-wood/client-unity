@@ -112,7 +112,7 @@ public class UI_SleepGraph : MonoBehaviour
                 //lineRenderer.points
                 Vector2 position;
                 position.x = content.transform.GetChild(idx).GetComponent<RectTransform>().anchoredPosition.x + 50;
-                position.y = 380 + 640 * content.transform.GetChild(idx).GetChild(2).GetChild(0).GetComponent<RectTransform>().anchorMax.x;
+                position.y = 520 + transform.GetChild(1).GetComponent<RectTransform>().anchoredPosition.y + 480 * content.transform.GetChild(idx).GetChild(2).GetChild(0).GetComponent<RectTransform>().anchorMax.x;
                 graphPoints[idx] = position;
                 VisitedList[idx] = true;
                 
