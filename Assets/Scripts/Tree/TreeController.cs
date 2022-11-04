@@ -204,25 +204,25 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 2. 작은 묘목
-        if (dayCount == 2)
-        {
-            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(-0.4f, 3.59f, 9.09f), camMoveSpeed * Time.deltaTime);
-        }
-        // 3. 묘목
-        if (dayCount == 3)
-        {
-            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(-0.4f, 4.67f, 11.43f), camMoveSpeed * Time.deltaTime);
-        }
-        // 4. 나무
-        if (dayCount == 4)
-        {
-            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.44f, 6.89f, 20.19f), camMoveSpeed * Time.deltaTime);
-        }
-        // 5. 열매
-        if (dayCount == 5)
-        {
-            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.36f, 8.6f, 26.07f), camMoveSpeed * Time.deltaTime);
-        }
+        //if (dayCount == 2)
+        //{
+        //    Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(-0.4f, 3.59f, 9.09f), camMoveSpeed * Time.deltaTime);
+        //}
+        //// 3. 묘목
+        //if (dayCount == 3)
+        //{
+        //    Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(-0.4f, 4.67f, 11.43f), camMoveSpeed * Time.deltaTime);
+        //}
+        //// 4. 나무
+        //if (dayCount == 4)
+        //{
+        //    Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.44f, 6.89f, 20.19f), camMoveSpeed * Time.deltaTime);
+        //}
+        //// 5. 열매
+        //if (dayCount == 5)
+        //{
+        //    Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.36f, 8.6f, 26.07f), camMoveSpeed * Time.deltaTime);
+        //}
 
         #region 가지 추가  Test Code
         // TreePipeline - 가지 추가
