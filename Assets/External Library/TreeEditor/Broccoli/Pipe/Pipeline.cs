@@ -83,7 +83,7 @@ namespace Broccoli.Pipe {
 		/// </summary>
 		[SerializeField]
 		public SproutGroups _sproutGroups = new SproutGroups ();
-		/// <summary>
+		/// <summary> 
 		/// Accessor for sprout groups.
 		/// </summary>
 		/// <value>The sprout groups.</value>
