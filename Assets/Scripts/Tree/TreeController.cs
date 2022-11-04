@@ -41,7 +41,7 @@ public class TreeController : MonoBehaviour
     Dictionary<SeedType, string> pipeNameDict = new Dictionary<SeedType, string>()
     {
         { SeedType.Basic, "BasicTree"},
-        { SeedType.Oak, "BigOakTree" },
+        { SeedType.Oak, "OakTree" },
         { SeedType.Sakura, "SakuraTree" }
     };
 

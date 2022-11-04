@@ -19,26 +19,22 @@ public class TreeGrowthData  // TreeCustomData
     public int? baseLength;
     // 나무 굵기
     public float trunkThick;
-
-    // 나무 가지, 잎, 꽃 텍스처 ?
 }
 
 [Serializable]
 public class TreeData
 {
+    // 종류
+    public string? type;
+    // seed 번호
+    public int? seedNumber;
     // 나무 이름
     public string? treeName;
-    // 잎 텍스처 리스트
-    public List<Texture2D> leafTextures = new List<Texture2D>();
-    // 가지 텍스처 리스트
-    public List<Texture2D> branchTextures = new List<Texture2D>();
-    // 꽃 텍스처 리스트
-    public List<Texture2D> flowerTextures = new List<Texture2D>();
-    // 나무를 심은 날짜
-    public DateTime? treePlantDate;
+    // 처음 심은 날짜
+    public DateTime? firstPlantDate;
     // 나무 성장 관련 정보
     public TreeGrowthData? treeGrowthData;
-    // 현재 land  ID
+    // 현재 land ID
     public int? landID;
 }
 
