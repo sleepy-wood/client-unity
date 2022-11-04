@@ -5591,26 +5591,66 @@ MonoBehaviour:
       scale: 0.7
   - seedType: 3
     treeGrowDatas:
-    - minMaxList: []
-      rootFreq: 0
-      rootBaseLength: 0
-      girthBase: 0
-      scale: 0
-    - minMaxList: []
-      rootFreq: 0
-      rootBaseLength: 0
-      girthBase: 0
-      scale: 0
-    - minMaxList: []
-      rootFreq: 0
-      rootBaseLength: 0
-      girthBase: 0
-      scale: 0
-    - minMaxList: []
-      rootFreq: 0
-      rootBaseLength: 0
-      girthBase: 0
-      scale: 0
+    - minMaxList:
+      - min: 1
+        max: 1
+      - min: 3
+        max: 6
+      - min: 0
+        max: 0
+      - min: 0
+        max: 0
+      - min: 0
+        max: 0
+      rootFreq: 1
+      rootBaseLength: 13
+      girthBase: 1.5
+      scale: 0.3
+    - minMaxList:
+      - min: 1
+        max: 2
+      - min: 4
+        max: 7
+      - min: 0
+        max: 0
+      - min: 0
+        max: 0
+      - min: 1
+        max: 1
+      rootFreq: 1
+      rootBaseLength: 16
+      girthBase: 1.3
+      scale: 0.3
+    - minMaxList:
+      - min: 2
+        max: 3
+      - min: 5
+        max: 8
+      - min: 1
+        max: 1
+      - min: 1
+        max: 1
+      - min: 1
+        max: 2
+      rootFreq: 1
+      rootBaseLength: 21
+      girthBase: 1.5
+      scale: 0.85
+    - minMaxList:
+      - min: 2
+        max: 4
+      - min: 5
+        max: 9
+      - min: 1
+        max: 1
+      - min: 1
+        max: 2
+      - min: 1
+        max: 3
+      rootFreq: 1
+      rootBaseLength: 21
+      girthBase: 2
+      scale: 1
   treeFactory: {fileID: 1794721962}
   treePipeline: {fileID: 0}
   growPos: {fileID: 1319027253}
