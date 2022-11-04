@@ -445,4 +445,5 @@ public class LandDataManager : MonoBehaviour
 
         isOnClickMinimap = isOnClickMinimap == true ? false : true;
     }
+
 }

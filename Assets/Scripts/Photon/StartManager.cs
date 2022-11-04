@@ -38,35 +38,6 @@ public class StartManager : MonoBehaviourPunCallbacks
         //닉네임 설정
         PhotonNetwork.NickName = nickName_InputField.text;
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (nickName_InputField.text != "")
-            {
-                if (friendCode_InputField?.text == "" && createCode_InputField?.text == "")
-                {
-                    //나중에 UI로 구현
-                    Debug.Log("코드를 입력해주세요.");
-                }
-                else if (friendCode_InputField?.text != "" && createCode_InputField?.text != "")
-                {
-                    //나중에 UI로 구현
-                    Debug.Log("둘 중 하나의 코드만 입력해주세요");
-                }
-                else if (friendCode_InputField?.text != "")
-                {
-                    Debug.Log("내가 갈게 친구야~~");
-                    JoinRoom();
-                }
-                else if (createCode_InputField?.text != "")
-                {
-                    Debug.Log("가~보자고~~");
-                    CreateRoom();
-                }
-            }
-        }
-    }
     private void JoinRoom()
     {
         PhotonNetwork.JoinRoom(friendCode_InputField.text);
@@ -98,5 +69,49 @@ public class StartManager : MonoBehaviourPunCallbacks
         //방 참여 실패 UI로 알려주기
     }
 
+    /// <summary>
+    /// 친구 방 입장 창 띄우기
+    /// </summary>
+    public void OnClickActive()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
+    }
 
+    /// <summary>
+    /// 친구 방 입장 창 끄기
+    /// </summary>
+    public void OnClickNotActive()
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 친구방 입장
+    /// </summary>
+    public void OnClickVisit()
+    {
+        if (nickName_InputField.text != "")
+        {
+            if (friendCode_InputField?.text == "" && createCode_InputField?.text == "")
+            {
+                //나중에 UI로 구현
+                Debug.Log("코드를 입력해주세요.");
+            }
+            else if (friendCode_InputField?.text != "" && createCode_InputField?.text != "")
+            {
+                //나중에 UI로 구현
+                Debug.Log("둘 중 하나의 코드만 입력해주세요");
+            }
+            else if (friendCode_InputField?.text != "")
+            {
+                Debug.Log("내가 갈게 친구야~~");
+                JoinRoom();
+            }
+            else if (createCode_InputField?.text != "")
+            {
+                Debug.Log("가~보자고~~");
+                CreateRoom();
+            }
+        }
+    }
 }
