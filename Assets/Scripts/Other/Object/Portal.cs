@@ -15,7 +15,7 @@ public class Portal : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if(other.transform.name == "User")
+        if(other.gameObject.layer == LayerMask.NameToLayer("User"))
         {
             transform.GetChild(0).gameObject.SetActive(true);
 
@@ -23,7 +23,7 @@ public class Portal : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.name == "User")
+        if (other.gameObject.layer == LayerMask.NameToLayer("User"))
         {
             transform.GetChild(0).gameObject.SetActive(false);
 

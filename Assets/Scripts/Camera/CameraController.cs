@@ -1,12 +1,13 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : MonoBehaviourPun
 {
     [Header("Follow Player CamPos")]
-    [SerializeField] private Transform camPos;
+    private Transform camPos;
 
     [Header("Zoom In / Out")]
     [SerializeField] private float wheelScrollSpeed;
@@ -19,30 +20,34 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         user = GameManager.Instance.User;
+        camPos = user.transform.GetChild(0);
         userInput = user.GetComponent<UserInput>();
         myCamera = GetComponent<Camera>();
         initialOrthographicSize = myCamera.orthographicSize;
     }
     private void Update()
     {
-        //zoom을 했을 경우
-        if (userInput.Zoom != 0)
+        if (photonView.IsMine)
         {
-            //카메라 재조정
-            StopAllCoroutines();
-            StartCoroutine(CameraMoving(7));
-           
-            //카메라 Zoom in / out
-            myCamera.orthographicSize -= userInput.Zoom * wheelScrollSpeed;
-            myCamera.orthographicSize = Mathf.Clamp(myCamera.orthographicSize, initialOrthographicSize - 12, initialOrthographicSize + 12);
-        }
+            //zoom을 했을 경우
+            if (userInput.Zoom != 0)
+            {
+                //카메라 재조정
+                StopAllCoroutines();
+                StartCoroutine(CameraMoving(7));
 
-        //플레이어와 카메라의 거리가 5정도 떨어지면 따라가기
-        if(Vector3.Distance(camPos.position, transform.position) > 3)
-        {
-            StartCoroutine(CameraMoving());
+                //카메라 Zoom in / out
+                myCamera.orthographicSize -= userInput.Zoom * wheelScrollSpeed;
+                myCamera.orthographicSize = Mathf.Clamp(myCamera.orthographicSize, initialOrthographicSize - 12, initialOrthographicSize + 12);
+            }
+
+            //플레이어와 카메라의 거리가 5정도 떨어지면 따라가기
+            if (Vector3.Distance(camPos.position, transform.position) > 3)
+            {
+                StartCoroutine(CameraMoving());
+            }
+            transform.parent.Rotate(user.transform.up, userInput.Rotate);
         }
-        transform.parent.Rotate(user.transform.up, userInput.Rotate);
     }
     //카메라 움직임 코루틴
     IEnumerator CameraMoving(float speed = 1)

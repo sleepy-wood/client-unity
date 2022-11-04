@@ -7,8 +7,10 @@ using UnityEngine.Android;
 using System;
 using UnityEngine.Networking;
 using System.Net.NetworkInformation;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class CharactorChoice : MonoBehaviour
+public class CharactorChoice : MonoBehaviourPunCallbacks
 {
     public Transform content;
     public int selectedIndex;
@@ -68,7 +70,7 @@ public class CharactorChoice : MonoBehaviour
         {
             curTime += Time.deltaTime;
             if (curTime > 1.2f)
-                SceneManager.LoadScene("MyWorld");
+                SceneManager.LoadScene("MiddleScene");
         }
     }
     public IEnumerator AlphaText(int i)

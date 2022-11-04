@@ -47,7 +47,7 @@ public class StartManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         print("OnJoinedRoom");
-        PhotonNetwork.LoadLevel("SkyLand");
+        PhotonNetwork.LoadLevel("MyWorld");
     }
     private void CreateRoom()
     {
