@@ -15,7 +15,8 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     private Quaternion receiveRot;
     private void Start()
     {
-        userInput = GetComponent<UserInput>();
+        if (photonView.IsMine)
+            userInput = GetComponent<UserInput>();
 
         if (!moveControl)
         {
