@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class TreeDataManager : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
 
-    void Update()
-    {
-        
-    }
+
 }
