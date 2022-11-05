@@ -1,9 +1,7 @@
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Pun;
 
 public class UI_Chatting : MonoBehaviourPun
 {
@@ -11,13 +9,17 @@ public class UI_Chatting : MonoBehaviourPun
 
     private Vector3 startPos;
     private Vector3 endPos;
-    //private void Start()
-    //{
-    //    if(PhotonNetwork.PlayerList.Length <= 1)
-    //    {
-    //        transform.GetChild(0).gameObject.SetActive(false);
-    //    }
-    //}
+    private void Update()
+    {
+        if (PhotonNetwork.PlayerList.Length <= 1)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
+        else
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
+    }
     private void Awake()
     {
         startPos = transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().position + new Vector3(-140, 0, 0);

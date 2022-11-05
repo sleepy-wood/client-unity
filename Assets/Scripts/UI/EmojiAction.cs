@@ -13,9 +13,13 @@ public class EmojiAction : MonoBehaviour
         if (curTime > activeTime)
         {
             Color color = GetComponent<Image>().color;
+            Color color1 = transform.GetChild(0).GetComponent<Image>().color;
             color.a = Mathf.Lerp(color.a, 0, Time.deltaTime * 3);
+            color1.a = Mathf.Lerp(color1.a, 0, Time.deltaTime * 3);
             GetComponent<Image>().color = color;
-            if(GetComponent<Image>().color.a < 0.01f)
+            transform.GetChild(0).GetComponent<Image>().color = color1;
+
+            if (GetComponent<Image>().color.a < 0.01f)
                 Destroy(gameObject);
         }
     }
