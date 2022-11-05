@@ -19,14 +19,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
 
         if (!moveControl)
         {
-            //userAvatar 생성
-            GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + DataTemporary.MyUserData.UserAvatar);
-            GameObject userAvatar = Instantiate(userAvatarResource);
-            userAvatar.name = userAvatar.name.Split("(")[0];
-            userAvatar.transform.parent = transform;
-            userAvatar.transform.localPosition = Vector3.zero;
-            userAvatar.transform.localEulerAngles = Vector3.zero;
-            animator = transform.GetChild(2).GetComponent<Animator>();
+            photonView.RPC("RPC_ChoiceCharactorLoad", RpcTarget.AllBuffered);
         }
     }
     private void Update()
@@ -63,8 +56,8 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
             {
                 transform.position =
                     Vector3.Lerp(transform.position, receivePos, Time.deltaTime * 5);
-                transform.rotation =
-                    Quaternion.Lerp(transform.rotation, receiveRot, Time.deltaTime * 5);
+                transform.GetChild(2).rotation =
+                    Quaternion.Lerp(transform.GetChild(2).rotation, receiveRot, Time.deltaTime * 5);
             }
             #endregion
         }
@@ -154,7 +147,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
+            stream.SendNext(transform.GetChild(2).rotation);
         }
         else
         {
@@ -162,4 +155,19 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
             receiveRot = (Quaternion)stream.ReceiveNext();
         }
     }
+
+    #region RPC
+    [PunRPC]
+    public void RPC_ChoiceCharactorLoad()
+    {
+        //userAvatar 생성
+        GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + DataTemporary.MyUserData.UserAvatar);
+        GameObject userAvatar = Instantiate(userAvatarResource);
+        userAvatar.name = userAvatar.name.Split("(")[0];
+        userAvatar.transform.parent = transform;
+        userAvatar.transform.localPosition = Vector3.zero;
+        userAvatar.transform.localEulerAngles = Vector3.zero;
+        animator = transform.GetChild(2).GetComponent<Animator>();
+    }
+    #endregion
 }

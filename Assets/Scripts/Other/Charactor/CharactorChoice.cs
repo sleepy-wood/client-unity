@@ -70,7 +70,8 @@ public class CharactorChoice : MonoBehaviourPunCallbacks
         {
             curTime += Time.deltaTime;
             if (curTime > 1.2f)
-                SceneManager.LoadScene("MiddleScene");
+                 PhotonNetwork.LoadLevel("MyWorld");
+                //SceneManager.LoadScene("MiddleScene");
         }
     }
     public IEnumerator AlphaText(int i)
