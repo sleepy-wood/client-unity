@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -26,8 +27,6 @@ public class UI_Initial : MonoBehaviour
 
     public TimeManager timeManager;
 
-
-
     #endregion
 
 
@@ -35,6 +34,11 @@ public class UI_Initial : MonoBehaviour
     private void Start()
     {
         inputPlantName.onValueChanged.AddListener(onValueChanged);
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            gameObject.SetActive(false);
+        }
+
     }
 
     /// <summary>
@@ -43,6 +47,17 @@ public class UI_Initial : MonoBehaviour
     public void onProfile()
     {
         profileUI.gameObject.SetActive(true);
+        for(int i = 0; i < profileUI.transform.GetChild(1).childCount; i++)
+        {
+            if (profileUI.transform.GetChild(1).GetChild(i).name == DataTemporary.MyUserData.UserAvatar)
+            {
+                profileUI.transform.GetChild(1).GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                profileUI.transform.GetChild(1).GetChild(i).gameObject.SetActive(false);
+            }
+        }
         // Tree Age 변경
         txtAge.text = $"{timeManager.totalPlantDay}세";
         //screenShotCam.transform.parent = previewTreePos;
@@ -77,7 +92,7 @@ public class UI_Initial : MonoBehaviour
     /// </summary>
     public void OnClickToWorld()
     {
-        SceneManager.LoadScene("MyWorld");
+        PhotonNetwork.LoadLevel("MyWorld");
     }
 
     /// <summary>
