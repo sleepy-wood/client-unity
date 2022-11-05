@@ -15,12 +15,6 @@ using UnityEngine.Networking;
 
 public class TreeController : MonoBehaviour
 {
-    // Test
-    public void OnToGray()
-    {
-        count += 1;
-    }
-
     #region Variable
 
     // Load할 Pipeline 이름
@@ -149,8 +143,6 @@ public class TreeController : MonoBehaviour
         if (visitType == VisitType.None) visitType = VisitType.First;
         else visitType = VisitType.ReVisit;
 
-        
-
         // Test : 씨앗이 선택되었다면 그 씨앗에 맞는 pipeline name 저장
         if (selectedSeed != SeedType.None)
         {
@@ -176,6 +168,13 @@ public class TreeController : MonoBehaviour
     bool isOnce2;
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            // Test : Sprout Seeds 넣어보기
+            SproutMap.SproutMapArea pipe0 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[1].sproutAreas[0];
+            pipe0.enabled = true;
+        }
         #region 썩은잎 만들기 Test
         //if (count == 1 && !isOnce)
         //{
@@ -203,6 +202,7 @@ public class TreeController : MonoBehaviour
         //}
         #endregion
 
+        #region Camera Moving
         // 2. 작은 묘목
         //if (dayCount == 2)
         //{
@@ -223,6 +223,7 @@ public class TreeController : MonoBehaviour
         //{
         //    Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, new Vector3(0.36f, 8.6f, 26.07f), camMoveSpeed * Time.deltaTime);
         //}
+        #endregion
 
         #region 가지 추가  Test Code
         // TreePipeline - 가지 추가
