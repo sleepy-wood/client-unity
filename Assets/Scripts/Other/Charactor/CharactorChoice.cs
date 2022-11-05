@@ -35,7 +35,7 @@ public class CharactorChoice : MonoBehaviourPunCallbacks
         Uri uri = new Uri(filePath);
         UnityWebRequest request = UnityWebRequest.Get(uri.AbsoluteUri);
         yield return request.SendWebRequest();
-        print(Application.persistentDataPath + ", " + request.downloadHandler.text);
+        //print(Application.persistentDataPath + ", " + request.downloadHandler.text);
 
         filePath = Application.persistentDataPath + "/Data";
         if (!Directory.Exists(filePath))
@@ -55,6 +55,7 @@ public class CharactorChoice : MonoBehaviourPunCallbacks
             StartCoroutine(AlphaText(i));
         }
     }
+    bool isOnce = false;
     private void Update()
     {
         //Rotate를 하면 안내문 끄기
@@ -69,8 +70,11 @@ public class CharactorChoice : MonoBehaviourPunCallbacks
         if (isNextScene)
         {
             curTime += Time.deltaTime;
-            if (curTime > 1.2f)
-                 PhotonNetwork.LoadLevel("MyWorld");
+            if (curTime > 1.2f && !isOnce)
+            {
+                isOnce = true;
+                PhotonNetwork.LoadLevel("MyWorld");
+            }
                 //SceneManager.LoadScene("MiddleScene");
         }
     }
@@ -119,7 +123,6 @@ public class CharactorChoice : MonoBehaviourPunCallbacks
                 content.GetChild(i).GetChild(1).gameObject.SetActive(true);
                 //content.GetChild(i).GetComponent<Image>().color = Color.gray;
                 selectedIndex = i;
-                print(i);
             }
             else
             {
@@ -136,13 +139,14 @@ public class CharactorChoice : MonoBehaviourPunCallbacks
         
         //데이터 저장
         DataTemporary.MyUserData.UserAvatar = transform.GetChild(selectedIndex).name;
+        PhotonNetwork.NickName += "/" + DataTemporary.MyUserData.UserAvatar;
         //string jsonData = FileManager.SaveDataFile<UserData>(userDataFileName, DataTemporary.MyUserData);
 
         //TODO: 데이터 수정
         //ResultTemp<Token> data = await DataModule.WebRequest<ResultTemp<Token>>(
         //    "/api/v1/users/",
         //    DataModule.NetworkType.PUT, jsonData);
-        
+
         isNextScene = true;
         //if (data.result)
         //{

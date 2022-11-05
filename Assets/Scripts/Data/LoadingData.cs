@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using Random = UnityEngine.Random;
 
 public class LoadingData : MonoBehaviourPunCallbacks
 {
@@ -46,8 +47,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
         //print("OnConnectedToMaster");
 
         //닉네임 설정
-        PhotonNetwork.NickName = "1";
-
+        PhotonNetwork.NickName = Random.Range(0, 10).ToString();
+        Debug.Log(PhotonNetwork.NickName);
         CreateRoom();
     }
     private void CreateRoom()
@@ -56,8 +57,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
         roomOptions.MaxPlayers = 3;
         roomOptions.IsVisible = true;
-        PhotonNetwork.CreateRoom(PhotonNetwork.NickName, roomOptions);
-        isCreateComplete = true;
+        if(PhotonNetwork.CreateRoom(PhotonNetwork.NickName, roomOptions))
+            isCreateComplete = true;
     }
     public override void OnCreateRoomFailed(short returnCode, string message)
     {

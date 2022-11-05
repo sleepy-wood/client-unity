@@ -29,24 +29,31 @@ public class CameraController : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            //zoom을 했을 경우
-            if (userInput.Zoom != 0)
+            if (user)
             {
-                //카메라 재조정
+                //zoom을 했을 경우
+                if (userInput.Zoom != 0)
+                {
+                    //카메라 재조정
+                    StopAllCoroutines();
+                    StartCoroutine(CameraMoving(7));
+
+                    //카메라 Zoom in / out
+                    myCamera.orthographicSize -= userInput.Zoom * wheelScrollSpeed;
+                    myCamera.orthographicSize = Mathf.Clamp(myCamera.orthographicSize, initialOrthographicSize - 12, initialOrthographicSize + 12);
+                }
+
+                //플레이어와 카메라의 거리가 5정도 떨어지면 따라가기
+                if (Vector3.Distance(camPos.position, transform.position) > 3)
+                {
+                    StartCoroutine(CameraMoving());
+                }
+                transform.parent.Rotate(user.transform.up, userInput.Rotate);
+            }
+            else
+            {
                 StopAllCoroutines();
-                StartCoroutine(CameraMoving(7));
-
-                //카메라 Zoom in / out
-                myCamera.orthographicSize -= userInput.Zoom * wheelScrollSpeed;
-                myCamera.orthographicSize = Mathf.Clamp(myCamera.orthographicSize, initialOrthographicSize - 12, initialOrthographicSize + 12);
             }
-
-            //플레이어와 카메라의 거리가 5정도 떨어지면 따라가기
-            if (Vector3.Distance(camPos.position, transform.position) > 3)
-            {
-                StartCoroutine(CameraMoving());
-            }
-            transform.parent.Rotate(user.transform.up, userInput.Rotate);
         }
     }
     //카메라 움직임 코루틴

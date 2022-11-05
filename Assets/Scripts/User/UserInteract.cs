@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
+using Unity.VisualScripting;
 
 public class UserInteract : MonoBehaviourPun, IPunObservable
 {
@@ -39,11 +40,11 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
 
                 if (moveDir.magnitude != 0)
                 {
-                    animator.SetBool("Walk", true);
+                    photonView.RPC("RPC_WalkAnimation", RpcTarget.All, true);
                 }
                 else
                 {
-                    animator.SetBool("Walk", false);
+                    photonView.RPC("RPC_WalkAnimation", RpcTarget.All, false);
                 }
 
                 transform.GetChild(2).LookAt(transform.position + moveDir * 10);
@@ -155,19 +156,29 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
             receiveRot = (Quaternion)stream.ReceiveNext();
         }
     }
-
     #region RPC
     [PunRPC]
     public void RPC_ChoiceCharactorLoad()
     {
-        //userAvatar 생성
-        GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + DataTemporary.MyUserData.UserAvatar);
-        GameObject userAvatar = Instantiate(userAvatarResource);
-        userAvatar.name = userAvatar.name.Split("(")[0];
-        userAvatar.transform.parent = transform;
-        userAvatar.transform.localPosition = Vector3.zero;
-        userAvatar.transform.localEulerAngles = Vector3.zero;
-        animator = transform.GetChild(2).GetComponent<Animator>();
+        if (transform.childCount == 2)
+        {
+            string model = PhotonNetwork.PlayerList[(int)photonView.ViewID.ToString()[0] - 49].NickName.Split('/')[1];
+            //userAvatar 생성
+            GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + model);
+            //Debug.Log(DataTemporary.MyUserData.UserAvatar);
+            
+            GameObject userAvatar = Instantiate(userAvatarResource);
+            userAvatar.name = userAvatar.name.Split("(")[0];
+            userAvatar.transform.parent = transform;
+            userAvatar.transform.localPosition = Vector3.zero;
+            userAvatar.transform.localEulerAngles = Vector3.zero;
+            animator = transform.GetChild(2).GetComponent<Animator>();
+        }
+    }
+    [PunRPC]
+    public void RPC_WalkAnimation(bool isActive)
+    {
+        animator.SetBool("Walk", isActive);
     }
     #endregion
 }
