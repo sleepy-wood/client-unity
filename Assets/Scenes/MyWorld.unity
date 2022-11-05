@@ -719,7 +719,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 898283597}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1856,7 +1856,7 @@ MonoBehaviour:
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
+  m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 1
@@ -5449,8 +5449,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 111.09445, y: -79.997}
-  m_SizeDelta: {x: 222.1889, y: 1262.2}
+  m_AnchoredPosition: {x: 316.41083, y: -79.997}
+  m_SizeDelta: {x: 632.8217, y: 1262.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1482125156
 MonoBehaviour:
@@ -6017,6 +6017,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1699136338}
   - component: {fileID: 1699136339}
+  - component: {fileID: 1699136340}
   m_Layer: 0
   m_Name: Chat
   m_TagString: Untagged
@@ -6053,6 +6054,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windowContent: {fileID: 524167769}
+--- !u!114 &1699136340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699136337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1699291106
 GameObject:
   m_ObjectHideFlags: 0

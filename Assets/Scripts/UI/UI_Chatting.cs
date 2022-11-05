@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class UI_Chatting : MonoBehaviour
+public class UI_Chatting : MonoBehaviourPun
 {
     public Transform windowContent;
 
@@ -24,14 +25,16 @@ public class UI_Chatting : MonoBehaviour
     }
     public void OnClickEmojiButton(int i)
     {
+        string model = "";
+        UserInteract[] users = GameObject.FindObjectsOfType<UserInteract>();
+        for (int j = 0; j < users.Length; j++)
+        {
+            if (users[j].GetComponent<PhotonView>().IsMine)
+                model = PhotonNetwork.PlayerList[(int)users[j].GetComponent<PhotonView>().ViewID.ToString()[0] - 49].NickName.Split('/')[1]; 
+        }
         //if (PhotonNetwork.PlayerList.Length <= 1) return;
+        photonView.RPC("RPC_EmojiButton", RpcTarget.All, i, model);
 
-        GameObject emojiResource = Resources.Load<GameObject>("Emoji");
-        GameObject emojiPrefab = Instantiate(emojiResource);
-        emojiPrefab.transform.parent = windowContent.transform;
-        Sprite emojiImgResource = Resources.Load<Sprite>("Emoji_image/Emoji_" + i);
-        Sprite emoji = Instantiate(emojiImgResource);
-        emojiPrefab.GetComponent<Image>().sprite = emoji;
     }
     bool isChatActive = false;
     /// <summary>
@@ -70,4 +73,24 @@ public class UI_Chatting : MonoBehaviour
         }
     }
 
+    #region RPC
+    [PunRPC]
+    public void RPC_EmojiButton(int i, string model)
+    {
+        GameObject emojiResource = Resources.Load<GameObject>("Emoji");
+        GameObject emojiPrefab = Instantiate(emojiResource);
+
+        emojiPrefab.transform.parent = windowContent.transform;
+
+        Sprite emojiImgResource = Resources.Load<Sprite>("Emoji_image/Emoji_" + i);
+        Sprite emoji = Instantiate(emojiImgResource);
+
+        Sprite emoji_ProfileResource = Resources.Load<Sprite>("Charactor_Img/" + model);
+        Sprite emoji_Profile = Instantiate(emoji_ProfileResource);
+
+        emojiPrefab.transform.GetChild(0).GetComponent<Image>().sprite = emoji;
+        emojiPrefab.GetComponent<Image>().sprite = emoji_Profile;
+    }
+
+    #endregion
 }
