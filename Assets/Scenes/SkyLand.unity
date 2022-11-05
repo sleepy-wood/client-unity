@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: fe70d0432e1dca44f817dd7a8ee2d42f, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -5694,6 +5694,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1501146570, guid: 33e88ec7f688561419c9636d2ca8d779, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 732575698270952508, guid: 33e88ec7f688561419c9636d2ca8d779, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -6252,9 +6256,9 @@ MonoBehaviour:
   defaultFOV: 10.29
   targetFOV: 3.11
   data:
-    type: 
     treeName: 
-    treeGrowthData:
+    treePipelineData:
+      sproutTexture: 
       trunkThick: 0
   leafText: {fileID: 2800000, guid: a20fa2ce21dd530459d2d0919c7cc398, type: 3}
   user: {fileID: 0}
@@ -13251,6 +13255,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1709053598, guid: 0cd04027e04b9854c8ed9e07c7836cb1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9098596863503923111, guid: 0cd04027e04b9854c8ed9e07c7836cb1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
