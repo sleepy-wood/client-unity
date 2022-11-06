@@ -110,6 +110,7 @@ public class UI_Initial : MonoBehaviour
     public void onConfirmPlantName()
     {
         treeName.text = inputPlantName.text;
+        GameManager.Instance.treeController.GetComponent<TreeController>().treeName = inputPlantName.text;
         plantNameUI.SetActive(false);
     }
 }

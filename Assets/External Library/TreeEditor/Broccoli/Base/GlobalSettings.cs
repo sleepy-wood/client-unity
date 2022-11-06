@@ -36,7 +36,7 @@ namespace Broccoli.Base
 		/// <summary>
 		/// Let using the tree editor canvas when on play mode.
 		/// </summary>
-		public static bool useTreeEditorOnPlayMode = false;
+		public static bool useTreeEditorOnPlayMode = true;
 		/// <summary>
 		/// When loading a pipeline points the scene camera to the newly created preview tree.
 		/// </summary>

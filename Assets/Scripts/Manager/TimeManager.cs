@@ -5,8 +5,6 @@ using System;
 using UnityEngine.UI;
 using System.Globalization;
 
-// 나무 심은 지 얼마나 지났는지
-// 현재 시간이 오전인지 오후인지
 public class TimeManager : MonoBehaviour
 {
     // 현재 시간
@@ -19,13 +17,15 @@ public class TimeManager : MonoBehaviour
     public ChangeSky sky;
     // test 현재 날짜
     public UDateTime testDate;
+    // 나무를 처음 심은 날
+    public UDateTime firstPlantDate;
 
     private void Start()
     {
         // Test : 현재 시간 저장
         testFirstDay = DateTime.Now;
         testDate = DateTime.Now;
-}
+    }
 
     /// <summary>
     /// 사용자가 MyRoom에 들어왔을 때 나무 심은 누적 Day Count해주는 함수
@@ -33,7 +33,6 @@ public class TimeManager : MonoBehaviour
     /// <returns>나무 심은지 몇일이 지났는지 int로 반환</returns>
     public void CalculatePlantDays(DateTime date)
     {
-        DateTime start = GameManager.Instance.firstPlantTime;
         // Test 용
         TimeSpan timeDif = date - testFirstDay;
         // 실제 구현용
@@ -42,8 +41,6 @@ public class TimeManager : MonoBehaviour
         //return totalPlantDay;
     }
 
-
-    
     public Text txtDayCount;
     public Text txtAge;
     /// <summary>
@@ -54,7 +51,7 @@ public class TimeManager : MonoBehaviour
         testDate = testDate.dateTime.AddHours(25);
         CalculatePlantDays(testDate);
         // Tree Update
-        GameManager.Instance.treeController.GetComponent<TreeController>().TreeUpdate();
+        GameManager.Instance.treeController.TreeUpdate();
         // DayCount Text 변경
         //txtDayCount.text = $"Day{totalPlantDay}";
     }

@@ -14,15 +14,12 @@ public class GameManager : MonoBehaviourPun
         {
             Instance = this;
         }
-        User = PhotonNetwork.Instantiate("User", new Vector3(Random.Range(-3, 3), 5, Random.Range(-3, 3)), Quaternion.identity);
-        PhotonNetwork.AutomaticallySyncScene = true;
+        //User = PhotonNetwork.Instantiate("User", new Vector3(Random.Range(-3, 3), 5, Random.Range(-3, 3)), Quaternion.identity);
+        //PhotonNetwork.AutomaticallySyncScene = true;
     }
     
     public GameObject User { get; private set; }
 
-    // 나무 처음 심은 시간
-    public DateTime firstPlantTime;
-
-    // TreeController
-    public GameObject treeController;
+    public TimeManager timeManager;
+    public TreeController treeController;
 }
