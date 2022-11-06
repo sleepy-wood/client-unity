@@ -20,6 +20,9 @@ public class TreeController : MonoBehaviour
     // Load할 Pipeline 이름
     string pipeName;
 
+    // treeList
+    
+
     // 방문 타입
     public enum VisitType
     {
@@ -108,14 +111,15 @@ public class TreeController : MonoBehaviour
     // user
     public GameObject user;
     // previewTree Scale Value
-    float scaleTo;
+    float scaleTo = 1;
     // AssetBundle
     AssetBundle assetBundle;
-    // 식물 이름 입력 UI
-    public GameObject plantNameUI;
-
+    // 나무 이름 입력 UI
+    public GameObject treeNameUI;
+    // 나무 이름
+    public string treeName;
     #endregion
-
+    
 
     void Start()
     {
@@ -166,15 +170,9 @@ public class TreeController : MonoBehaviour
 
     bool isOnce;
     bool isOnce2;
+    public Texture2D barkTexture;
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            // Test : Sprout Seeds 넣어보기
-            SproutMap.SproutMapArea pipe0 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[1].sproutAreas[0];
-            pipe0.enabled = true;
-        }
         #region 썩은잎 만들기 Test
         //if (count == 1 && !isOnce)
         //{
@@ -263,6 +261,9 @@ public class TreeController : MonoBehaviour
         //Camera.main.fieldOfView = targetFOV;
         #endregion
 
+        // 처음 심은 시간 저장
+        //TimeManager.
+
         // 씨앗 심기
         seed.transform.localPosition = new Vector3(0, 2.5f, 0);
         seed.gameObject.SetActive(true);
@@ -295,7 +296,7 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 식물 이름 UI 띄우기
-        plantNameUI.gameObject.SetActive(true);
+        treeNameUI.gameObject.SetActive(true);
     }
     #endregion
 
@@ -409,7 +410,7 @@ public class TreeController : MonoBehaviour
             seed.SetActive(true);
             //TreeReload();
             // 나무 심은 시간 저장
-            GameManager.Instance.firstPlantTime = DateTime.Now;
+            GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
         // 2일차
@@ -461,6 +462,20 @@ public class TreeController : MonoBehaviour
     /// </summary>
     public void SaveTreeData()
     {
+        TreeData treeData = new TreeData();
+
+        // seed Number
+        treeData.seedNumber = treePipeline.seed;
+        // Tree Name
+        treeData.treeName = treeName;
+        // First Plant Day
+        treeData.firstPlantDate = GameManager.Instance.timeManager.firstPlantDate;
+        // Tree Pipeline Data
+        TreePipelineData pipeData = new TreePipelineData();
+        // 
+
+        // Land ID
+        //treeData.landID = 
 
     }
 }

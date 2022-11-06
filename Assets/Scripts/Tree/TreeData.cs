@@ -6,21 +6,30 @@ using System;
 
 #nullable enable
 
+
 [Serializable]
-public class TreePipelineData 
+public class TreePipelineData
 {
-    // 가지 개수
-    public int? branchNum;
-    // 잎 Frequency
-    public int? sproutFreq;
-    // 나뭇잎 텍스처 enabled 상태
-    public List<bool>? sproutTexture;
-    // 자식 개수
-    public int? rootChild;
-    // Base 나무 길이
-    public int? baseLength;
-    // 나무 굵기
-    public float trunkThick;
+    // 나무 높이
+    public float? baseLength;
+    // 나무 가지 개수
+    public List<int>? branchNums;
+    // 나뭇잎 개수
+    public int? sproutNum;
+    // 나뭇잎 썩은 비율
+    public float? rottenRate;
+    // 나무 두께
+    public float? thickness;
+    // 나무 꺾임(Noise)
+    public float? bending;
+    // 중력
+    public float? gravity;
+    // 뿌리 개수
+    public int? rootNum;
+    // 나무가지 텍스처
+    public Texture2D? barkTexture;
+    // 나뭇잎 enabled 상태
+
 }
 
 [Serializable]

@@ -37,9 +37,6 @@ public class GameManager : MonoBehaviourPun
     }
     public GameObject User { get; set; }
 
-    // 나무 처음 심은 시간
-    public DateTime firstPlantTime;
-
-    // TreeController
-    public GameObject treeController;
+    public TimeManager timeManager;
+    public TreeController treeController;
 }
