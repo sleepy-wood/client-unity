@@ -17,7 +17,7 @@ public class TreePipelineData
     // 나뭇잎 개수
     public int? sproutNum;
     // 나뭇잎 썩은 비율
-    public float? rottenRate;
+    //public float? rottenRate;
     // 나무 두께
     public float? thickness;
     // 나무 꺾임(Noise)
@@ -29,7 +29,7 @@ public class TreePipelineData
     // 나무가지 텍스처
     public Texture2D? barkTexture;
     // 나뭇잎 enabled 상태
-
+    public List<bool>? sproutEnabled;
 }
 
 [Serializable]

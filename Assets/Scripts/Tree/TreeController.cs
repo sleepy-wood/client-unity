@@ -21,7 +21,7 @@ public class TreeController : MonoBehaviour
     string pipeName;
 
     // treeList
-    
+
 
     // 방문 타입
     public enum VisitType
@@ -119,7 +119,7 @@ public class TreeController : MonoBehaviour
     // 나무 이름
     public string treeName;
     #endregion
-    
+
 
     void Start()
     {
@@ -365,22 +365,22 @@ public class TreeController : MonoBehaviour
         #endregion
     }
 
-    
+
     /// <summary>
     /// treeStores에서 씨앗 종류에 맞는 treeGrowDatas 찾는 함수
     /// </summary>
     public void FindtreeGrowDatas()
     {
-        for (int i=0; i < treeStores.Count; i++)
+        for (int i = 0; i < treeStores.Count; i++)
         {
             if (treeStores[i].seedType == selectedSeed)
             {
                 selectedtreeGrowDatas = treeStores[i].treeGrowDatas;
             }
         }
-         
+
     }
-    
+
 
     /// <summary>
     /// 업데이트한 나무 정보를 기반으로 나무 다시 로드
@@ -400,7 +400,7 @@ public class TreeController : MonoBehaviour
     /// </summary>
     public float camMoveSpeed = 0.5f;
     Transform campos;
-    int count=0;
+    int count = 0;
     public void LoadTree()
     {
         // 1일차
@@ -470,12 +470,51 @@ public class TreeController : MonoBehaviour
         treeData.treeName = treeName;
         // First Plant Day
         treeData.firstPlantDate = GameManager.Instance.timeManager.firstPlantDate;
+
         // Tree Pipeline Data
         TreePipelineData pipeData = new TreePipelineData();
-        // 
+        #region Tree Pipeline Data
+        // Tree Height
+        pipeData.baseLength = treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase;
+        // Branch Num
+        int levels = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
+        for (int i = 0; i < levels-1; i++)
+        {
+            pipeData.branchNums[i] = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency;
+        }
+        // Sprout Num
+        pipeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].minFrequency;
+        // Thickness
+        pipeData.thickness = treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase;
+        // Tree Bending (Noise)
+        pipeData.bending = treePipeline._serializedPipeline.branchBenders[0].noiseScaleAtBase;
+        // Gravity
+        pipeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
+        // Root Num
+        int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
+        pipeData.rootNum = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[idx - 1].minFrequency;
+        // Bark Texture
+        pipeData.barkTexture = treePipeline._serializedPipeline.barkMappers[0].mainTexture;
+        // Sprout Enabled
+        int n = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps.Count;
+        for (int i=0; i<n; i++)
+        {
+            pipeData.sproutEnabled[i] = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled;
+        }
+        #endregion
+        // Save Pipe Data
+        treeData.treePipelineData = pipeData;
 
         // Land ID
         //treeData.landID = 
+
+    }
+
+    /// <summary>
+    /// Tree Data Load하는 함수
+    /// </summary>
+    public void LoadTreeData()
+    {
 
     }
 }
