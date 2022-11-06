@@ -384,7 +384,7 @@ namespace Broccoli.Pipe {
 		/// on the pipeline participating in the processing.
 		/// </summary>
 		public void GenerateSeed () {
-            seed = 1;// (int)System.DateTime.Now.Ticks;
+            seed = 10;// (int)System.DateTime.Now.Ticks;
         }
 		#endregion
 
