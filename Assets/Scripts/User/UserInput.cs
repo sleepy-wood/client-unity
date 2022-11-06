@@ -4,9 +4,9 @@ using UnityEngine.UIElements;
 
 public class UserInput : MonoBehaviour
 {
-    public Text currentStateText;
-    public Text clickText;
-    public Text timeText;
+    //public Text currentStateText;
+    //public Text clickText;
+    //public Text timeText;
 
 #if UNITY_STANDALONE
     private const string MoveNameX = "Horizontal";
