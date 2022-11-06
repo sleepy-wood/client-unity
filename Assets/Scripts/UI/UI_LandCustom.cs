@@ -23,10 +23,10 @@ public class UI_LandCustom : MonoBehaviour
         {
             GameObject objectButtonResource = Resources.Load<GameObject>("ObjectButton_");
             GameObject objectButton = Instantiate(objectButtonResource);
-
+            objectButton.name = objectButton.name.Split('(')[0];
             objectButton.name += fi.Name;
             objectButton.transform.GetChild(0).GetComponent<Text>().text = fi.Name;
-            objectButton.transform.parent = transform.GetChild(2).transform;
+            objectButton.transform.parent = transform.GetChild(2);
         }
 
         //버튼 이벤트 등록
@@ -34,6 +34,10 @@ public class UI_LandCustom : MonoBehaviour
         {
             transform.GetChild(2).GetChild(i).GetComponent<Button>().onClick.AddListener(
                 ()=>OnClickCategoryActive(transform.GetChild(2).GetChild(i).GetChild(0).GetComponent<Text>().text, i));
+            Debug.Log(transform.GetChild(2));
+            Debug.Log(transform.GetChild(2).GetChild(i));
+            Debug.Log(transform.GetChild(2).GetChild(i).GetChild(0));
+            Debug.Log(transform.GetChild(2).GetChild(i).GetChild(0).GetComponent<Text>().text);
         }
 
         //초기값 0번째 버튼 활성화
@@ -44,7 +48,6 @@ public class UI_LandCustom : MonoBehaviour
     {
 #if UNITY_STANDALONE
         DirectoryInfo di = new DirectoryInfo(Application.dataPath + "/Resources/LandCustom/" + Cat);
-        string imagePath = Application.dataPath + "/Resources/LandCustomImage/";
 #elif UNITY_IOS || UNITY_ANDROID
         DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + "/Resources/LandCustom/" + Cat);
         string imagePath = Application.persistentDataPath + "/Resources/LandCustomImage/";
@@ -58,20 +61,21 @@ public class UI_LandCustom : MonoBehaviour
             {
                 continue;
             }
+            Sprite resource = Resources.Load<Sprite>("LandCustomImage/" + fi.Name.Split('.')[0]);
             itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite =
-                Resources.Load<Sprite>(imagePath + fi.Name);
-
+                Instantiate(resource);
             Color color = itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().color;
+
             color.a = 1;
             itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().color = color;
-            
+
             cnt++;
         }
 
         //나머지 버튼들은 비활성화
         for(int i = cnt; i < 15; i++)
         {
-            itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite = Resources.Load<Sprite>("Resources/unity_builtin_extra/UISprite");
+            itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite = Instantiate(Resources.Load<Sprite>("LandCustomImage/ButtonBg"));
             Color color = itemWindow.transform.GetChild(i / 5).GetChild(i % 5).GetComponent<Image>().color;
             color.a = 0.3f;
             itemWindow.transform.GetChild(i / 5).GetChild(i % 5).GetComponent<Image>().color = color;
