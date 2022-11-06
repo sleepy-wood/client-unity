@@ -34,10 +34,12 @@ public class UI_LandCustom : MonoBehaviour
         {
             transform.GetChild(2).GetChild(i).GetComponent<Button>().onClick.AddListener(
                 ()=>OnClickCategoryActive(transform.GetChild(2).GetChild(i).GetChild(0).GetComponent<Text>().text, i));
+            Debug.Log("===========================================");
             Debug.Log(transform.GetChild(2));
             Debug.Log(transform.GetChild(2).GetChild(i));
             Debug.Log(transform.GetChild(2).GetChild(i).GetChild(0));
             Debug.Log(transform.GetChild(2).GetChild(i).GetChild(0).GetComponent<Text>().text);
+            Debug.Log("===========================================");
         }
 
         //초기값 0번째 버튼 활성화
