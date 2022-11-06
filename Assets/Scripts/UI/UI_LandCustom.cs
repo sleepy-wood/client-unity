@@ -90,4 +90,28 @@ public class UI_LandCustom : MonoBehaviour
     {
 
     }
+
+    private bool isActiveCanvase = true;
+    /// <summary>
+    /// Custom UI 열고 닫기
+    /// </summary>
+    public void OnClickLandCustomActive()
+    {
+        if (!isActiveCanvase)
+        {
+            for(int i = 0; i < transform.childCount; i++)
+            {
+                if (i != 0)
+                    transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (i != 0)
+                    transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+    }
 }
