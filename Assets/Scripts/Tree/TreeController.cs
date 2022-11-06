@@ -140,20 +140,6 @@ public class TreeController : MonoBehaviour
         //treeFactory = TreeFactory.GetFactory();
         #endregion
 
-        // TreeData 객체 생성
-        data = new TreeData();
-
-        // 방문 타입 결정
-        if (visitType == VisitType.None) visitType = VisitType.First;
-        else visitType = VisitType.ReVisit;
-
-        // Test : 씨앗이 선택되었다면 그 씨앗에 맞는 pipeline name 저장
-        if (selectedSeed != SeedType.None)
-        {
-            pipeName = pipeNameDict[selectedSeed];
-        }
-        FindtreeGrowDatas();
-
         // Tree Pipeline 로드
         treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 
@@ -460,8 +446,9 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// 현재 User의 Tree Data 저장
     /// </summary>
-    public void SaveTreeData()
+    public async void SaveTreeData()
     {
+        List<TreeData> treeDatas = new List<TreeData>();
         TreeData treeData = new TreeData();
 
         // seed Number
@@ -470,7 +457,6 @@ public class TreeController : MonoBehaviour
         treeData.treeName = treeName;
         // First Plant Day
         treeData.firstPlantDate = GameManager.Instance.timeManager.firstPlantDate;
-
         // Tree Pipeline Data
         TreePipelineData pipeData = new TreePipelineData();
         #region Tree Pipeline Data
@@ -504,10 +490,29 @@ public class TreeController : MonoBehaviour
         #endregion
         // Save Pipe Data
         treeData.treePipelineData = pipeData;
-
         // Land ID
-        //treeData.landID = 
+        treeData.landID = DataTemporary.MyLandData.landLists[0].unityLandId;
 
+        string treeJsonData = JsonUtility.ToJson(treeData);
+
+        // Web
+        ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
+            "/api/v1/trees/" + "",
+            DataModule.NetworkType.PUT,
+            DataModule.DataType.BUFFER,
+            treeJsonData);
+
+        if (!resultPut.result)
+        {
+            Debug.LogError("WebRequestError : NetworkType[Put]");
+        }
+        treeDatas.Add(treeData);
+
+        ArrayTreeData arrayTreeData = new ArrayTreeData();
+        arrayTreeData.treeDataList = treeDatas;
+
+        // DataTemporary
+        DataTemporary.MyTreeData = arrayTreeData;
     }
 
     /// <summary>
@@ -515,6 +520,7 @@ public class TreeController : MonoBehaviour
     /// </summary>
     public void LoadTreeData()
     {
-
+        ArrayTreeData arrayTreeData = DataTemporary.MyTreeData;
+        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/newtreebundle");
     }
 }

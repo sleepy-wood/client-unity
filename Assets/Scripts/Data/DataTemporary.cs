@@ -15,4 +15,6 @@ public class DataTemporary
     public static List<BridgeFromTo> BridgeConnection = new List<BridgeFromTo>();
     public static AssetBundle assetBundle;
     public static SleepSample[] samples = new SleepSample[100];
+    // Tree Data
+    public static ArrayTreeData MyTreeData = new ArrayTreeData();
 }
