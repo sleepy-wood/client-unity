@@ -90,7 +90,7 @@ public class UI_LandCustom : MonoBehaviour
 #if UNITY_STANDALONE
         DirectoryInfo di = new DirectoryInfo(Application.dataPath + "/Resources/LandCustom/" + selectCatName);
 #elif UNITY_IOS || UNITY_ANDROID
-        DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + "/Resources/LandCustom/" + Cat);
+        DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + "/Resources/LandCustom/" + selectCatName);
         string imagePath = Application.persistentDataPath + "/Resources/LandCustomImage/";
 #endif
         int cnt = 0;
