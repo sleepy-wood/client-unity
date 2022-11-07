@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UI_LandCustom : MonoBehaviour
 {
+    [SerializeField] private Transform land;
+
     private GameObject itemWindow;
     private int selectCat = 0;
     private string selectCatName = "";
@@ -105,6 +107,19 @@ public class UI_LandCustom : MonoBehaviour
                 GameObject prefab = Instantiate(resource);
                 prefab.name = prefab.name.Split('(')[0];
                 prefab.transform.position = new Vector3(0, 0.5f, 0);
+                //landDecorations라는 가방에 담기 => 존재하지 않으면 만들자
+                for(int j = 0; j < land.childCount; j++)
+                {
+                    if(land.GetChild(j).gameObject.name == "landDecorations")
+                    {
+                        prefab.transform.parent = land.GetChild(j);
+                        return;
+                    }
+                }
+                GameObject landDecorations = new GameObject("landDecorations");
+                landDecorations.transform.parent = land;
+                landDecorations.transform.position = Vector3.zero;
+                prefab.transform.parent = landDecorations.transform;
                 return;
             }
 

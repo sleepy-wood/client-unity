@@ -15,7 +15,8 @@ public class LandCustom : MonoBehaviour
         Camera,
         Move,
         Rotate,
-        Scale
+        Scale,
+        Delete
     }
 
     [Header("Zoom In / Out")]
@@ -29,13 +30,13 @@ public class LandCustom : MonoBehaviour
     public EditType editType = EditType.Camera;
     private GameObject selectedObject;
     private UserInput userInput;
-    private Camera camera;
+    private Camera cam;
     private float initialOrthographicSize = 0;
     private void Start()
     {
         userInput = GetComponent<UserInput>();
-        camera = GetComponent<Camera>();
-        initialOrthographicSize = camera.fieldOfView;
+        cam = GetComponent<Camera>();
+        initialOrthographicSize = cam.fieldOfView;
     }
     private LayerMask preLayer;
     private void Update()
@@ -48,7 +49,7 @@ public class LandCustom : MonoBehaviour
             if (userInput.Interact)
             {
                 Vector3 mousePos = Input.mousePosition;
-                Ray ray = camera.ScreenPointToRay(mousePos);
+                Ray ray = cam.ScreenPointToRay(mousePos);
                 RaycastHit hit;
                 LayerMask layer = 1 << LayerMask.NameToLayer("Ground");
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~layer))
@@ -63,24 +64,32 @@ public class LandCustom : MonoBehaviour
                             hit.transform.parent.GetChild(i).gameObject.layer = LayerMask.NameToLayer("Selected");
                         }
                         //아웃라인 켜기
-                        hit.transform.parent.GetComponent<Outline>().enabled = true;
+                        if (hit.transform.parent.GetComponent<Outline>())
+                            hit.transform.parent.GetComponent<Outline>().enabled = true;
+
                         for (int i = 0; i < hit.transform.parent.childCount; i++)
                         {
                             if (hit.transform.parent.GetChild(i).GetComponent<Outline>())
-                            {
                                 hit.transform.parent.GetChild(i).GetComponent<Outline>().enabled = true;
-                            }
                         }
                     }
                     else
                     {
                         hit.transform.gameObject.layer = LayerMask.NameToLayer("Selected");
+                        
                         if (hit.transform.GetComponent<Outline>())
                         {
                             hit.transform.GetComponent<Outline>().enabled = true;
                         }
+
+                        for (int i = 0; i < hit.transform.childCount; i++)
+                        {
+                            if (hit.transform.GetChild(i).GetComponent<Outline>())
+                                hit.transform.GetChild(i).GetComponent<Outline>().enabled = true;
+                        }
+
                     }
-                    Debug.Log("Select = " + hit.transform);
+                    //Debug.Log("Select = " + hit.transform);
                     selectState = SelectState.Selected;
                 }
             }
@@ -94,13 +103,13 @@ public class LandCustom : MonoBehaviour
                 {
                     //선택 취소
                     Vector3 mousePos = Input.mousePosition;
-                    Ray ray = camera.ScreenPointToRay(mousePos);
+                    Ray ray = cam.ScreenPointToRay(mousePos);
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                     {
                         if (hit.transform.gameObject.layer == selectedObject.layer)
                         {
-                            Debug.Log("Not Selected = " + selectedObject.transform);
+                            //Debug.Log("Not Selected = " + selectedObject.transform);
                             if (selectedObject.transform.parent != null)
                             {
                                 selectedObject.transform.parent.gameObject.layer = preLayer;
@@ -118,10 +127,21 @@ public class LandCustom : MonoBehaviour
                                     }
                                 }
                             }
-                            //아웃라인 끄기
-                            if (selectedObject.transform.GetComponent<Outline>())
+                            else
                             {
-                                selectedObject.transform.GetComponent<Outline>().enabled = false;
+                                //아웃라인 끄기
+                                if (selectedObject.transform.GetComponent<Outline>())
+                                {
+                                    selectedObject.transform.GetComponent<Outline>().enabled = false;
+                                }
+                                for (int i = 0; i < selectedObject.transform.childCount; i++)
+                                {
+                                    selectedObject.transform.GetChild(i).gameObject.layer = preLayer;
+                                    if (selectedObject.transform.GetChild(i).GetComponent<Outline>())
+                                    {
+                                        selectedObject.transform.GetChild(i).GetComponent<Outline>().enabled = false;
+                                    }
+                                }
                             }
                             selectedObject.layer = preLayer;
                             selectedObject = null;
@@ -147,6 +167,9 @@ public class LandCustom : MonoBehaviour
                     case EditType.Scale:
                         ScaleMode();
                         break;
+                    case EditType.Delete:
+                        DeleteMode();
+                        break;
                     default:
                         break;
                 }
@@ -162,6 +185,19 @@ public class LandCustom : MonoBehaviour
                 break;
         }
     }
+
+    /// <summary>
+    /// 오브젝트 삭제
+    /// </summary>
+    void DeleteMode()
+    {
+        Destroy(selectedObject);
+        selectedObject = null;
+        isActiveMove = false;
+        editType = EditType.Camera;
+        selectState = SelectState.None;
+    }
+
     /// <summary>
     /// 카메라 모드
     /// </summary>
@@ -173,8 +209,8 @@ public class LandCustom : MonoBehaviour
         if (userInput.Zoom != 0)
         {
             //카메라 Zoom in / out
-            camera.fieldOfView -= userInput.Zoom * zoomSpeed;
-            camera.fieldOfView = Mathf.Clamp(camera.fieldOfView, initialOrthographicSize - 30, initialOrthographicSize + 30);
+            cam.fieldOfView -= userInput.Zoom * zoomSpeed;
+            cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, initialOrthographicSize - 30, initialOrthographicSize + 30);
         }
     }
 
@@ -205,7 +241,7 @@ public class LandCustom : MonoBehaviour
         if (isActiveMove)
         {
             Vector3 mousePos = Input.mousePosition;
-            Ray ray = camera.ScreenPointToRay(mousePos);
+            Ray ray = cam.ScreenPointToRay(mousePos);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
@@ -260,6 +296,9 @@ public class LandCustom : MonoBehaviour
                 break;
             case 4:
                 editType = EditType.Scale;
+                break;
+            case 5:
+                editType = EditType.Delete;
                 break;
             default:
                 break;
