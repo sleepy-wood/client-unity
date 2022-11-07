@@ -218,9 +218,9 @@ public class UserInput : MonoBehaviour
             else
             {
                 Zoom = 0;
-                Rotate = 0;
+                RotateX = 0;
+                RotateY = 0;
             }
-
 #endif
         }
     }

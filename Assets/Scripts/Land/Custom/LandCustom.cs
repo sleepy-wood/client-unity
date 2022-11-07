@@ -248,18 +248,15 @@ public class LandCustom : MonoBehaviour
             {
                 if (Input.touches[i].phase == TouchPhase.Moved)
                 {
-                    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                    Vector3 mousePos = Input.mousePosition;
+                    Ray ray = GetComponent<Camera>().ScreenPointToRay(mousePos);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                     {
-                        Vector3 mousePos = Input.mousePosition;
-                        Ray ray = camera.ScreenPointToRay(mousePos);
-                        RaycastHit hit;
-                        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
                         {
-                            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
-                            {
-                                Vector3 pos = hit.point;
-                                selectedObject.transform.position = pos;
-                            }
+                            Vector3 pos = hit.point;
+                            selectedObject.transform.position = pos;
                         }
                     }
                 }
