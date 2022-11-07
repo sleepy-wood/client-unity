@@ -22,31 +22,32 @@ public class TreeController : MonoBehaviour
 
     // treeList
 
+    #region 방문 타입
+    //public enum VisitType
+    //{
+    //    None,
+    //    First,
+    //    ReVisit
+    //}
+    //public VisitType visitType;
+    #endregion
 
-    // 방문 타입
-    public enum VisitType
+    // 랜덤으로 선택된 SeedType
+    public SeedType selectedSeed = SeedType.None;
+    // pipeNameList
+    List<string> pipeNameList = new List<string>() { "BasicTree", "OakTree", "SakuraTree" };
+    // pipeName별 SeedType
+    Dictionary<string, SeedType> pipeNameDict = new Dictionary<string, SeedType>()
     {
-        None,
-        First,
-        ReVisit
-    }
-    public VisitType visitType;
-
-    // User가 선택한 Seed
-    public SeedType selectedSeed;
-    // Seed별 pipeName
-    Dictionary<SeedType, string> pipeNameDict = new Dictionary<SeedType, string>()
-    {
-        { SeedType.Basic, "BasicTree"},
-        { SeedType.Oak, "OakTree" },
-        { SeedType.Sakura, "SakuraTree" }
+        { "BasicTree", SeedType.Basic},
+        { "OakTree", SeedType.Oak},
+        { "SakuraTree", SeedType.Sakura}
     };
+    // 선택된 TreeSetting
+    TreeSetting selectedTreeSetting;
 
-    // 선택된 treeGrowDatas
-    List<TreeGrowData> selectedtreeGrowDatas;
-
-    #region 기본 5일 성장 변수 저장소
-    // Pipeline Element별 dayuency Min/Max값 저장소
+    #region 기본 세팅 변수 저장소
+    // Pipeline Element별 frequency Min/Max값 저장소
     [System.Serializable]
     public class MinMax
     {
@@ -54,7 +55,7 @@ public class TreeController : MonoBehaviour
         public int max;
     }
     [System.Serializable]
-    public class TreeGrowData
+    public class TreeSetting
     {
         public List<MinMax> minMaxList = new List<MinMax>();
         public int rootFreq;
@@ -74,8 +75,8 @@ public class TreeController : MonoBehaviour
     public class TreeStore
     {
         public SeedType seedType = SeedType.None;
-        // DayCount에 따라 변하는 나무 관련 변수 저장소
-        public List<TreeGrowData> treeGrowDatas = new List<TreeGrowData>();
+        // seed별 기본 세팅값
+        public TreeSetting treeSetting = new TreeSetting();
     }
     // 나무 종류별 관련 변수 클래스의 모음 리스트
     public List<TreeStore> treeStores = new List<TreeStore>();
@@ -140,8 +141,19 @@ public class TreeController : MonoBehaviour
         //treeFactory = TreeFactory.GetFactory();
         #endregion
 
+        // 나무 형태 Random 선택
+        int i = 0;//UnityEngine.Random.Range(0, pipeNameList.Count);
+        pipeName = pipeNameList[i];
+        selectedSeed = pipeNameDict[pipeName];
+        print(pipeName + " Selected");
+
+        // 기본 세팅값
+        FindtreeSetting();
+
         // Tree Pipeline 로드
         treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+        // Pipeline값 기본 세팅
+        PipelineSetting();
 
         #region 기존 코드
         //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
@@ -247,6 +259,7 @@ public class TreeController : MonoBehaviour
         //Camera.main.fieldOfView = targetFOV;
         #endregion
 
+
         // 처음 심은 시간 저장
         //TimeManager.
 
@@ -294,14 +307,13 @@ public class TreeController : MonoBehaviour
     /// "girthBase" > Min/Max Girth At Base
     /// "scale" > Object scale
     /// </summary>
-    /// <param name="dayCount"></param>
-    public void PipelineUpdate(int dayCount)
+    public void PipelineSetting()
     {
-        // 날짜에 맞춘 성장 데이터 정보 지닌 요소
-        TreeGrowData element = selectedtreeGrowDatas[dayCount - 2];
+        // 기본 세팅 성장 데이터 정보 지닌 요소
+        TreeSetting element = selectedTreeSetting;
 
-        #region 1. Element MinMax
-        int idx = element.minMaxList.Count;
+        #region 1. Element MinMax Frequency
+        int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
         // pipeline element 개수만큼 설정
         for (int i = 0; i < idx; i++)
         {
@@ -347,21 +359,21 @@ public class TreeController : MonoBehaviour
 
         #region 5. Object scale
         scaleTo = element.scale;
-        print($"object scale : {scaleTo}");
+
         #endregion
     }
 
 
     /// <summary>
-    /// treeStores에서 씨앗 종류에 맞는 treeGrowDatas 찾는 함수
+    /// treeStores에서 씨앗 종류에 맞는 Tree Setting 찾는 함수
     /// </summary>
-    public void FindtreeGrowDatas()
+    public void FindtreeSetting()
     {
         for (int i = 0; i < treeStores.Count; i++)
         {
             if (treeStores[i].seedType == selectedSeed)
             {
-                selectedtreeGrowDatas = treeStores[i].treeGrowDatas;
+                selectedTreeSetting = treeStores[i].treeSetting;
             }
         }
 
@@ -377,6 +389,7 @@ public class TreeController : MonoBehaviour
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
         treeFactory.UnloadAndClearPipeline();
         treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
+        print(scaleTo);
         Resources.UnloadAsset(loadedPipeline);
     }
 
@@ -389,7 +402,7 @@ public class TreeController : MonoBehaviour
     int count = 0;
     public void LoadTree()
     {
-        // 1일차
+        // 씨앗 심기
         if (dayCount == 1)
         {
             StartCoroutine(PlantSeed(0.5f));
@@ -399,39 +412,38 @@ public class TreeController : MonoBehaviour
             GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
-        // 2일차
+        // 랜덤 나무
         if (dayCount == 2)
         {
             sprout.SetActive(false);
             soil.SetActive(false);
-            PipelineUpdate(dayCount);
             TreeReload();
             treeFactory.gameObject.SetActive(true);
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
         // 3일차
-        if (dayCount == 3)
-        {
-            PipelineUpdate(dayCount);
-            TreeReload();
-            treeFactory.transform.GetChild(0).gameObject.layer = 11;
-            campos = Camera.main.gameObject.transform;
-        }
-        // 4일차
-        if (dayCount == 4)
-        {
-            PipelineUpdate(dayCount);
-            TreeReload();
-            treeFactory.transform.GetChild(0).gameObject.layer = 11;
-        }
-        // 5일차
-        if (dayCount == 5)
-        {
-            PipelineUpdate(dayCount);
-            TreeReload();
-            treeFactory.transform.GetChild(0).gameObject.layer = 11;
-            assetBundle.Unload(false);
-        }
+        //if (dayCount == 3)
+        //{
+        //    PipelineUpdate();
+        //    TreeReload();
+        //    treeFactory.transform.GetChild(0).gameObject.layer = 11;
+        //    campos = Camera.main.gameObject.transform;
+        //}
+        //// 4일차
+        //if (dayCount == 4)
+        //{
+        //    PipelineUpdate();
+        //    TreeReload();
+        //    treeFactory.transform.GetChild(0).gameObject.layer = 11;
+        //}
+        //// 5일차
+        //if (dayCount == 5)
+        //{
+        //    PipelineUpdate();
+        //    TreeReload();
+        //    treeFactory.transform.GetChild(0).gameObject.layer = 11;
+        //    assetBundle.Unload(false);
+        //}
     }
 
     /// <summary>
@@ -440,12 +452,14 @@ public class TreeController : MonoBehaviour
     public void TreeUpdate()
     {
         dayCount++;
+        print("DayCount = " + dayCount);
         LoadTree();
     }
 
     /// <summary>
     /// 현재 User의 Tree Data 저장
     /// </summary>
+    public Transform previewTree;
     public async void SaveTreeData()
     {
         List<TreeData> treeDatas = new List<TreeData>();
@@ -460,9 +474,9 @@ public class TreeController : MonoBehaviour
         // Tree Pipeline Data
         TreePipelineData pipeData = new TreePipelineData();
         #region Tree Pipeline Data
-        // Tree Height
-        pipeData.baseLength = treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase;
-        // Branch Num
+        // Tree Scale
+        pipeData.scale = previewTree.localScale.x;
+        // Branch Numbers
         int levels = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
         for (int i = 0; i < levels-1; i++)
         {
@@ -470,8 +484,6 @@ public class TreeController : MonoBehaviour
         }
         // Sprout Num
         pipeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].minFrequency;
-        // Thickness
-        pipeData.thickness = treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase;
         // Tree Bending (Noise)
         pipeData.bending = treePipeline._serializedPipeline.branchBenders[0].noiseScaleAtBase;
         // Gravity
