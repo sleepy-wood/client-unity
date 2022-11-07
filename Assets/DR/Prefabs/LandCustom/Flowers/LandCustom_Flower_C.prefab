@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5886438928138934368}
   - component: {fileID: 5886438928126201024}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LandCustom_Flower_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,8 @@ GameObject:
   - component: {fileID: 5886438928138934370}
   - component: {fileID: 5886438928142358592}
   - component: {fileID: 5886438928141359744}
-  m_Layer: 0
+  - component: {fileID: 5793353942225209085}
+  m_Layer: 13
   m_Name: TFF_Flower_Patch_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,6 +146,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5793353942225209085
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886438928139355202}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300004, guid: 3772b8ae1f4df3c4babcb16eb2bf185d, type: 3}
 --- !u!1 &5886438928139355204
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +171,8 @@ GameObject:
   - component: {fileID: 5886438928138934372}
   - component: {fileID: 5886438928142358594}
   - component: {fileID: 5886438928141359746}
-  m_Layer: 0
+  - component: {fileID: 8036458906700971840}
+  m_Layer: 13
   m_Name: TFF_Flower_Patch_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,6 +244,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8036458906700971840
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886438928139355204}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: 3772b8ae1f4df3c4babcb16eb2bf185d, type: 3}
 --- !u!1 &5886438928139355206
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +269,8 @@ GameObject:
   - component: {fileID: 5886438928138934374}
   - component: {fileID: 5886438928142358596}
   - component: {fileID: 5886438928141359748}
-  m_Layer: 0
+  - component: {fileID: 1219800752447905820}
+  m_Layer: 13
   m_Name: TFF_Flower_Patch_01_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,3 +342,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1219800752447905820
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886438928139355206}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 3772b8ae1f4df3c4babcb16eb2bf185d, type: 3}

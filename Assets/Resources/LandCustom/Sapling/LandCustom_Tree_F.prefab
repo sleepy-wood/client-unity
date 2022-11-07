@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7031761292462873893}
   - component: {fileID: 7031761292461744101}
   - component: {fileID: 7031761292463769475}
+  - component: {fileID: 1728254910269690283}
   m_Layer: 0
   m_Name: LandCustom_Tree_F
   m_TagString: Untagged
@@ -97,3 +98,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 0.45, z: 3}
   m_Center: {x: 0, y: 0.225, z: 0}
+--- !u!64 &1728254910269690283
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7031761292463735077}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 4f9d770e78ebb374db99e66631661d87, type: 3}

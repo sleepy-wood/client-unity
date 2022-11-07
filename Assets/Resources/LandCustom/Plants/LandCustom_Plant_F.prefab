@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 2504489801575669524}
   - component: {fileID: 2504489801576668628}
   - component: {fileID: 5422888438436694763}
-  m_Layer: 0
+  - component: {fileID: 6343181434771080163}
+  m_Layer: 13
   m_Name: LandCustom_Plant_F
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,6 +109,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 649490108844565066}
   m_Enabled: 1
+--- !u!64 &6343181434771080163
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2504489801578857236}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 8695ab3a7e5c7b544b2fa68426ce3dec, type: 3}
 --- !u!1001 &649490108846471722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -118,6 +133,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: f8c0e05ee5755b7429c3e2a7dfef1fcd, type: 3}
       propertyPath: m_Name
       value: TFF_Vine_01A_LOD_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f8c0e05ee5755b7429c3e2a7dfef1fcd, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: f8c0e05ee5755b7429c3e2a7dfef1fcd, type: 3}
       propertyPath: m_IsActive

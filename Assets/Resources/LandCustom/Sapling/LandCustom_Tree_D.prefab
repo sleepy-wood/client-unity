@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7523527324169890247}
   - component: {fileID: 3385434395183744855}
   - component: {fileID: 8510790521721212532}
+  - component: {fileID: 6864300582088819902}
   m_Layer: 0
   m_Name: LandCustom_Tree_D
   m_TagString: Untagged
@@ -123,6 +124,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 9107044007095858408}
   m_Enabled: 1
+--- !u!64 &6864300582088819902
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7523527324171892481}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: f32549d3d12b317438d60be92c5eb4f3, type: 3}
 --- !u!1001 &9107044007098150024
 PrefabInstance:
   m_ObjectHideFlags: 0

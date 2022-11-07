@@ -24,9 +24,9 @@ public class GameManager : MonoBehaviourPun
         {
             Destroy(gameObject);
         }
-        
-        //if (!User)
-        //    User = PhotonNetwork.Instantiate("User", new Vector3(Random.Range(-3, 3), 2, Random.Range(-3, 3)), Quaternion.identity);
+
+        if (!User)
+            User = PhotonNetwork.Instantiate("User", new Vector3(Random.Range(-3, 3), 2, Random.Range(-3, 3)), Quaternion.identity);
     }
     private void Start()
     {

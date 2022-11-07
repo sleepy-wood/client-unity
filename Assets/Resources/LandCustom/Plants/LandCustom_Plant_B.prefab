@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 7476622417468057635}
   - component: {fileID: 8645593198677599845}
   - component: {fileID: 4336157900059930260}
-  m_Layer: 0
+  - component: {fileID: 4464985974208865026}
+  m_Layer: 13
   m_Name: TFF_Grass_Patch_02_LOD3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4464985974208865026
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2299329821468056651}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300012, guid: c8529c51ad24d3a4f92c8578f111c5f3, type: 3}
 --- !u!1 &5081173949434924296
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +109,8 @@ GameObject:
   - component: {fileID: 5081173949435220264}
   - component: {fileID: 5081173949438120202}
   - component: {fileID: 5081173949437121482}
-  m_Layer: 0
+  - component: {fileID: 7743223379935465671}
+  m_Layer: 13
   m_Name: TFF_Grass_Patch_02_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,6 +182,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7743223379935465671
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5081173949434924296}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: c8529c51ad24d3a4f92c8578f111c5f3, type: 3}
 --- !u!1 &5081173949434924298
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +207,8 @@ GameObject:
   - component: {fileID: 5081173949435220266}
   - component: {fileID: 5081173949438120204}
   - component: {fileID: 5081173949437121484}
-  m_Layer: 0
+  - component: {fileID: 2158392410995335937}
+  m_Layer: 13
   m_Name: TFF_Grass_Patch_02_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,6 +280,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2158392410995335937
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5081173949434924298}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: c8529c51ad24d3a4f92c8578f111c5f3, type: 3}
 --- !u!1 &5081173949434924300
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +305,8 @@ GameObject:
   - component: {fileID: 5081173949435220268}
   - component: {fileID: 5081173949438120206}
   - component: {fileID: 5081173949437121486}
-  m_Layer: 0
+  - component: {fileID: 8834885456761811953}
+  m_Layer: 13
   m_Name: TFF_Grass_Patch_02_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,6 +378,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8834885456761811953
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5081173949434924300}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300004, guid: c8529c51ad24d3a4f92c8578f111c5f3, type: 3}
 --- !u!1 &5081173949434924302
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +402,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5081173949435220270}
   - component: {fileID: 5081173949454271886}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LandCustom_Plant_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}

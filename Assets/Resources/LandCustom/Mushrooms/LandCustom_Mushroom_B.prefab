@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1734570716583798992}
   - component: {fileID: 1734570716586698992}
   - component: {fileID: 1734570716585568816}
-  m_Layer: 0
+  - component: {fileID: 973838563974656523}
+  m_Layer: 13
   m_Name: TFF_Mushroom_06A_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &973838563974656523
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734570716583572720}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 0e5f030be664d4c40adff327e3abaa7d, type: 3}
 --- !u!1 &1734570716583572722
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +109,8 @@ GameObject:
   - component: {fileID: 1734570716583798994}
   - component: {fileID: 1734570716586698994}
   - component: {fileID: 1734570716585568818}
-  m_Layer: 0
+  - component: {fileID: 680797101279862599}
+  m_Layer: 13
   m_Name: TFF_Mushroom_06A_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,6 +182,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &680797101279862599
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734570716583572722}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: 0e5f030be664d4c40adff327e3abaa7d, type: 3}
 --- !u!1 &1734570716583572726
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +205,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1734570716583798998}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LandCustom_Mushroom_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}

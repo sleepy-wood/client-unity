@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3757015960348964352}
   - component: {fileID: 3757015960350291488}
   - component: {fileID: 3757015960351388896}
-  m_Layer: 0
+  - component: {fileID: 129538499183416357}
+  m_Layer: 13
   m_Name: TFF_Mushroom_10A_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &129538499183416357
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757015960349125152}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300004, guid: 0885c858afd712f4dadf3bbedf2a8918, type: 3}
 --- !u!1 &3757015960349125154
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +109,8 @@ GameObject:
   - component: {fileID: 3757015960348964354}
   - component: {fileID: 3757015960350291490}
   - component: {fileID: 3757015960351388898}
-  m_Layer: 0
+  - component: {fileID: 4028264629442790161}
+  m_Layer: 13
   m_Name: TFF_Mushroom_10A_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,6 +182,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4028264629442790161
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757015960349125154}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300006, guid: 0885c858afd712f4dadf3bbedf2a8918, type: 3}
 --- !u!1 &3757015960349125156
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +205,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3757015960348964356}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LandCustom_Mushroom_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +242,8 @@ GameObject:
   - component: {fileID: 3757015960348964358}
   - component: {fileID: 3757015960350291494}
   - component: {fileID: 3757015960351388902}
-  m_Layer: 0
+  - component: {fileID: 2977064161716751332}
+  m_Layer: 13
   m_Name: TFF_Mushroom_10A_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,6 +315,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2977064161716751332
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757015960349125158}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: 0885c858afd712f4dadf3bbedf2a8918, type: 3}
 --- !u!1 &3757015960349125162
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +340,8 @@ GameObject:
   - component: {fileID: 3757015960348964362}
   - component: {fileID: 3757015960350291498}
   - component: {fileID: 3757015960351388906}
-  m_Layer: 0
+  - component: {fileID: 1744224511636878444}
+  m_Layer: 13
   m_Name: TFF_Mushroom_10A_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,3 +413,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1744224511636878444
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757015960349125162}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 0885c858afd712f4dadf3bbedf2a8918, type: 3}

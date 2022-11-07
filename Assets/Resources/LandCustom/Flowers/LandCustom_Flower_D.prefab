@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2967052114830498416}
   - component: {fileID: 2967052114850074320}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LandCustom_Flower_D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,8 @@ GameObject:
   - component: {fileID: 2967052114830498418}
   - component: {fileID: 2967052114833922640}
   - component: {fileID: 2967052114832791696}
-  m_Layer: 0
+  - component: {fileID: 6309931532939299131}
+  m_Layer: 13
   m_Name: TFF_Flower_Patch_02_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,6 +141,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6309931532939299131
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2967052114830591570}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: 487cb0943c5a1b942861e0a642a191b7, type: 3}
 --- !u!1 &2967052114830591572
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +166,8 @@ GameObject:
   - component: {fileID: 2967052114830498420}
   - component: {fileID: 2967052114833922642}
   - component: {fileID: 2967052114832791698}
-  m_Layer: 0
+  - component: {fileID: 4561444326999258991}
+  m_Layer: 13
   m_Name: TFF_Flower_Patch_02_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,3 +239,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4561444326999258991
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2967052114830591572}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 487cb0943c5a1b942861e0a642a191b7, type: 3}
