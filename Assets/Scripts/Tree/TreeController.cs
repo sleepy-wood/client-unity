@@ -35,13 +35,14 @@ public class TreeController : MonoBehaviour
     // 랜덤으로 선택된 SeedType
     public SeedType selectedSeed = SeedType.None;
     // pipeNameList
-    List<string> pipeNameList = new List<string>() { "BasicTree", "OakTree", "SakuraTree" };
+    List<string> pipeNameList = new List<string>() { "BasicTree", "OakTree", "SakuraTree", "DRTree"};
     // pipeName별 SeedType
     Dictionary<string, SeedType> pipeNameDict = new Dictionary<string, SeedType>()
     {
-        { "BasicTree", SeedType.Basic},
-        { "OakTree", SeedType.Oak},
-        { "SakuraTree", SeedType.Sakura}
+        { "BasicTree", SeedType.Basic },
+        { "OakTree", SeedType.Oak },
+        { "SakuraTree", SeedType.Sakura },
+        { "DrTree", SeedType.DR }
     };
     // 선택된 TreeSetting
     TreeSetting selectedTreeSetting;
@@ -68,7 +69,8 @@ public class TreeController : MonoBehaviour
         None,
         Basic,
         Oak,
-        Sakura
+        Sakura,
+        DR
     }
     // 나무 종류별 관련 변수 클래스
     [System.Serializable]
@@ -142,17 +144,17 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 나무 형태 Random 선택
-        int i = 0;//UnityEngine.Random.Range(0, pipeNameList.Count);
-        pipeName = pipeNameList[i];
+        int i = UnityEngine.Random.Range(0, pipeNameList.Count);
+        pipeName = pipeNameList[0];
         selectedSeed = pipeNameDict[pipeName];
         print(pipeName + " Selected");
 
-        // 기본 세팅값
+        // 기본 세팅값 찾기
         FindtreeSetting();
 
         // Tree Pipeline 로드
         treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
-        // Pipeline값 기본 세팅
+        // Pipeline 기본 세팅
         PipelineSetting();
 
         #region 기존 코드
@@ -359,7 +361,6 @@ public class TreeController : MonoBehaviour
 
         #region 5. Object scale
         scaleTo = element.scale;
-
         #endregion
     }
 
@@ -421,6 +422,7 @@ public class TreeController : MonoBehaviour
             treeFactory.gameObject.SetActive(true);
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
+        #region 일차수별 update
         // 3일차
         //if (dayCount == 3)
         //{
@@ -444,6 +446,7 @@ public class TreeController : MonoBehaviour
         //    treeFactory.transform.GetChild(0).gameObject.layer = 11;
         //    assetBundle.Unload(false);
         //}
+        #endregion
     }
 
     /// <summary>
