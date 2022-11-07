@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5744370013676921185}
   - component: {fileID: 5744370013660296641}
+  - component: {fileID: 7829824679550451790}
   m_Layer: 13
   m_Name: LandCustom_Flower_B
   m_TagString: Untagged
@@ -62,6 +63,24 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5744370013678822277}
   m_Enabled: 1
+--- !u!114 &7829824679550451790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5744370013676633409}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.9635534, b: 0, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5744370013676633411
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,7 +93,6 @@ GameObject:
   - component: {fileID: 5744370013677691201}
   - component: {fileID: 5744370013678822273}
   - component: {fileID: 9090981956678823866}
-  - component: {fileID: 8237840887799355377}
   m_Layer: 13
   m_Name: TFF_Flower_Patch_01_LOD0
   m_TagString: Untagged
@@ -161,24 +179,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 3772b8ae1f4df3c4babcb16eb2bf185d, type: 3}
---- !u!114 &8237840887799355377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5744370013676633411}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 1
-  outlineColor: {r: 0.990566, g: 0.9805149, b: 0.051397298, a: 1}
-  outlineWidth: 6
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!1 &5744370013676633413
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +191,6 @@ GameObject:
   - component: {fileID: 5744370013677691203}
   - component: {fileID: 5744370013678822275}
   - component: {fileID: 5846138118960309759}
-  - component: {fileID: 1574340367163901641}
   m_Layer: 13
   m_Name: TFF_Flower_Patch_01_LOD1
   m_TagString: Untagged
@@ -278,24 +277,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 3772b8ae1f4df3c4babcb16eb2bf185d, type: 3}
---- !u!114 &1574340367163901641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5744370013676633413}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 1
-  outlineColor: {r: 0.990566, g: 0.9805149, b: 0.051397298, a: 1}
-  outlineWidth: 6
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!1 &5744370013676633415
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +289,6 @@ GameObject:
   - component: {fileID: 5744370013677691205}
   - component: {fileID: 5744370013678822277}
   - component: {fileID: 1430509550494184293}
-  - component: {fileID: 7164243451487372661}
   m_Layer: 13
   m_Name: TFF_Flower_Patch_01_LOD2
   m_TagString: Untagged
@@ -395,21 +375,3 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 3772b8ae1f4df3c4babcb16eb2bf185d, type: 3}
---- !u!114 &7164243451487372661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5744370013676633415}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 1
-  outlineColor: {r: 0.990566, g: 0.9805149, b: 0.051397298, a: 1}
-  outlineWidth: 6
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []

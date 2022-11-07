@@ -66,13 +66,19 @@ public class LandCustom : MonoBehaviour
                         hit.transform.parent.GetComponent<Outline>().enabled = true;
                         for (int i = 0; i < hit.transform.parent.childCount; i++)
                         {
-                            hit.transform.parent.GetChild(i).GetComponent<Outline>().enabled = true;
+                            if (hit.transform.parent.GetChild(i).GetComponent<Outline>())
+                            {
+                                hit.transform.parent.GetChild(i).GetComponent<Outline>().enabled = true;
+                            }
                         }
                     }
                     else
                     {
                         hit.transform.gameObject.layer = LayerMask.NameToLayer("Selected");
-                        hit.transform.GetComponent<Outline>().enabled = true;
+                        if (hit.transform.GetComponent<Outline>())
+                        {
+                            hit.transform.GetComponent<Outline>().enabled = true;
+                        }
                     }
                     Debug.Log("Select = " + hit.transform);
                     selectState = SelectState.Selected;
