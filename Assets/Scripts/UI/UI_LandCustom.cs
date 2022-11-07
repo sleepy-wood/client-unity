@@ -10,6 +10,7 @@ public class UI_LandCustom : MonoBehaviour
 {
     private GameObject itemWindow;
     private int selectCat = 0;
+    private string selectCatName = "";
     private void Start()
     {
         itemWindow = transform.GetChild(1).gameObject;
@@ -30,16 +31,11 @@ public class UI_LandCustom : MonoBehaviour
         }
 
         //버튼 이벤트 등록
-        for(int i = 0; i < transform.GetChild(2).transform.childCount; i++)
+        for(int i = 0; i < transform.GetChild(2).childCount; i++)
         {
-            transform.GetChild(2).GetChild(i).GetComponent<Button>().onClick.AddListener(
-                ()=>OnClickCategoryActive(transform.GetChild(2).GetChild(i).GetChild(0).GetComponent<Text>().text, i));
-            Debug.Log("===========================================");
-            Debug.Log(transform.GetChild(2));
-            Debug.Log(transform.GetChild(2).GetChild(i));
-            Debug.Log(transform.GetChild(2).GetChild(i).GetChild(0));
-            Debug.Log(transform.GetChild(2).GetChild(i).GetChild(0).GetComponent<Text>().text);
-            Debug.Log("===========================================");
+            int temp = i;
+            transform.GetChild(2).GetChild(temp).GetComponent<Button>().onClick.AddListener(
+                () => OnClickCategoryActive(transform.GetChild(2).GetChild(temp).GetChild(0).GetComponent<Text>().text, temp));
         }
 
         //초기값 0번째 버튼 활성화
@@ -54,6 +50,7 @@ public class UI_LandCustom : MonoBehaviour
         DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + "/Resources/LandCustom/" + Cat);
         string imagePath = Application.persistentDataPath + "/Resources/LandCustomImage/";
 #endif
+        selectCatName = Cat;
         selectCat = num;
         int cnt = 0;
         //썸네일 넣기
@@ -90,7 +87,33 @@ public class UI_LandCustom : MonoBehaviour
     /// <param name="i"></param>
     public void OnClickCreateObject(int i)
     {
+#if UNITY_STANDALONE
+        DirectoryInfo di = new DirectoryInfo(Application.dataPath + "/Resources/LandCustom/" + selectCatName);
+#elif UNITY_IOS || UNITY_ANDROID
+        DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + "/Resources/LandCustom/" + Cat);
+        string imagePath = Application.persistentDataPath + "/Resources/LandCustomImage/";
+#endif
+        int cnt = 0;
+        //썸네일 넣기
+        foreach (FileInfo fi in di.GetFiles())
+        {
+            if (fi.Name.Split('.').Length > 2)
+            {
+                continue;
+            }
+            if(cnt == i)
+            {
+                GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fi.Name.Split('.')[0]);
+                GameObject prefab = Instantiate(resource);
+                prefab.name = prefab.name.Split('(')[0];
+                prefab.transform.position = Vector3.zero;
+                return;
+            }
 
+            cnt++;
+        }
+        Debug.Log(selectCat);
+        Debug.Log(i);
     }
 
     private bool isActiveCanvase = true;
