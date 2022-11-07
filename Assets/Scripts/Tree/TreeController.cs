@@ -42,7 +42,7 @@ public class TreeController : MonoBehaviour
         { "BasicTree", SeedType.Basic },
         { "OakTree", SeedType.Oak },
         { "SakuraTree", SeedType.Sakura },
-        { "DrTree", SeedType.DR }
+        { "DRTree", SeedType.DR }
     };
     // 선택된 TreeSetting
     TreeSetting selectedTreeSetting;
@@ -145,7 +145,7 @@ public class TreeController : MonoBehaviour
 
         // 나무 형태 Random 선택
         int i = UnityEngine.Random.Range(0, pipeNameList.Count);
-        pipeName = pipeNameList[0];
+        pipeName = pipeNameList[3];
         selectedSeed = pipeNameDict[pipeName];
         print(pipeName + " Selected");
 
@@ -408,7 +408,6 @@ public class TreeController : MonoBehaviour
         {
             StartCoroutine(PlantSeed(0.5f));
             seed.SetActive(true);
-            //TreeReload();
             // 나무 심은 시간 저장
             GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
