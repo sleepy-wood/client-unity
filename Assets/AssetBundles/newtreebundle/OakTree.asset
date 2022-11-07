@@ -1853,206 +1853,6 @@ MonoBehaviour:
     overrideNoise: 0
     noise: 0.5
     noiseScale: 0.5
-  - id: 6
-    parentId: 3
-    sharingGroupId: 0
-    sharingNextId: 0
-    enabled: 0
-    isSprout: 0
-    isRoot: 0
-    isLocked: 0
-    sproutGroupId: 0
-    probability: 1
-    sharedProbability: 0.5
-    distributionOrigin: 0
-    distribution: 0
-    distributionSpacingVariance: 0
-    distributionAngleVariance: 0
-    distributionCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    childrenPerNode: 1
-    minFrequency: 0
-    maxFrequency: 0
-    randomTwirlOffsetEnabled: 1
-    twirlOffset: 0
-    maxTwirl: 0
-    minTwirl: 0
-    maxParallelAlignAtTop: 0.7
-    minParallelAlignAtTop: 0.7
-    maxParallelAlignAtBase: 0.3
-    minParallelAlignAtBase: 0.3
-    parallelAlignCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    maxGravityAlignAtTop: 0.4
-    minGravityAlignAtTop: 0.4
-    maxGravityAlignAtBase: 0.4
-    minGravityAlignAtBase: 0.4
-    gravityAlignCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    maxHorizontalAlignAtTop: 0.4
-    minHorizontalAlignAtTop: 0.4
-    maxHorizontalAlignAtBase: 0.4
-    minHorizontalAlignAtBase: 0.4
-    horizontalAlignCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    flipSproutAlign: 0
-    flipSproutDirection: {x: 1, y: 0, z: 0}
-    maxLengthAtTop: 4
-    minLengthAtTop: 4
-    maxLengthAtBase: 4
-    minLengthAtBase: 4
-    lengthCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    minGirthScale: 1
-    maxGirthScale: 1
-    radius: 0
-    fromBranchCenter: 0
-    nodePosition: {x: 129.00002, y: -205}
-    actionRangeEnabled: 0
-    minRange: 0
-    maxRange: 1
-    minMaskRange: 0
-    maxMaskRange: 1
-    applyBranchBreak: 0
-    breakBranchProbability:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    minBreakRange: 0.5
-    maxBreakRange: 1
-    overrideNoise: 0
-    noise: 0.5
-    noiseScale: 0.5
   flatStructures:
   - id: 120328
     generatorId: 0
@@ -2405,8 +2205,8 @@ MonoBehaviour:
       forward: {x: -0.027897151, y: 0.32088676, z: 0.94670683}
       _position: 0.5
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: 2.8381827, y: 5.314856, z: -2.5498974}
-      positionFromRoot: {x: 2.8381827, y: 45.314857, z: -2.549904}
+      positionFromBranch: {x: 2.8326137, y: 5.3358126, z: -2.5489268}
+      positionFromRoot: {x: 2.8326137, y: 45.33581, z: -2.5489335}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -2489,7 +2289,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: 1.0362563, y: 3.075804, z: 5.6316605}
-      positionFromRoot: {x: 3.874439, y: 48.390663, z: 3.0817564}
+      positionFromRoot: {x: 3.86887, y: 48.411617, z: 3.082727}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -2571,8 +2371,8 @@ MonoBehaviour:
       forward: {x: -0.9684719, y: -0.060744427, z: 0.24160403}
       _position: 0.5
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: 0.4988686, y: 0.7887463, z: 3.3421254}
-      positionFromRoot: {x: 3.3370514, y: 46.103603, z: 0.7922213}
+      positionFromBranch: {x: 0.4854338, y: 0.86852586, z: 3.1663163}
+      positionFromRoot: {x: 3.3180475, y: 46.204338, z: 0.61738276}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -2654,8 +2454,8 @@ MonoBehaviour:
       forward: {x: -0.9890461, y: -0.00000004608674, z: 0.14760745}
       _position: 0.7732245
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -0.67394847, y: 30.960632, z: 0.6620115}
-      positionFromRoot: {x: -0.67394847, y: 30.960632, z: 0.6620115}
+      positionFromBranch: {x: -0.26468632, y: 30.925133, z: 0.259995}
+      positionFromRoot: {x: -0.26468632, y: 30.925133, z: 0.259995}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -2738,7 +2538,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -14.446742, y: 4.2309084, z: 2.1560643}
-      positionFromRoot: {x: -15.12069, y: 35.19154, z: 2.8180757}
+      positionFromRoot: {x: -14.711429, y: 35.15604, z: 2.4160593}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -2821,7 +2621,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -5.768402, y: -0.75698006, z: -1.4671466}
-      positionFromRoot: {x: -20.889091, y: 34.43456, z: 1.350929}
+      positionFromRoot: {x: -20.479832, y: 34.39906, z: 0.9489126}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -2903,8 +2703,8 @@ MonoBehaviour:
       forward: {x: -0.2915819, y: -0.8921876, z: 0.34493685}
       _position: 0.5
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -2.8795102, y: -0.42834562, z: -0.7075304}
-      positionFromRoot: {x: -18.0002, y: 34.763195, z: 2.1105452}
+      positionFromBranch: {x: -2.8869498, y: -0.4090563, z: -0.7069609}
+      positionFromRoot: {x: -17.59838, y: 34.746983, z: 1.7090983}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -2986,8 +2786,8 @@ MonoBehaviour:
       forward: {x: 0.34063795, y: 0.3012872, z: 0.8906132}
       _position: 0.5
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -7.81887, y: 0.42157182, z: 1.3299896}
-      positionFromRoot: {x: -8.492819, y: 31.382204, z: 1.992001}
+      positionFromBranch: {x: -7.556337, y: 0.74155575, z: 1.2573596}
+      positionFromRoot: {x: -7.821023, y: 31.666689, z: 1.5173546}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -3070,7 +2870,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -1.1983058, y: 1.7034094, z: 6.157309}
-      positionFromRoot: {x: -9.691125, y: 33.085613, z: 8.14931}
+      positionFromRoot: {x: -9.019329, y: 33.3701, z: 7.6746635}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -3152,8 +2952,8 @@ MonoBehaviour:
       forward: {x: -0.9279666, y: -0.36534345, z: 0.07349893}
       _position: 0.5
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -0.5202415, y: -0.02617898, z: 3.4531958}
-      positionFromRoot: {x: -9.013061, y: 31.356026, z: 5.445197}
+      positionFromBranch: {x: -0.51153594, y: 0.08241998, z: 3.2889223}
+      positionFromRoot: {x: -8.332559, y: 31.74911, z: 4.806277}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5

@@ -146,6 +146,7 @@ public class TreeController : MonoBehaviour
         // 나무 형태 Random 선택
         int i = UnityEngine.Random.Range(0, pipeNameList.Count);
         pipeName = pipeNameList[3];
+        print("Random Number : " + i);
         selectedSeed = pipeNameDict[pipeName];
         print(pipeName + " Selected");
 
@@ -315,9 +316,9 @@ public class TreeController : MonoBehaviour
         TreeSetting element = selectedTreeSetting;
 
         #region 1. Element MinMax Frequency
-        int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
+        //int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
         // pipeline element 개수만큼 설정
-        for (int i = 0; i < idx; i++)
+        for (int i = 0; i < 4; i++)
         {
             // pipeline
             StructureGenerator.StructureLevel pipe1 = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
@@ -390,7 +391,6 @@ public class TreeController : MonoBehaviour
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
         treeFactory.UnloadAndClearPipeline();
         treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
-        print(scaleTo);
         Resources.UnloadAsset(loadedPipeline);
     }
 
@@ -446,16 +446,6 @@ public class TreeController : MonoBehaviour
         //    assetBundle.Unload(false);
         //}
         #endregion
-    }
-
-    /// <summary>
-    ///  TimeManager로부터 신호받아 TreeUpdate
-    /// </summary>
-    public void TreeUpdate()
-    {
-        dayCount++;
-        print("DayCount = " + dayCount);
-        LoadTree();
     }
 
     /// <summary>
