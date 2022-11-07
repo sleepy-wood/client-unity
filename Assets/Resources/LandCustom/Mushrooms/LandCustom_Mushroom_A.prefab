@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3757015960350291488}
   - component: {fileID: 3757015960351388896}
   - component: {fileID: 129538499183416357}
+  - component: {fileID: 3663682212763336318}
   m_Layer: 13
   m_Name: TFF_Mushroom_10A_02
   m_TagString: Untagged
@@ -98,6 +99,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 0885c858afd712f4dadf3bbedf2a8918, type: 3}
+--- !u!114 &3663682212763336318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757015960349125152}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.8854509, b: 0.042452812, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &3757015960349125154
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,6 +129,7 @@ GameObject:
   - component: {fileID: 3757015960350291490}
   - component: {fileID: 3757015960351388898}
   - component: {fileID: 4028264629442790161}
+  - component: {fileID: 8157261585428683863}
   m_Layer: 13
   m_Name: TFF_Mushroom_10A_01
   m_TagString: Untagged
@@ -196,6 +216,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300006, guid: 0885c858afd712f4dadf3bbedf2a8918, type: 3}
+--- !u!114 &8157261585428683863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757015960349125154}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.8854509, b: 0.042452812, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &3757015960349125156
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,6 +281,7 @@ GameObject:
   - component: {fileID: 3757015960350291494}
   - component: {fileID: 3757015960351388902}
   - component: {fileID: 2977064161716751332}
+  - component: {fileID: 8006113813426655112}
   m_Layer: 13
   m_Name: TFF_Mushroom_10A_03
   m_TagString: Untagged
@@ -329,6 +368,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 0885c858afd712f4dadf3bbedf2a8918, type: 3}
+--- !u!114 &8006113813426655112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757015960349125158}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.8854509, b: 0.042452812, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &3757015960349125162
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +398,7 @@ GameObject:
   - component: {fileID: 3757015960350291498}
   - component: {fileID: 3757015960351388906}
   - component: {fileID: 1744224511636878444}
+  - component: {fileID: 3031621189817020250}
   m_Layer: 13
   m_Name: TFF_Mushroom_10A_04
   m_TagString: Untagged
@@ -427,3 +485,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 0885c858afd712f4dadf3bbedf2a8918, type: 3}
+--- !u!114 &3031621189817020250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757015960349125162}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.8854509, b: 0.042452812, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

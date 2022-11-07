@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8645593198677599845}
   - component: {fileID: 4336157900059930260}
   - component: {fileID: 4464985974208865026}
+  - component: {fileID: 666019026969478021}
   m_Layer: 13
   m_Name: TFF_Grass_Patch_02_LOD3
   m_TagString: Untagged
@@ -98,6 +99,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300012, guid: c8529c51ad24d3a4f92c8578f111c5f3, type: 3}
+--- !u!114 &666019026969478021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2299329821468056651}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.8307336, b: 0, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5081173949434924296
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,6 +129,7 @@ GameObject:
   - component: {fileID: 5081173949438120202}
   - component: {fileID: 5081173949437121482}
   - component: {fileID: 7743223379935465671}
+  - component: {fileID: 5617541547143549098}
   m_Layer: 13
   m_Name: TFF_Grass_Patch_02_LOD2
   m_TagString: Untagged
@@ -196,6 +216,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: c8529c51ad24d3a4f92c8578f111c5f3, type: 3}
+--- !u!114 &5617541547143549098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5081173949434924296}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.8307336, b: 0, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5081173949434924298
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,6 +246,7 @@ GameObject:
   - component: {fileID: 5081173949438120204}
   - component: {fileID: 5081173949437121484}
   - component: {fileID: 2158392410995335937}
+  - component: {fileID: 7681452099218446123}
   m_Layer: 13
   m_Name: TFF_Grass_Patch_02_LOD1
   m_TagString: Untagged
@@ -294,6 +333,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: c8529c51ad24d3a4f92c8578f111c5f3, type: 3}
+--- !u!114 &7681452099218446123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5081173949434924298}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.8307336, b: 0, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5081173949434924300
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +363,7 @@ GameObject:
   - component: {fileID: 5081173949438120206}
   - component: {fileID: 5081173949437121486}
   - component: {fileID: 8834885456761811953}
+  - component: {fileID: 3679854888294679654}
   m_Layer: 13
   m_Name: TFF_Grass_Patch_02_LOD0
   m_TagString: Untagged
@@ -392,6 +450,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: c8529c51ad24d3a4f92c8578f111c5f3, type: 3}
+--- !u!114 &3679854888294679654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5081173949434924300}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.8307336, b: 0, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5081173949434924302
 GameObject:
   m_ObjectHideFlags: 0

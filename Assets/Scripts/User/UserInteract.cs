@@ -34,7 +34,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
 #if UNITY_STANDALONE
             Vector3 moveDir = userInput.MoveX * transform.right + userInput.MoveZ * transform.forward;
 #elif UNITY_IOS || UNITY_ANDROID
-                Vector3 moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
+            Vector3 moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
 #endif
                 moveDir.Normalize();
 
@@ -51,7 +51,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
                 transform.position += moveSpeed * moveDir * Time.deltaTime;
 
                 //회전
-                transform.Rotate(transform.up, userInput.Rotate);
+                transform.Rotate(transform.up, userInput.RotateX);
             }
             else
             {

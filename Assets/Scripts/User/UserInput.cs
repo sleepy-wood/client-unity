@@ -11,6 +11,7 @@ public class UserInput : MonoBehaviour
     private const string LeftClickName = "Fire1";
     private const string RightClickName = "Fire2";
     private const string MouseXName = "Mouse X";
+    private const string MouseYName = "Mouse Y";
 
 #elif UNITY_IOS || UNITY_ANDROID
     /// <summary>
@@ -56,9 +57,13 @@ public class UserInput : MonoBehaviour
     public bool LongInteract { get; private set; }
 
     /// <summary>
-    /// Mouse Drag -> Rotate
+    /// Mouse Drag -> RotateX
     /// </summary>c
-    public float Rotate { get; private set; }
+    public float RotateX { get; private set; }
+    /// <summary>
+    /// Mouse Drag -> RotateY
+    /// </summary>c
+    public float RotateY { get; private set; }
 
 
     private void Update()
@@ -83,11 +88,13 @@ public class UserInput : MonoBehaviour
             #region 회전 
             if (Input.GetButton(RightClickName))
             {
-                Rotate = Input.GetAxis(MouseXName);
+                RotateX = Input.GetAxis(MouseXName);
+                RotateY = Input.GetAxis(MouseYName);
             }
             else
             {
-                Rotate = 0;
+                RotateX = 0;
+                RotateY = 0;
             }
             #endregion
 
@@ -200,7 +207,8 @@ public class UserInput : MonoBehaviour
                     {
                         if (Input.touches[i].phase == TouchPhase.Moved)
                         {
-                            Rotate = (touchFirstFingerPos.x - touchFirstFinger.position.x) * 0.07f;
+                            RotateX = (touchFirstFingerPos.x - touchFirstFinger.position.x) * 0.07f;
+                            RotateY = (touchFirstFingerPos.y - touchFirstFinger.position.y) * 0.07f;
                         }
                     }
                 }

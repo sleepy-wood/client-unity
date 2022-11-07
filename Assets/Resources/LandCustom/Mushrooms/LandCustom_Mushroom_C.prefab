@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6692405076626255073}
   - component: {fileID: 6692405076625288737}
   - component: {fileID: 6755662704830274946}
+  - component: {fileID: 6687302474528575752}
   m_Layer: 13
   m_Name: TFF_Mushroom_13A_03
   m_TagString: Untagged
@@ -98,6 +99,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: ff94261e926444249abc4b26ecb6683e, type: 3}
+--- !u!114 &6687302474528575752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6692405076627550433}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.9111887, b: 0, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &6692405076627550435
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,6 +163,7 @@ GameObject:
   - component: {fileID: 6692405076626255077}
   - component: {fileID: 6692405076625288741}
   - component: {fileID: 5682469836513180357}
+  - component: {fileID: 8422911141116448299}
   m_Layer: 13
   m_Name: TFF_Mushroom_13A_02
   m_TagString: Untagged
@@ -230,6 +250,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: ff94261e926444249abc4b26ecb6683e, type: 3}
+--- !u!114 &8422911141116448299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6692405076627550437}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.9111887, b: 0, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &6692405076627550439
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +280,7 @@ GameObject:
   - component: {fileID: 6692405076626255079}
   - component: {fileID: 6692405076625288743}
   - component: {fileID: 3435335150198997245}
+  - component: {fileID: 3117469642698429662}
   m_Layer: 13
   m_Name: TFF_Mushroom_13A_01
   m_TagString: Untagged
@@ -328,3 +367,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: ff94261e926444249abc4b26ecb6683e, type: 3}
+--- !u!114 &3117469642698429662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6692405076627550439}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.9111887, b: 0, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

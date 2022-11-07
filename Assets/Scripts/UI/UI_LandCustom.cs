@@ -104,7 +104,7 @@ public class UI_LandCustom : MonoBehaviour
                 GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fi.Name.Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
                 prefab.name = prefab.name.Split('(')[0];
-                prefab.transform.position = Vector3.zero;
+                prefab.transform.position = new Vector3(0, 0.5f, 0);
                 return;
             }
 
