@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LandCustom : MonoBehaviour
 {
@@ -23,6 +23,8 @@ public class LandCustom : MonoBehaviour
     [SerializeField] private float zoomSpeed = 20;
     [Header("Edit Custom Tool")]
     [SerializeField] private GameObject editButton;
+    [Header("Edit Buttons")]
+    [SerializeField] private List<GameObject> buttons = new List<GameObject>();
 
     //현재 고른 상태인가?
     private SelectState selectState = SelectState.None;
@@ -304,6 +306,18 @@ public class LandCustom : MonoBehaviour
                 break;
 
         }
+        //클릭된 버튼 색 변경하기
+        for (int j = 0; j < buttons.Count; j++)
+        {
+            Debug.Log("1");
+            if (j + 1 == i && i != 5)
+                buttons[j].GetComponent<Image>().color = new Color(113, 113, 113);
+            else
+            {
+                buttons[j].GetComponent<Image>().color = new Color(255, 255, 255);
+            }
+        }
+
     }
 
 }
