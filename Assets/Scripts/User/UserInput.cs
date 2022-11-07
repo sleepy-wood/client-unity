@@ -4,9 +4,6 @@ using UnityEngine.UIElements;
 
 public class UserInput : MonoBehaviour
 {
-    //public Text currentStateText;
-    //public Text clickText;
-    //public Text timeText;
 
 #if UNITY_STANDALONE
     private const string MoveNameX = "Horizontal";
@@ -99,40 +96,34 @@ public class UserInput : MonoBehaviour
             //현재 Touch를 한손가락으로 했을 경우 Move 상태인지, Touch상태인지 확인
             //Move 상태: 약간의 움직임이 감지가 된다면 Move
             //Touch 상태: 움직임이 감지가 되지 않은 상태에서 손가락을 뗐을 때
-            //if (currentStateText)
-            //    currentStateText.text = "currentState: " + currentState.ToString();
-            //if (Input.touchCount == 1)
-            //{
-            //    if (timeText)
-            //        timeText.text = curTime.ToString();
-            //    curTime += Time.deltaTime;
-            //    //LongTouch 설정
-            //    if (curTime > 1.5f && currentState == TouchState.None)
-            //        currentState = TouchState.LongTouch;
+            if (Input.touchCount == 1)
+            {
+                curTime += Time.deltaTime;
+                //LongTouch 설정
+                if (curTime > 1.5f && currentState == TouchState.None)
+                    currentState = TouchState.LongTouch;
                 
-            //    for (int i = 0; i < Input.touches.Length; i++)
-            //    {
-            //        if (Input.touches[i].phase == TouchPhase.Began)
-            //        {
-            //            curTime = 0;
-            //        }
-            //        else if (Input.touches[i].phase == TouchPhase.Moved)
-            //        {
-            //            if (currentState == TouchState.None)
-            //                currentState = TouchState.Move;
-            //        }
-            //        else if (Input.touches[i].phase == TouchPhase.Ended)
-            //        {
-            //            currentState = currentState == TouchState.None ? TouchState.Touch : TouchState.None;
-            //            curTime = 0;
-            //        }
-            //    }
+                for (int i = 0; i < Input.touches.Length; i++)
+                {
+                    if (Input.touches[i].phase == TouchPhase.Began)
+                    {
+                        curTime = 0;
+                    }
+                    else if (Input.touches[i].phase == TouchPhase.Moved)
+                    {
+                        if (currentState == TouchState.None)
+                            currentState = TouchState.Move;
+                    }
+                    else if (Input.touches[i].phase == TouchPhase.Ended)
+                    {
+                        currentState = currentState == TouchState.None ? TouchState.Touch : TouchState.None;
+                        curTime = 0;
+                    }
+                }
 
-                #region 이동 
+            #region 이동 
                 if (currentState == TouchState.Move)
                 {
-                    //if (clickText)
-                    //    clickText.text = "\n클릭여부: 노노";
                     Vector3 mousePos = Input.mousePosition;
                     Ray ray = Camera.main.ScreenPointToRay(mousePos);
                     RaycastHit hit;
@@ -147,9 +138,6 @@ public class UserInput : MonoBehaviour
                             dir.Normalize();
                             MoveX = dir.x;
                             MoveZ = dir.z;
-                        //    if (currentStateText)
-                        //        currentStateText.text = $"hit.point = {hit.point} \n transform.position = {transform.position}" +
-                        //$"\n dir = {dir}\n  MoveX = {MoveX} | MoveZ = {MoveZ}";
                         }
                     }
                 }
@@ -163,31 +151,27 @@ public class UserInput : MonoBehaviour
 
             #region interact
 
-            //if (currentState == TouchState.Touch)
-            //{
-            //    if (clickText)
-            //        clickText.text = "\n클릭여부: 클릭";
-            //    Interact = true;
-            //    currentState = TouchState.None;
-            //}
-            //else if (currentState == TouchState.LongTouch)
-            //{
-            //    if (clickText)
-            //        clickText.text = "\n클릭여부: 롱 클릭";
-            //    LongInteract = true;
-            //    currentState = TouchState.None;
-            //}
-            //else
-            //{
-            //    LongInteract = false;
-            //    Interact = false;
-            //}
+            if (currentState == TouchState.Touch)
+            {
+                Interact = true;
+                currentState = TouchState.None;
+            }
+            else if (currentState == TouchState.LongTouch)
+            {
+                LongInteract = true;
+                currentState = TouchState.None;
+            }
+            else
+            {
+                LongInteract = false;
+                Interact = false;
+            }
             #endregion
 
 
             if (Input.touchCount == 2)
             {
-                #region 줌인/줌아웃
+            #region 줌인/줌아웃
                 Touch touchFirstFinger = Input.GetTouch(0);
                 Touch touchSecondFinger = Input.GetTouch(1);
 
@@ -206,9 +190,9 @@ public class UserInput : MonoBehaviour
                     Zoom = (prevTwoFingerDist - curTwoFingerDist) * -0.006f;
 
                 }
-                #endregion
+            #endregion
 
-                #region 회전
+            #region 회전
                 //두 손가락의 간격이 같은 경우 -> Roate
                 else
                 {
@@ -220,7 +204,7 @@ public class UserInput : MonoBehaviour
                         }
                     }
                 }
-                #endregion
+            #endregion
 
             }
             else
@@ -231,5 +215,6 @@ public class UserInput : MonoBehaviour
 
 #endif
         }
+    }
 }
 
