@@ -56,9 +56,9 @@ public class LandCustom : MonoBehaviour
                 LayerMask layer = 1 << LayerMask.NameToLayer("Ground");
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~layer))
                 {
-                    selectedObject = hit.transform.parent != null ? hit.transform.parent.gameObject : hit.transform.transform.gameObject;
+                    selectedObject = hit.transform.parent.name != "landDecorations" ? hit.transform.parent.gameObject : hit.transform.transform.gameObject;
                     preLayer = hit.transform.gameObject.layer;
-                    if (hit.transform.parent != null)
+                    if (hit.transform.parent.name != "landDecorations")
                     {
                         hit.transform.parent.gameObject.layer = LayerMask.NameToLayer("Selected");
                         for (int i = 0; i < hit.transform.parent.childCount; i++)
@@ -93,6 +93,13 @@ public class LandCustom : MonoBehaviour
                     }
                     //Debug.Log("Select = " + hit.transform);
                     selectState = SelectState.Selected;
+
+                    //클릭된 버튼 색깔 초기화
+                    buttons[0].GetComponent<Image>().color = new Color32(150, 150, 150, 255);
+                    for (int j = 1; j < buttons.Count; j++)
+                    {
+                        buttons[j].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                    }
                 }
             }
         }
@@ -111,38 +118,17 @@ public class LandCustom : MonoBehaviour
                     {
                         if (hit.transform.gameObject.layer == selectedObject.layer)
                         {
-                            //Debug.Log("Not Selected = " + selectedObject.transform);
-                            if (selectedObject.transform.parent != null)
+                            //아웃라인 끄기
+                            if (selectedObject.transform.GetComponent<Outline>())
                             {
-                                selectedObject.transform.parent.gameObject.layer = preLayer;
-                                //부모 아웃라인 끄기
-                                if (selectedObject.transform.parent.GetComponent<Outline>())
-                                {
-                                    selectedObject.transform.parent.GetComponent<Outline>().enabled = false;
-                                }
-                                for (int i = 0; i < selectedObject.transform.parent.childCount; i++)
-                                {
-                                    selectedObject.transform.parent.GetChild(i).gameObject.layer = preLayer;
-                                    if (selectedObject.transform.parent.GetChild(i).GetComponent<Outline>())
-                                    {
-                                        selectedObject.transform.parent.GetChild(i).GetComponent<Outline>().enabled = false;
-                                    }
-                                }
+                                selectedObject.transform.GetComponent<Outline>().enabled = false;
                             }
-                            else
+                            for (int i = 0; i < selectedObject.transform.childCount; i++)
                             {
-                                //아웃라인 끄기
-                                if (selectedObject.transform.GetComponent<Outline>())
+                                selectedObject.transform.GetChild(i).gameObject.layer = preLayer;
+                                if (selectedObject.transform.GetChild(i).GetComponent<Outline>())
                                 {
-                                    selectedObject.transform.GetComponent<Outline>().enabled = false;
-                                }
-                                for (int i = 0; i < selectedObject.transform.childCount; i++)
-                                {
-                                    selectedObject.transform.GetChild(i).gameObject.layer = preLayer;
-                                    if (selectedObject.transform.GetChild(i).GetComponent<Outline>())
-                                    {
-                                        selectedObject.transform.GetChild(i).GetComponent<Outline>().enabled = false;
-                                    }
+                                    selectedObject.transform.GetChild(i).GetComponent<Outline>().enabled = false;
                                 }
                             }
                             selectedObject.layer = preLayer;
@@ -309,12 +295,15 @@ public class LandCustom : MonoBehaviour
         //클릭된 버튼 색 변경하기
         for (int j = 0; j < buttons.Count; j++)
         {
-            Debug.Log("1");
             if (j + 1 == i && i != 5)
-                buttons[j].GetComponent<Image>().color = new Color(113, 113, 113);
+            {
+                Debug.Log(j);
+                buttons[j].GetComponent<Image>().color = new Color32(150, 150, 150, 255);
+                Debug.Log(buttons[j].GetComponent<Image>().color);
+            }
             else
             {
-                buttons[j].GetComponent<Image>().color = new Color(255, 255, 255);
+                buttons[j].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
         }
 
