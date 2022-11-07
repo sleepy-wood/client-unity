@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6415997389300956891}
   - component: {fileID: 6415997389299825691}
   - component: {fileID: 376273898998911893}
+  - component: {fileID: 7759286007345572859}
   m_Layer: 0
   m_Name: LandCustom_Plant_A
   m_TagString: Untagged
@@ -108,6 +109,24 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2061318338344152782}
   m_Enabled: 1
+--- !u!114 &7759286007345572859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6415997389302014683}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.8238035, b: 0, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &2061318338346448558
 PrefabInstance:
   m_ObjectHideFlags: 0

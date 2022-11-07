@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6142188631943825133}
   - component: {fileID: 2283883804833031267}
   - component: {fileID: 923708775364470472}
+  - component: {fileID: 7414568324079770820}
   m_Layer: 0
   m_Name: LandCustom_Tree_A
   m_TagString: Untagged
@@ -99,7 +100,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: d9cfd624df7f68d40968fd1ce326a59d, type: 3}
 --- !u!205 &923708775364470472
@@ -129,6 +130,24 @@ LODGroup:
     renderers:
     - renderer: {fileID: 3027799983062251477}
   m_Enabled: 1
+--- !u!114 &7414568324079770820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6142188631941896237}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.85783035, b: 0, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &3027799983064149941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c9692b2b81a1e064da8b738bf9c46b99, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c9692b2b81a1e064da8b738bf9c46b99, type: 3}
       propertyPath: m_LocalPosition.y
@@ -221,7 +240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: faf4490e54e692d4dbb982513c8bf5fa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: faf4490e54e692d4dbb982513c8bf5fa, type: 3}
       propertyPath: m_LocalPosition.y

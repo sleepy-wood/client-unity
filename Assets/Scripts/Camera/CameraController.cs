@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviourPun
         camPos = user.transform.GetChild(0);
         userInput = user.GetComponent<UserInput>();
         myCamera = GetComponent<Camera>();
-        initialOrthographicSize = myCamera.orthographicSize;
+        initialOrthographicSize = myCamera.fieldOfView;
     }
     private void Update()
     {
@@ -39,8 +39,8 @@ public class CameraController : MonoBehaviourPun
                     StartCoroutine(CameraMoving(7));
 
                     //카메라 Zoom in / out
-                    myCamera.orthographicSize -= userInput.Zoom * wheelScrollSpeed;
-                    myCamera.orthographicSize = Mathf.Clamp(myCamera.orthographicSize, initialOrthographicSize - 12, initialOrthographicSize + 12);
+                    myCamera.fieldOfView -= userInput.Zoom * wheelScrollSpeed;
+                    myCamera.fieldOfView = Mathf.Clamp(myCamera.fieldOfView, initialOrthographicSize - 30, initialOrthographicSize + 30);
                 }
 
                 //플레이어와 카메라의 거리가 5정도 떨어지면 따라가기
@@ -48,7 +48,7 @@ public class CameraController : MonoBehaviourPun
                 {
                     StartCoroutine(CameraMoving());
                 }
-                transform.parent.Rotate(user.transform.up, userInput.Rotate);
+                transform.parent.Rotate(user.transform.up, userInput.RotateX);
             }
             else
             {

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 229920801183729322}
   - component: {fileID: 4177032791137816802}
   - component: {fileID: 3718865052175357551}
+  - component: {fileID: 6289256678123684254}
   m_Layer: 0
   m_Name: LandCustom_Tree_B
   m_TagString: Untagged
@@ -142,6 +143,24 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8534925702630777077}
   m_Enabled: 1
+--- !u!114 &6289256678123684254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4085581058532792146}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.9188481, b: 0, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &8176767090497967810
 PrefabInstance:
   m_ObjectHideFlags: 0
