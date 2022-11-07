@@ -83,32 +83,14 @@ public class TimeManager : MonoBehaviour
         if (totalPlantDay==0 && Input.GetKeyDown(KeyCode.Alpha0))
         {
             CalculatePlantDays(now);
+            GameManager.Instance.treeController.LoadTree();
             txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
         }
-        //else if (totalPlantDay==1 && Input.GetKeyDown(KeyCode.Alpha1))
-        //{
-        //    GameManager.Instance.treeController.dayCount++;
-        //    print(GameManager.Instance.treeController.dayCount);
-            
-        //    CalculatePlantDays(now);
-        //    txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
-        //}
-        else if(skyChaneDone && totalPlantDay==2 && Input.GetKeyDown(KeyCode.Alpha1))
+        else if(skyChaneDone && Input.GetKeyDown(KeyCode.Alpha1) && totalPlantDay < 5)
         {
             now = now.dateTime.AddDays(1);
             CalculatePlantDays(now);
-            txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
-        }
-        else if(totalPlantDay==3 && Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            now = now.dateTime.AddDays(1);
-            CalculatePlantDays(now);
-            txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
-        }
-        else if(totalPlantDay==4 && Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            now = now.dateTime.AddDays(1);
-            CalculatePlantDays(now);
+            GameManager.Instance.treeController.LoadTree();
             txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
         }
         #endregion
@@ -150,14 +132,5 @@ public class TimeManager : MonoBehaviour
         TimeSpan timeDif = date - firstPlantDate;
         totalPlantDay = (int)timeDif.Days + 1;
         GameManager.Instance.treeController.dayCount = totalPlantDay;
-
-        if (totalPlantDay == 1)
-        {
-            GameManager.Instance.treeController.LoadTree();
-        }
-        else if (totalPlantDay == 2)
-        {
-            GameManager.Instance.treeController.LoadTree();
-        }
     }
 }
