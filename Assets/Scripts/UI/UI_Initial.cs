@@ -29,15 +29,15 @@ public class UI_Initial : MonoBehaviour
 
     #endregion
 
-
+    
 
     private void Start()
     {
         inputPlantName.onValueChanged.AddListener(onValueChanged);
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            gameObject.SetActive(false);
-        }
+        //if (!PhotonNetwork.IsMasterClient)
+        //{
+        //    gameObject.SetActive(false);
+        //}
 
     }
 

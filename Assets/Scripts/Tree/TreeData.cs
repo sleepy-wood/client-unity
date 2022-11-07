@@ -10,16 +10,14 @@ using System;
 [Serializable]
 public class TreePipelineData
 {
-    // 나무 높이
-    public float? baseLength;
+    // 나무 scale
+    public float? scale;
     // 나무 가지 개수
     public List<int>? branchNums;
     // 나뭇잎 개수
     public int? sproutNum;
     // 나뭇잎 썩은 비율
     //public float? rottenRate;
-    // 나무 두께
-    public float? thickness;
     // 나무 꺾임(Noise)
     public float? bending;
     // 중력
