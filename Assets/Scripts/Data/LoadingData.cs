@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using Random = UnityEngine.Random;
-using TreeEditor;
+//using TreeEditor;
 
 public class LoadingData : MonoBehaviourPunCallbacks
 {
