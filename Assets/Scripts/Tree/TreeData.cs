@@ -33,7 +33,7 @@ public class TreePipelineData
     public string? barkTexture;
     // 활성화할 sprout Texture index
     public int? sproutIndex;
-
+    // 나무 첫 생성 시간
     public DateTime createdAt;
     public DateTime updatedAt;
 }
