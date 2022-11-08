@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using Cysharp.Threading.Tasks.Triggers;
 using System.Net;
+using Photon.Pun.Demo.Cockpit;
 
 class ResultTemp
 {
@@ -60,10 +61,10 @@ public class LandDataManager : MonoBehaviour
         {
             minimapObject[i].SetActive(false);
         }
-        LoadLandData();
-        LoadBridge();
-        //SaveLandData();
-        //SaveBridgeData();
+        //LoadLandData();
+        //LoadBridge();
+        SaveLandData();
+        SaveBridgeData();
     }
 
     private void Update()
@@ -163,16 +164,19 @@ public class LandDataManager : MonoBehaviour
             landData.landEulerAngleZ = transform.GetChild(i).localEulerAngles.z;
 
             string landJsonData = JsonUtility.ToJson(landData);
-            //Web에 데이터 수정
-            ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
-                "/api/v1/lands/" + DataTemporary.MyLandData.landLists[i].id, 
-                DataModule.NetworkType.PUT, 
-                DataModule.DataType.BUFFER, 
-                landJsonData);
-
-            if (!resultPut.result)
+            if (!testMode)
             {
-                Debug.LogError("WebRequestError: NetworkType[Put]");
+                //Web에 데이터 수정
+                ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
+                    "/api/v1/lands/" + DataTemporary.MyLandData.landLists[i].id,
+                    DataModule.NetworkType.PUT,
+                    DataModule.DataType.BUFFER,
+                    landJsonData);
+
+                if (!resultPut.result)
+                {
+                    Debug.LogError("WebRequestError: NetworkType[Put]");
+                }
             }
 
             landDataList.Add(landData);
@@ -264,16 +268,19 @@ public class LandDataManager : MonoBehaviour
             //Web에 데이터 수정
             string bridgeJsonData = JsonUtility.ToJson(bridgeData);
 
-            ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
+            if (!testMode)
+            {
+                ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
                 "/api/v1/bridges/" + DataTemporary.MyBridgeData.bridgeLists[i].id,
                 DataModule.NetworkType.PUT,
                 DataModule.DataType.BUFFER,
                 bridgeJsonData);
-
-            if (!resultPut.result)
-            {
-                Debug.LogError("WebRequestError: NetworkType[Put]");
+                if (!resultPut.result)
+                {
+                    Debug.LogError("WebRequestError: NetworkType[Put]");
+                }
             }
+
 
             bridgeDataList.Add(bridgeData);
         }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using Random = UnityEngine.Random;
+using TreeEditor;
 
 public class LoadingData : MonoBehaviourPunCallbacks
 {
@@ -91,7 +92,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
         ResultGet<BridgeData> bridgeData = await DataModule.WebRequest<ResultGet<BridgeData>>("/api/v1/bridges", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         // TreeData Load
-        ResultGet<TreeData> treeData = await DataModule.WebRequest<ResultGet<TreeData>>("api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        //ResultGet<TreeData> treeData = await DataModule.WebRequest<ResultGet<TreeData>>("api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         ArrayLandData arrayLandData = new ArrayLandData();
         arrayLandData.landLists = landData.data;
@@ -101,8 +102,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
         arrayBridgeData.bridgeLists = bridgeData.data;
         //DataTemporary.MyBridgeData = arrayBridgeData;
 
-        ArrayTreeData arrayTreeData = new ArrayTreeData();
-        arrayTreeData.treeDataList = treeData.data;
+        //ArrayTreeData arrayTreeData = new ArrayTreeData();
+        //arrayTreeData.treeDataList = treeData.data;
 
 
         if (landData.result)
@@ -115,15 +116,16 @@ public class LoadingData : MonoBehaviourPunCallbacks
             Debug.Log(bridgeData.data);
             DataTemporary.MyBridgeData = arrayBridgeData;
         }
-        if (treeData.result)
-        {
-            Debug.Log(treeData.data);
-            DataTemporary.MyTreeData = arrayTreeData;
-        }
+        //if (treeData.result)
+        //{
+        //    Debug.Log(treeData.data);
+        //    DataTemporary.MyTreeData = arrayTreeData;
+        //}
 
         if (!m_testMode)
         {
-            if (landData.result && bridgeData.result && treeData.result)
+             //&& treeData.result
+            if (landData.result && bridgeData.result)
             {
                 //PhotonNetwork.LoadLevel(1);
                 isLoadingComplete = true;

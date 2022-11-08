@@ -46,7 +46,7 @@ public class UI_LandCustom : MonoBehaviour
         string customPath = Application.streamingAssetsPath + "/LandCustom/" + Cat;
         string imagePath = Application.streamingAssetsPath + "/LandCustomImage/";
 #elif UNITY_STANDALONE
-        DirectoryInfo di = new DirectoryInfo(Application.streamingAssetsPath + "/LandCustom/" + Cat);
+        string customPath = Application.streamingAssetsPath + "/LandCustom/" + Cat;
         string imagePath = Application.streamingAssetsPath + "/LandCustomImage/";
 #endif
         Debug.Log("55555555555555");
@@ -120,7 +120,7 @@ public class UI_LandCustom : MonoBehaviour
         DirectoryInfo di = new DirectoryInfo(Application.streamingAssetsPath + "/LandCustom/" + selectCatName);
         string customPath = Application.streamingAssetsPath + "/LandCustom/" + selectCatName;
 #elif UNITY_STANDALONE
-        DirectoryInfo di = new DirectoryInfo(Application.streamingAssetsPath + "/LandCustom/" + selectCatName);
+        string customPath = Application.streamingAssetsPath + "/LandCustom/" + selectCatName;
 #endif
         //string imagePath = Application.streamingAssetsPath + "/LandCustomImage/";
 
