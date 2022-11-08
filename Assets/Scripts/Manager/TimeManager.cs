@@ -79,7 +79,8 @@ public class TimeManager : MonoBehaviour
             skyChaneDone = true;
         }
         #endregion
-        #region Day +1
+
+        #region Day ++
         if (totalPlantDay==0 && Input.GetKeyDown(KeyCode.Alpha0))
         {
             CalculatePlantDays(now);
