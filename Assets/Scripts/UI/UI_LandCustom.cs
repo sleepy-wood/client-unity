@@ -11,24 +11,23 @@ public class UI_LandCustom : MonoBehaviour
     private GameObject itemWindow;
     private int selectCat = 0;
     private string selectCatName = "";
+    private AssetBundle assetBundle;
+    private AssetBundle assetBundleImg;
     private void Start()
     {
-        itemWindow = transform.GetChild(1).gameObject;
-#if UNITY_STANDALONE
-        DirectoryInfo di = new DirectoryInfo(Application.dataPath + "/Resources/LandCustom");
-#elif UNITY_IOS || UNITY_ANDROID
-        DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + "/Resources/LandCustom");
+        Debug.Log("111111111");
+#if UNITY_IOS
+        assetBundle = AssetBundle.LoadFromFile("file:" + Application.dataPath + "/Raw/" + "landcustombundle");
+        assetBundleImg = AssetBundle.LoadFromFile("file:" + Application.dataPath + "/Raw/" + "landcustomimg");
+#elif UNITY_ANDROID
+        assetBundle = AssetBundle.LoadFromFile("jar:file://" + Application.dataPath + "!/assets/" + "landcustombundle");
+        assetBundleImg = AssetBundle.LoadFromFile("jar:file://" + Application.dataPath + "!/assets/" + "landcustomimg");
+#elif UNITY_STANDALONE
+        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath  + "/landcustombundle");
+        assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/landcustomimg");
 #endif
-        //Category Button 생성
-        foreach(DirectoryInfo fi in di.GetDirectories())
-        {
-            GameObject objectButtonResource = Resources.Load<GameObject>("ObjectButton_");
-            GameObject objectButton = Instantiate(objectButtonResource);
-            objectButton.name = objectButton.name.Split('(')[0];
-            objectButton.name += fi.Name;
-            objectButton.transform.GetChild(0).GetComponent<Text>().text = fi.Name;
-            objectButton.transform.parent = transform.GetChild(2);
-        }
+        Debug.Log("222222222222");
+        itemWindow = transform.GetChild(1).gameObject;
 
         //버튼 이벤트 등록
         for(int i = 0; i < transform.GetChild(2).childCount; i++)
@@ -38,29 +37,40 @@ public class UI_LandCustom : MonoBehaviour
                 () => OnClickCategoryActive(transform.GetChild(2).GetChild(temp).GetChild(0).GetComponent<Text>().text, temp));
         }
 
+        Debug.Log("3333333333333");
         //초기값 0번째 버튼 활성화
         OnClickCategoryActive(transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>().text, 0);
     }
 
     public void OnClickCategoryActive(string Cat, int num)
     {
-#if UNITY_STANDALONE
-        DirectoryInfo di = new DirectoryInfo(Application.dataPath + "/Resources/LandCustom/" + Cat);
-#elif UNITY_IOS || UNITY_ANDROID
-        DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + "/Resources/LandCustom/" + Cat);
-        string imagePath = Application.persistentDataPath + "/Resources/LandCustomImage/";
+        Debug.Log("444444444444444");
+#if UNITY_IOS
+        DirectoryInfo di = new DirectoryInfo("file:" + Application.dataPath + "/Raw/" + "LandCustom/" + Cat);
+        string imagePath = "file:" + Application.dataPath + "/Raw/" + "LandCustomImage/";
+#elif UNITY_ANDROID
+        DirectoryInfo di = new DirectoryInfo("jar:file://" + Application.dataPath + "!/assets/" + "LandCustom/" + Cat);
+        string imagePath = "jar:file://" + Application.dataPath + "!/assets" + "/LandCustomImage/";
+#elif UNITY_STANDALONE
+        DirectoryInfo di = new DirectoryInfo(Application.streamingAssetsPath + "/LandCustom/" + Cat);
+        string imagePath = Application.streamingAssetsPath + "/LandCustomImage/";
 #endif
+        Debug.Log("55555555555555");
         selectCatName = Cat;
         selectCat = num;
         int cnt = 0;
         //썸네일 넣기
+        Debug.Log("666666666666");
+        
         foreach (FileInfo fi in di.GetFiles())
         {
             if (fi.Name.Split('.').Length > 2)
             {
                 continue;
             }
-            Sprite resource = Resources.Load<Sprite>("LandCustomImage/" + fi.Name.Split('.')[0]);
+
+            Sprite resource = assetBundleImg.LoadAsset<Sprite>(fi.Name.Split('.')[0]);
+
             itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite =
                 Instantiate(resource);
             Color color = itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().color;
@@ -70,9 +80,10 @@ public class UI_LandCustom : MonoBehaviour
 
             cnt++;
         }
+        Debug.Log("7777777777777");
 
         //나머지 버튼들은 비활성화
-        for(int i = cnt; i < 15; i++)
+        for (int i = cnt; i < 15; i++)
         {
             itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite = Instantiate(Resources.Load<Sprite>("LandCustomImage/ButtonBg"));
             Color color = itemWindow.transform.GetChild(i / 5).GetChild(i % 5).GetComponent<Image>().color;
@@ -87,12 +98,17 @@ public class UI_LandCustom : MonoBehaviour
     /// <param name="i"></param>
     public void OnClickCreateObject(int i)
     {
-#if UNITY_STANDALONE
-        DirectoryInfo di = new DirectoryInfo(Application.dataPath + "/Resources/LandCustom/" + selectCatName);
-#elif UNITY_IOS || UNITY_ANDROID
-        DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath + "/Resources/LandCustom/" + selectCatName);
-        string imagePath = Application.persistentDataPath + "/Resources/LandCustomImage/";
+        Debug.Log("888888888888888");
+#if UNITY_IOS
+        DirectoryInfo di = new DirectoryInfo("file:" + Application.dataPath + "/Raw/" + "LandCustom/" + selectCatName);
+#elif UNITY_ANDROID
+        DirectoryInfo di = new DirectoryInfo("jar:file://" + Application.dataPath + "!/assets/" + "LandCustom/" + selectCatName);
+#elif UNITY_STANDALONE
+        DirectoryInfo di = new DirectoryInfo(Application.streamingAssetsPath + "/LandCustom/" + selectCatName);
 #endif
+        //string imagePath = Application.streamingAssetsPath + "/LandCustomImage/";
+
+        Debug.Log("9999999999999");
         int cnt = 0;
         //썸네일 넣기
         foreach (FileInfo fi in di.GetFiles())
@@ -103,7 +119,7 @@ public class UI_LandCustom : MonoBehaviour
             }
             if(cnt == i)
             {
-                GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fi.Name.Split('.')[0]);
+                GameObject resource = assetBundle.LoadAsset<GameObject>(fi.Name.Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
                 prefab.name = prefab.name.Split('(')[0];
                 prefab.transform.position = new Vector3(0, 0.5f, 0);
@@ -137,6 +153,7 @@ public class UI_LandCustom : MonoBehaviour
     {
         if (!isActiveCanvase)
         {
+            isActiveCanvase = true;
             for(int i = 0; i < transform.childCount; i++)
             {
                 if (i != 0)
@@ -145,6 +162,7 @@ public class UI_LandCustom : MonoBehaviour
         }
         else
         {
+            isActiveCanvase = false;
             for (int i = 0; i < transform.childCount; i++)
             {
                 if (i != 0)
