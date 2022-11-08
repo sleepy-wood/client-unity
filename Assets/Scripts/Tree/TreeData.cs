@@ -11,10 +11,14 @@ using System;
 [Serializable]
 public class TreePipelineData
 {
+    public int pipeid;
     // 나무 scale
     public float scale;
-    // 나무 가지 개수
-    public List<int>? branchNums;
+    // 나무 가지 개수(4)
+    public int branch1;
+    public int branch2;
+    public int branch3;
+    public int branch4;
     // 나무 기둥 길이
     public float trunkLength;
     // 나뭇잎 개수
@@ -27,25 +31,30 @@ public class TreePipelineData
     public int rootNum;
     // 나무가지 텍스처 이름
     public string? barkTexture;
-    // 나뭇잎 enabled 상태
-    public List<bool>? sproutEnabled;
+    // 활성화할 sprout Texture index
+    public int? sproutIndex;
+
+    public DateTime createdAt;
+    public DateTime updatedAt;
 }
 
 [Serializable]
 public class TreeData
 {
+    public int treeid;
     // seed 번호
     public int seedNumber;
     // 나무 이름
     public string? treeName;
     // 나무 종류
     public string ?seedType; 
-    // 처음 심은 날짜
-    public DateTime firstPlantDate;
     // 나무 파이프라인 관련 정보
     public TreePipelineData? treePipelineData;
     // 현재 land ID
     public int landID;
+    // 나무 생성 날짜
+    public DateTime createdAt;
+    public DateTime updatedAt;
 }
 
 [Serializable]

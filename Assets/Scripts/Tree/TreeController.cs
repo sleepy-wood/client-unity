@@ -471,7 +471,7 @@ public class TreeController : MonoBehaviour
         // Seed Type
         treeData.seedType = selectedSeed.ToString();
         // First Plant Day
-        treeData.firstPlantDate = GameManager.Instance.timeManager.firstPlantDate;
+        treeData.createdAt = GameManager.Instance.timeManager.firstPlantDate;
         // Tree Pipeline Data
         TreePipelineData pipeData = new TreePipelineData();
         #region Tree Pipeline Data                         
