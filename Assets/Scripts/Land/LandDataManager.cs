@@ -302,7 +302,7 @@ public class LandDataManager : MonoBehaviour
         user.GetComponent<Rigidbody>().useGravity = false;
 
        for(int i = 0; i < arrayLandData.landLists.Count; i++)
-        {
+       {
             //Land 자체를 생성
             GameObject landResource = Resources.Load<GameObject>("SkyLand");
             GameObject land = Instantiate(landResource);

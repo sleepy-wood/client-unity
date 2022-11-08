@@ -171,6 +171,7 @@ public class TreeController : MonoBehaviour
 
     bool isOnce;
     bool isOnce2;
+    bool isOnce3;
     public Texture2D barkTexture;
     void Update()
     {
@@ -246,6 +247,12 @@ public class TreeController : MonoBehaviour
         //    treeFactory.gameObject.transform.parent = growPos;
         //}
         #endregion
+
+        if (dayCount==5 && !isOnce3)
+        {
+            isOnce3 = true;
+            SaveTreeData();
+        }
     }
 
     #region 씨앗 심기 코루틴
@@ -452,7 +459,7 @@ public class TreeController : MonoBehaviour
     /// 현재 User의 Tree Data 저장
     /// </summary>
     public Transform previewTree;
-    public async void SaveTreeData()
+    public void SaveTreeData()
     {
         List<TreeData> treeDatas = new List<TreeData>();
         TreeData treeData = new TreeData();
@@ -461,6 +468,8 @@ public class TreeController : MonoBehaviour
         treeData.seedNumber = treePipeline.seed;
         // Tree Name
         treeData.treeName = treeName;
+        // Seed Type
+        treeData.seedType = selectedSeed.ToString();
         // First Plant Day
         treeData.firstPlantDate = GameManager.Instance.timeManager.firstPlantDate;
         // Tree Pipeline Data
@@ -470,61 +479,131 @@ public class TreeController : MonoBehaviour
         pipeData.scale = previewTree.localScale.x;
         // Branch Numbers
         int levels = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
-        for (int i = 0; i < levels-1; i++)
+        List<int> branch = new List<int>();
+        for (int i = 0; i < levels; i++)
         {
-            pipeData.branchNums[i] = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency;
+            branch.Add(treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency);
         }
+        pipeData.branchNums = branch;
         // Sprout Num
         pipeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].minFrequency;
-        // Tree Bending (Noise)
-        pipeData.bending = treePipeline._serializedPipeline.branchBenders[0].noiseScaleAtBase;
         // Gravity
         pipeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
-        // Root Num
+        // Root Num                       
         int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
         pipeData.rootNum = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[idx - 1].minFrequency;
-        // Bark Texture
-        pipeData.barkTexture = treePipeline._serializedPipeline.barkMappers[0].mainTexture;
+        // Bark Texture Name
+        pipeData.barkTexture = treePipeline._serializedPipeline.barkMappers[0].mainTexture.name;
         // Sprout Enabled
         int n = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps.Count;
+        List<bool> sprout = new List<bool>();
         for (int i=0; i<n; i++)
         {
-            pipeData.sproutEnabled[i] = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled;
+            sprout.Add(treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled);
         }
+        pipeData.sproutEnabled = sprout;
         #endregion
-        // Save Pipe Data
         treeData.treePipelineData = pipeData;
         // Land ID
-        treeData.landID = DataTemporary.MyLandData.landLists[0].unityLandId;
+        treeData.landID = 1;
 
         string treeJsonData = JsonUtility.ToJson(treeData);
 
         // Web
-        ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
-            "/api/v1/trees/" + "",
-            DataModule.NetworkType.PUT,
-            DataModule.DataType.BUFFER,
-            treeJsonData);
+        //ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
+        //    "/api/v1/trees/" + "",
+        //    DataModule.NetworkType.PUT,
+        //    DataModule.DataType.BUFFER,
+        //    treeJsonData);
 
-        if (!resultPut.result)
-        {
-            Debug.LogError("WebRequestError : NetworkType[Put]");
-        }
+        //if (!resultPut.result)
+        //{
+        //    Debug.LogError("WebRequestError : NetworkType[Put]");
+        //}
+        //treeDatas.Add(treeData);
+
         treeDatas.Add(treeData);
-
         ArrayTreeData arrayTreeData = new ArrayTreeData();
         arrayTreeData.treeDataList = treeDatas;
 
         // DataTemporary
         DataTemporary.MyTreeData = arrayTreeData;
+
+        //File 형식으로 Update or Save
+        FileManager.SaveDataFile("TreeData", arrayTreeData);
     }
 
     /// <summary>
     /// Tree Data Load하는 함수
     /// </summary>
+    public Text txtTreeName;
+    public int rotten;
     public void LoadTreeData()
     {
         ArrayTreeData arrayTreeData = DataTemporary.MyTreeData;
         assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/newtreebundle");
+
+        // 기본 세팅값 찾기
+        FindtreeSetting();
+
+        // Tree Pipeline 로드
+        TreeData treeData = arrayTreeData.treeDataList[0];
+        pipeName = treeData.seedType;
+        treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+        // Pipeline 기본 세팅
+        PipelineSetting();
+
+        // seed Number
+        treePipeline.seed = treeData.seedNumber;
+        // Tree Name
+        txtTreeName.text = treeData.treeName;
+        // seedType
+        selectedSeed = (SeedType)System.Enum.Parse(typeof(SeedType), treeData.seedType);
+        // First Plant Date
+        GameManager.Instance.timeManager.firstPlantDate = treeData.firstPlantDate;
+        // tree Pipeline Data
+        TreePipelineData pipeData = treeData.treePipelineData;
+
+        float p = pipeData.scale;
+        previewTree.localScale = new Vector3(p, p, p);
+
+        for (int i=0; i < pipeData.branchNums.Count; i++)
+        {
+            int bn = pipeData.branchNums[i];
+            treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minFrequency = bn;
+            treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxFrequency = bn;
+        }
+
+        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxLengthAtBase = pipeData.trunkLength;
+        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase = pipeData.trunkLength;
+
+        treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = pipeData.sproutNum;
+        treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = pipeData.sproutNum;
+
+        // 나뭇잎 썩은 비율
+
+        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtBase = pipeData.gravity;
+        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtBase = pipeData.gravity;
+
+        for (int i = 0; i < 4; i++)
+        {
+            treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minGravityAlignAtBase = pipeData.gravity;
+            treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxGravityAlignAtBase = pipeData.gravity;
+        }
+
+        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = pipeData.rootNum;
+        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = pipeData.rootNum;
+
+        string name = pipeData.barkTexture;
+        Texture2D texture = Resources.Load("Tree/Sprites/" + name) as Texture2D;
+        treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
+
+        int s = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas.Count;
+        for (int i=0; i<s; i++)
+        {
+            treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = pipeData.sproutEnabled[i];
+        }
+            
+
     }
 }
