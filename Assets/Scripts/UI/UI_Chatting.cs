@@ -19,11 +19,13 @@ public class UI_Chatting : MonoBehaviourPun
     private RectTransform trScrollView;
     //내 아이디 색
     Color32 idColor;
-
     private Vector3 startPos;
     private Vector3 endPos;
+    private GameObject user;
+
     private void Awake()
     {
+        user = GameManager.Instance.User;
         trScrollView = transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<RectTransform>();
         chatting = transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<InputField>();
         chatPrefab = Resources.Load<GameObject>("Chat_Text");
@@ -113,6 +115,23 @@ public class UI_Chatting : MonoBehaviourPun
         chatting.ActivateInputField();
     }
 
+    bool isActiveChat = false;
+    public void OnClickActiveChat()
+    {
+        if (!isActiveChat)
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+            isActiveChat = true;
+            user.GetComponent<UserInteract>().moveControl = true;
+        }
+        else
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+            isActiveChat = false;
+            user.GetComponent<UserInteract>().moveControl = false;
+        }
+
+    }
     IEnumerator AutoScrollBotton()
     {
         yield return null;
