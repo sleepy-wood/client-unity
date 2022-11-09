@@ -11,7 +11,8 @@ using System;
 [Serializable]
 public class TreePipelineData
 {
-    public int pipeid;
+    public int pipeId;
+    public int treeGrowthId;
     // 나무 scale
     public float scale;
     // 나무 가지 개수(4)
@@ -39,9 +40,19 @@ public class TreePipelineData
 }
 
 [Serializable]
+public class TreeGrowth
+{
+    public int growId;
+    public int treeDay;
+    public int treeId;  
+    public DateTime createdAt;
+    public DateTime deletedAt;
+}
+
+[Serializable]
 public class TreeData
 {
-    public int treeid;
+    public int treeDataId;
     // seed 번호
     public int seedNumber;
     // 나무 이름
