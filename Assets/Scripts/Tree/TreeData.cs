@@ -9,10 +9,25 @@ using System;
 // User - Tree - TreeMetaData (1일차,2일차,3일차,4일차,5일차) - TreePipelineData
 
 [Serializable]
-public class TreePipelineData
+public class TreeGrowth
 {
-    public int pipeId;
-    public int treeGrowthId;
+    public int growId;
+    public int treeDay;
+    public int treeId;  
+}
+
+[Serializable]
+public class TreeData
+{
+    // 나무 이름
+    public string? treeName;
+    // seed 번호
+    public int seedNumber;
+    // 나무 종류
+    public string? seedType;
+    // 현재 land ID
+    public int landID;
+
     // 나무 scale
     public float scale;
     // 나무 가지 개수
@@ -34,38 +49,6 @@ public class TreePipelineData
     public string? barkTexture;
     // 활성화할 sprout Texture index
     public int? sproutIndex;
-    // 나무 첫 생성 시간
-    public DateTime createdAt;
-    public DateTime updatedAt;
-}
-
-[Serializable]
-public class TreeGrowth
-{
-    public int growId;
-    public int treeDay;
-    public int treeId;  
-    public DateTime createdAt;
-    public DateTime deletedAt;
-}
-
-[Serializable]
-public class TreeData
-{
-    public int treeDataId;
-    // seed 번호
-    public int seedNumber;
-    // 나무 이름
-    public string? treeName;
-    // 나무 종류
-    public string ?seedType; 
-    // 나무 파이프라인 관련 정보
-    public TreePipelineData? treePipelineData;
-    // 현재 land ID
-    public int landID;
-    // 나무 생성 날짜
-    public DateTime createdAt;
-    public DateTime updatedAt;
 }
 
 [Serializable]

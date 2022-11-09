@@ -6,6 +6,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+using Broccoli.Factory;
+using Broccoli.Pipe;
+using Broccoli.Generator;
+using System;
+
 public class UI_Initial : MonoBehaviour
 {
     #region Variable
@@ -26,6 +31,11 @@ public class UI_Initial : MonoBehaviour
     public Button btnPlantName;
 
     public InputField inputPlantName;
+    public InputField inputYear;
+    public InputField inputMonth;
+    public InputField inputDay;
+    public InputField inputHour;
+    public InputField inputSeed;
 
     public TimeManager timeManager;
 
@@ -40,6 +50,7 @@ public class UI_Initial : MonoBehaviour
         //{
         //    gameObject.SetActive(false);
         //}
+        developerUI.anchoredPosition = new Vector2(-329, -15);
 
     }
 
@@ -157,6 +168,46 @@ public class UI_Initial : MonoBehaviour
             yield return null;
         }
         developerUI.anchoredPosition = to;
+    }
+    /// <summary>
+    /// 개발자 모드에서 시작 시간 입력 후 확인 버튼 눌렀을 시 호출
+    /// </summary>
+    public int year;
+    public int month;
+    public int day;
+    public int hour;
+    public void OnStartTime()
+    {
+        bool cond1 = inputYear.text.Length == 4;
+        bool cond2 = inputMonth.text.Length > 0;
+        bool cond3 = inputDay.text.Length > 0;
+        bool cond4 = inputHour.text.Length > 0;
+        if (cond1 && cond2 && cond3 && cond4)
+        {
+            year = int.Parse(inputYear.text);
+            month = int.Parse(inputMonth.text);
+            day = int.Parse(inputDay.text);
+            hour = int.Parse(inputHour.text);
+
+            // 시작 시간 저장
+            GameManager.Instance.timeManager.firstPlantDate = new DateTime(year, month, day, hour, 0, 0);
+
+            inputYear.text = "";
+            inputMonth.text = "";
+            inputDay.text = "";
+            inputHour.text = "";
+        }
+
+    }
+    /// <summary>
+    /// 개발자 모드에서 랜덤 시드 번호 입력 후 입력 버튼 눌렀을 시 호출
+    /// </summary>
+    public void OnRandomSeed()
+    {
+        Pipeline pipe = GameManager.Instance.treeController.treePipeline;
+        pipe.seed = int.Parse(inputSeed.text);
+        inputSeed.text = "";
+        GameManager.Instance.treeController.TreeReload();
     }
 
     /// <summary>
