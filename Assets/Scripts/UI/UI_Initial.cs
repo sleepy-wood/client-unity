@@ -16,6 +16,8 @@ public class UI_Initial : MonoBehaviour
     public GameObject sleepDataUI;
     public GameObject plantNameUI;
 
+    public RectTransform developerUI;
+    public RectTransform dayCountFlag;
     public Transform previewTreePos;
 
     public Text txtAge;
@@ -127,5 +129,68 @@ public class UI_Initial : MonoBehaviour
         treeName.text = inputPlantName.text;
         GameManager.Instance.treeController.treeName = inputPlantName.text;
         plantNameUI.SetActive(false);
+    }
+
+    /// <summary>
+    /// 개발자 모드 버튼 나오게 하기
+    /// </summary>
+    public void OnDevloperUI()
+    {
+        Vector2 pos = developerUI.anchoredPosition;
+        StartCoroutine(UILerp(pos, new Vector2(272, pos.y), 2, developerUI));
+    }
+    /// <summary>
+    /// UI Lerp 이동
+    /// </summary>
+    /// <param name="from"> UI 본래 위치 </param>
+    /// <param name="to"> UI가 이동할 위치 </param>
+    /// <param name="speed"> UI 이동 속도 </param>
+    /// <param name="rect"> 움직일 UI의 RectTransform </param>
+    /// <returns></returns>
+    IEnumerator UILerp(Vector2 from, Vector2 to, float speed, RectTransform rect)
+    {
+        float t = 0;
+        while (t<1)
+        {
+            t += speed * Time.deltaTime;
+            rect.anchoredPosition = Vector2.Lerp(from, to, t);
+            yield return null;
+        }
+        developerUI.anchoredPosition = to;
+    }
+
+    /// <summary>
+    /// 개발자 모드에서 일차 수 선택했을 때 실행되는 함수들
+    /// </summary>
+    public void OnClickDay1()
+    {
+        StartCoroutine(PlusDayFlag(2, 1));
+    }
+    public void OnClickDay2()
+    {
+        StartCoroutine(PlusDayFlag(2, 2));
+    }
+    public void OnClickDay3()
+    {
+        StartCoroutine(PlusDayFlag(2, 3));
+    }
+    public void OnClickDay4()
+    {
+        StartCoroutine(PlusDayFlag(2, 4));
+    }
+    public void OnClickDay5()
+    {
+        StartCoroutine(PlusDayFlag(2, 5));
+    }
+    IEnumerator PlusDayFlag(float speed, float day)
+    {
+        float t = 0;
+        while (t < 1)
+        {
+            t += speed * Time.deltaTime;
+            dayCountFlag.sizeDelta = Vector2.Lerp(dayCountFlag.sizeDelta, new Vector2(day*20, dayCountFlag.sizeDelta.y), t);
+            yield return null;
+        }
+        dayCountFlag.sizeDelta = new Vector2(day * 20, dayCountFlag.sizeDelta.y);
     }
 }

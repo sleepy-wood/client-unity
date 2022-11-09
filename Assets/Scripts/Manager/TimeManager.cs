@@ -46,10 +46,15 @@ public class TimeManager : MonoBehaviour
     int i=0;
     private void Update()
     {
+        //now = DateTime.Now;
+        //txtCurrentTime.text = now.dateTime.ToString("tt h : mm : ss");
+
+        
         # region skyBox 변화 시연
         // 특정 시간 지정
         if (i == 0 && Input.GetKeyDown(KeyCode.Alpha2))
         {
+            //now = now.dateTime.AddHours(6);
             int month = int.Parse(DateTime.Now.ToString("MM"));
             int day = int.Parse(DateTime.Now.ToString("dd"));
             // 일몰 시간
