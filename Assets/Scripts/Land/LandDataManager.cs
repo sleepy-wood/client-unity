@@ -61,10 +61,10 @@ public class LandDataManager : MonoBehaviour
         {
             minimapObject[i].SetActive(false);
         }
-        //LoadLandData();
-        //LoadBridge();
-        SaveLandData();
-        SaveBridgeData();
+        LoadLandData();
+        LoadBridge();
+        //SaveLandData();
+        //SaveBridgeData();
     }
 
     private void Update()
