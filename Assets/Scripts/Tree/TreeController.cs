@@ -145,7 +145,7 @@ public class TreeController : MonoBehaviour
 
         // 나무 형태 Random 선택
         int i = UnityEngine.Random.Range(0, pipeNameList.Count);
-        pipeName = pipeNameList[3];
+        pipeName = pipeNameList[i];
         print("Random Number : " + i);
         selectedSeed = pipeNameDict[pipeName];
         print(pipeName + " Selected");
@@ -522,7 +522,7 @@ public class TreeController : MonoBehaviour
 
         treeDatas.Add(treeData);
         ArrayTreeData arrayTreeData = new ArrayTreeData();
-        arrayTreeData.treeDataList = treeDatas;
+        arrayTreeData.treeDataList = treeDatas;                       
 
         // DataTemporary
         DataTemporary.MyTreeData = arrayTreeData;
