@@ -121,11 +121,8 @@ public class UI_Chatting : MonoBehaviourPun
             + ": " + s;
         photonView.RPC("RpcAddChat", RpcTarget.All, chat);
 
-        //방법1. InputField 내용 초기화 하는법
-        //chatting.text = "";
+        chatting.text = "";
 
-        //방법2. InputField 계속해서 쓸 수 있게 Focus하는법
-        chatting.ActivateInputField();
     }
 
     bool isActiveChat = false;
