@@ -13,11 +13,11 @@ public class UI_Chatting : MonoBehaviourPun
     {
         if (PhotonNetwork.PlayerList.Length <= 1)
         {
-            transform.GetChild(0).gameObject.SetActive(false);
+            //transform.GetChild(0).gameObject.SetActive(false);
         }
         else
         {
-            transform.GetChild(0).gameObject.SetActive(true);
+            //transform.GetChild(0).gameObject.SetActive(true);
         }
     }
     private void Awake()
