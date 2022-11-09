@@ -23,7 +23,7 @@ public class UI_Chatting : MonoBehaviourPun
     private Vector3 endPos;
     private GameObject user;
 
-    private void Awake()
+    private void Start()
     {
         user = GameManager.Instance.User;
         trScrollView = transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<RectTransform>();
@@ -40,6 +40,19 @@ public class UI_Chatting : MonoBehaviourPun
     }
     private void Update()
     {
+        if (user)
+        {
+            //사용자 입력 제어
+            if (transform.GetChild(0).gameObject.activeSelf)
+            {
+                user.GetComponent<UserInput>().InputControl = true;
+            }
+            else
+            {
+                user.GetComponent<UserInput>().InputControl = false;
+            }
+        }
+
         if (PhotonNetwork.PlayerList.Length <= 1)
         {
             //transform.GetChild(0).gameObject.SetActive(false);
@@ -122,13 +135,11 @@ public class UI_Chatting : MonoBehaviourPun
         {
             transform.GetChild(0).gameObject.SetActive(true);
             isActiveChat = true;
-            user.GetComponent<UserInteract>().moveControl = true;
         }
         else
         {
             transform.GetChild(0).gameObject.SetActive(false);
             isActiveChat = false;
-            user.GetComponent<UserInteract>().moveControl = false;
         }
 
     }
