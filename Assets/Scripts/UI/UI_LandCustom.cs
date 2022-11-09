@@ -16,13 +16,8 @@ public class UI_LandCustom : MonoBehaviour
     private void Start()
     {
         Debug.Log("111111111");
-#if UNITY_IOS ||UNITY_ANDROID
         assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath  + "/AssetBundles/landcustombundle");
         assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustomimg");
-#elif UNITY_STANDALONE
-        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath  + "/landcustombundle");
-        assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/landcustomimg");
-#endif
         Debug.Log("222222222222");
         itemWindow = transform.GetChild(1).gameObject;
 
@@ -42,13 +37,8 @@ public class UI_LandCustom : MonoBehaviour
     public void OnClickCategoryActive(string Cat, int num)
     {
         Debug.Log("444444444444444");
-#if UNITY_IOS|| UNITY_ANDROID
         string customPath = Application.streamingAssetsPath + "/LandCustom/" + Cat;
         string imagePath = Application.streamingAssetsPath + "/LandCustomImage/";
-#elif UNITY_STANDALONE
-        string customPath = Application.streamingAssetsPath + "/LandCustom/" + Cat;
-        string imagePath = Application.streamingAssetsPath + "/LandCustomImage/";
-#endif
         Debug.Log("55555555555555");
         selectCatName = Cat;
         selectCat = num;
@@ -109,12 +99,8 @@ public class UI_LandCustom : MonoBehaviour
     public void OnClickCreateObject(int i)
     {
         Debug.Log("888888888888888");
-#if UNITY_IOS || UNITY_ANDROID
         DirectoryInfo di = new DirectoryInfo(Application.streamingAssetsPath + "/LandCustom/" + selectCatName);
         string customPath = Application.streamingAssetsPath + "/LandCustom/" + selectCatName;
-#elif UNITY_STANDALONE
-        string customPath = Application.streamingAssetsPath + "/LandCustom/" + selectCatName;
-#endif
         //string imagePath = Application.streamingAssetsPath + "/LandCustomImage/";
 
         Debug.Log("9999999999999");

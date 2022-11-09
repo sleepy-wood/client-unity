@@ -13,18 +13,15 @@ public class LandCustom : MonoBehaviour
     public enum EditType
     {
         Camera,
-        Move,
-        Rotate,
-        Scale,
-        Delete
+        Editor
     }
 
     [Header("Zoom In / Out")]
     [SerializeField] private float zoomSpeed = 20;
     [Header("Edit Custom Tool")]
     [SerializeField] private GameObject editButton;
-    [Header("Edit Buttons")]
-    [SerializeField] private List<GameObject> buttons = new List<GameObject>();
+    [Header("Edit Check Canvas")]
+    [SerializeField] private RectTransform checkCanvas;
 
     //현재 고른 상태인가?
     private SelectState selectState = SelectState.None;
@@ -47,7 +44,8 @@ public class LandCustom : MonoBehaviour
         if (selectState == SelectState.None)
         {
             //선택
-            editButton.SetActive(false);
+            checkCanvas.gameObject.SetActive(false);
+            editButton.transform.GetChild(1).gameObject.SetActive(false);
             if (userInput.Interact)
             {
                 Vector3 mousePos = Input.mousePosition;
@@ -74,11 +72,12 @@ public class LandCustom : MonoBehaviour
                             if (hit.transform.parent.GetChild(i).GetComponent<Outline>())
                                 hit.transform.parent.GetChild(i).GetComponent<Outline>().enabled = true;
                         }
+                       
                     }
                     else
                     {
                         hit.transform.gameObject.layer = LayerMask.NameToLayer("Selected");
-                        
+
                         if (hit.transform.GetComponent<Outline>())
                         {
                             hit.transform.GetComponent<Outline>().enabled = true;
@@ -91,79 +90,29 @@ public class LandCustom : MonoBehaviour
                         }
 
                     }
-                    //Debug.Log("Select = " + hit.transform);
+                    editType = EditType.Editor;
                     selectState = SelectState.Selected;
 
-                    //클릭된 버튼 색깔 초기화
-                    buttons[0].GetComponent<Image>().color = new Color32(150, 150, 150, 255);
-                    for (int j = 1; j < buttons.Count; j++)
-                    {
-                        buttons[j].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-                    }
                 }
             }
         }
         else
         {
-            editButton.SetActive(true);
-            if (userInput.Interact)
+           
+            switch (editType)
             {
-                if (!isActiveMove)
-                {
-                    //선택 취소
-                    Vector3 mousePos = Input.mousePosition;
-                    Ray ray = cam.ScreenPointToRay(mousePos);
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                    {
-                        if (hit.transform.gameObject.layer == selectedObject.layer)
-                        {
-                            //아웃라인 끄기
-                            if (selectedObject.transform.GetComponent<Outline>())
-                            {
-                                selectedObject.transform.GetComponent<Outline>().enabled = false;
-                            }
-                            for (int i = 0; i < selectedObject.transform.childCount; i++)
-                            {
-                                selectedObject.transform.GetChild(i).gameObject.layer = preLayer;
-                                if (selectedObject.transform.GetChild(i).GetComponent<Outline>())
-                                {
-                                    selectedObject.transform.GetChild(i).GetComponent<Outline>().enabled = false;
-                                }
-                            }
-                            selectedObject.layer = preLayer;
-                            selectedObject = null;
-                            selectState = SelectState.None;
-                        }
-                    }
-                }
-                else if (isActiveMove)
-                {
-                    isActiveMove = false;
-                }
+                case EditType.Editor:
+                    checkCanvas.gameObject.SetActive(true);
+                    editButton.transform.GetChild(1).gameObject.SetActive(true);
+                    RotateMode();
+                    MoveMode();
+                    ScaleMode();
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                switch (editType)
-                {
-                    case EditType.Move:
-                        MoveMode();
-                        break;
-                    case EditType.Rotate:
-                        RotateMode();
-                        break;
-                    case EditType.Scale:
-                        ScaleMode();
-                        break;
-                    case EditType.Delete:
-                        DeleteMode();
-                        break;
-                    default:
-                        break;
-                }
-            }
+            CanvasSetting();
         }
-
         switch (editType)
         {
             case EditType.Camera:
@@ -175,21 +124,48 @@ public class LandCustom : MonoBehaviour
     }
 
     /// <summary>
-    /// 오브젝트 삭제
+    /// 오브젝트 확정 
     /// </summary>
-    void DeleteMode()
+    public void OnClickCheck()
     {
-        if (!userInput.LongInteract)
+        Debug.Log("Click");
+        if (selectedObject.transform.GetComponent<Outline>())
         {
-            Debug.Log("LongTouch");
-            Destroy(selectedObject);
-            selectedObject = null;
-            isActiveMove = false;
-            selectState = SelectState.None;
+            selectedObject.transform.GetComponent<Outline>().enabled = false;
         }
+        for (int i = 0; i < selectedObject.transform.childCount; i++)
+        {
+            selectedObject.transform.GetChild(i).gameObject.layer = preLayer;
+            if (selectedObject.transform.GetChild(i).GetComponent<Outline>())
+            {
+                selectedObject.transform.GetChild(i).GetComponent<Outline>().enabled = false;
+            }
+        }
+        selectedObject.layer = preLayer;
+        selectedObject = null;
+        selectState = SelectState.None;
         editType = EditType.Camera;
     }
-
+    /// <summary>
+    /// 오브젝트 삭제
+    /// </summary>
+    public void OnClickDelete()
+    {
+        Debug.Log("Delete");
+        Destroy(selectedObject);
+        selectedObject = null;
+        isActiveMove = false;
+        selectState = SelectState.None;
+        editType = EditType.Camera;
+    }
+    /// <summary>
+    /// 확정여부와 삭제 여부를 결정한 캔버스가 나를 쳐다보게 하
+    /// </summary>
+    void CanvasSetting()
+    {
+        checkCanvas.position = selectedObject.transform.position + new Vector3(0, selectedObject.transform.localScale.y / 2 + 1, 0);
+        checkCanvas.LookAt(transform);
+    }
     /// <summary>
     /// 카메라 모드
     /// </summary>
@@ -207,12 +183,17 @@ public class LandCustom : MonoBehaviour
     }
 
 
+    Vector3 preScale = Vector3.zero;
     /// <summary>
     /// 오브젝트 스케일 조정
     /// </summary>
     void ScaleMode()
     {
-        selectedObject.transform.localScale += new Vector3(userInput.Zoom, userInput.Zoom, userInput.Zoom);
+        if (preScale != new Vector3(userInput.Zoom, userInput.Zoom, userInput.Zoom))
+        {
+            preScale = new Vector3(userInput.Zoom, userInput.Zoom, userInput.Zoom);
+            selectedObject.transform.localScale += new Vector3(userInput.Zoom, userInput.Zoom, userInput.Zoom) * 0.1f;
+        }
     }
 
     /// <summary>
@@ -220,7 +201,7 @@ public class LandCustom : MonoBehaviour
     /// </summary>
     void RotateMode()
     {
-        selectedObject.transform.Rotate(selectedObject.transform.up, -userInput.RotateX * 3);
+        selectedObject.transform.Rotate(selectedObject.transform.up, -userInput.RotateX * 2);
     }
 
     bool isActiveMove = false;
@@ -271,23 +252,16 @@ public class LandCustom : MonoBehaviour
 
     public void OnClickEditSelect(int i)
     {
-        //클릭된 버튼 색 변경하기
-        //설명 창 초기
-        for (int j = 0; j < buttons.Count; j++)
+        //클릭된 버튼 색 변경하
+        for (int j = 0; j < editButton.transform.childCount; j++)
         {
-            Color color = editButton.transform.GetChild(j).GetChild(1).GetComponent<Image>().color;
-            color.a = 0;
-            editButton.transform.GetChild(j).GetChild(1).GetComponent<Image>().color = color;
-            editButton.transform.GetChild(j).GetChild(1).gameObject.SetActive(false);
             if (j + 1 == i && i != 5)
             {
-                Debug.Log(j);
-                buttons[j].GetComponent<Image>().color = new Color32(150, 150, 150, 255);
-                Debug.Log(buttons[j].GetComponent<Image>().color);
+                editButton.transform.GetChild(j).GetComponent<Image>().color = new Color32(150, 150, 150, 255);
             }
             else
             {
-                buttons[j].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                editButton.transform.GetChild(j).GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
         }
         //상태 변경
@@ -297,17 +271,8 @@ public class LandCustom : MonoBehaviour
                 editType = EditType.Camera;
                 break;
             case 2:
-                editType = EditType.Move;
+                editType = EditType.Editor;
                 isActiveMove = true;
-                break;
-            case 3:
-                editType = EditType.Rotate;
-                break;
-            case 4:
-                editType = EditType.Scale;
-                break;
-            case 5:
-                editType = EditType.Delete;
                 break;
             default:
                 break;

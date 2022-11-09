@@ -160,13 +160,11 @@ public class UserInput : MonoBehaviour
 
             if (currentState == TouchState.Touch)
             {
-                Debug.Log("터치 ");
                 Interact = true;
                 currentState = TouchState.None;
             }
             else if (currentState == TouchState.LongTouch)
             {
-                Debug.Log("롱터치 ");
                 LongInteract = true;
                 currentState = TouchState.None;
             }
