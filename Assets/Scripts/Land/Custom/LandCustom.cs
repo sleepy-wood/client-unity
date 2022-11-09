@@ -163,7 +163,7 @@ public class LandCustom : MonoBehaviour
     /// </summary>
     void CanvasSetting()
     {
-        checkCanvas.position = selectedObject.transform.position + new Vector3(0, selectedObject.transform.localScale.y / 2 + 1, 0);
+        checkCanvas.position = selectedObject.transform.position + new Vector3(selectedObject.transform.localScale.x / 2, selectedObject.transform.localScale.y / 2 + 1, 0);
         checkCanvas.LookAt(transform);
     }
     /// <summary>
