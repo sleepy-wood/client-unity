@@ -18,15 +18,29 @@ public class TimeManager : MonoBehaviour
     public UDateTime firstPlantDate;
     public Text txtAge;
 
+    private void Awake()
+    {
+        // firstPlantDate로 방문타입 결정  => 5일차 후 새로운 Seed심기 전 null값 처리필요
+        if (firstPlantDate == null)
+        {
+            print("First Visit");
+            GameManager.Instance.treeController.visitType = TreeController.VisitType.First;
+        }
+        else
+        {
+            print("Revisit");
+            GameManager.Instance.treeController.visitType = TreeController.VisitType.ReVisit;
+        }
+    }
+
     private void Start()
     {
-        firstPlantDate = DateTime.Now;
         // 현재 날짜
         now = DateTime.Now;
-        txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
+        //txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
 
         // 현재시간
-        txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
+        //txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
 
         // 현재 시간 고려해 SkyBox 세팅
         // 낮 : 오전 7시~ / 일몰 : 오후 5시~ / 저녁 : 오후 6시~
@@ -42,15 +56,15 @@ public class TimeManager : MonoBehaviour
     }
 
     bool isOnce;
-    bool skyChaneDone;
+    bool skyChangeDone;
     int i=0;
     private void Update()
     {
         //now = DateTime.Now;
         //txtCurrentTime.text = now.dateTime.ToString("tt h : mm : ss");
 
-        
-        # region skyBox 변화 시연
+
+        #region skyBox 변화 시연
         // 특정 시간 지정
         //if (i == 0 && Input.GetKeyDown(KeyCode.Alpha2))
         //{
@@ -101,32 +115,32 @@ public class TimeManager : MonoBehaviour
         //}
         #endregion
 
-
-        // SkyBox 변경
-        if (txtCurrentTime.text == "오후 5 : 00" && !isOnce)
-        {
-            sky.Sunset();
-            txtCurrentDate.color = Color.black;
-            txtCurrentTime.color = Color.black;
-            txtUserData.color = Color.black;
-            isOnce = true;
-        }
-        else if (txtCurrentTime.text == "오후 6 : 00" && isOnce)
-        {
-            sky.Night();
-            txtCurrentDate.color = Color.white;
-            txtCurrentTime.color = Color.white;
-            txtUserData.color = Color.white;
-            isOnce = false;
-        }
-        else if (txtCurrentTime.text == "오전 7 : 00" && !isOnce)
-        {
-            sky.Day();
-            txtCurrentDate.color = Color.black;
-            txtCurrentTime.color = Color.black;
-            txtUserData.color = Color.black;
-            isOnce = true;
-        }
+        #region SkyBox 변경
+        //if (txtCurrentTime.text == "오후 5 : 00" && !isOnce)
+        //{
+        //    sky.Sunset();
+        //    txtCurrentDate.color = Color.black;
+        //    txtCurrentTime.color = Color.black;
+        //    txtUserData.color = Color.black;
+        //    isOnce = true;
+        //}
+        //else if (txtCurrentTime.text == "오후 6 : 00" && isOnce)
+        //{
+        //    sky.Night();
+        //    txtCurrentDate.color = Color.white;
+        //    txtCurrentTime.color = Color.white;
+        //    txtUserData.color = Color.white;
+        //    isOnce = false;
+        //}
+        //else if (txtCurrentTime.text == "오전 7 : 00" && !isOnce)
+        //{
+        //    sky.Day();
+        //    txtCurrentDate.color = Color.black;
+        //    txtCurrentTime.color = Color.black;
+        //    txtUserData.color = Color.black;
+        //    isOnce = true;
+        //}
+        #endregion
     }
 
     /// <summary>

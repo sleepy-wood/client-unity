@@ -23,13 +23,13 @@ public class TreeController : MonoBehaviour
     // treeList
 
     #region 방문 타입
-    //public enum VisitType
-    //{
-    //    None,
-    //    First,
-    //    ReVisit
-    //}
-    //public VisitType visitType;
+    public enum VisitType
+    {
+        None,
+        First,
+        ReVisit
+    }
+    public VisitType visitType;
     #endregion
 
     // 랜덤으로 선택된 SeedType
@@ -126,6 +126,7 @@ public class TreeController : MonoBehaviour
 
     void Start()
     {
+        treeFactory.gameObject.SetActive(false);
         assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
 
         #region Build
@@ -143,22 +144,29 @@ public class TreeController : MonoBehaviour
         //treeFactory = TreeFactory.GetFactory();
         #endregion
 
-        // 나무 형태 Random 선택
-        int i = UnityEngine.Random.Range(0, pipeNameList.Count);
-        pipeName = pipeNameList[i];
-        print("Random Number : " + i);
-        selectedSeed = pipeNameDict[pipeName];
-        print(pipeName + " Selected");
+        // 방문 타입에 따라 시나리오 선택
+        if (visitType == VisitType.First)
+        {
+            // 나무 형태 Random 선택
+            int i = UnityEngine.Random.Range(0, pipeNameList.Count);
+            pipeName = pipeNameList[0];  // 수정
+            print("Random Number : " + i);
+            selectedSeed = pipeNameDict[pipeName];
+            print(pipeName + " Selected");
 
-        // 기본 세팅값 찾기
-        FindtreeSetting();
+            // 랜덤 선택된 Seed로 기본 세팅값 찾기
+            FindtreeSetting();
 
-        // Tree Pipeline 로드
-        treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+            // Tree Pipeline 로드
+            treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 
-        // Pipeline 기본 세팅
-        PipelineSetting(0);
-        
+            // Pipeline 기본 세팅
+            PipelineSetting(0);
+        }
+        else if (visitType == VisitType.ReVisit)
+        {
+            // DB에 저장해놓은 나무 변수 가져와 로드
+        }
 
         #region 기존 코드
         //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
@@ -318,7 +326,7 @@ public class TreeController : MonoBehaviour
     public void PipelineSetting(int day)
     {
         // 기본 세팅 성장 데이터 정보 지닌 요소
-        TreeSetting element = selectedTreeSetting[day];
+        TreeSetting element = selectedTreeSetting[day-1];
 
         #region 1. Element MinMax Frequency
         //int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
@@ -399,7 +407,13 @@ public class TreeController : MonoBehaviour
         Resources.UnloadAsset(loadedPipeline);
     }
 
-
+    public void PlantSeed()
+    {
+        StartCoroutine(PlantSeed(0.5f));
+        seed.SetActive(true);
+        //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
+        treeFactory.transform.GetChild(0).gameObject.layer = 11;
+    }
     /// <summary>
     /// dayCount에 맞게 Tree 업데이트
     /// </summary>

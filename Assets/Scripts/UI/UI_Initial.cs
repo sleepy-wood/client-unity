@@ -215,10 +215,14 @@ public class UI_Initial : MonoBehaviour
     /// </summary>
     public void OnClickDay1()
     {
+        // 나무 변화
+        GameManager.Instance.treeController.PlantSeed();
         StartCoroutine(PlusDayFlag(2, 1));
     }
     public void OnClickDay2()
     {
+        GameManager.Instance.treeController.PipelineSetting(1);
+        GameManager.Instance.treeController.TreeReload();
         StartCoroutine(PlusDayFlag(2, 2));
     }
     public void OnClickDay3()
