@@ -250,6 +250,26 @@ public class LandCustom : MonoBehaviour
 #endif
     }
 
+    /// <summary>
+    /// Tool Tip 활성화 
+    /// </summary>
+    public void OnClickToolTipActive()
+    {
+        editButton.transform.GetChild(3).gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// Tool Tip 비활성화 
+    /// </summary>
+    public void OnClickToolTipNotActive()
+    {
+        editButton.transform.GetChild(3).gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// Edit 모드 변경 
+    /// </summary>
+    /// <param name="i"></param>
     public void OnClickEditSelect(int i)
     {
         //클릭된 버튼 색 변경하

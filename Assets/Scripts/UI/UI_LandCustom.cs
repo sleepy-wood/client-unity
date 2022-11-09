@@ -15,10 +15,8 @@ public class UI_LandCustom : MonoBehaviour
     private AssetBundle assetBundleImg;
     private void Start()
     {
-        Debug.Log("111111111");
         assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath  + "/AssetBundles/landcustombundle");
         assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustomimg");
-        Debug.Log("222222222222");
         itemWindow = transform.GetChild(1).gameObject;
 
         //버튼 이벤트 등록
@@ -29,29 +27,22 @@ public class UI_LandCustom : MonoBehaviour
                 () => OnClickCategoryActive(transform.GetChild(2).GetChild(temp).GetChild(0).GetComponent<Text>().text, temp));
         }
 
-        Debug.Log("3333333333333");
         //초기값 0번째 버튼 활성화
         OnClickCategoryActive(transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>().text, 0);
     }
 
     public void OnClickCategoryActive(string Cat, int num)
     {
-        Debug.Log("444444444444444");
         string customPath = Application.streamingAssetsPath + "/LandCustom/" + Cat;
         string imagePath = Application.streamingAssetsPath + "/LandCustomImage/";
-        Debug.Log("55555555555555");
         selectCatName = Cat;
         selectCat = num;
         int cnt = 0;
         //썸네일 넣기
-        Debug.Log("666666666666");
         string[] fileEntries = Directory.GetFiles(customPath, "*.prefab");
 
-        Debug.Log(fileEntries.Length);
         for (int i = 0; i < fileEntries.Length; i++)
         {
-            Debug.Log("fileEntries = " + fileEntries[i]);
-            Debug.Log("fileEntries = " + fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
             Sprite resource = assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
             itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite =
                 Instantiate(resource);
@@ -80,7 +71,6 @@ public class UI_LandCustom : MonoBehaviour
 
         //    cnt++;
         //}
-        Debug.Log("7777777777777");
 
         //나머지 버튼들은 비활성화
         for (int i = cnt; i < 15; i++)
@@ -98,12 +88,10 @@ public class UI_LandCustom : MonoBehaviour
     /// <param name="i"></param>
     public void OnClickCreateObject(int i)
     {
-        Debug.Log("888888888888888");
         DirectoryInfo di = new DirectoryInfo(Application.streamingAssetsPath + "/LandCustom/" + selectCatName);
         string customPath = Application.streamingAssetsPath + "/LandCustom/" + selectCatName;
         //string imagePath = Application.streamingAssetsPath + "/LandCustomImage/";
 
-        Debug.Log("9999999999999");
         int cnt = 0;
 
         string[] fileEntries = Directory.GetFiles(customPath, "*.prefab");
@@ -168,8 +156,6 @@ public class UI_LandCustom : MonoBehaviour
 
         //    cnt++;
         //}
-        Debug.Log(selectCat);
-        Debug.Log(i);
     }
 
     private bool isActiveCanvase = true;
