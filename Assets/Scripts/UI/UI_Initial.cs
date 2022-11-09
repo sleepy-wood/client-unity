@@ -50,7 +50,7 @@ public class UI_Initial : MonoBehaviour
         //{
         //    gameObject.SetActive(false);
         //}
-        developerUI.anchoredPosition = new Vector2(-329, -15);
+        developerUI.anchoredPosition = new Vector2(-570, -211);
 
     }
 
@@ -148,7 +148,7 @@ public class UI_Initial : MonoBehaviour
     public void OnDevloperUI()
     {
         Vector2 pos = developerUI.anchoredPosition;
-        StartCoroutine(UILerp(pos, new Vector2(272, pos.y), 2, developerUI));
+        StartCoroutine(UILerp(pos, new Vector2(512, pos.y), 2, developerUI));
     }
     /// <summary>
     /// UI Lerp 이동
@@ -243,5 +243,14 @@ public class UI_Initial : MonoBehaviour
             yield return null;
         }
         dayCountFlag.sizeDelta = new Vector2(day * 20, dayCountFlag.sizeDelta.y);
+    }
+    
+    /// <summary>
+    /// 개발자 모드 창 닫기
+    /// </summary>
+    public void OnCloseDeveloperMode()
+    {
+        Vector2 pos = developerUI.anchoredPosition;
+        StartCoroutine(UILerp(pos, new Vector2(-570, pos.y), 2, developerUI));
     }
 }

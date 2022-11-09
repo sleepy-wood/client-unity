@@ -44,8 +44,8 @@ public class TreeController : MonoBehaviour
         { "SakuraTree", SeedType.Sakura },
         { "DRTree", SeedType.DR }
     };
-    // 선택된 TreeSetting
-    TreeSetting selectedTreeSetting;
+    // 선택된 TreeSetting List
+    List<TreeSetting> selectedTreeSetting;
 
     #region 기본 세팅 변수 저장소
     // Pipeline Element별 frequency Min/Max값 저장소
@@ -77,8 +77,8 @@ public class TreeController : MonoBehaviour
     public class TreeStore
     {
         public SeedType seedType = SeedType.None;
-        // seed별 기본 세팅값
-        public TreeSetting treeSetting = new TreeSetting();
+        // seed 기본 세팅값
+        public List<TreeSetting> treeSettings = new List<TreeSetting>();
     }
     // 나무 종류별 관련 변수 클래스의 모음 리스트
     public List<TreeStore> treeStores = new List<TreeStore>();
@@ -157,7 +157,7 @@ public class TreeController : MonoBehaviour
         treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 
         // Pipeline 기본 세팅
-        PipelineSetting();
+        PipelineSetting(0);
         
 
         #region 기존 코드
@@ -271,10 +271,6 @@ public class TreeController : MonoBehaviour
         //Camera.main.fieldOfView = targetFOV;
         #endregion
 
-
-        // 처음 심은 시간 저장
-        //TimeManager.
-
         // 씨앗 심기
         seed.transform.localPosition = new Vector3(0, 2.5f, 0);
         seed.gameObject.SetActive(true);
@@ -319,10 +315,10 @@ public class TreeController : MonoBehaviour
     /// "girthBase" > Min/Max Girth At Base
     /// "scale" > Object scale
     /// </summary>
-    public void PipelineSetting()
+    public void PipelineSetting(int day)
     {
         // 기본 세팅 성장 데이터 정보 지닌 요소
-        TreeSetting element = selectedTreeSetting;
+        TreeSetting element = selectedTreeSetting[day];
 
         #region 1. Element MinMax Frequency
         //int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
@@ -376,7 +372,7 @@ public class TreeController : MonoBehaviour
 
 
     /// <summary>
-    /// treeStores에서 씨앗 종류에 맞는 Tree Setting 찾는 함수
+    /// treeStores에서 씨앗 종류에 맞는 Tree Settings 찾는 함수
     /// </summary>
     public void FindtreeSetting()
     {
@@ -384,7 +380,7 @@ public class TreeController : MonoBehaviour
         {
             if (treeStores[i].seedType == selectedSeed)
             {
-                selectedTreeSetting = treeStores[i].treeSetting;
+                selectedTreeSetting = treeStores[i].treeSettings;
             }
         }
 
@@ -413,7 +409,7 @@ public class TreeController : MonoBehaviour
     public void LoadTree()
     {
         // 씨앗 심기
-        if (dayCount == 1)
+        if (dayCount == 0)
         {
             StartCoroutine(PlantSeed(0.5f));
             seed.SetActive(true);
@@ -422,7 +418,7 @@ public class TreeController : MonoBehaviour
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
         // 랜덤 나무
-        if (dayCount == 3)
+        else if (dayCount == 1)
         {
             sprout.SetActive(false);
             soil.SetActive(false);
@@ -430,31 +426,29 @@ public class TreeController : MonoBehaviour
             treeFactory.gameObject.SetActive(true);
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
-        #region 일차수별 update
         // 3일차
-        //if (dayCount == 3)
-        //{
-        //    PipelineUpdate();
-        //    TreeReload();
-        //    treeFactory.transform.GetChild(0).gameObject.layer = 11;
-        //    campos = Camera.main.gameObject.transform;
-        //}
-        //// 4일차
-        //if (dayCount == 4)
-        //{
-        //    PipelineUpdate();
-        //    TreeReload();
-        //    treeFactory.transform.GetChild(0).gameObject.layer = 11;
-        //}
-        //// 5일차
-        //if (dayCount == 5)
-        //{
-        //    PipelineUpdate();
-        //    TreeReload();
-        //    treeFactory.transform.GetChild(0).gameObject.layer = 11;
-        //    assetBundle.Unload(false);
-        //}
-        #endregion
+        if (dayCount == 3)
+        {
+            PipelineSetting(3);
+            TreeReload();
+            treeFactory.transform.GetChild(0).gameObject.layer = 11;
+            campos = Camera.main.gameObject.transform;
+        }
+        // 4일차
+        if (dayCount == 4)
+        {
+            PipelineSetting(4);
+            TreeReload();
+            treeFactory.transform.GetChild(0).gameObject.layer = 11;
+        }
+        // 5일차
+        if (dayCount == 5)
+        {
+            PipelineSetting(5);
+            TreeReload();
+            treeFactory.transform.GetChild(0).gameObject.layer = 11;
+            assetBundle.Unload(false);
+        }
     }
 
     /// <summary>
@@ -551,7 +545,7 @@ public class TreeController : MonoBehaviour
         pipeName = treeData.seedType;
         treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
         // Pipeline 기본 세팅
-        PipelineSetting();
+        //PipelineSetting();
 
         // seed Number
         treePipeline.seed = treeData.seedNumber;
