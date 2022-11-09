@@ -158,6 +158,7 @@ public class TreeController : MonoBehaviour
 
         // Pipeline 기본 세팅
         PipelineSetting();
+        
 
         #region 기존 코드
         //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
@@ -421,7 +422,7 @@ public class TreeController : MonoBehaviour
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
         // 랜덤 나무
-        if (dayCount == 2)
+        if (dayCount == 3)
         {
             sprout.SetActive(false);
             soil.SetActive(false);
@@ -460,68 +461,66 @@ public class TreeController : MonoBehaviour
     /// 현재 User의 Tree Data 저장
     /// </summary>
     public Transform previewTree;
-    public void SaveTreeData()
+    public async void SaveTreeData()
     {
         List<TreeData> treeDatas = new List<TreeData>();
         TreeData treeData = new TreeData();
 
-        // seed Number
-        treeData.seedNumber = treePipeline.seed;
         // Tree Name
         treeData.treeName = treeName;
+        // seed Number
+        treeData.seedNumber = treePipeline.seed;
         // Seed Type
         treeData.seedType = selectedSeed.ToString();
-        // First Plant Day
-        //treeData.createdAt = GameManager.Instance.timeManager.firstPlantDate;
-        // Tree Pipeline Data
-        TreePipelineData pipeData = new TreePipelineData();
-        #region Tree Pipeline Data                         
-        // 1. Scale
-        pipeData.scale = previewTree.localScale.x;
-        // 2. Branch Numbers
-        List<StructureGenerator.StructureLevel> level = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels;
-        pipeData.branch1 = level[0].minFrequency;
-        pipeData.branch2 = level[1].minFrequency;
-        pipeData.branch3 = level[2].minFrequency;
-        pipeData.branch4 = level[3].minFrequency;
-        // 3. Sprout Number
-        pipeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].minFrequency;
-        // 4. Gravity
-        pipeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
-        // 5. Root Num                       
-        int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
-        pipeData.rootNum = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[idx - 1].minFrequency;
-        // 6. Bark Texture Name
-        pipeData.barkTexture = treePipeline._serializedPipeline.barkMappers[0].mainTexture.name;
-        // 7. Sprout Enabled
-        for (int i=0; i<5; i++)
-        {
-            if (treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled)
-            {
-                pipeData.sproutIndex = i;
-            }
-        }
-        // 8. Rotten Rate of Sprout
-        pipeData.rottenRate = 0;
-        #endregion
-        treeData.treePipelineData = pipeData;
         // Land ID
         treeData.landID = 1;  // 변경 필요
 
+        // Tree Pipeline Data //
+        // 1. Scale
+        treeData.scale = previewTree.localScale.x;
+        // 2. Branch Numbers
+        List<StructureGenerator.StructureLevel> level = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels;
+        treeData.branch1 = level[0].minFrequency;
+        treeData.branch2 = level[1].minFrequency;
+        treeData.branch3 = level[2].minFrequency;
+        treeData.branch4 = level[3].minFrequency;
+        // 3. Trunk Length
+        treeData.trunkLength = treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase;
+        // 4. Sprout Number
+        treeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].minFrequency;
+        // 5. Rotten Rate
+        treeData.rottenRate = 0.1f;
+        // 6. Gravity
+        treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
+        // 7. Root Num                       
+        int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
+        treeData.rootNum = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[idx - 1].minFrequency;
+        // 8. Bark Texture Name
+        treeData.barkTexture = treePipeline._serializedPipeline.barkMappers[0].mainTexture.name;
+        // 9. Sprout Index
+        int id = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas.Count;
+        for (int i=0; i<id; i++)
+        {
+            if (treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled)
+            {
+                treeData.sproutIndex = i;
+            }
+        }
+        
         string treeJsonData = JsonUtility.ToJson(treeData);
 
         // Web
-        //ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
-        //    "/api/v1/trees/",
-        //    DataModule.NetworkType.PUT,
-        //    DataModule.DataType.BUFFER,
-        //    treeJsonData);
+        ResultPut resultPost = await DataModule.WebRequest<ResultPut>(
+            "/api/v1/trees",
+            DataModule.NetworkType.POST,
+            DataModule.DataType.BUFFER,
+            treeJsonData);
 
-        //if (!resultPut.result)
-        //{
-        //    Debug.LogError("WebRequestError : NetworkType[Put]");
-        //}
-        //treeDatas.Add(treeData);
+        if (!resultPost.result)
+        {
+            Debug.LogError("WebRequestError : NetworkType[Post]");
+        }
+        treeDatas.Add(treeData);
 
         treeDatas.Add(treeData);
         ArrayTreeData arrayTreeData = new ArrayTreeData();
@@ -561,59 +560,59 @@ public class TreeController : MonoBehaviour
         // seedType
         selectedSeed = (SeedType)System.Enum.Parse(typeof(SeedType), treeData.seedType);
         // First Plant Date
-        GameManager.Instance.timeManager.firstPlantDate = treeData.createdAt;
+        //GameManager.Instance.timeManager.firstPlantDate = treeData.createdAt;
         // Tree Pipeline Data
-        TreePipelineData pipeData = treeData.treePipelineData;
-        #region Pipeline Data
-        // 1. Scale
-        float p = pipeData.scale;
-        previewTree.localScale = new Vector3(p, p, p);
-        // 2. Branch Number
-        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minFrequency = pipeData.branch1;
-        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxFrequency = pipeData.branch1;
-        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].minFrequency = pipeData.branch2;
-        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].maxFrequency = pipeData.branch2;
-        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].minFrequency = pipeData.branch3;
-        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].maxFrequency = pipeData.branch3;
-        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].minFrequency = pipeData.branch4;
-        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].maxFrequency = pipeData.branch4;
-        // 3. Trunk Length
-        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxLengthAtBase = pipeData.trunkLength;
-        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase = pipeData.trunkLength;
-        // 4. Sprout Number
-        treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = pipeData.sproutNum;
-        treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = pipeData.sproutNum;
-        // 5. Ratio of Rotten Sprout
+        //TreePipelineData pipeData = treeData.treePipelineData;
+        //#region Pipeline Data
+        //// 1. Scale
+        //float p = pipeData.scale;
+        //previewTree.localScale = new Vector3(p, p, p);
+        //// 2. Branch Number
+        //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minFrequency = pipeData.branch1;
+        //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxFrequency = pipeData.branch1;
+        //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].minFrequency = pipeData.branch2;
+        //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].maxFrequency = pipeData.branch2;
+        //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].minFrequency = pipeData.branch3;
+        //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].maxFrequency = pipeData.branch3;
+        //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].minFrequency = pipeData.branch4;
+        //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].maxFrequency = pipeData.branch4;
+        //// 3. Trunk Length
+        //treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxLengthAtBase = pipeData.trunkLength;
+        //treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase = pipeData.trunkLength;
+        //// 4. Sprout Number
+        //treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = pipeData.sproutNum;
+        //treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = pipeData.sproutNum;
+        //// 5. Ratio of Rotten Sprout
 
-        // 6. Gravity
-        for (int i = 0; i < 4; i++)
-        {
-            if(!treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].isRoot)
-            {
-                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minGravityAlignAtBase = pipeData.gravity;
-                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxGravityAlignAtBase = pipeData.gravity;
-            }
-        }
-        // 7. Root Number
-        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = pipeData.rootNum;
-        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = pipeData.rootNum;
-        // 8. Bark Texture
-        string name = pipeData.barkTexture;
-        Texture2D texture = Resources.Load("Tree/Sprites/" + name) as Texture2D;
-        treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
-        // 9. Sprout Texture
-        for (int i=0; i < 5; i++)
-        {
-            if (i == pipeData.sproutIndex)
-            {
-                treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = true;
-            }
-            else
-            {
-                treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = false;
-            }
-        }
-        #endregion
+        //// 6. Gravity
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    if(!treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].isRoot)
+        //    {
+        //        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minGravityAlignAtBase = pipeData.gravity;
+        //        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxGravityAlignAtBase = pipeData.gravity;
+        //    }
+        //}
+        //// 7. Root Number
+        //treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = pipeData.rootNum;
+        //treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = pipeData.rootNum;
+        //// 8. Bark Texture
+        //string name = pipeData.barkTexture;
+        //Texture2D texture = Resources.Load("Tree/Sprites/" + name) as Texture2D;
+        //treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
+        //// 9. Sprout Texture
+        //for (int i=0; i < 5; i++)
+        //{
+        //    if (i == pipeData.sproutIndex)
+        //    {
+        //        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = true;
+        //    }
+        //    else
+        //    {
+        //        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = false;
+        //    }
+        //}
+        //#endregion
 
     }
 }
