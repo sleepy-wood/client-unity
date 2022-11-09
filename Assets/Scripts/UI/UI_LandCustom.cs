@@ -17,8 +17,8 @@ public class UI_LandCustom : MonoBehaviour
     {
         Debug.Log("111111111");
 #if UNITY_IOS ||UNITY_ANDROID
-        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath  + "/landcustombundle");
-        assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/landcustomimg");
+        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath  + "/AssetBundles/landcustombundle");
+        assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustomimg");
 #elif UNITY_STANDALONE
         assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath  + "/landcustombundle");
         assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/landcustomimg");
@@ -55,21 +55,14 @@ public class UI_LandCustom : MonoBehaviour
         int cnt = 0;
         //썸네일 넣기
         Debug.Log("666666666666");
-        if(Directory.Exists(customPath))
-        {
-
-            Debug.Log("77777777777");
-        }
-        else
-        {
-            Debug.Log(customPath);
-            Debug.Log("8888888888888");
-        }
         string[] fileEntries = Directory.GetFiles(customPath, "*.prefab");
 
+        Debug.Log(fileEntries.Length);
         for (int i = 0; i < fileEntries.Length; i++)
         {
-            Sprite resource = assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split('\\')[1].Split('.')[0]);
+            Debug.Log("fileEntries = " + fileEntries[i]);
+            Debug.Log("fileEntries = " + fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
+            Sprite resource = assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
             itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite =
                 Instantiate(resource);
             Color color = itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().color;
@@ -135,9 +128,8 @@ public class UI_LandCustom : MonoBehaviour
         {
             if (cnt == i)
             {
-                GameObject resource = assetBundle.LoadAsset<GameObject>(fileName.Split('\\')[1].Split('.')[0]);
+                GameObject resource = assetBundle.LoadAsset<GameObject>(fileName.Split("/LandCustom/" + selectCatName + "/")[1].Split('.')[0]);
                 //GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
-                Debug.Log("File = " + fileName.Split('\\')[1].Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
                 prefab.name = prefab.name.Split('(')[0];
                 prefab.transform.position = new Vector3(0, 0.5f, 0);

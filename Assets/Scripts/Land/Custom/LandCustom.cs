@@ -179,11 +179,15 @@ public class LandCustom : MonoBehaviour
     /// </summary>
     void DeleteMode()
     {
-        Destroy(selectedObject);
-        selectedObject = null;
-        isActiveMove = false;
+        if (!userInput.LongInteract)
+        {
+            Debug.Log("LongTouch");
+            Destroy(selectedObject);
+            selectedObject = null;
+            isActiveMove = false;
+            selectState = SelectState.None;
+        }
         editType = EditType.Camera;
-        selectState = SelectState.None;
     }
 
     /// <summary>
@@ -267,6 +271,26 @@ public class LandCustom : MonoBehaviour
 
     public void OnClickEditSelect(int i)
     {
+        //클릭된 버튼 색 변경하기
+        //설명 창 초기
+        for (int j = 0; j < buttons.Count; j++)
+        {
+            Color color = editButton.transform.GetChild(j).GetChild(1).GetComponent<Image>().color;
+            color.a = 0;
+            editButton.transform.GetChild(j).GetChild(1).GetComponent<Image>().color = color;
+            editButton.transform.GetChild(j).GetChild(1).gameObject.SetActive(false);
+            if (j + 1 == i && i != 5)
+            {
+                Debug.Log(j);
+                buttons[j].GetComponent<Image>().color = new Color32(150, 150, 150, 255);
+                Debug.Log(buttons[j].GetComponent<Image>().color);
+            }
+            else
+            {
+                buttons[j].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            }
+        }
+        //상태 변경
         switch (i)
         {
             case 1:
@@ -288,20 +312,6 @@ public class LandCustom : MonoBehaviour
             default:
                 break;
 
-        }
-        //클릭된 버튼 색 변경하기
-        for (int j = 0; j < buttons.Count; j++)
-        {
-            if (j + 1 == i && i != 5)
-            {
-                Debug.Log(j);
-                buttons[j].GetComponent<Image>().color = new Color32(150, 150, 150, 255);
-                Debug.Log(buttons[j].GetComponent<Image>().color);
-            }
-            else
-            {
-                buttons[j].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            }
         }
 
     }

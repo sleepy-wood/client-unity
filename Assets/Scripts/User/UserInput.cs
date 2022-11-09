@@ -107,7 +107,7 @@ public class UserInput : MonoBehaviour
             {
                 curTime += Time.deltaTime;
                 //LongTouch 설정
-                if (curTime > 1.5f && currentState == TouchState.None)
+                if (curTime > 1.2f && currentState == TouchState.None)
                     currentState = TouchState.LongTouch;
                 
                 for (int i = 0; i < Input.touches.Length; i++)
@@ -160,11 +160,13 @@ public class UserInput : MonoBehaviour
 
             if (currentState == TouchState.Touch)
             {
+                Debug.Log("터치 ");
                 Interact = true;
                 currentState = TouchState.None;
             }
             else if (currentState == TouchState.LongTouch)
             {
+                Debug.Log("롱터치 ");
                 LongInteract = true;
                 currentState = TouchState.None;
             }
