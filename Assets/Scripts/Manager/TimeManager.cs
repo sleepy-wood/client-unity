@@ -52,53 +52,53 @@ public class TimeManager : MonoBehaviour
         
         # region skyBox 변화 시연
         // 특정 시간 지정
-        if (i == 0 && Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            //now = now.dateTime.AddHours(6);
-            int month = int.Parse(DateTime.Now.ToString("MM"));
-            int day = int.Parse(DateTime.Now.ToString("dd"));
-            // 일몰 시간
-            now = new DateTime(2022, month, day, 17, 00, 0);
-            txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
-            i++;
-        }
-        else if (i == 1 && Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            int month = int.Parse(DateTime.Now.ToString("MM"));
-            int day = int.Parse(DateTime.Now.ToString("dd"));
-            // 저녁 시간
-            now = new DateTime(2022, month, day, 18, 00, 0);
-            txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
-            i++;
-        }
-        else if (i == 2 && Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            int month = int.Parse(DateTime.Now.ToString("MM"));
-            int day = int.Parse(DateTime.Now.ToString("dd"));
-            // 아침
-            now = new DateTime(2022, month, day + 1, 07, 00, 0);
-            CalculatePlantDays(firstPlantDate, now);
-            txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
-            txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
-            i++;
-            skyChaneDone = true;
-        }
+        //if (i == 0 && Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    //now = now.dateTime.AddHours(6);
+        //    int month = int.Parse(DateTime.Now.ToString("MM"));
+        //    int day = int.Parse(DateTime.Now.ToString("dd"));
+        //    // 일몰 시간
+        //    now = new DateTime(2022, month, day, 17, 00, 0);
+        //    txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
+        //    i++;
+        //}
+        //else if (i == 1 && Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    int month = int.Parse(DateTime.Now.ToString("MM"));
+        //    int day = int.Parse(DateTime.Now.ToString("dd"));
+        //    // 저녁 시간
+        //    now = new DateTime(2022, month, day, 18, 00, 0);
+        //    txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
+        //    i++;
+        //}
+        //else if (i == 2 && Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    int month = int.Parse(DateTime.Now.ToString("MM"));
+        //    int day = int.Parse(DateTime.Now.ToString("dd"));
+        //    // 아침
+        //    now = new DateTime(2022, month, day + 1, 07, 00, 0);
+        //    CalculatePlantDays(firstPlantDate, now);
+        //    txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
+        //    txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
+        //    i++;
+        //    skyChaneDone = true;
+        //}
         #endregion
 
         #region Day ++
-        if (totalPlantDay==0 && Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            CalculatePlantDays(firstPlantDate, now);
-            GameManager.Instance.treeController.LoadTree();
-            txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
-        }
-        else if(skyChaneDone && Input.GetKeyDown(KeyCode.Alpha1) && totalPlantDay < 5)
-        {
-            now = now.dateTime.AddDays(1);
-            CalculatePlantDays(firstPlantDate, now);
-            GameManager.Instance.treeController.LoadTree();
-            txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
-        }
+        //if (totalPlantDay==0 && Input.GetKeyDown(KeyCode.Alpha0))
+        //{
+        //    CalculatePlantDays(firstPlantDate, now);
+        //    GameManager.Instance.treeController.LoadTree();
+        //    txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
+        //}
+        //else if(skyChaneDone && Input.GetKeyDown(KeyCode.Alpha1) && totalPlantDay < 5)
+        //{
+        //    now = now.dateTime.AddDays(1);
+        //    CalculatePlantDays(firstPlantDate, now);
+        //    GameManager.Instance.treeController.LoadTree();
+        //    txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
+        //}
         #endregion
 
 
