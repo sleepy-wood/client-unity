@@ -126,7 +126,7 @@ public class TreeController : MonoBehaviour
 
     void Start()
     {
-        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/newtreebundle");
+        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
 
         #region Build
         // Build mesh 오류 해결 코드
@@ -155,6 +155,7 @@ public class TreeController : MonoBehaviour
 
         // Tree Pipeline 로드
         treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+
         // Pipeline 기본 세팅
         PipelineSetting();
 
@@ -471,7 +472,7 @@ public class TreeController : MonoBehaviour
         // Seed Type
         treeData.seedType = selectedSeed.ToString();
         // First Plant Day
-        treeData.createdAt = GameManager.Instance.timeManager.firstPlantDate;
+        //treeData.createdAt = GameManager.Instance.timeManager.firstPlantDate;
         // Tree Pipeline Data
         TreePipelineData pipeData = new TreePipelineData();
         #region Tree Pipeline Data                         
@@ -500,6 +501,8 @@ public class TreeController : MonoBehaviour
                 pipeData.sproutIndex = i;
             }
         }
+        // 8. Rotten Rate of Sprout
+        pipeData.rottenRate = 0;
         #endregion
         treeData.treePipelineData = pipeData;
         // Land ID
@@ -509,7 +512,7 @@ public class TreeController : MonoBehaviour
 
         // Web
         //ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
-        //    "/api/v1/trees/" + "",
+        //    "/api/v1/trees/",
         //    DataModule.NetworkType.PUT,
         //    DataModule.DataType.BUFFER,
         //    treeJsonData);

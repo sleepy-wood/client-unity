@@ -15,7 +15,7 @@ public class TreePipelineData
     public int treeGrowthId;
     // 나무 scale
     public float scale;
-    // 나무 가지 개수(4)
+    // 나무 가지 개수
     public int branch1;
     public int branch2;
     public int branch3;
