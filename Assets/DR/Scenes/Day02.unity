@@ -1949,6 +1949,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7555079392117158160, guid: 27e698fbb6af65e459f0dd77249d30d1, type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8400507215453277669, guid: 27e698fbb6af65e459f0dd77249d30d1, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -2367,7 +2371,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.90588236, g: 0.80316436, b: 0.6039216, a: 1}
+  m_Color: {r: 0.9339623, g: 0.7260385, b: 0.5154415, a: 1}
   m_Intensity: 1.6
   m_Range: 10
   m_SpotAngle: 30
@@ -3451,7 +3455,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.8773585, g: 0.42220506, b: 0.22761661, a: 1}
   m_Intensity: 3.19
-  m_Range: 1.44
+  m_Range: 4.46
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
