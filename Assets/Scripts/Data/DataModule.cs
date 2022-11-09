@@ -30,7 +30,7 @@ public class ResultPut
 public class DataModule
 {
     private const string DOMAIN = "https://team-buildup.shop";
-    public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3NTcwNjEyLCJleHAiOjMzMjI1MTcwNjEyfQ.TBhmO748LmLATDjHtCAUivQE-9bYhzQ1oFCHEOtXses";
+    public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3OTU4NDcxLCJleHAiOjMzMjI1NTU4NDcxfQ.Zm7l0xr4HkIOfmlIGCfXKNXWh50-kTfiW-6daG70Flw";
 
     /// <summary>
     /// Network Type 설정
