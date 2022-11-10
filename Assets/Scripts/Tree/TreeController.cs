@@ -565,7 +565,7 @@ public class TreeController : MonoBehaviour
         string treeJsonData = JsonUtility.ToJson(treeData);
 
         // Web
-        ResultPost<TreeData> resultPost = await DataModule.WebRequest<ResultPost<TreeData>>(
+        ResultPost<TreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeData>>(
             "/api/v1/trees",
             DataModule.NetworkType.POST,
             DataModule.DataType.BUFFER,
