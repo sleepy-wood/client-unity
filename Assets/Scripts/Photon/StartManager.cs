@@ -83,7 +83,7 @@ public class StartManager : MonoBehaviourPunCallbacks
         base.OnConnectedToMaster();
         print(System.Reflection.MethodBase.GetCurrentMethod().Name);
         //닉네임 설정
-        //PhotonNetwork.NickName = nickName_InputField.text;
+        PhotonNetwork.NickName = DataTemporary.MyUserData.nickName;
 
         //Connect 후 친구방 들어가기
         JoinRoom(friendCode_InputField.text);

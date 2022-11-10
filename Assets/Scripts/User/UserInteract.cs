@@ -18,10 +18,10 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     {
         userInput = GetComponent<UserInput>();
 
-        if (!moveControl)
-        {
-            photonView.RPC("RPC_ChoiceCharactorLoad", RpcTarget.AllBuffered);
-        }
+        //if (!moveControl)
+        //{
+        //    photonView.RPC("RPC_ChoiceCharactorLoad", RpcTarget.AllBuffered);
+        //}
     }
     private void Update()
     {
@@ -157,25 +157,25 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
         }
     }
     #region RPC
-    [PunRPC]
-    public void RPC_ChoiceCharactorLoad()
-    {
-        if (transform.childCount == 2)
-        {
-            string model = PhotonNetwork.PlayerList[(int)photonView.ViewID.ToString()[0] - 49].NickName.Split('/')[1];
-            //userAvatar 생성
-            GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + model);
-            //Debug.Log(DataTemporary.MyUserData.UserAvatar);
+    //[PunRPC]
+    //public void RPC_ChoiceCharactorLoad()
+    //{
+    //    if (transform.childCount == 2)
+    //    {
+    //        string model = PhotonNetwork.PlayerList[(int)photonView.ViewID.ToString()[0] - 49].NickName.Split('/')[1];
+    //        //userAvatar 생성
+    //        GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + model);
+    //        //Debug.Log(DataTemporary.MyUserData.UserAvatar);
             
-            GameObject userAvatar = Instantiate(userAvatarResource);
-            userAvatar.name = userAvatar.name.Split("(")[0];
-            userAvatar.transform.parent = transform;
-            userAvatar.transform.localPosition = Vector3.zero;
-            userAvatar.transform.localEulerAngles = Vector3.zero;
-            animator = transform.GetChild(2).GetComponent<Animator>();
-        }
-    }
-    [PunRPC]
+    //        GameObject userAvatar = Instantiate(userAvatarResource);
+    //        userAvatar.name = userAvatar.name.Split("(")[0];
+    //        userAvatar.transform.parent = transform;
+    //        userAvatar.transform.localPosition = Vector3.zero;
+    //        userAvatar.transform.localEulerAngles = Vector3.zero;
+    //        animator = transform.GetChild(2).GetComponent<Animator>();
+    //    }
+    //}
+    //[PunRPC]
     public void RPC_WalkAnimation(bool isActive)
     {
         animator.SetBool("Walk", isActive);

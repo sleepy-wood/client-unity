@@ -48,7 +48,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
         //print("OnConnectedToMaster");
 
         //닉네임 설정
-        PhotonNetwork.NickName = Random.Range(0, 10).ToString();
+        PhotonNetwork.NickName = DataTemporary.MyUserData.nickName;
         Debug.Log(PhotonNetwork.NickName);
         CreateRoom();
     }
@@ -129,7 +129,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
         if (!m_testMode)
         {
              //&& treeData.result
-            if (landData.result && bridgeData.result)
+            if (landData.result && bridgeData.result && userData.result)
             {
                 //PhotonNetwork.LoadLevel(1);
                 isLoadingComplete = true;
@@ -138,11 +138,17 @@ public class LoadingData : MonoBehaviourPunCallbacks
     }
     private void Update()
     {
-        if (isLoadingComplete && isCreateComplete)
+        if (isLoadingComplete)
+        {
+            OnConnect();
+            isLoadingComplete = false;
+        }
+        if (isCreateComplete)
         {
             PhotonNetwork.LoadLevel(1);
             isCreateComplete = false;
         }
+        
     }
     public IEnumerator StartLoading()
     {
