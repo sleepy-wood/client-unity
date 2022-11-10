@@ -75,6 +75,12 @@ public static class HealthDataStore
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="startDate"></param>
+    /// <param name="endDate">startDate + 5</param>
+    /// <returns></returns>
     static SleepSample[] GetSleepSamples(DateTime startDate, DateTime endDate)
     {
         if (sleepSamples == null)

@@ -40,7 +40,7 @@ public class TreeData
     // 나뭇잎 개수
     public int sproutNum;
     // 나뭇잎 썩은 비율
-    public float? rottenRate;
+    public float rottenRate;
     // 중력
     public float gravity;
     // 뿌리 개수
@@ -48,7 +48,7 @@ public class TreeData
     // 나무가지 텍스처 이름
     public string? barkTexture;
     // 활성화할 sprout Texture index
-    public int? sproutIndex;
+    public int sproutIndex;
 }
 
 [Serializable]
