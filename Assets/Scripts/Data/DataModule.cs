@@ -70,7 +70,7 @@ public class DataModule
     /// <param name="networkType">어떻게 Request 할 것인가</param>
     /// <param name="data">보낼 데이터</param>
     /// <returns></returns>
-    public static async UniTask<T> WebRequest<T>(string _url, NetworkType networkType, DataType dataType ,  string data = null, string filePath = null)
+    public static async UniTask<T> WebRequestBuffer<T>(string _url, NetworkType networkType, DataType dataType ,  string data = null, string filePath = null)
     {
         //네트워크 체킹
         await CheckNetwork();
@@ -118,7 +118,7 @@ public class DataModule
                 //TODO: 네트워크 재시도 팝업 호출.
 
                 //재시도
-                return await WebRequest<T>(_url, networkType, dataType, data);
+                return await WebRequestBuffer<T>(_url, networkType, dataType, data);
             }
         }
         catch (Exception e)
