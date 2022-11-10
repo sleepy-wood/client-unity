@@ -16,7 +16,7 @@ public enum SleepAmount
 }
 
 // 기상 시간의 오차
-public enum SleepRisingTimeVariance
+public enum SleepRiseTimeVariance
 {
     SmallGood,
     LargeBad,
@@ -32,13 +32,13 @@ public enum SleepDaytimeNap
 public readonly struct SleepReport
 {
     public SleepAmount sleepAmount;
-    public SleepRisingTimeVariance sleepRisingTimeVariance;
+    public SleepRiseTimeVariance sleepRiseTimeVariance;
     public SleepDaytimeNap sleepDaytimeNap;
 
-    public SleepReport(SleepAmount sleepAmount, SleepRisingTimeVariance sleepRisingTimeVariance, SleepDaytimeNap sleepDaytimeNap)
+    public SleepReport(SleepAmount sleepAmount, SleepRiseTimeVariance sleepRiseTimeVariance, SleepDaytimeNap sleepDaytimeNap)
     {
         this.sleepAmount = sleepAmount;
-        this.sleepRisingTimeVariance = sleepRisingTimeVariance;
+        this.sleepRiseTimeVariance = sleepRiseTimeVariance;
         this.sleepDaytimeNap = sleepDaytimeNap;
     }
 }
@@ -77,7 +77,7 @@ public static class HealthDataAnalyzer
         if (!HealthDataStore.Loaded())
         {
             Debug.Log("HealthDataStore is not loaded");
-            return new HealthReport(new SleepReport(SleepAmount.Zero, SleepRisingTimeVariance.LargeBad, SleepDaytimeNap.YesBad), new ActivityReport(0, 0, 0));
+            return new HealthReport(new SleepReport(SleepAmount.Zero, SleepRiseTimeVariance.LargeBad, SleepDaytimeNap.YesBad), new ActivityReport(0, 0, 0));
         }
         SleepReport sleepReport = GetSleepReport(startDate, days);
         ActivityReport activityReport = GetActivityReport(startDate, days);
@@ -91,7 +91,7 @@ public static class HealthDataAnalyzer
         if (sleepSamples is null || sleepSamples.Length == 0)
         {
             Debug.Log("SleepSamples is null or empty");
-            return new SleepReport(SleepAmount.Zero, SleepRisingTimeVariance.LargeBad, SleepDaytimeNap.YesBad);
+            return new SleepReport(SleepAmount.Zero, SleepRiseTimeVariance.LargeBad, SleepDaytimeNap.YesBad);
         }
 
         List<(DateTime, DataTime)> consecutiveSleeps = new List<(DateTime, DataTime)>();
@@ -178,9 +178,9 @@ public static class HealthDataAnalyzer
         }
 
         SleepAmount sleepAmount = GetSleepAmount(totalSleepTime);
-        SleepRisingTimeVariance sleepRisingTimeVariance = GetSleepRisingTimeVariance(longestConsecutiveSleeps);
+        SleepRiseTimeVariance sleepRiseTimeVariance = GetSleepRiseTimeVariance(longestConsecutiveSleeps, days);
         SleepDaytimeNap sleepDaytimeNap = GetSleepDaytimeNap(consecutiveSleepsByDay[days - 1], longestConsecutiveSleepIdxsByDay[days - 1]);
-        return new SleepReport(sleepAmount, sleepRisingTimeVariance, sleepDaytimeNap);
+        return new SleepReport(sleepAmount, sleepRiseTimeVariance, sleepDaytimeNap);
     }
 
     private static SleepAmount GetSleepAmount(double totalSleepTime)
@@ -207,20 +207,62 @@ public static class HealthDataAnalyzer
         }
     }
 
-    private static SleepRisingTimeVariance GetSleepRisingTimeVariance(List<(DateTime, DateTime)> longestConsecutiveSleeps)
+    private static SleepRiseTimeVariance GetSleepRiseTimeVariance(List<(DateTime, DateTime)> longestConsecutiveSleeps, int days)
     {
-        double totalRisingTimeVariance = 0;
-        foreach (SleepSample sleepSample in sleepSamples)
+        if (longestConsecutiveSleeps.Count == 0)
         {
-            totalRisingTimeVariance += (sleepSample.endDate - sleepSample.startDate).TotalHours;
+            return SleepRiseTimeVariance.LargeBad; // 잠을 아예 자지 않은 경우
         }
-        if (totalRisingTimeVariance == 0)
+        else if (longestConsecutiveSleeps.Count == 1)
         {
-            return SleepRisingTimeVariance.LargeBad;
+            if (days == 1) // 첫날에는 데이터가 하나만 있어도 OK
+            {
+                return SleepRiseTimeVariance.SmallGood;
+            }
+            else
+            {
+                return SleepRiseTimeVariance.LargeBad;
+            }
         }
         else
         {
-            return SleepRisingTimeVariance.SmallGood;
+            List<double> riseTimes = new List<double>();
+            foreach ((DateTime, DateTime) (sDate, eDate) in longestConsecutiveSleeps)
+            {
+                riseTimes.Add(eDate.TimeOfDay.TotalHours);
+            }
+            double totalVariance = 0;
+            for (int i = 0; i < riseTimes.Count - 1; i++)
+            {
+                double difference = Math.Abs(riseTimes[i] - riseTimes[i + 1]);
+                if (difference > 12)
+                {
+                    difference = 24 - difference;
+                }
+            }
+            for (int i = 0; i < riseTimes.Count - 1; i++)
+            {
+                totalVariance += (riseTimes[i + 1] - riseTimes[i]).TotalHours;
+            }
+            for (int i = 0; i < longestConsecutiveSleeps.Count - 1; i++)
+            {
+                (DateTime, DateTime) (sDate, eDate) = longestConsecutiveSleeps[i];
+                (DateTime, DateTime) (nextSDate, nextEDate) = longestConsecutiveSleeps[i + 1];
+                totalVariance += (nextSDate - eDate).TotalHours;
+            }
+            double averageVariance = totalVariance / (longestConsecutiveSleeps.Count - 1);
+            if (averageVariance < 1)
+            {
+                return SleepRiseTimeVariance.SmallGood;
+            }
+            else if (averageVariance < 2)
+            {
+                return SleepRiseTimeVariance.Medium;
+            }
+            else
+            {
+                return SleepRiseTimeVariance.LargeBad;
+            }
         }
     }
 
