@@ -79,14 +79,14 @@ public static class HealthDataAnalyzer
             Debug.Log("HealthDataStore is not loaded");
             return new HealthReport(new SleepReport(SleepAmount.Zero, SleepRisingTimeVariance.LargeBad, SleepDaytimeNap.YesBad), new ActivityReport(0, 0, 0));
         }
-        endDate = startDate.AddDays(days);
-        SleepReport sleepReport = GetSleepReport(startDate, endDate);
-        ActivityReport activityReport = GetActivityReport(startDate, endDate);
+        SleepReport sleepReport = GetSleepReport(startDate, days);
+        ActivityReport activityReport = GetActivityReport(startDate, days);
         return new HealthReport(sleepReport, activityReport);
     }
 
-    private static SleepReport GetSleepReport(DateTime startDate, DateTime endDate)
+    private static SleepReport GetSleepReport(DateTime startDate, int days)
     {
+        DateTime endDate = startDate.AddDays(days);
         SleepSample[] sleepSamples = HealthDataStore.GetSleepSamples(startDate, endDate);
         if (sleepSamples is null || sleepSamples.Length == 0)
         {
@@ -95,7 +95,7 @@ public static class HealthDataAnalyzer
         }
 
         List<(DateTime, DataTime)> consecutiveSleeps = new List<(DateTime, DataTime)>();
-        TimeSpan padSpan = TimeSpan.FromMinutes(30) / 2;
+        TimeSpan padSpan = TimeSpan.FromMinutes(30) / 2; // 30분 환승 룰
 
         foreach (SleepSample sleepSample in sleepSamples)
         {
@@ -120,48 +120,66 @@ public static class HealthDataAnalyzer
             }
         }
 
-        List<(DateTime, DataTime)> latestConsecutiveSleeps = new List<(DateTime, DataTime)>();
+        double totalSleepTime = 0;
         foreach ((DateTime, DateTime) (sDate, eDate) in consecutiveSleeps)
         {
-            if (sDate > endDate - TimeSpan.FromDays(1))
+            totalSleepTime += (eDate - sDate).TotalHours;
+        }
+
+        List<(DateTime, DataTime)>[] consecutiveSleepsByDay = new List<(DateTime, DataTime)>[days];
+        for (int i = 0; i < days; i++)
+        {
+            consecutiveSleepsByDay[i] = new List<(DateTime, DataTime)>();
+        }
+        foreach ((DateTime, DataTime) (sDate, eDate) in consecutiveSleeps)
+        {
+            DateTime mDate = sDate + (eDate - sDate) / 2;
+            for (int i = 0; i < days; i++)
             {
-                latestConsecutiveSleeps.Add((sDate, eDate));
+                // if (CheckOverlap(startDate.AddDays(i), startDate.AddDays(i + 1), sDate, eDate))
+                if (mDate > startDate.AddDays(i) && mDate < startDate.AddDays(i + 1))
+                {
+                    consecutiveSleepsByDay[i].Add((sDate, eDate));
+                    break;
+                }
             }
         }
 
-        int latestLongestSleepIdx = 0;
-        TimeSpan longestSpan = TimeSpan.Zero;
-        for (int i = 0; i < latestConsecutiveSleeps.Count; i++)
+        int[] longestConsecutiveSleepIdxsByDay = new int[days];
+        for (int i = 0; i < days; i++)
         {
-            (DateTime, DateTime) (sDate, eDate) = latestConsecutiveSleeps[i];
-            TimeSpan span = eDate - sDate;
-            if (span > longestSpan)
+            int longestIdx = 0;
+            for (int j = 1; j < consecutiveSleepsByDay[i].Count; j++)
             {
-                longestSpan = span;
-                latestLongestSleepIdx = i;
+                (DateTime, DataTime) (sDate, eDate) = consecutiveSleepsByDay[i][j];
+                (DateTime, DataTime) (longestSDate, longestEDate) = consecutiveSleepsByDay[i][longestIdx];
+                if (eDate - sDate > longestEDate - longestSDate)
+                {
+                    longestIdx = j;
+                }
+            }
+            if (consecutiveSleepsByDay[i].Count > 0)
+            {
+                longestConsecutiveSleepIdxsByDay[i] = longestIdx;
+            }
+            else // 어떤 날에는 잠이 없을 수도
+            {
+                longestConsecutiveSleepIdxsByDay[i] = -1;
             }
         }
 
-        foreach ((DateTime, DateTime) (sDate, eDate) in latestConsecutiveSleeps)
+        List<(DateTime, DateTime)> longestConsecutiveSleeps = new List<(DateTime, DateTime)>();
+        for (int i = 0; i < days; i++)
         {
-            TimeSpan span = eDate - sDate;
-            if (span > longestSpan)
+            if (longestConsecutiveSleepIdxsByDay[i] != -1)
             {
-                longestSpan = span;
-                latestLongestSleep = (sDate, eDate);
-            }
-        }
-        foreach ((DateTime, DateTime) (sDate, eDate) in consecutiveSleeps)
-        {
-            if (sDate > endDate - TimeSpan.FromDays(1))
-            {
-                latestTotalSleepTime += (eDate - sDate).TotalHours;
+                longestConsecutiveSleeps.Add(consecutiveSleepsByDay[i][longestConsecutiveSleepIdxsByDay[i]]);
             }
         }
 
         SleepAmount sleepAmount = GetSleepAmount(totalSleepTime);
-        SleepRisingTimeVariance sleepRisingTimeVariance = GetSleepRisingTimeVariance(sleepSamples);
-        SleepDaytimeNap sleepDaytimeNap = GetSleepDaytimeNap(sleepSamples);
+        SleepRisingTimeVariance sleepRisingTimeVariance = GetSleepRisingTimeVariance(longestConsecutiveSleeps);
+        SleepDaytimeNap sleepDaytimeNap = GetSleepDaytimeNap(consecutiveSleepsByDay[days - 1], longestConsecutiveSleepIdxsByDay[days - 1]);
         return new SleepReport(sleepAmount, sleepRisingTimeVariance, sleepDaytimeNap);
     }
 
@@ -189,7 +207,7 @@ public static class HealthDataAnalyzer
         }
     }
 
-    private static SleepRisingTimeVariance GetSleepRisingTimeVariance(SleepSample[] sleepSamples)
+    private static SleepRisingTimeVariance GetSleepRisingTimeVariance(List<(DateTime, DateTime)> longestConsecutiveSleeps)
     {
         double totalRisingTimeVariance = 0;
         foreach (SleepSample sleepSample in sleepSamples)
@@ -206,13 +224,52 @@ public static class HealthDataAnalyzer
         }
     }
 
+    private static SleepDaytimeNap GetSleepDaytimeNap(List<(DateTime, DateTime)> sleeps, int longestSleepIdx)
+    {
+        if (sleeps.Count == 0 || longestSleepIdx == -1)
+        {
+            return SleepDaytimeNap.YesBad;
+        }
+        else
+        {
+            (DateTime, DateTime) (sDate, eDate) = sleeps[longestSleepIdx];
+            (DateTime, DateTime) dayTime = (sDate - TimeSpan.FromHours(8), sDate);
+            double totalDaytimeNap = 0;
+            for (int i = 0; i < sleeps.Count; i++)
+            {
+                if (i == longestSleepIdx)
+                {
+                    continue;
+                }
+                (DateTime, DateTime) (sDate, eDate) = sleeps[i];
+                if (CheckOverlap(dayTime.Item1, dayTime.Item2, sDate, eDate))
+                {
+                    totalDaytimeNap += CalcOverlap(dayTime.Item1, dayTime.Item2, sDate, eDate).TotalHours;
+                }
+            }
+            if (totalDaytimeNap > 0.5) // 30분 이상 daytime 수면
+            {
+                return SleepDaytimeNap.YesBad;
+            }
+            return SleepDaytimeNap.NoGood;
+        }
+    }
+
     private static bool CheckOverlap(DateTime min1, DateTime max1, DateTime min2, DateTime max2)
     {
         return min1 <= min2 && min2 <= max1;
     }
 
-    private static ActivityReport GetActivityReport(DateTime startDate, DateTime endDate)
+    private static TimeSpan CalcOverlap(DateTime min1, DateTime max1, DateTime min2, DateTime max2)
     {
+        DateTime maxMin = min1 > min2 ? min1 : min2;
+        DateTime minMax = max1 < max2 ? max1 : max2;
+        return minMax - maxMin > TimeSpan.Zero ? minMax - maxMin : TimeSpan.Zero;
+    }
+
+    private static ActivityReport GetActivityReport(DateTime startDate, int days)
+    {
+        DateTime endDate = startDate.AddDays(days);
         ActivitySample[] activitySamples = HealthDataStore.GetActivitySamples(startDate, endDate);
         if (activitySamples is null || activitySamples.Length == 0)
         {
