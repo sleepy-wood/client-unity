@@ -121,6 +121,8 @@ public class TreeController : MonoBehaviour
     public GameObject treeNameUI;
     // 나무 이름
     public string treeName;
+    // 현재 나무의 DB id
+    public int dbId;
     #endregion
 
 
@@ -434,6 +436,7 @@ public class TreeController : MonoBehaviour
             // 나무 심은 시간 저장
             //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
+            SaveTreeData();
         }
         // 랜덤 나무
         else if (day == 2)
@@ -445,6 +448,7 @@ public class TreeController : MonoBehaviour
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
 
             previewTree.transform.localScale = new Vector3(scaleTo, scaleTo, scaleTo);
+            SaveTreeData();
         }
         // 3일차
         else if (day == 3)
@@ -453,6 +457,7 @@ public class TreeController : MonoBehaviour
             TreeReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             campos = Camera.main.gameObject.transform;
+            SaveTreeData();
         }
         // 4일차
         else if (day == 4)
@@ -460,6 +465,7 @@ public class TreeController : MonoBehaviour
             PipelineSetting(4);
             TreeReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
+            SaveTreeData();
         }
         // 5일차
         else if (day == 5)
@@ -468,11 +474,12 @@ public class TreeController : MonoBehaviour
             TreeReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             assetBundle.Unload(false);
+            SaveTreeData();
         }
     }
 
     /// <summary>
-    /// 현재 User의 Tree Data 저장
+    /// 일차 수 별로 User의 Tree Data 저장
     /// </summary>
     public Transform previewTree;
     public async void SaveTreeData()
@@ -487,7 +494,7 @@ public class TreeController : MonoBehaviour
         // Seed Type
         treeData.seedType = selectedSeed.ToString();
         // Land ID
-        treeData.landID = 3;  // 변경 필요
+        treeData.landId = 3;  // 변경 필요
 
         // Tree Pipeline Data //
         // 1. Scale
@@ -525,7 +532,7 @@ public class TreeController : MonoBehaviour
         string treeJsonData = JsonUtility.ToJson(treeData);
 
         // Web
-        ResultPut resultPost = await DataModule.WebRequest<ResultPut>(
+        ResultPost<TreeData> resultPost = await DataModule.WebRequest<ResultPost<TreeData>>(
             "/api/v1/trees",
             DataModule.NetworkType.POST,
             DataModule.DataType.BUFFER,
@@ -534,6 +541,10 @@ public class TreeController : MonoBehaviour
         if (!resultPost.result)
         {
             Debug.LogError("WebRequestError : NetworkType[Post]");
+        }
+        else
+        {
+            Debug.Log("Tree Save 성공");
         }
         treeDatas.Add(treeData);
 
@@ -549,11 +560,11 @@ public class TreeController : MonoBehaviour
     }
 
     /// <summary>
-    /// Tree Data Load하는 함수
+    /// 내 나무 목록 가져오기
     /// </summary>
     public Text txtTreeName;
     public int rotten;
-    public void LoadTreeData()
+    public async void LoadTreeData()
     {
         ArrayTreeData arrayTreeData = DataTemporary.MyTreeData;
         assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/newtreebundle");
@@ -630,4 +641,5 @@ public class TreeController : MonoBehaviour
         //#endregion
 
     }
+
 }
