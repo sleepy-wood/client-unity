@@ -301,11 +301,25 @@ public class TreeController : MonoBehaviour
         //}
         #endregion
 
-        if (dayCount==5 && !isOnce3)
-        {
-            isOnce3 = true;
-            SaveTreeData();
-        }
+        #region 자연스러운 나무 성장 Test
+        //if (Input.GetKeyDown(KeyCode.Alpha5) && !isOnce3)
+        //{
+        //    isOnce3 = true;
+        //    print("55555555555");
+        //    treeFactory.gameObject.SetActive(true);
+        //    for (int j=0; j< 10; j++)
+        //    {
+        //        for (int i = 0; i < 4; i++)
+        //        {
+        //            StructureGenerator.StructureLevel branchPipe = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
+        //            branchPipe.minFrequency += 1;
+        //            branchPipe.maxFrequency += 1;
+        //            TreeReload();
+        //            print(i);
+        //        }
+        //    }
+        //}
+        #endregion
     }
 
     #region 씨앗 심기 코루틴
@@ -439,7 +453,6 @@ public class TreeController : MonoBehaviour
     }
 
 
-
     /// <summary>
     /// 업데이트한 나무 정보를 기반으로 나무 다시 로드
     /// </summary>
@@ -476,16 +489,15 @@ public class TreeController : MonoBehaviour
         {
             sprout.SetActive(false);
             soil.SetActive(false);
-            // 사용자 데이터
+            // 사용자 데이터로 나무 변화
             SleepAmountToTree(sleepAmount);
             SleepRiseToTree(sleepRiseTimeVariance);
-            //NapToTree()
-            ScaleChange(activityPercent);
+            NapToTree(sleepyDayTimeNap);
             //불러오기
             TreeReload();
             treeFactory.gameObject.SetActive(true);
+            ScaleChange(activityPercent);
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
-            previewTree.transform.localScale = new Vector3(scaleTo, scaleTo, scaleTo);
             //SaveTreeData();
         }
         // 3일차
@@ -516,6 +528,7 @@ public class TreeController : MonoBehaviour
         }
     }
 
+    #region DB
     /// <summary>
     /// 일차 수 별로 User의 Tree Data 저장
     /// </summary>
@@ -679,8 +692,9 @@ public class TreeController : MonoBehaviour
     //    //#endregion
 
     //}
+    #endregion
 
-
+    #region User Data
     /// <summary>
     /// 수면양 타입에 따른 나무 데이터 변경
     /// </summary>
@@ -735,6 +749,24 @@ public class TreeController : MonoBehaviour
             BadChange(true);
         }
     }
+    /// <summary>
+    /// Activity 달성 퍼센트에 따라 나무 Scale 조절하는 함수
+    /// </summary>
+    /// <param name="activityRate"> Activity 달성 퍼센트 </param>
+    public void ScaleChange(float activityRate, float lerpSpeed = 2f)
+    {
+        if (selectedSeed == SeedType.Oak)
+        {
+            Vector3 newScale = new Vector3(previewTree.localScale.x + 0.8f, previewTree.localScale.y + 0.8f, previewTree.localScale.z + 0.8f);
+            previewTree.localScale = Vector3.Lerp(previewTree.localScale, newScale, lerpSpeed * Time.deltaTime);
+        }
+        else
+        {
+            Vector3 newScale = new Vector3(previewTree.localScale.x + 0.18f, previewTree.localScale.y + 0.18f, previewTree.localScale.z + 0.18f);
+            previewTree.localScale = Vector3.Lerp(previewTree.localScale, newScale, lerpSpeed * Time.deltaTime);
+        }
+    }
+
 
     /// <summary>
     /// 나무가지 개수 조절하는 함수
@@ -832,19 +864,5 @@ public class TreeController : MonoBehaviour
         }
 
     }
-    /// <summary>
-    /// 나무의 Scale 조절하는 함수
-    /// </summary>
-    /// <param name="activityRate"> Activity 달성 퍼센트 </param>
-    public void ScaleChange(float activityRate)
-    {
-        if (selectedSeed == SeedType.Oak)
-        {
-            previewTree.localScale = new Vector3(previewTree.localScale.x + 0.8f, previewTree.localScale.y + 0.8f, previewTree.localScale.z + 0.8f);
-        }
-        else 
-        {
-            previewTree.localScale = new Vector3(previewTree.localScale.x + 0.18f, previewTree.localScale.y + 0.18f, previewTree.localScale.z + 0.18f);
-        }
-    }
+    #endregion
 }
