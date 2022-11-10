@@ -216,25 +216,27 @@ public class UI_Initial : MonoBehaviour
     public void OnClickDay1()
     {
         // 나무 변화
-        GameManager.Instance.treeController.PlantSeed();
+        GameManager.Instance.treeController.LoadTree(1);
         StartCoroutine(PlusDayFlag(2, 1));
     }
     public void OnClickDay2()
     {
-        GameManager.Instance.treeController.PipelineSetting(1);
-        GameManager.Instance.treeController.TreeReload();
+        GameManager.Instance.treeController.LoadTree(2);
         StartCoroutine(PlusDayFlag(2, 2));
     }
     public void OnClickDay3()
     {
+        GameManager.Instance.treeController.LoadTree(3);
         StartCoroutine(PlusDayFlag(2, 3));
     }
     public void OnClickDay4()
     {
+        GameManager.Instance.treeController.LoadTree(4);
         StartCoroutine(PlusDayFlag(2, 4));
     }
     public void OnClickDay5()
     {
+        GameManager.Instance.treeController.LoadTree(5);
         StartCoroutine(PlusDayFlag(2, 5));
     }
     IEnumerator PlusDayFlag(float speed, float day)
