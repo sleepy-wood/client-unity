@@ -149,19 +149,25 @@ public class TreeController : MonoBehaviour
         {
             // 나무 형태 Random 선택
             int i = UnityEngine.Random.Range(0, pipeNameList.Count);
-            pipeName = pipeNameList[0];  // 수정
-            print("Random Number : " + i);
+            pipeName = pipeNameList[3]; 
             selectedSeed = pipeNameDict[pipeName];
             print(pipeName + " Selected");
-
+            // Tree Pipeline 로드
+            treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+            // sprout Texture 랜덤 선택
+            int s = UnityEngine.Random.Range(0, 4);
+            treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[s].enabled = true;
+            print("sprout texture index : " + s);
+            // bark Texture 랜덤 선택
+            List<string> name = new List<string>() { "A", "B", "C", "D", "E" };
+            int b = UnityEngine.Random.Range(0, 5);
+            Texture2D texture = Resources.Load("Tree/Sprites/Tree_Bark_" + name[b]) as Texture2D;
+            treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
             // 랜덤 선택된 Seed로 기본 세팅값 찾기
             FindtreeSetting();
 
-            // Tree Pipeline 로드
-            treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
-
             // Pipeline 기본 세팅
-            PipelineSetting(0);
+            PipelineSetting(2);
         }
         else if (visitType == VisitType.ReVisit)
         {
@@ -326,7 +332,8 @@ public class TreeController : MonoBehaviour
     public void PipelineSetting(int day)
     {
         // 기본 세팅 성장 데이터 정보 지닌 요소
-        TreeSetting element = selectedTreeSetting[day-1];
+        TreeSetting element = selectedTreeSetting[day-2];
+
 
         #region 1. Element MinMax Frequency
         //int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
@@ -364,13 +371,13 @@ public class TreeController : MonoBehaviour
         #endregion
 
         #region 4. Min/Max Girth At Base
-        GirthTransformElement pipe4 = treePipeline._serializedPipeline.girthTransforms[0];
-        float store4 = element.girthBase;
+        //GirthTransformElement pipe4 = treePipeline._serializedPipeline.girthTransforms[0];
+        //float store4 = element.girthBase;
 
-        // Min Girth At Base
-        pipe4.minGirthAtBase = store4;
-        // Max Girth At Base
-        pipe4.maxGirthAtBase = store4;
+        //// Min Girth At Base
+        //pipe4.minGirthAtBase = store4;
+        //// Max Girth At Base
+        //pipe4.maxGirthAtBase = store4;
         #endregion
 
         #region 5. Object scale
@@ -407,41 +414,37 @@ public class TreeController : MonoBehaviour
         Resources.UnloadAsset(loadedPipeline);
     }
 
-    public void PlantSeed()
-    {
-        StartCoroutine(PlantSeed(0.5f));
-        seed.SetActive(true);
-        //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
-        treeFactory.transform.GetChild(0).gameObject.layer = 11;
-    }
+    
     /// <summary>
     /// dayCount에 맞게 Tree 업데이트
     /// </summary>
     public float camMoveSpeed = 0.5f;
     Transform campos;
     int count = 0;
-    public void LoadTree()
+    public void LoadTree(int day)
     {
         // 씨앗 심기
-        if (dayCount == 0)
+        if (day == 1)
         {
             StartCoroutine(PlantSeed(0.5f));
             seed.SetActive(true);
             // 나무 심은 시간 저장
-            GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
+            //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
         // 랜덤 나무
-        else if (dayCount == 1)
+        else if (day == 2)
         {
             sprout.SetActive(false);
             soil.SetActive(false);
             TreeReload();
             treeFactory.gameObject.SetActive(true);
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
+
+            previewTree.transform.localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         }
         // 3일차
-        if (dayCount == 3)
+        else if (day == 3)
         {
             PipelineSetting(3);
             TreeReload();
@@ -449,14 +452,14 @@ public class TreeController : MonoBehaviour
             campos = Camera.main.gameObject.transform;
         }
         // 4일차
-        if (dayCount == 4)
+        else if (day == 4)
         {
             PipelineSetting(4);
             TreeReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
         // 5일차
-        if (dayCount == 5)
+        else if (day == 5)
         {
             PipelineSetting(5);
             TreeReload();

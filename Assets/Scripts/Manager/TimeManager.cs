@@ -21,7 +21,7 @@ public class TimeManager : MonoBehaviour
     private void Awake()
     {
         // firstPlantDate로 방문타입 결정  => 5일차 후 새로운 Seed심기 전 null값 처리필요
-        if (firstPlantDate == null)
+        if (firstPlantDate == DateTime.Parse("0001-01-01 오전 12:00:00"))
         {
             print("First Visit");
             GameManager.Instance.treeController.visitType = TreeController.VisitType.First;
