@@ -6,7 +6,7 @@ using Photon.Pun;
 using Random = UnityEngine.Random;
 using Unity.VisualScripting;
 
-public class GameManager : MonoBehaviourPun
+public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance;
 
@@ -20,13 +20,9 @@ public class GameManager : MonoBehaviourPun
         {
             Instance = this;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         if (!User)
             User = PhotonNetwork.Instantiate("User", new Vector3(Random.Range(-3, 3), 2, Random.Range(-3, 3)), Quaternion.identity);
+
     }
     private void Start()
     {
