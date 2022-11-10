@@ -1,17 +1,12 @@
 using Broccoli.Pipe;
 using Cysharp.Threading.Tasks;
-using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.Networking;
-using UnityEngine.Rendering;
 
 
 [Serializable]
@@ -25,7 +20,6 @@ public class ResultGet<T>
 public class ResultGetId<T>
 {
     public bool result;
-    public int count;
     public T data;
 }
 

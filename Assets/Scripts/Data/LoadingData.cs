@@ -87,8 +87,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
 
         //UserData 
-        //UserData userData = await DataModule.WebRequest<UserData>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-        //DataTemporary.MyUserData = userData;
+        ResultGetId<UserData> userData = await DataModule.WebRequest<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        DataTemporary.MyUserData = userData.data;
 
         //LandData Load
         //Root landData = await DataModule.WebRequest<Root>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
