@@ -17,7 +17,7 @@ public class SkyLandManager : MonoBehaviour
     public async void LoadData()
     {
         int landId = DataTemporary.MyUserData.currentLandId;
-        ResultGetId<LandData> landDataResponse = await DataModule.WebRequest<ResultGetId<LandData>>("/api/v1/lands/" + landId, DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        ResultGetId<LandData> landDataResponse = await DataModule.WebRequestBuffer<ResultGetId<LandData>>("/api/v1/lands/" + landId, DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         if (!landDataResponse.result)
         {
             Debug.LogError("WebRequestError: NetworkType[Get]");
@@ -64,7 +64,7 @@ public class SkyLandManager : MonoBehaviour
 
         string jsonData = JsonUtility.ToJson(landData);
 
-        ResultPut resultPut = await DataModule.WebRequest<ResultPut>("/api/v1/lands/" + landId, DataModule.NetworkType.PUT, DataModule.DataType.BUFFER, jsonData);
+        ResultPut resultPut = await DataModule.WebRequestBuffer<ResultPut>("/api/v1/lands/" + landId, DataModule.NetworkType.PUT, DataModule.DataType.BUFFER, jsonData);
 
         if (!resultPut.result)
             Debug.LogError("WebRequestError: NetworkType[Put]");
