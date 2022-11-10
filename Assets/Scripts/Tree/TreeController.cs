@@ -733,14 +733,14 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// 나무가지 개수 조절하는 함수
     /// </summary>
-    public void BranchNumChange(bool plus)
+    public void BranchNumChange(bool addBranch)
     {
-        // 나무가지 개수 ++
-        // 
-        if (plus)
+        // 나무가지 개수 +
+        if (addBranch)
         {
             
         }
+        // 나무가지 개수 -
         else
         {
             
