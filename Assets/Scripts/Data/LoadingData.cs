@@ -77,7 +77,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
             StartCoroutine(StartLoading());
         }
         //Native Data Load
-        nativeLoad.LoadNativeData();
+        //nativeLoad.LoadNativeData();
 
         //AssetBundle Load
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);

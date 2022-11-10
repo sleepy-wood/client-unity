@@ -8,7 +8,8 @@ using UnityEngine;
 [System.Serializable]
 public class UserData
 {
-    public int? Id;
+    public int Id;
+    public int LandId;
     public string? NickName;
     public string? UserAvatar;
     public SleepDataStruct? SleepData;
