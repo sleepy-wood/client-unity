@@ -28,6 +28,12 @@ public class ResultGetId<T>
     public int count;
     public T data;
 }
+[Serializable]
+public class ResultPost<T>
+{
+    public bool result;
+    public T data;
+}
 
 [Serializable]
 public class ResultPut
