@@ -58,7 +58,6 @@ public class TimeManager : MonoBehaviour
 
     bool isOnce;
     bool skyChangeDone;
-    int i=0;
     private void Update()
     {
         //now = DateTime.Now;
