@@ -57,12 +57,10 @@ public class UI_Chatting : MonoBehaviourPun
 
         if (PhotonNetwork.PlayerList.Length <= 1)
         {
-            transform.GetChild(0).gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(false);
         }
         else
         {
-            transform.GetChild(0).gameObject.SetActive(true);
             transform.GetChild(1).gameObject.SetActive(true);
         }
     }
@@ -79,27 +77,27 @@ public class UI_Chatting : MonoBehaviourPun
         photonView.RPC("RPC_EmojiButton", RpcTarget.All, i, DataTemporary.MyUserData.profileImg);
 
     }
-    bool isChatActive = false;
-    /// <summary>
-    /// Chatting Button을 눌렀을 때, 판넬을 활성화
-    /// </summary>
-    public void OnClickChat()
-    {
-        if (isChatActive)
-        {
-            isChatActive = false;
-            StopAllCoroutines();
-            //오른쪽으로 140정도 이동
-            StartCoroutine(ChatActive(endPos));
-        }
-        else
-        {
-            isChatActive = true;
-            StopAllCoroutines();
-            //왼쪽으로 140정도 이동
-            StartCoroutine(ChatActive(startPos));
-        }
-    }
+    //bool isChatActive = false;
+    ///// <summary>
+    ///// Chatting Button을 눌렀을 때, 판넬을 활성화
+    ///// </summary>
+    //public void OnClickChat()
+    //{
+    //    if (isChatActive)
+    //    {
+    //        isChatActive = false;
+    //        StopAllCoroutines();
+    //        //오른쪽으로 140정도 이동
+    //        StartCoroutine(ChatActive(endPos));
+    //    }
+    //    else
+    //    {
+    //        isChatActive = true;
+    //        StopAllCoroutines();
+    //        //왼쪽으로 140정도 이동
+    //        StartCoroutine(ChatActive(startPos));
+    //    }
+    //}
     private IEnumerator ChatActive(Vector3 endPosition)
     {
         while (true)
@@ -134,14 +132,16 @@ public class UI_Chatting : MonoBehaviourPun
     {
         if (!isActiveChat)
         {
+            Debug.Log(transform.GetChild(0).gameObject);
             transform.GetChild(0).gameObject.SetActive(true);
-            menuBar.SetActive(false);
+            menuBar.SetActive(true);
             isActiveChat = true;
         }
         else
         {
+            Debug.Log(transform.GetChild(0).gameObject);
             transform.GetChild(0).gameObject.SetActive(false);
-            menuBar.SetActive(true);
+            menuBar.SetActive(false);
             isActiveChat = false;
         }
 
