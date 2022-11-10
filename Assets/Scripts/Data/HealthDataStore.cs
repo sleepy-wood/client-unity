@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,7 +61,7 @@ public static class HealthDataStore
     static void OnQuerySleepSamplesCompleted(SleepSample[] samples)
     {
         // if there was error, samples will be null
-        if (samples != null)
+        if (samples is not null)
         {
             SleepSamples = samples;
             SleepLoadedTime = DateTime.Now;
@@ -71,16 +71,16 @@ public static class HealthDataStore
     static void OnQueryActivitySamplesCompleted(ActivitySample[] samples)
     {
         // if there was error, samples will be null
-        if (samples != null)
+        if (samples is not null)
         {
             ActivitySamples = samples;
             ActivityLoadedTime = DateTime.Now;
         }
     }
 
-    static SleepSample[] GetSleepSamples(DateTime startDate, DateTime endDate)
+    public static SleepSample[] GetSleepSamples(DateTime startDate, DateTime endDate)
     {
-        if (SleepSamples == null)
+        if (SleepSamples is null)
         {
             return null;
         }
@@ -98,9 +98,9 @@ public static class HealthDataStore
         }
     }
 
-    static ActivitySample[] GetActivitySamples(DateTime startDate, DateTime endDate)
+    public static ActivitySample[] GetActivitySamples(DateTime startDate, DateTime endDate)
     {
-        if (ActivitySamples == null)
+        if (ActivitySamples is null)
         {
             return null;
         }

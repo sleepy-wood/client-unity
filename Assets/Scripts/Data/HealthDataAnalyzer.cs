@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,41 +31,49 @@ public enum SleepDaytimeNap
 
 public readonly struct SleepReport
 {
-    public readonly SleepAmount sleepAmount;
-    public readonly SleepRiseTimeVariance sleepRiseTimeVariance;
-    public readonly SleepDaytimeNap sleepDaytimeNap;
+    public readonly SleepAmount SleepAmount;
+    public readonly SleepRiseTimeVariance SleepRiseTimeVariance;
+    public readonly SleepDaytimeNap SleepDaytimeNap;
 
-    public SleepReport(SleepAmount sleepAmount, SleepRiseTimeVariance sleepRiseTimeVariance, SleepDaytimeNap sleepDaytimeNap)
+    public SleepReport(
+        SleepAmount sleepAmount,
+        SleepRiseTimeVariance sleepRiseTimeVariance,
+        SleepDaytimeNap sleepDaytimeNap
+    )
     {
-        this.sleepAmount = sleepAmount;
-        this.sleepRiseTimeVariance = sleepRiseTimeVariance;
-        this.sleepDaytimeNap = sleepDaytimeNap;
+        SleepAmount = sleepAmount;
+        SleepRiseTimeVariance = sleepRiseTimeVariance;
+        SleepDaytimeNap = sleepDaytimeNap;
     }
 }
 
 public readonly struct ActivityReport
 {
-    public readonly double sctiveEnergyBurnedGoalAchieved;
-    public readonly double exerciseTimeGoalAchieved;
-    public readonly double standHoursGoalAchieved;
+    public readonly double ActiveEnergyBurnedGoalAchieved;
+    public readonly double ExerciseTimeGoalAchieved;
+    public readonly double StandHoursGoalAchieved;
 
-    public ActivityReport(double activeEnergyBurnedGoalAchieved, double exerciseTimeGoalAchieved, double standHoursGoalAchieved)
+    public ActivityReport(
+        double activeEnergyBurnedGoalAchieved,
+        double exerciseTimeGoalAchieved,
+        double standHoursGoalAchieved
+    )
     {
-        this.activeEnergyBurnedGoalAchieved = activeEnergyBurnedGoalAchieved;
-        this.exerciseTimeGoalAchieved = exerciseTimeGoalAchieved;
-        this.standHoursGoalAchieved = standHoursGoalAchieved;
+        ActiveEnergyBurnedGoalAchieved = activeEnergyBurnedGoalAchieved;
+        ExerciseTimeGoalAchieved = exerciseTimeGoalAchieved;
+        StandHoursGoalAchieved = standHoursGoalAchieved;
     }
 }
 
 public readonly struct HealthReport
 {
-    public readonly SleepReport sleepReport;
-    public readonly ActivityReport activityReport;
+    public readonly SleepReport SleepReport;
+    public readonly ActivityReport ActivityReport;
 
     public HealthReport(SleepReport sleepReport, ActivityReport activityReport)
     {
-        this.sleepReport = sleepReport;
-        this.activityReport = activityReport;
+        SleepReport = sleepReport;
+        ActivityReport = activityReport;
     }
 }
 
@@ -77,7 +85,14 @@ public static class HealthDataAnalyzer
         if (!HealthDataStore.Loaded())
         {
             Debug.Log("HealthDataStore is not loaded");
-            return new HealthReport(new SleepReport(SleepAmount.Zero, SleepRiseTimeVariance.LargeBad, SleepDaytimeNap.YesBad), new ActivityReport(0, 0, 0));
+            return new HealthReport(
+                new SleepReport(
+                    SleepAmount.Zero,
+                    SleepRiseTimeVariance.LargeBad,
+                    SleepDaytimeNap.YesBad
+                ),
+                new ActivityReport(0, 0, 0)
+            );
         }
         SleepReport sleepReport = GetSleepReport(startDate, days);
         ActivityReport activityReport = GetActivityReport(startDate, days);
@@ -91,10 +106,14 @@ public static class HealthDataAnalyzer
         if (sleepSamples is null || sleepSamples.Length == 0)
         {
             Debug.Log("SleepSamples is null or empty");
-            return new SleepReport(SleepAmount.Zero, SleepRiseTimeVariance.LargeBad, SleepDaytimeNap.YesBad);
+            return new SleepReport(
+                SleepAmount.Zero,
+                SleepRiseTimeVariance.LargeBad,
+                SleepDaytimeNap.YesBad
+            );
         }
 
-        List<(DateTime, DataTime)> consecutiveSleeps = new List<(DateTime, DataTime)>();
+        List<(DateTime, DateTime)> consecutiveSleeps = new List<(DateTime, DateTime)>();
         TimeSpan padSpan = TimeSpan.FromMinutes(30) / 2; // 30분 환승 룰
 
         foreach (SleepSample sleepSample in sleepSamples)
@@ -106,17 +125,27 @@ public static class HealthDataAnalyzer
             bool found = false;
             for (int i = 0; i < consecutiveSleeps.Count; i++)
             {
-                (DateTime, DateTime) (sDate, eDate) = consecutiveSleeps[i];
-                if (CheckOverlap(sDate - padSpan, eDate + padSpan, sleepSample.startDate - padSpan, sleepSample.endDate + padSpan))
+                var (sDate, eDate) = consecutiveSleeps[i];
+                if (
+                    CheckOverlap(
+                        sDate - padSpan,
+                        eDate + padSpan,
+                        sleepSample.StartDate - padSpan,
+                        sleepSample.EndDate + padSpan
+                    )
+                )
                 {
-                    consecutiveSleeps[i] = (sDate < sleepSample.startDate ? sDate : sleepSample.startDate, eDate > sleepSample.endDate ? eDate : sleepSample.endDate);
+                    consecutiveSleeps[i] = (
+                        sDate < sleepSample.StartDate ? sDate : sleepSample.StartDate,
+                        eDate > sleepSample.EndDate ? eDate : sleepSample.EndDate
+                    );
                     found = true;
                     break;
                 }
             }
             if (!found)
             {
-                consecutiveSleeps.Add((sleepSample.startDate, sleepSample.endDate));
+                consecutiveSleeps.Add((sleepSample.StartDate, sleepSample.EndDate));
             }
         }
 
@@ -126,10 +155,10 @@ public static class HealthDataAnalyzer
             totalSleepTime += (eDate - sDate).TotalHours;
         }
 
-        List<(DateTime, DataTime)>[] consecutiveSleepsByDay = new List<(DateTime, DataTime)>[days];
+        List<(DateTime, DateTime)>[] consecutiveSleepsByDay = new List<(DateTime, DateTime)>[days];
         for (int i = 0; i < days; i++)
         {
-            consecutiveSleepsByDay[i] = new List<(DateTime, DataTime)>();
+            consecutiveSleepsByDay[i] = new List<(DateTime, DateTime)>();
         }
         foreach (var (sDate, eDate) in consecutiveSleeps)
         {
@@ -151,8 +180,8 @@ public static class HealthDataAnalyzer
             int longestIdx = 0;
             for (int j = 1; j < consecutiveSleepsByDay[i].Count; j++)
             {
-                (DateTime, DataTime) (sDate, eDate) = consecutiveSleepsByDay[i][j];
-                (DateTime, DataTime) (longestSDate, longestEDate) = consecutiveSleepsByDay[i][longestIdx];
+                var (sDate, eDate) = consecutiveSleepsByDay[i][j];
+                var (longestSDate, longestEDate) = consecutiveSleepsByDay[i][longestIdx];
                 if (eDate - sDate > longestEDate - longestSDate)
                 {
                     longestIdx = j;
@@ -173,13 +202,21 @@ public static class HealthDataAnalyzer
         {
             if (longestConsecutiveSleepIdxsByDay[i] != -1)
             {
-                longestConsecutiveSleeps.Add(consecutiveSleepsByDay[i][longestConsecutiveSleepIdxsByDay[i]]);
+                longestConsecutiveSleeps.Add(
+                    consecutiveSleepsByDay[i][longestConsecutiveSleepIdxsByDay[i]]
+                );
             }
         }
 
         SleepAmount sleepAmount = GetSleepAmount(totalSleepTime);
-        SleepRiseTimeVariance sleepRiseTimeVariance = GetSleepRiseTimeVariance(longestConsecutiveSleeps, days);
-        SleepDaytimeNap sleepDaytimeNap = GetSleepDaytimeNap(consecutiveSleepsByDay[days - 1], longestConsecutiveSleepIdxsByDay[days - 1]);
+        SleepRiseTimeVariance sleepRiseTimeVariance = GetSleepRiseTimeVariance(
+            longestConsecutiveSleeps,
+            days
+        );
+        SleepDaytimeNap sleepDaytimeNap = GetSleepDaytimeNap(
+            consecutiveSleepsByDay[days - 1],
+            longestConsecutiveSleepIdxsByDay[days - 1]
+        );
 
         return new SleepReport(sleepAmount, sleepRiseTimeVariance, sleepDaytimeNap);
     }
@@ -208,7 +245,10 @@ public static class HealthDataAnalyzer
         }
     }
 
-    private static SleepRiseTimeVariance GetSleepRiseTimeVariance(List<(DateTime, DateTime)> longestConsecutiveSleeps, int days)
+    private static SleepRiseTimeVariance GetSleepRiseTimeVariance(
+        List<(DateTime, DateTime)> longestConsecutiveSleeps,
+        int days
+    )
     {
         if (longestConsecutiveSleeps.Count == 0)
         {
@@ -254,7 +294,10 @@ public static class HealthDataAnalyzer
         }
     }
 
-    private static SleepDaytimeNap GetSleepDaytimeNap(List<(DateTime, DateTime)> sleeps, int longestSleepIdx)
+    private static SleepDaytimeNap GetSleepDaytimeNap(
+        List<(DateTime, DateTime)> sleeps,
+        int longestSleepIdx
+    )
     {
         if (sleeps.Count == 0 || longestSleepIdx == -1)
         {
@@ -262,8 +305,8 @@ public static class HealthDataAnalyzer
         }
         else
         {
-            (DateTime, DateTime) (sDate, eDate) = sleeps[longestSleepIdx];
-            (DateTime, DateTime) dayTime = (sDate - TimeSpan.FromHours(8), sDate);
+            var (sLDate, eLDate) = sleeps[longestSleepIdx];
+            var dayTime = (sLDate - TimeSpan.FromHours(8), sLDate);
             double totalDaytimeNap = 0;
             for (int i = 0; i < sleeps.Count; i++)
             {
@@ -271,10 +314,15 @@ public static class HealthDataAnalyzer
                 {
                     continue;
                 }
-                (DateTime, DateTime) (sDate, eDate) = sleeps[i];
+                var (sDate, eDate) = sleeps[i];
                 if (CheckOverlap(dayTime.Item1, dayTime.Item2, sDate, eDate))
                 {
-                    totalDaytimeNap += CalcOverlap(dayTime.Item1, dayTime.Item2, sDate, eDate).TotalHours;
+                    totalDaytimeNap += CalcOverlap(
+                        dayTime.Item1,
+                        dayTime.Item2,
+                        sDate,
+                        eDate
+                    ).TotalHours;
                 }
             }
             if (totalDaytimeNap > 0.5) // 30분 이상 daytime 수면
@@ -317,10 +365,23 @@ public static class HealthDataAnalyzer
         }
 
         ActivitySample latestSample = activitySamples[latestIdx];
-        double activeEnergyBurnedGoalAchieved = latestSample.ActiveEnergyBurnedGoalInKcal != 0 ? latestSample.ActiveEnergyBurnedInKcal / latestSample.ActiveEnergyBurnedGoalInKcal : 0;
-        double exerciseTimeGoalAchieved = latestSample.ExerciseTimeGoalInMinutes != 0 ? latestSample.ExerciseTimeInMinutes / latestSample.ExerciseTimeGoalInMinutes : 0;
-        double standHoursGoalAchieved = latestSample.StandHoursGoal != 0 ? latestSample.StandHours / latestSample.StandHoursGoal : 0;
+        double activeEnergyBurnedGoalAchieved =
+            latestSample.ActiveEnergyBurnedGoalInKcal != 0
+                ? latestSample.ActiveEnergyBurnedInKcal / latestSample.ActiveEnergyBurnedGoalInKcal
+                : 0;
+        double exerciseTimeGoalAchieved =
+            latestSample.ExerciseTimeGoalInMinutes != 0
+                ? latestSample.ExerciseTimeInMinutes / latestSample.ExerciseTimeGoalInMinutes
+                : 0;
+        double standHoursGoalAchieved =
+            latestSample.StandHoursGoal != 0
+                ? latestSample.StandHours / latestSample.StandHoursGoal
+                : 0;
 
-        return new ActivityReport(activeEnergyBurnedGoalAchieved, exerciseTimeGoalAchieved, standHoursGoalAchieved);
+        return new ActivityReport(
+            activeEnergyBurnedGoalAchieved,
+            exerciseTimeGoalAchieved,
+            standHoursGoalAchieved
+        );
     }
 }
