@@ -8,19 +8,15 @@ public class SkyLandManager : MonoBehaviour
 {
     public static SkyLandManager Instance;
 
-    private AssetBundle assetBundle;
     void Awake()
     {
         if (!Instance)
             Instance = this;
-
-        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustombundle");
-
         //LoadData();
     }
     public async void LoadData()
     {
-        int landId = DataTemporary.MyUserData.LandId;
+        int landId = DataTemporary.MyUserData.currentLandId;
         ResultGetId<LandData> landDataResponse = await DataModule.WebRequest<ResultGetId<LandData>>("/api/v1/lands/" + landId, DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         if (!landDataResponse.result)
         {
@@ -32,7 +28,7 @@ public class SkyLandManager : MonoBehaviour
 
         for(int i = 0; i < landData.landDecorations.Count; i++)
         {
-            GameObject resource = assetBundle.LoadAsset<GameObject>(landData.landDecorations[i].path);
+            GameObject resource = DataTemporary.assetBundle.LoadAsset<GameObject>(landData.landDecorations[i].path);
             //동기화가 안될거 같은데,,,
             GameObject decoration = Instantiate(resource);
             decoration.transform.parent = parent;
@@ -47,7 +43,7 @@ public class SkyLandManager : MonoBehaviour
 
     public async void SaveData()
     {
-        int landId = DataTemporary.MyUserData.LandId;
+        int landId = DataTemporary.MyUserData.currentLandId;
         LandData landData = DataTemporary.MyLandData.landLists[landId];
         Transform landDecorations = transform.GetChild(0);
         for (int i = 0; i < landDecorations.childCount; i++)

@@ -8,11 +8,17 @@ using UnityEngine;
 [System.Serializable]
 public class UserData
 {
-    public int Id;
-    public int LandId;
-    public string? NickName;
-    public string? UserAvatar;
-    public SleepDataStruct? SleepData;
+    public int id;
+    public string? profileImg;
+    public string? type;
+    public string? nickName;
+    public string? avatar;
+    public int badgeCount;
+    public int productCount;
+    public string? hp;
+    public int currentLandId;
+    public string? createdAt;
+    public string? updatedAt;
 }
 [System.Serializable]
 public class SleepDataStruct
@@ -20,4 +26,9 @@ public class SleepDataStruct
     public DateTime StartDate;
     public DateTime EndDate;
     public SleepType Type;
+}
+[System.Serializable]
+public class ArraySleepData
+{
+    public List<SleepDataStruct>? arraySleepData;
 }

@@ -15,17 +15,13 @@ public class UI_LandCustom : MonoBehaviourPun
     private GameObject itemWindow;
     private int selectCat = 0;
     private string selectCatName = "";
-    private AssetBundle assetBundle;
-    private AssetBundle assetBundleImg;
     private void Start()
     {
         if(PhotonNetwork.PlayerList.Length != 1)
         {
             button.SetActive(false);
         }
-
-        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath  + "/AssetBundles/landcustombundle");
-        assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustomimg");
+        
         itemWindow = transform.GetChild(0).gameObject;
 
         //버튼 이벤트 등록
@@ -62,7 +58,7 @@ public class UI_LandCustom : MonoBehaviourPun
 
         for (int i = 0; i < fileEntries.Length; i++)
         {
-            Sprite resource = assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "\\")[1].Split('.')[0]);
+            Sprite resource = DataTemporary.assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "\\")[1].Split('.')[0]);
             itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite =
                 Instantiate(resource);
             Color color = itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().color;
@@ -94,7 +90,7 @@ public class UI_LandCustom : MonoBehaviourPun
         //나머지 버튼들은 비활성화
         for (int i = cnt; i < 15; i++)
         {
-            itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite = Instantiate(assetBundleImg.LoadAsset<Sprite>("ButtonBg"));
+            itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite = Instantiate(DataTemporary.assetBundleImg.LoadAsset<Sprite>("ButtonBg"));
             Color color = itemWindow.transform.GetChild(i / 5).GetChild(i % 5).GetComponent<Image>().color;
             color.a = 0.3f;
             itemWindow.transform.GetChild(i / 5).GetChild(i % 5).GetComponent<Image>().color = color;
@@ -121,7 +117,7 @@ public class UI_LandCustom : MonoBehaviourPun
         {
             if (cnt == i)
             {
-                GameObject resource = assetBundle.LoadAsset<GameObject>(fileName.Split("/LandCustom/" + selectCatName + "/")[1].Split('.')[0]);
+                GameObject resource = DataTemporary.assetBundleCustom.LoadAsset<GameObject>(fileName.Split("/LandCustom/" + selectCatName + "/")[1].Split('.')[0]);
                 //GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
                 prefab.name = prefab.name.Split('(')[0];

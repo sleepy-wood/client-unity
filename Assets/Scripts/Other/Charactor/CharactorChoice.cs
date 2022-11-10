@@ -138,8 +138,8 @@ public class CharactorChoice : MonoBehaviourPunCallbacks
         transform.GetChild(selectedIndex).GetComponent<Animator>().SetTrigger("Victory");
         
         //데이터 저장
-        DataTemporary.MyUserData.UserAvatar = transform.GetChild(selectedIndex).name;
-        PhotonNetwork.NickName += "/" + DataTemporary.MyUserData.UserAvatar;
+        DataTemporary.MyUserData.avatar = transform.GetChild(selectedIndex).name;
+        PhotonNetwork.NickName += "/" + DataTemporary.MyUserData.avatar;
         //string jsonData = FileManager.SaveDataFile<UserData>(userDataFileName, DataTemporary.MyUserData);
 
         //TODO: 데이터 수정

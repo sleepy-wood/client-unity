@@ -76,6 +76,10 @@ public class LoadingData : MonoBehaviourPunCallbacks
             scrollbar_left.SetActive(false);
             StartCoroutine(StartLoading());
         }
+
+        DataTemporary.assetBundleCustom = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustombundle");
+        DataTemporary.assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustomimg");
+
         //Native Data Load
         //nativeLoad.LoadNativeData();
 
