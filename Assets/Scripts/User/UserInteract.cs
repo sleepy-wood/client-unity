@@ -17,12 +17,15 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
 
     private Vector3 receivePos;
     private Quaternion receiveRot;
-    private void Start()
+    private void Awake()
     {
-        animatorUser = transform.GetChild(2).GetComponent<Animator>();
         userInput = GetComponent<UserInput>();
         profileImage = transform.GetChild(3).GetChild(0).GetComponent<Image>();
-        photonView.RPC("RPC_SettingProfile", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg);
+        animatorUser = transform.GetChild(2).GetComponent<Animator>();
+    }
+    private void Start()
+    {
+        photonView.RPC("RPC_SettingProfile", RpcTarget.All, DataTemporary.MyUserData.profileImg);
 
     }
     private void Update()
@@ -31,7 +34,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
         {
             #region Player Move
 
-            if (photonView.IsMine)
+            if (photonView && photonView.IsMine)
             {
 #if UNITY_STANDALONE
             Vector3 moveDir = userInput.MoveX * transform.right + userInput.MoveZ * transform.forward;

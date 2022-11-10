@@ -1,8 +1,10 @@
+using JetBrains.Annotations;
 using NativePlugin.HealthData;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 
 [Serializable]
 public class UserData
@@ -18,6 +20,13 @@ public class UserData
     public int currentLandId;
     public string createdAt;
     public string updatedAt;
+}
+
+[Serializable]
+public class UserLogin
+{
+    public string token;
+    public UserData user;
 }
 [Serializable]
 public class SleepDataStruct

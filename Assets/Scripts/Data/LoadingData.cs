@@ -14,6 +14,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject scrollbar_right;
     [SerializeField] private GameObject scrollbar_left;
     [SerializeField] private float scrollbarSpeed = 2;
+    [SerializeField] private int loginId = 1; 
 
     public bool m_testMode = false;
     private Scrollbar right;
@@ -61,7 +62,6 @@ public class LoadingData : MonoBehaviourPunCallbacks
         roomOptions.IsVisible = true;
         if (PhotonNetwork.CreateRoom(PhotonNetwork.NickName, roomOptions))
         {
-            Debug.Log("완료");
             isCreateComplete = true;
         }
     }
@@ -83,6 +83,13 @@ public class LoadingData : MonoBehaviourPunCallbacks
         DataTemporary.assetBundleCustom = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustombundle");
         DataTemporary.assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustomimg");
 
+        //로그인
+        //"/api/v1/auth/login/temp/{id}"
+        ResultPost<UserLogin> login = await DataModule.WebRequestBuffer<ResultPost<UserLogin>>("/api/v1/auth/login/temp/" + loginId, DataModule.NetworkType.POST, DataModule.DataType.BUFFER);
+        if (login.result)
+        {
+            DataModule.REPLACE_BEARER_TOKEN = login.data.token;
+        }
         //Native Data Load
         //nativeLoad.LoadNativeData();
 
@@ -90,7 +97,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
 
         //UserData 
-        ResultGetId<UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        ResultGetId <UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         //LandData Load
         //Root landData = await DataModule.WebRequest<Root>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
@@ -135,10 +142,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
         if (!m_testMode)
         {
              //&& treeData.result
-            if (landData.result && bridgeData.result && userData.result)
+            if (landData.result && bridgeData.result && userData.result && login.result)
             {
-                Debug.Log("시작");
-                //PhotonNetwork.LoadLevel(1);
                 isLoadingComplete = true;
             }
         }
