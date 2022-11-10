@@ -147,8 +147,8 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 방문 타입에 따라 시나리오 선택
-        if (visitType == VisitType.First)
-        {
+        //if (visitType == VisitType.First)
+        //{
             // 나무 형태 Random 선택
             int i = UnityEngine.Random.Range(0, pipeNameList.Count);
             pipeName = pipeNameList[i]; 
@@ -170,11 +170,11 @@ public class TreeController : MonoBehaviour
 
             // Pipeline 기본 세팅
             PipelineSetting(2);
-        }
-        else if (visitType == VisitType.ReVisit)
-        {
-            // DB에 저장해놓은 나무 변수 가져와 로드
-        }
+        //}
+        //else if (visitType == VisitType.ReVisit)
+        //{
+        //    // DB에 저장해놓은 나무 변수 가져와 로드
+        //}
          
         // 헬스데이터 불러오기 ( 로딩바에서 )
         HealthDataStore.Init();
