@@ -163,9 +163,11 @@ public class LandCustom : MonoBehaviour
     /// </summary>
     void CanvasSetting()
     {
-        checkCanvas.position = selectedObject.transform.position + new Vector3(selectedObject.transform.localScale.x / 2, selectedObject.transform.localScale.y / 2 + 1, 0);
+        checkCanvas.position = selectedObject.transform.position + new Vector3(selectedObject.transform.localScale.x/2, selectedObject.transform.localScale.y / 2 + 1, 0);
         checkCanvas.LookAt(transform);
     }
+
+    float preZoom = 0;
     /// <summary>
     /// 카메라 모드
     /// </summary>
@@ -174,8 +176,9 @@ public class LandCustom : MonoBehaviour
         transform.parent.Rotate(new Vector3(0, 1, 0), userInput.RotateX * 10);
         transform.Rotate(new Vector3(transform.parent.right.x, 0, 0), userInput.RotateY * 3);
         //zoom을 했을 경우
-        if (userInput.Zoom != 0)
+        if (userInput.Zoom != 0 && preZoom != userInput.Zoom)
         {
+            preZoom = userInput.Zoom;
             //카메라 Zoom in / out
             cam.fieldOfView -= userInput.Zoom * zoomSpeed;
             cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, initialOrthographicSize - 30, initialOrthographicSize + 30);
@@ -192,7 +195,7 @@ public class LandCustom : MonoBehaviour
         if (preScale != new Vector3(userInput.Zoom, userInput.Zoom, userInput.Zoom))
         {
             preScale = new Vector3(userInput.Zoom, userInput.Zoom, userInput.Zoom);
-            selectedObject.transform.localScale += new Vector3(userInput.Zoom, userInput.Zoom, userInput.Zoom) * 0.1f;
+            selectedObject.transform.localScale += new Vector3(userInput.Zoom, userInput.Zoom, userInput.Zoom) * 0.5f;
         }
     }
 
