@@ -11,6 +11,7 @@ public class UI_LandCustom : MonoBehaviourPun
     [SerializeField] private Transform land;
     [SerializeField] private List<GameObject> objects = new List<GameObject>();
     [SerializeField] private GameObject button;
+    public GameObject menuBar;
 
     private GameObject itemWindow;
     private int selectCat = 0;
@@ -186,6 +187,7 @@ public class UI_LandCustom : MonoBehaviourPun
     {
         if (!isActiveCanvase)
         {
+            menuBar.SetActive(false);
             isActiveCanvase = true;
             GameManager.Instance.User.GetComponent<UserInput>().InputControl = true;
             for (int i = 0; i < objects.Count; i++)
@@ -199,6 +201,7 @@ public class UI_LandCustom : MonoBehaviourPun
         }
         else
         {
+            menuBar.SetActive(true);
             //SkyLandManager.Instance.SaveData();
             GameManager.Instance.User.GetComponent<UserInput>().InputControl = false;
             isActiveCanvase = false;

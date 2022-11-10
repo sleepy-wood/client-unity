@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UI_Chatting : MonoBehaviourPun
 {
     public Transform windowContent;
+    public GameObject menuBar;
 
     //InputChat
     private InputField chatting;
@@ -55,11 +56,11 @@ public class UI_Chatting : MonoBehaviourPun
 
         if (PhotonNetwork.PlayerList.Length <= 1)
         {
-            //transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(0).gameObject.SetActive(false);
         }
         else
         {
-            //transform.GetChild(0).gameObject.SetActive(true);
+            transform.GetChild(0).gameObject.SetActive(true);
         }
     }
     public void OnClickEmojiButton(int i)
@@ -131,11 +132,13 @@ public class UI_Chatting : MonoBehaviourPun
         if (!isActiveChat)
         {
             transform.GetChild(0).gameObject.SetActive(true);
+            menuBar.SetActive(false);
             isActiveChat = true;
         }
         else
         {
             transform.GetChild(0).gameObject.SetActive(false);
+            menuBar.SetActive(true);
             isActiveChat = false;
         }
 
