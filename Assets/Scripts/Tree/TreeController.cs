@@ -436,7 +436,7 @@ public class TreeController : MonoBehaviour
             // 나무 심은 시간 저장
             //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
-            SaveTreeData();
+            //SaveTreeData();
         }
         // 랜덤 나무
         else if (day == 2)
@@ -448,7 +448,7 @@ public class TreeController : MonoBehaviour
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
 
             previewTree.transform.localScale = new Vector3(scaleTo, scaleTo, scaleTo);
-            SaveTreeData();
+            //SaveTreeData();
         }
         // 3일차
         else if (day == 3)
@@ -457,7 +457,7 @@ public class TreeController : MonoBehaviour
             TreeReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             campos = Camera.main.gameObject.transform;
-            SaveTreeData();
+            //SaveTreeData();
         }
         // 4일차
         else if (day == 4)
@@ -465,7 +465,7 @@ public class TreeController : MonoBehaviour
             PipelineSetting(4);
             TreeReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
-            SaveTreeData();
+            //SaveTreeData();
         }
         // 5일차
         else if (day == 5)
@@ -474,7 +474,7 @@ public class TreeController : MonoBehaviour
             TreeReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             assetBundle.Unload(false);
-            SaveTreeData();
+            //SaveTreeData();
         }
     }
 
