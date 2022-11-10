@@ -1,12 +1,16 @@
+using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_LandCustom : MonoBehaviour
+public class UI_LandCustom : MonoBehaviourPun
 {
     [SerializeField] private Transform land;
+    [SerializeField] private List<GameObject> objects = new List<GameObject>();
+    [SerializeField] private GameObject button;
 
     private GameObject itemWindow;
     private int selectCat = 0;
@@ -15,20 +19,35 @@ public class UI_LandCustom : MonoBehaviour
     private AssetBundle assetBundleImg;
     private void Start()
     {
+        if(PhotonNetwork.PlayerList.Length != 1)
+        {
+            button.SetActive(false);
+        }
+
         assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath  + "/AssetBundles/landcustombundle");
         assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustomimg");
-        itemWindow = transform.GetChild(1).gameObject;
+        itemWindow = transform.GetChild(0).gameObject;
 
         //버튼 이벤트 등록
-        for(int i = 0; i < transform.GetChild(2).childCount; i++)
+        for(int i = 0; i < transform.GetChild(1).childCount; i++)
         {
             int temp = i;
-            transform.GetChild(2).GetChild(temp).GetComponent<Button>().onClick.AddListener(
-                () => OnClickCategoryActive(transform.GetChild(2).GetChild(temp).GetChild(0).GetComponent<Text>().text, temp));
+            transform.GetChild(1).GetChild(temp).GetComponent<Button>().onClick.AddListener(
+                () => OnClickCategoryActive(transform.GetChild(1).GetChild(temp).GetChild(0).GetComponent<Text>().text, temp));
         }
 
         //초기값 0번째 버튼 활성화
-        OnClickCategoryActive(transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>().text, 0);
+        //OnClickCategoryActive(transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text, 0);
+
+        //비활성화
+        for (int i = 0; i < objects.Count; i++)
+        {
+            objects[i].SetActive(false);
+        }
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
     }
 
     public void OnClickCategoryActive(string Cat, int num)
@@ -43,7 +62,7 @@ public class UI_LandCustom : MonoBehaviour
 
         for (int i = 0; i < fileEntries.Length; i++)
         {
-            Sprite resource = assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
+            Sprite resource = assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "\\")[1].Split('.')[0]);
             itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite =
                 Instantiate(resource);
             Color color = itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().color;
@@ -158,7 +177,7 @@ public class UI_LandCustom : MonoBehaviour
         //}
     }
 
-    private bool isActiveCanvase = true;
+    private bool isActiveCanvase = false;
     /// <summary>
     /// Custom UI 열고 닫기
     /// </summary>
@@ -167,19 +186,26 @@ public class UI_LandCustom : MonoBehaviour
         if (!isActiveCanvase)
         {
             isActiveCanvase = true;
-            for(int i = 0; i < transform.childCount; i++)
+            for (int i = 0; i < objects.Count; i++)
             {
-                if (i != 0)
-                    transform.GetChild(i).gameObject.SetActive(true);
+                objects[i].SetActive(true);
+            }
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(true);
             }
         }
         else
         {
+            //SkyLandManager.Instance.SaveData();
             isActiveCanvase = false;
+            for (int i = 0; i < objects.Count; i++)
+            {
+                objects[i].SetActive(false);
+            }
             for (int i = 0; i < transform.childCount; i++)
             {
-                if (i != 0)
-                    transform.GetChild(i).gameObject.SetActive(false);
+                transform.GetChild(i).gameObject.SetActive(false);
             }
         }
     }

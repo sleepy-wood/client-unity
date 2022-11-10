@@ -21,6 +21,13 @@ public class ResultGet<T>
     public int count;
     public List<T> data;
 }
+[Serializable]
+public class ResultGetId<T>
+{
+    public bool result;
+    public int count;
+    public T data;
+}
 
 [Serializable]
 public class ResultPut
