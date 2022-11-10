@@ -173,6 +173,9 @@ public class TreeController : MonoBehaviour
         {
             // DB에 저장해놓은 나무 변수 가져와 로드
         }
+         
+        // 헬스데이터 불러오기 ( 로딩바에서 )
+        HealthDataStore.Init();
 
         #region 기존 코드
         //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
@@ -484,10 +487,11 @@ public class TreeController : MonoBehaviour
         // Seed Type
         treeData.seedType = selectedSeed.ToString();
         // Land ID
-        treeData.landID = 1;  // 변경 필요
+        treeData.landID = 3;  // 변경 필요
 
         // Tree Pipeline Data //
         // 1. Scale
+        if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
         treeData.scale = previewTree.localScale.x;
         // 2. Branch Numbers
         List<StructureGenerator.StructureLevel> level = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels;
@@ -500,10 +504,10 @@ public class TreeController : MonoBehaviour
         // 4. Sprout Number
         treeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].minFrequency;
         // 5. Rotten Rate
-        treeData.rottenRate = 0.1f;
+        treeData.rottenRate = 20;
         // 6. Gravity
         treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
-        // 7. Root Num                       
+        // 7. Root Num                                                                                                                                                                                                                                          -000000000000000000
         int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
         treeData.rootNum = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[idx - 1].minFrequency;
         // 8. Bark Texture Name
