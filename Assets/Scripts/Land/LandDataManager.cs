@@ -115,7 +115,7 @@ public class LandDataManager : MonoBehaviour
     /// LandManager 하위에 있는 Land들의 정보를 수정하는 함수
     /// 웹에 수정 요청을 할것
     /// </summary>
-    public async void SaveLandData()
+    public async void SaveLandData() 
     {
         List<LandData> landDataList = new List<LandData>();
         for(int i = 0; i< transform.childCount - 1; i++)
