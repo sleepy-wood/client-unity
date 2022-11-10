@@ -4,6 +4,7 @@ root = true
 [*]
 indent_style = space
 charset = utf-8
+end_of_line = lf
 dotnet_style_qualification_for_field = false:silent
 dotnet_style_qualification_for_property = false:silent
 dotnet_style_qualification_for_method = false:silent
@@ -35,31 +36,31 @@ dotnet_naming_rule.non_field_members_should_be_pascal_case.style = pascal_case
 
 dotnet_naming_symbols.interface.applicable_kinds = interface
 dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.interface.required_modifiers = 
+dotnet_naming_symbols.interface.required_modifiers =
 
 dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum
 dotnet_naming_symbols.types.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.types.required_modifiers = 
+dotnet_naming_symbols.types.required_modifiers =
 
 dotnet_naming_symbols.non_field_members.applicable_kinds = property, event, method
 dotnet_naming_symbols.non_field_members.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.non_field_members.required_modifiers = 
+dotnet_naming_symbols.non_field_members.required_modifiers =
 
 # 명명 스타일
 
 dotnet_naming_style.begins_with_i.required_prefix = I
-dotnet_naming_style.begins_with_i.required_suffix = 
-dotnet_naming_style.begins_with_i.word_separator = 
+dotnet_naming_style.begins_with_i.required_suffix =
+dotnet_naming_style.begins_with_i.word_separator =
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
-dotnet_naming_style.pascal_case.required_prefix = 
-dotnet_naming_style.pascal_case.required_suffix = 
-dotnet_naming_style.pascal_case.word_separator = 
+dotnet_naming_style.pascal_case.required_prefix =
+dotnet_naming_style.pascal_case.required_suffix =
+dotnet_naming_style.pascal_case.word_separator =
 dotnet_naming_style.pascal_case.capitalization = pascal_case
 
-dotnet_naming_style.pascal_case.required_prefix = 
-dotnet_naming_style.pascal_case.required_suffix = 
-dotnet_naming_style.pascal_case.word_separator = 
+dotnet_naming_style.pascal_case.required_prefix =
+dotnet_naming_style.pascal_case.required_suffix =
+dotnet_naming_style.pascal_case.word_separator =
 dotnet_naming_style.pascal_case.capitalization = pascal_case
 csharp_using_directive_placement = outside_namespace:silent
 csharp_style_conditional_delegate_call = true:suggestion
@@ -88,29 +89,29 @@ dotnet_naming_rule.필드가_아닌_멤버_should_be_파스칼식_대_소문자.
 
 dotnet_naming_symbols.interface.applicable_kinds = interface
 dotnet_naming_symbols.interface.applicable_accessibilities = public, friend, private, protected, protected_friend, private_protected
-dotnet_naming_symbols.interface.required_modifiers = 
+dotnet_naming_symbols.interface.required_modifiers =
 
 dotnet_naming_symbols.형식.applicable_kinds = class, struct, interface, enum
 dotnet_naming_symbols.형식.applicable_accessibilities = public, friend, private, protected, protected_friend, private_protected
-dotnet_naming_symbols.형식.required_modifiers = 
+dotnet_naming_symbols.형식.required_modifiers =
 
 dotnet_naming_symbols.필드가_아닌_멤버.applicable_kinds = property, event, method
 dotnet_naming_symbols.필드가_아닌_멤버.applicable_accessibilities = public, friend, private, protected, protected_friend, private_protected
-dotnet_naming_symbols.필드가_아닌_멤버.required_modifiers = 
+dotnet_naming_symbols.필드가_아닌_멤버.required_modifiers =
 
 # 명명 스타일
 
 dotnet_naming_style.i로_시작.required_prefix = I
-dotnet_naming_style.i로_시작.required_suffix = 
-dotnet_naming_style.i로_시작.word_separator = 
+dotnet_naming_style.i로_시작.required_suffix =
+dotnet_naming_style.i로_시작.word_separator =
 dotnet_naming_style.i로_시작.capitalization = pascal_case
 
-dotnet_naming_style.파스칼식_대_소문자.required_prefix = 
-dotnet_naming_style.파스칼식_대_소문자.required_suffix = 
-dotnet_naming_style.파스칼식_대_소문자.word_separator = 
+dotnet_naming_style.파스칼식_대_소문자.required_prefix =
+dotnet_naming_style.파스칼식_대_소문자.required_suffix =
+dotnet_naming_style.파스칼식_대_소문자.word_separator =
 dotnet_naming_style.파스칼식_대_소문자.capitalization = pascal_case
 
-dotnet_naming_style.파스칼식_대_소문자.required_prefix = 
-dotnet_naming_style.파스칼식_대_소문자.required_suffix = 
-dotnet_naming_style.파스칼식_대_소문자.word_separator = 
+dotnet_naming_style.파스칼식_대_소문자.required_prefix =
+dotnet_naming_style.파스칼식_대_소문자.required_suffix =
+dotnet_naming_style.파스칼식_대_소문자.word_separator =
 dotnet_naming_style.파스칼식_대_소문자.capitalization = pascal_case
