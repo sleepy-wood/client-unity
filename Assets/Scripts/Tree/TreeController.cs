@@ -149,7 +149,7 @@ public class TreeController : MonoBehaviour
         {
             // 나무 형태 Random 선택
             int i = UnityEngine.Random.Range(0, pipeNameList.Count);
-            pipeName = pipeNameList[3]; 
+            pipeName = pipeNameList[i]; 
             selectedSeed = pipeNameDict[pipeName];
             print(pipeName + " Selected");
             // Tree Pipeline 로드
