@@ -437,6 +437,7 @@ public class TreeController : MonoBehaviour
             //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             //SaveTreeData();
+            TreeReload();
         }
         // 랜덤 나무
         else if (day == 2)
