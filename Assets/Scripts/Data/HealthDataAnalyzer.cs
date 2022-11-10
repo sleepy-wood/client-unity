@@ -6,6 +6,7 @@ using UnityEngine;
 using NativePlugin.HealthData;
 
 // 총 수면 시간
+[Serializable]
 public enum SleepAmount
 {
     Zero, // 데이터가 없음 (Watch를 차고 자지 않거나 잠을 자지 않음)
@@ -16,6 +17,7 @@ public enum SleepAmount
 }
 
 // 기상 시간의 오차
+[Serializable]
 public enum SleepRiseTimeVariance
 {
     SmallGood,
@@ -23,17 +25,19 @@ public enum SleepRiseTimeVariance
 }
 
 // daytime에 낮잠 여부
+[Serializable]
 public enum SleepDaytimeNap
 {
     YesBad,
     NoGood,
 }
 
-public readonly struct SleepReport
+[Serializable]
+public class SleepReport
 {
-    public readonly SleepAmount SleepAmount;
-    public readonly SleepRiseTimeVariance SleepRiseTimeVariance;
-    public readonly SleepDaytimeNap SleepDaytimeNap;
+    public SleepAmount SleepAmount;
+    public SleepRiseTimeVariance SleepRiseTimeVariance;
+    public SleepDaytimeNap SleepDaytimeNap;
 
     public SleepReport(
         SleepAmount sleepAmount,
@@ -47,11 +51,12 @@ public readonly struct SleepReport
     }
 }
 
-public readonly struct ActivityReport
+[Serializable]
+public class ActivityReport
 {
-    public readonly double ActiveEnergyBurnedGoalAchieved;
-    public readonly double ExerciseTimeGoalAchieved;
-    public readonly double StandHoursGoalAchieved;
+    public double ActiveEnergyBurnedGoalAchieved;
+    public double ExerciseTimeGoalAchieved;
+    public double StandHoursGoalAchieved;
 
     public ActivityReport(
         double activeEnergyBurnedGoalAchieved,
@@ -65,10 +70,11 @@ public readonly struct ActivityReport
     }
 }
 
-public readonly struct HealthReport
+[Serializable]
+public class HealthReport
 {
-    public readonly SleepReport SleepReport;
-    public readonly ActivityReport ActivityReport;
+    public SleepReport SleepReport;
+    public ActivityReport ActivityReport;
 
     public HealthReport(SleepReport sleepReport, ActivityReport activityReport)
     {
@@ -81,14 +87,14 @@ public static class HealthDataAnalyzer
 {
     public static HealthReport GetDailyReport(DateTime startDate, int days)
     {
-        if (!HealthDataStore.Loaded())
+        if (!(HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded))
         {
             Debug.Log("HealthDataStore is not loaded");
             return new HealthReport(
                 new SleepReport(
                     SleepAmount.Zero,
                     SleepRiseTimeVariance.LargeBad,
-                    SleepDaytimeNap.YesBad
+                    SleepDaytimeNap.NoGood
                 ),
                 new ActivityReport(0, 0, 0)
             );
@@ -108,7 +114,7 @@ public static class HealthDataAnalyzer
             return new SleepReport(
                 SleepAmount.Zero,
                 SleepRiseTimeVariance.LargeBad,
-                SleepDaytimeNap.YesBad
+                SleepDaytimeNap.NoGood
             );
         }
 
@@ -148,12 +154,6 @@ public static class HealthDataAnalyzer
             }
         }
 
-        double totalSleepTime = 0;
-        foreach (var (sDate, eDate) in consecutiveSleeps)
-        {
-            totalSleepTime += (eDate - sDate).TotalHours;
-        }
-
         List<(DateTime, DateTime)>[] consecutiveSleepsByDay = new List<(DateTime, DateTime)>[days];
         for (int i = 0; i < days; i++)
         {
@@ -171,6 +171,12 @@ public static class HealthDataAnalyzer
                     break;
                 }
             }
+        }
+
+        double totalSleepTime = 0;
+        foreach (var (sDate, eDate) in consecutiveSleepsByDay[days - 1])
+        {
+            totalSleepTime += (eDate - sDate).TotalHours;
         }
 
         int[] longestConsecutiveSleepIdxsByDay = new int[days];
@@ -222,6 +228,7 @@ public static class HealthDataAnalyzer
 
     private static SleepAmount GetSleepAmount(double totalSleepTime)
     {
+        Debug.Log("totalSleepTime: " + totalSleepTime);
         if (totalSleepTime == 0)
         {
             return SleepAmount.Zero;
@@ -271,6 +278,7 @@ public static class HealthDataAnalyzer
             {
                 riseTimes.Add(eDate.TimeOfDay.TotalHours);
             }
+            Debug.Log("RiseTimes: " + string.Join(", ", riseTimes));
             double totalVariance = 0;
             for (int i = 0; i < riseTimes.Count - 1; i++)
             {
@@ -324,6 +332,7 @@ public static class HealthDataAnalyzer
                     ).TotalHours;
                 }
             }
+            Debug.Log("TotalDaytimeNap: " + totalDaytimeNap);
             if (totalDaytimeNap > 0.5) // 30분 이상 daytime 수면
             {
                 return SleepDaytimeNap.YesBad;

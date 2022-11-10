@@ -5,19 +5,26 @@ using UnityEngine;
 
 using NativePlugin.HealthData;
 
+public enum HealthDataStoreStatus
+{
+    NotLoaded,
+    Outdated, // loading한지 24시간이 지남
+    LoadingInProgress,
+    Loaded,
+}
+
 public static class HealthDataStore
 {
     public static SleepSample[] SleepSamples;
     public static ActivitySample[] ActivitySamples;
+    private static bool SleepLoading = false;
+    private static bool ActivityLoading = false;
     private static DateTime SleepLoadedTime;
     private static DateTime ActivityLoadedTime;
 
     // 앱 시작 시 호출
     public static bool Init()
     {
-        DateTime time1970 = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-        SleepLoadedTime = time1970;
-        ActivityLoadedTime = time1970;
         HealthData.RequestAuthCompleted += OnRequestAuthCompleted;
         HealthData.QuerySleepSamplesCompleted += OnQuerySleepSamplesCompleted;
         HealthData.QueryActivitySamplesCompleted += OnQueryActivitySamplesCompleted;
@@ -34,27 +41,35 @@ public static class HealthDataStore
     {
         if (HealthData.IsAvailable())
         {
+            SleepLoading = true;
+            ActivityLoading = true;
             DateTime time1970 = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            SleepLoadedTime = time1970;
-            ActivityLoadedTime = time1970;
-            HealthData.QuerySleepSamples(
-                time1970,
-                DateTime.Now,
-                10000
-            );
-            HealthData.QueryActivitySamples(
-                time1970,
-                DateTime.Now
-            );
+            HealthData.QuerySleepSamples(time1970, DateTime.Now, 100000);
+            HealthData.QueryActivitySamples(time1970, DateTime.Now);
         }
     }
 
-    public static bool Loaded()
+    public static HealthDataStoreStatus GetStatus()
     {
-        DateTime now = DateTime.Now;
-        bool SleepLoaded = now - SleepLoadedTime < TimeSpan.FromDays(1);
-        bool ActivityLoaded = now - ActivityLoadedTime < TimeSpan.FromDays(1);
-        return SleepLoaded && ActivityLoaded;
+        if (SleepSamples is null || ActivitySamples is null)
+        {
+            return HealthDataStoreStatus.NotLoaded;
+        }
+        else if (SleepLoading || ActivityLoading)
+        {
+            return HealthDataStoreStatus.LoadingInProgress;
+        }
+        else if (
+            SleepLoadedTime < DateTime.Now.AddDays(-1)
+            || ActivityLoadedTime < DateTime.Now.AddDays(-1)
+        )
+        {
+            return HealthDataStoreStatus.Outdated;
+        }
+        else
+        {
+            return HealthDataStoreStatus.Loaded;
+        }
     }
 
     static void OnRequestAuthCompleted(bool granted)
@@ -72,6 +87,7 @@ public static class HealthDataStore
         if (samples is not null)
         {
             SleepSamples = samples;
+            SleepLoading = false;
             SleepLoadedTime = DateTime.Now;
         }
     }
@@ -82,6 +98,7 @@ public static class HealthDataStore
         if (samples is not null)
         {
             ActivitySamples = samples;
+            ActivityLoading = false;
             ActivityLoadedTime = DateTime.Now;
         }
     }
