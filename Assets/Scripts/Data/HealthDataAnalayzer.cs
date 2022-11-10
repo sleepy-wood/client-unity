@@ -94,19 +94,69 @@ public static class HealthDataAnalyzer
             return new SleepReport(SleepAmount.Zero, SleepRisingTimeVariance.LargeBad, SleepDaytimeNap.YesBad);
         }
 
-        double totalSleepTime = 0;
+        List<(DateTime, DataTime)> consecutiveSleeps = new List<(DateTime, DataTime)>();
+        TimeSpan padSpan = TimeSpan.FromMinutes(30) / 2;
+
         foreach (SleepSample sleepSample in sleepSamples)
         {
-            if (sleepSample.startDate > endDate - TimeSpan.FromDays(1))
+            if (sleepSample.Type == SleepType.InBed || sleepSample.Type == SleepType.Awake)
             {
-                totalSleepTime += (sleepSample.endDate - sleepSample.startDate).TotalHours;
+                continue;
+            }
+            bool found = false;
+            for (int i = 0; i < consecutiveSleeps.Count; i++)
+            {
+                (DateTime, DateTime) (sDate, eDate) = consecutiveSleeps[i];
+                if CheckOverlap(sDate - padSpan, eDate + padSpan, sleepSample.startDate - padSpan, sleepSample.endDate + padSpan)
+                {
+                    consecutiveSleeps[i] = (sDate < sleepSample.startDate ? sDate : sleepSample.startDate, eDate > sleepSample.endDate ? eDate : sleepSample.endDate);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                consecutiveSleeps.Add((sleepSample.startDate, sleepSample.endDate));
             }
         }
 
-        (double, double)
-        foreach (SleepSample sleepSample in sleepSamples)
+        List<(DateTime, DataTime)> latestConsecutiveSleeps = new List<(DateTime, DataTime)>();
+        foreach ((DateTime, DateTime) (sDate, eDate) in consecutiveSleeps)
         {
-            totalSleepTime += (sleepSample.endDate - sleepSample.startDate).TotalHours;
+            if (sDate > endDate - TimeSpan.FromDays(1))
+            {
+                latestConsecutiveSleeps.Add((sDate, eDate));
+            }
+        }
+
+        int latestLongestSleepIdx = 0;
+        TimeSpan longestSpan = TimeSpan.Zero;
+        for (int i = 0; i < latestConsecutiveSleeps.Count; i++)
+        {
+            (DateTime, DateTime) (sDate, eDate) = latestConsecutiveSleeps[i];
+            TimeSpan span = eDate - sDate;
+            if (span > longestSpan)
+            {
+                longestSpan = span;
+                latestLongestSleepIdx = i;
+            }
+        }
+
+        foreach ((DateTime, DateTime) (sDate, eDate) in latestConsecutiveSleeps)
+        {
+            TimeSpan span = eDate - sDate;
+            if (span > longestSpan)
+            {
+                longestSpan = span;
+                latestLongestSleep = (sDate, eDate);
+            }
+        }
+        foreach ((DateTime, DateTime) (sDate, eDate) in consecutiveSleeps)
+        {
+            if (sDate > endDate - TimeSpan.FromDays(1))
+            {
+                latestTotalSleepTime += (eDate - sDate).TotalHours;
+            }
         }
 
         SleepAmount sleepAmount = GetSleepAmount(totalSleepTime);
@@ -156,7 +206,7 @@ public static class HealthDataAnalyzer
         }
     }
 
-    private static bool CheckOverlap(double min1, double max1, double min2, double max2)
+    private static bool CheckOverlap(DateTime min1, DateTime max1, DateTime min2, DateTime max2)
     {
         return min1 <= min2 && min2 <= max1;
     }
