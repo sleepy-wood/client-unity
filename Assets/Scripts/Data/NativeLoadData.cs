@@ -38,23 +38,19 @@ public class NativeLoadData
         if (samples != null)
         {
             Debug.Log("Start:QuerySleepSamplesCompleted: " + samples.Length.ToString());
+            List<SleepDataStruct> sleepDataArray = new List<SleepDataStruct>();
             foreach (var sample in samples)
             {
                 Debug.Log("Start:QuerySleepSamplesCompleted: " + sample.ToString());
+                SleepDataStruct sleepDataStruct = new SleepDataStruct();
+                sleepDataStruct.StartDate = sample.StartDate;
+                sleepDataStruct.EndDate = sample.EndDate;
+                sleepDataStruct.Type = sample.Type;
+                sleepDataArray.Add(sleepDataStruct);
             }
 
-            SleepDataStruct sleepDataStruct = new SleepDataStruct();
-            if (samples.Length >= 1)
-            {
-                sleepDataStruct.StartDate = samples[samples.Length - 1].StartDate;
-                sleepDataStruct.EndDate = samples[samples.Length - 1].EndDate;
-                sleepDataStruct.Type = samples[samples.Length - 1].Type;
-                DataTemporary.samples = samples;
-                DataTemporary.MyUserData.SleepData = sleepDataStruct;
-                Debug.Log(DataTemporary.MyUserData.SleepData.Type);
-                Debug.Log(DataTemporary.MyUserData.SleepData.StartDate);
-                Debug.Log(DataTemporary.MyUserData.SleepData.EndDate);
-            }
+            DataTemporary.samples = samples;
+            DataTemporary.ArraySleepData.arraySleepData = sleepDataArray;
         }
     }
 }

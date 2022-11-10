@@ -61,34 +61,47 @@ public class LandDataManager : MonoBehaviour
         {
             minimapObject[i].SetActive(false);
         }
-        LoadLandData();
-        LoadBridge();
+        //LoadLandData();
+        //LoadBridge();
         //SaveLandData();
         //SaveBridgeData();
     }
-
+    private bool isOnce = false;
     private void Update()
     {
-        //if (isLoad)
-        //{
-            //Build Mode - Bridge일때
-            if (buildMode == BuildMode.Bridge)
-                BuildBridge();
-            else if (buildMode == BuildMode.None)
+        if (!user)
+        {
+            user = GameManager.Instance.User;
+        }
+        else
+        {
+            if (!isOnce)
             {
-                //Bridge 건설용 카메라 끄기
-                buildBridgeCamera.SetActive(false);
-
-                //건설되지 않은 Bridge 안보여주기
-                for (int i = 0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
+                isOnce = true;
+                LoadLandData();
+                LoadBridge();
+                if (buildMode == BuildMode.Bridge)
+                    BuildBridge();
+                else if (buildMode == BuildMode.None)
                 {
-                    Transform bridge = transform.GetChild(transform.childCount - 1).GetChild(i);
-                    if (bridge.GetChild(0).GetComponent<Bridge>().currentBridgeType != Bridge.BridgeType.Build)
+                    //Bridge 건설용 카메라 끄기
+                    buildBridgeCamera.SetActive(false);
+
+                    //건설되지 않은 Bridge 안보여주기
+                    for (int i = 0; i < transform.GetChild(transform.childCount - 1).childCount; i++)
                     {
-                        bridge.gameObject.SetActive(false);
+                        Transform bridge = transform.GetChild(transform.childCount - 1).GetChild(i);
+                        if (bridge.GetChild(0).GetComponent<Bridge>().currentBridgeType != Bridge.BridgeType.Build)
+                        {
+                            bridge.gameObject.SetActive(false);
+                        }
                     }
                 }
             }
+        }
+        //if (isLoad)
+        //{
+            //Build Mode - Bridge일때
         //}
     }
 
@@ -115,7 +128,7 @@ public class LandDataManager : MonoBehaviour
     /// LandManager 하위에 있는 Land들의 정보를 수정하는 함수
     /// 웹에 수정 요청을 할것
     /// </summary>
-    public async void SaveLandData()
+    public async void SaveLandData() 
     {
         List<LandData> landDataList = new List<LandData>();
         for(int i = 0; i< transform.childCount - 1; i++)
@@ -167,7 +180,7 @@ public class LandDataManager : MonoBehaviour
             if (!testMode)
             {
                 //Web에 데이터 수정
-                ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
+                ResultPut resultPut = await DataModule.WebRequestBuffer<ResultPut>(
                     "/api/v1/lands/" + DataTemporary.MyLandData.landLists[i].id,
                     DataModule.NetworkType.PUT,
                     DataModule.DataType.BUFFER,
@@ -270,7 +283,7 @@ public class LandDataManager : MonoBehaviour
 
             if (!testMode)
             {
-                ResultPut resultPut = await DataModule.WebRequest<ResultPut>(
+                ResultPut resultPut = await DataModule.WebRequestBuffer<ResultPut>(
                 "/api/v1/bridges/" + DataTemporary.MyBridgeData.bridgeLists[i].id,
                 DataModule.NetworkType.PUT,
                 DataModule.DataType.BUFFER,

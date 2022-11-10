@@ -47,8 +47,9 @@ public class LoadingData : MonoBehaviourPunCallbacks
         print(System.Reflection.MethodBase.GetCurrentMethod().Name);
         //print("OnConnectedToMaster");
 
+        string imgNum = DataTemporary.MyUserData.profileImg.Split('.')[0];
         //닉네임 설정
-        PhotonNetwork.NickName = Random.Range(0, 10).ToString();
+        PhotonNetwork.NickName = DataTemporary.MyUserData.nickname;
         Debug.Log(PhotonNetwork.NickName);
         CreateRoom();
     }
@@ -58,8 +59,11 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
         roomOptions.MaxPlayers = 3;
         roomOptions.IsVisible = true;
-        if(PhotonNetwork.CreateRoom(PhotonNetwork.NickName, roomOptions))
+        if (PhotonNetwork.CreateRoom(PhotonNetwork.NickName, roomOptions))
+        {
+            Debug.Log("완료");
             isCreateComplete = true;
+        }
     }
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
@@ -70,26 +74,28 @@ public class LoadingData : MonoBehaviourPunCallbacks
     bool isCreateComplete = false;
     private async void Start()
     {
-        OnConnect();
         if (!m_testMode)
         {
             scrollbar_left.SetActive(false);
             StartCoroutine(StartLoading());
         }
+
+        DataTemporary.assetBundleCustom = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustombundle");
+        DataTemporary.assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustomimg");
+
         //Native Data Load
-        nativeLoad.LoadNativeData();
+        //nativeLoad.LoadNativeData();
 
         //AssetBundle Load
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
 
         //UserData 
-        //UserData userData = await DataModule.WebRequest<UserData>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-        //DataTemporary.MyUserData = userData;
+        ResultGetId<UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         //LandData Load
         //Root landData = await DataModule.WebRequest<Root>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-        ResultGet<LandData> landData = await DataModule.WebRequest<ResultGet<LandData>>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-        ResultGet<BridgeData> bridgeData = await DataModule.WebRequest<ResultGet<BridgeData>>("/api/v1/bridges", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        ResultGet<LandData> landData = await DataModule.WebRequestBuffer<ResultGet<LandData>>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        ResultGet<BridgeData> bridgeData = await DataModule.WebRequestBuffer<ResultGet<BridgeData>>("/api/v1/bridges", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         // TreeData Load
         //ResultGet<TreeData> treeData = await DataModule.WebRequest<ResultGet<TreeData>>("api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
@@ -116,6 +122,10 @@ public class LoadingData : MonoBehaviourPunCallbacks
             Debug.Log(bridgeData.data);
             DataTemporary.MyBridgeData = arrayBridgeData;
         }
+        if (userData.result)
+        {
+            DataTemporary.MyUserData = userData.data;
+        }
         //if (treeData.result)
         //{
         //    Debug.Log(treeData.data);
@@ -125,19 +135,30 @@ public class LoadingData : MonoBehaviourPunCallbacks
         if (!m_testMode)
         {
              //&& treeData.result
-            if (landData.result && bridgeData.result)
+            if (landData.result && bridgeData.result && userData.result)
             {
+                Debug.Log("시작");
                 //PhotonNetwork.LoadLevel(1);
                 isLoadingComplete = true;
             }
         }
     }
+    private float curTime = 0;
     private void Update()
     {
-        if (isLoadingComplete && isCreateComplete)
+        if (isLoadingComplete)
         {
-            PhotonNetwork.LoadLevel(1);
-            isCreateComplete = false;
+            OnConnect();
+            isLoadingComplete = false;
+        }
+        if (isCreateComplete)
+        {
+            curTime += Time.deltaTime;
+            if (curTime > 3)
+            {
+                PhotonNetwork.LoadLevel(1);
+                isCreateComplete = false;
+            }
         }
     }
     public IEnumerator StartLoading()

@@ -1,17 +1,13 @@
 using Broccoli.Pipe;
 using Cysharp.Threading.Tasks;
-using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.Networking;
-using UnityEngine.Rendering;
+using static DataModule;
 
 
 [Serializable]
@@ -20,6 +16,18 @@ public class ResultGet<T>
     public bool result;
     public int count;
     public List<T> data;
+}
+[Serializable]
+public class ResultGetId<T>
+{
+    public bool result;
+    public T data;
+}
+[Serializable]
+public class ResultPost<T>
+{
+    public bool result;
+    public T data;
 }
 
 [Serializable]
@@ -30,7 +38,7 @@ public class ResultPut
 public class DataModule
 {
     private const string DOMAIN = "https://team-buildup.shop";
-    public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3OTU4NDcxLCJleHAiOjMzMjI1NTU4NDcxfQ.Zm7l0xr4HkIOfmlIGCfXKNXWh50-kTfiW-6daG70Flw";
+    public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY4MDkwMDkzLCJleHAiOjMzMjI1NjkwMDkzfQ.9WI6YXZlRLiB8dIb-Fea4AzMZocUQKkHjVZ0NeAyS2I";
 
     /// <summary>
     /// Network Type 설정
@@ -63,7 +71,7 @@ public class DataModule
     /// <param name="networkType">어떻게 Request 할 것인가</param>
     /// <param name="data">보낼 데이터</param>
     /// <returns></returns>
-    public static async UniTask<T> WebRequest<T>(string _url, NetworkType networkType, DataType dataType ,  string data = null, string filePath = null)
+    public static async UniTask<T> WebRequestBuffer<T>(string _url, NetworkType networkType, DataType dataType ,  string data = null, string filePath = null)
     {
         //네트워크 체킹
         await CheckNetwork();
@@ -72,9 +80,12 @@ public class DataModule
         //Timeout 설정
         var cts = new CancellationTokenSource();
         cts.CancelAfterSlim(TimeSpan.FromSeconds(timeout));
+        
+        UnityWebRequest request;
 
         //웹 요청 생성(Get,Post,Delete,Update)
-        UnityWebRequest request = new UnityWebRequest(requestURL, networkType.ToString());
+        //Texture인가 Buffer인가?
+        request = new UnityWebRequest(requestURL, networkType.ToString());
 
         //Body 정보 입력
         request.downloadHandler = DownHandlerFactory(dataType, filePath, requestURL);
@@ -99,8 +110,8 @@ public class DataModule
         {
             
             var res = await request.SendWebRequest().WithCancellation(cts.Token);
-
             T result = JsonUtility.FromJson<T>(res.downloadHandler.text);
+      
             return result;
         }
         catch (OperationCanceledException ex)
@@ -111,7 +122,65 @@ public class DataModule
                 //TODO: 네트워크 재시도 팝업 호출.
 
                 //재시도
-                return await WebRequest<T>(_url, networkType, dataType, data);
+                return await WebRequestBuffer<T>(_url, networkType, dataType, data);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return default;
+        }
+        return default;
+    }
+
+    /// <summary>
+    /// Texture Webrequest
+    /// </summary>
+    /// <param name="url"></param>
+    /// <returns></returns>
+    public static async UniTask<Texture2D> WebrequestTexture(string url)
+    {
+
+        //네트워크 체킹
+        await CheckNetwork();
+        //API URL 생성
+        string requestURL = DOMAIN + url;
+        //Timeout 설정
+        var cts = new CancellationTokenSource();
+        cts.CancelAfterSlim(TimeSpan.FromSeconds(timeout));
+
+        UnityWebRequest request;
+        //Texture인가 Buffer인가?
+        request = UnityWebRequestTexture.GetTexture(requestURL);
+
+        //Body 정보 입력
+        DownloadHandlerTexture handlerTexture =  request.downloadHandler as DownloadHandlerTexture;
+
+        //Header 정보 입력
+        if (REPLACE_BEARER_TOKEN == "" && PlayerPrefs.GetString("Bearer") != "")
+        {
+            REPLACE_BEARER_TOKEN = PlayerPrefs.GetString("Bearer");
+        }
+
+        SetHeaders(request, "Authorization", "Bearer " + REPLACE_BEARER_TOKEN);
+        SetHeaders(request, "Content-Type", "application/json");
+
+        try
+        {
+
+            var res = await request.SendWebRequest().WithCancellation(cts.Token);
+            Texture2D result = handlerTexture.texture;
+            return result;
+        }
+        catch (OperationCanceledException ex)
+        {
+            if (ex.CancellationToken == cts.Token)
+            {
+                Debug.Log("Timeout");
+                //TODO: 네트워크 재시도 팝업 호출.
+
+                //재시도
+                return await WebrequestTexture(url);
             }
         }
         catch (Exception e)

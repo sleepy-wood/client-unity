@@ -62,7 +62,7 @@ public class UI_Initial : MonoBehaviour
         profileUI.gameObject.SetActive(true);
         for(int i = 0; i < profileUI.transform.GetChild(1).childCount; i++)
         {
-            if (profileUI.transform.GetChild(1).GetChild(i).name == DataTemporary.MyUserData.UserAvatar)
+            if (profileUI.transform.GetChild(1).GetChild(i).name == DataTemporary.MyUserData.avatar)
             {
                 profileUI.transform.GetChild(1).GetChild(i).gameObject.SetActive(true);
             }

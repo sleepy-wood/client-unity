@@ -3,25 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
+using UnityEngine.UI;
 using Unity.VisualScripting;
 
 public class UserInteract : MonoBehaviourPun, IPunObservable
 {
     [SerializeField] private float moveSpeed = 3f;
+    
     public bool moveControl;
     private UserInput userInput;
-    private Animator animator;
+    private Animator animatorUser;
+    private Image profileImage;
 
     private Vector3 receivePos;
     private Quaternion receiveRot;
     private void Start()
     {
+        animatorUser = transform.GetChild(2).GetComponent<Animator>();
         userInput = GetComponent<UserInput>();
+        profileImage = transform.GetChild(3).GetChild(0).GetComponent<Image>();
+        photonView.RPC("RPC_SettingProfile", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg);
 
-        if (!moveControl)
-        {
-            photonView.RPC("RPC_ChoiceCharactorLoad", RpcTarget.AllBuffered);
-        }
     }
     private void Update()
     {
@@ -157,28 +159,38 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
         }
     }
     #region RPC
+
+    //[PunRPC]
+    //public void RPC_ChoiceCharactorLoad()
+    //{
+    //    if (transform.childCount == 2)
+    //    {
+    //        string model = PhotonNetwork.PlayerList[(int)photonView.ViewID.ToString()[0] - 49].NickName.Split('/')[1];
+    //        //userAvatar 생성
+    //        GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + model);
+    //        //Debug.Log(DataTemporary.MyUserData.UserAvatar);
+
+    //        GameObject userAvatar = Instantiate(userAvatarResource);
+    //        userAvatar.name = userAvatar.name.Split("(")[0];
+    //        userAvatar.transform.parent = transform;
+    //        userAvatar.transform.localPosition = Vector3.zero;
+    //        userAvatar.transform.localEulerAngles = Vector3.zero;
+    //        animator = transform.GetChild(2).GetComponent<Animator>();
+    //    }
+    //}
+
     [PunRPC]
-    public void RPC_ChoiceCharactorLoad()
+    public async void RPC_SettingProfile(string imgURL)
     {
-        if (transform.childCount == 2)
-        {
-            string model = PhotonNetwork.PlayerList[(int)photonView.ViewID.ToString()[0] - 49].NickName.Split('/')[1];
-            //userAvatar 생성
-            GameObject userAvatarResource = Resources.Load<GameObject>("Charactor/" + model);
-            //Debug.Log(DataTemporary.MyUserData.UserAvatar);
-            
-            GameObject userAvatar = Instantiate(userAvatarResource);
-            userAvatar.name = userAvatar.name.Split("(")[0];
-            userAvatar.transform.parent = transform;
-            userAvatar.transform.localPosition = Vector3.zero;
-            userAvatar.transform.localEulerAngles = Vector3.zero;
-            animator = transform.GetChild(2).GetComponent<Animator>();
-        }
+        Texture2D texture = await DataModule.WebrequestTexture(imgURL);
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 10);
+        profileImage.sprite = sprite;
     }
+
     [PunRPC]
     public void RPC_WalkAnimation(bool isActive)
     {
-        animator.SetBool("Walk", isActive);
+        animatorUser.SetBool("Walk", isActive);
     }
     #endregion
 }
