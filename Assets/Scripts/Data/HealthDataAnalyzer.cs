@@ -81,7 +81,6 @@ public static class HealthDataAnalyzer
 {
     public static HealthReport GetDailyReport(DateTime startDate, int days)
     {
-        HealthDataStore.Load(); // 밖에서 해야 하나?
         if (!HealthDataStore.Loaded())
         {
             Debug.Log("HealthDataStore is not loaded");

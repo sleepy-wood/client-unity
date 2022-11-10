@@ -13,32 +13,40 @@ public static class HealthDataStore
     private static DateTime ActivityLoadedTime;
 
     // 앱 시작 시 호출
-    public static void Init()
+    public static bool Init()
     {
-        Debug.Log("HealthDataIsAvailable: " + HealthData.IsAvailable().ToString());
-
+        DateTime time1970 = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        SleepLoadedTime = time1970;
+        ActivityLoadedTime = time1970;
         HealthData.RequestAuthCompleted += OnRequestAuthCompleted;
         HealthData.QuerySleepSamplesCompleted += OnQuerySleepSamplesCompleted;
         HealthData.QueryActivitySamplesCompleted += OnQueryActivitySamplesCompleted;
-
-        if (HealthData.IsAvailable())
+        bool isAvailable = HealthData.IsAvailable();
+        if (isAvailable)
         {
             HealthData.RequestAuth();
         }
+        return isAvailable;
     }
 
     // 앱 시작 제외 24시간 마다 호출
     public static void Load()
     {
-        HealthData.QuerySleepSamples(
-            new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-            DateTime.Now,
-            10000
-        );
-        HealthData.QueryActivitySamples(
-            new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-            DateTime.Now
-        );
+        if (HealthData.IsAvailable())
+        {
+            DateTime time1970 = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            SleepLoadedTime = time1970;
+            ActivityLoadedTime = time1970;
+            HealthData.QuerySleepSamples(
+                time1970,
+                DateTime.Now,
+                10000
+            );
+            HealthData.QueryActivitySamples(
+                time1970,
+                DateTime.Now
+            );
+        }
     }
 
     public static bool Loaded()
