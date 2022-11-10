@@ -125,6 +125,38 @@ public class TreeController : MonoBehaviour
     public int dbId;
     #endregion
 
+    #region 가상 수면 데이터 변수
+    // 총 수면 시간
+    public enum SleepAmount
+    {
+        Zero,
+        VeryInadequateBad,
+        Inadequate,
+        AdequateGood,
+        Excessive,
+    }
+    public SleepAmount sleepAmount;
+
+    // 기상 시간의 오차
+    public enum SleepRiseTimeVariance
+    {
+        SmallGood,
+        LargeBad,
+    }
+    public SleepRiseTimeVariance sleepRiseTimeVariance;
+
+    // daytime에 낮잠 여부
+    public enum SleepyDayTimeNap
+    {
+        YesBad,
+        NoGood,
+    }
+    public SleepyDayTimeNap sleepyDayTimeNap;
+
+    // Activity 목표 달성 확률
+    public float activityPercent;
+
+    #endregion
 
     void Start()
     {
@@ -152,7 +184,7 @@ public class TreeController : MonoBehaviour
             // 나무 형태 Random 선택
             int i = UnityEngine.Random.Range(0, pipeNameList.Count);
             pipeName = pipeNameList[i]; 
-            selectedSeed = pipeNameDict[pipeName];
+            selectedSeed = pipeNameDict[pipeName];  
             print(pipeName + " Selected");
             // Tree Pipeline 로드
             treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
@@ -439,7 +471,7 @@ public class TreeController : MonoBehaviour
             //SaveTreeData();
             TreeReload();
         }
-        // 랜덤 나무
+        // 2일차
         else if (day == 2)
         {
             sprout.SetActive(false);
@@ -643,4 +675,97 @@ public class TreeController : MonoBehaviour
 
     }
 
+    
+    /// <summary>
+    /// 수면 양 타입에 따른 나무 데이터 변경
+    /// </summary>
+    public void SleepAmountToTree(SleepAmount sleep)
+    {
+        if (sleep == SleepAmount.Zero)
+        {
+        }
+        else if (sleep == SleepAmount.VeryInadequateBad)
+        {
+
+        }
+        else if (sleep == SleepAmount.Inadequate)
+        {
+
+        }
+        else if (sleep == SleepAmount.AdequateGood)
+        {
+            
+        }
+        else if (sleep == SleepAmount.Excessive)
+        {
+
+        }
+    }
+    /// <summary>
+    /// 기상 시간 오차에 따른 나무 데이터 변경
+    /// </summary>
+    public void SleepRiseToTree(SleepRiseTimeVariance riseTime)
+    {
+        if (riseTime == SleepRiseTimeVariance.LargeBad)
+        {
+
+        }
+        else if (riseTime == SleepRiseTimeVariance.SmallGood)
+        {
+
+        }
+    }
+    /// <summary>
+    /// Daytime 낮잠 여부에 따른 나무 데이터 변경
+    /// </summary>
+    public void NapToTree (SleepyDayTimeNap nap)
+    {
+        if (nap == SleepyDayTimeNap.NoGood)
+        {
+
+        }
+        else if (nap == SleepyDayTimeNap.YesBad)
+        {
+
+        }
+    }
+
+    /// <summary>
+    /// 나무가지 개수 조절하는 함수
+    /// </summary>
+    public void BranchNumChange(bool plus)
+    {
+        // 나무가지 개수 ++
+        // 
+        if (plus)
+        {
+            
+        }
+        else
+        {
+            
+        }
+        
+    }
+    /// <summary>
+    /// 나뭇잎 개수 조절하는 함수
+    /// </summary>
+    public void SproutNumChange()
+    {
+
+    }
+    /// <summary>
+    /// 나무의 상한잎, 중력 조절하는 함수
+    /// </summary>
+    public void BadChange()
+    {
+
+    }
+    /// <summary>
+    /// 나무의 Scale 조절하는 함수
+    /// </summary>
+    public void ScaleChange()
+    {
+
+    }
 }
