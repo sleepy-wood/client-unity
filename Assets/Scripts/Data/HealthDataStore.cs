@@ -7,10 +7,10 @@ using NativePlugin.HealthData;
 
 public static class HealthDataStore
 {
-    public static SleepSample[] sleepSamples;
-    public static ActivitySample[] activitySamples;
-    private static bool sleepLoaded;
-    private static bool activityLoaded;
+    public static SleepSample[] SleepSamples;
+    public static ActivitySample[] ActivitySamples;
+    private static DateTime SleepLoadedTime;
+    private static DateTime ActivityLoadedTime;
 
     // 앱 시작 시 호출
     public static void Init()
@@ -43,7 +43,10 @@ public static class HealthDataStore
 
     public static bool Loaded()
     {
-        return sleepLoaded && activityLoaded;
+        DateTime now = DateTime.Now;
+        bool SleepLoaded = now - SleepLoadedTime < TimeSpan.FromDays(1);
+        bool ActivityLoaded = now - ActivityLoadedTime < TimeSpan.FromDays(1);
+        return SleepLoaded && ActivityLoaded;
     }
 
     static void OnRequestAuthCompleted(bool granted)
@@ -60,8 +63,8 @@ public static class HealthDataStore
         // if there was error, samples will be null
         if (samples != null)
         {
-            sleepSamples = samples;
-            sleepLoaded = true;
+            SleepSamples = samples;
+            SleepLoadedTime = DateTime.Now;
         }
     }
 
@@ -70,21 +73,21 @@ public static class HealthDataStore
         // if there was error, samples will be null
         if (samples != null)
         {
-            activitySamples = samples;
-            activityLoaded = true;
+            ActivitySamples = samples;
+            ActivityLoadedTime = DateTime.Now;
         }
     }
 
     static SleepSample[] GetSleepSamples(DateTime startDate, DateTime endDate)
     {
-        if (sleepSamples == null)
+        if (SleepSamples == null)
         {
             return null;
         }
         else
         {
             List<SleepSample> sleepSamplesList = new List<SleepSample>();
-            foreach (var sample in sleepSamples)
+            foreach (var sample in SleepSamples)
             {
                 if (sample.StartDate > startDate && sample.EndDate < endDate)
                 {
@@ -97,14 +100,14 @@ public static class HealthDataStore
 
     static ActivitySample[] GetActivitySamples(DateTime startDate, DateTime endDate)
     {
-        if (activitySamples == null)
+        if (ActivitySamples == null)
         {
             return null;
         }
         else
         {
             List<ActivitySample> activitySamplesList = new List<ActivitySample>();
-            foreach (var sample in activitySamples)
+            foreach (var sample in ActivitySamples)
             {
                 if (sample.Date > startDate && sample.Date < endDate)
                 {
