@@ -58,7 +58,12 @@ public class UI_LandCustom : MonoBehaviourPun
 
         for (int i = 0; i < fileEntries.Length; i++)
         {
-            Sprite resource = DataTemporary.assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "\\")[1].Split('.')[0]);
+
+            //Sprite resource = DataTemporary.assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "\\")[1].Split('.')[0]);
+            Debug.Log(fileEntries[i]);
+            Debug.Log(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1]);
+            Debug.Log(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
+            Sprite resource = DataTemporary.assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
             itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite =
                 Instantiate(resource);
             Color color = itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().color;
@@ -182,6 +187,7 @@ public class UI_LandCustom : MonoBehaviourPun
         if (!isActiveCanvase)
         {
             isActiveCanvase = true;
+            GameManager.Instance.User.GetComponent<UserInput>().InputControl = true;
             for (int i = 0; i < objects.Count; i++)
             {
                 objects[i].SetActive(true);
@@ -194,6 +200,7 @@ public class UI_LandCustom : MonoBehaviourPun
         else
         {
             //SkyLandManager.Instance.SaveData();
+            GameManager.Instance.User.GetComponent<UserInput>().InputControl = false;
             isActiveCanvase = false;
             for (int i = 0; i < objects.Count; i++)
             {
