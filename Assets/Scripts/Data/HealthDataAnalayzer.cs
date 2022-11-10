@@ -239,25 +239,12 @@ public static class HealthDataAnalyzer
                 {
                     difference = 24 - difference;
                 }
+                totalVariance += difference;
             }
-            for (int i = 0; i < riseTimes.Count - 1; i++)
-            {
-                totalVariance += (riseTimes[i + 1] - riseTimes[i]).TotalHours;
-            }
-            for (int i = 0; i < longestConsecutiveSleeps.Count - 1; i++)
-            {
-                (DateTime, DateTime) (sDate, eDate) = longestConsecutiveSleeps[i];
-                (DateTime, DateTime) (nextSDate, nextEDate) = longestConsecutiveSleeps[i + 1];
-                totalVariance += (nextSDate - eDate).TotalHours;
-            }
-            double averageVariance = totalVariance / (longestConsecutiveSleeps.Count - 1);
-            if (averageVariance < 1)
+            double averageVariance = totalVariance / (riseTimes.Count - 1);
+            if (averageVariance < 1.0) // 1시간 이내의 variation
             {
                 return SleepRiseTimeVariance.SmallGood;
-            }
-            else if (averageVariance < 2)
-            {
-                return SleepRiseTimeVariance.Medium;
             }
             else
             {
