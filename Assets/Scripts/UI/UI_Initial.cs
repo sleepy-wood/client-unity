@@ -20,6 +20,7 @@ public class UI_Initial : MonoBehaviour
     public GameObject screenShotCam;
     public GameObject sleepDataUI;
     public GameObject plantNameUI;
+    public GameObject bottomUI;
 
     public RectTransform developerUI;
     public RectTransform dayCountFlag;
@@ -258,5 +259,28 @@ public class UI_Initial : MonoBehaviour
     {
         Vector2 pos = developerUI.anchoredPosition;
         StartCoroutine(UILerp(pos, new Vector2(-570, pos.y), 2, developerUI));
+    }
+
+    
+    public void OnClickBottomUI(int idx)
+    {
+        print(idx);
+        for (int i=0; i<bottomUI.transform.childCount; i++)
+        {
+            if (idx == i)
+            {
+                // 원래 이미지
+                bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                // 선택했을 때의 이미지
+                bottomUI.transform.GetChild(i).GetChild(2).gameObject.SetActive(true);
+            }
+            else
+            {
+                // 원래 이미지
+                bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                // 선택했을 때의 이미지
+                bottomUI.transform.GetChild(i).GetChild(2).gameObject.SetActive(false);
+            }
+        }
     }
 }
