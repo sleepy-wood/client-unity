@@ -3393,13 +3393,53 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
+      propertyPath: NoiseModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
+      propertyPath: NoiseModule.frequency
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
       propertyPath: ShapeModule.m_Scale.x
       value: 9.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
+      propertyPath: NoiseModule.separateAxes
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
+      propertyPath: ColorBySpeedModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
+      propertyPath: NoiseModule.strength.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
+      propertyPath: ExternalForcesModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
+      propertyPath: NoiseModule.scrollSpeed.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
+      propertyPath: NoiseModule.positionAmount.scalar
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
       propertyPath: CollisionModule.m_Planes.Array.data[0]
       value: 
       objectReference: {fileID: 1612205347}
+    - target: {fileID: 1308237884665287232, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
+      propertyPath: ExternalForcesModule.multiplierCurve.scalar
+      value: 1.69
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5fb067b5e2ef9d4083eb15c2001688a, type: 3}
 --- !u!1001 &1576896442
