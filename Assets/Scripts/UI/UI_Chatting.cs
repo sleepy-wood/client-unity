@@ -34,7 +34,7 @@ public class UI_Chatting : MonoBehaviourPun
         user = GameManager.Instance.User;
         trScrollView = transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<RectTransform>();
         chatting = transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<InputField>();
-        chatPrefab = Resources.Load<GameObject>("Chat_Text");
+        chatPrefab = Resources.Load<GameObject>("Chatting_Text");
         content = transform.GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetComponent<RectTransform>();
         startPos = transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().position + new Vector3(-140, 0, 0);
         endPos = transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().position;
@@ -122,11 +122,12 @@ public class UI_Chatting : MonoBehaviourPun
     {
         string s = chatting.text;
         //<color=#색깔코드>닉네임</color>
-        string chat = "<color=#" + ColorUtility.ToHtmlStringRGB(idColor) + ">"
-            + PhotonNetwork.NickName
-            + "</color>"
-            + ": " + s;
-        photonView.RPC("RpcAddChat", RpcTarget.All, chat);
+        //string chat = "<color=#" + ColorUtility.ToHtmlStringRGB(idColor) + ">"
+        //    + PhotonNetwork.NickName
+        //    + "</color>"
+        //    + ": " + s;
+        string chat = ": " + s;
+        photonView.RPC("RpcAddChat", RpcTarget.All, chat, DataTemporary.MyUserData.nickname);
 
         chatting.text = "";
 
@@ -167,7 +168,7 @@ public class UI_Chatting : MonoBehaviourPun
     }
     #region RPC
     [PunRPC]
-    public void RpcAddChat(string rpcChat)
+    public void RpcAddChat(string rpcChat, string nickname)
     {
         //0.바뀌기 전의 Content H값을 넣자
         prevContentH = content.sizeDelta.y;
@@ -177,7 +178,8 @@ public class UI_Chatting : MonoBehaviourPun
         GameObject chat = Instantiate(chatPrefab, content);
         //2. 만든 ChatItem에서 ChatItem 컴포넌트를 가져온다.
         //3. 가져온 컴포넌트에 s를 셋팅
-        chat.GetComponent<ChatItem>().SetText(rpcChat);
+        chat.transform.GetChild(0).GetComponent<ChatItem>().SetText(rpcChat);
+        chat.transform.GetChild(1).GetComponent<Image>().sprite = profileDic[nickname];
         StartCoroutine(AutoScrollBotton());
     }
 
