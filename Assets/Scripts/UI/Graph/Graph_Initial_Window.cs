@@ -48,9 +48,10 @@ public class Graph_Initial_Window : MonoBehaviour
             once = true;
 
             DateTime now = DateTime.Now;
-            DateTime nowEnd = now.AddDays(1);
+
+            DateTime nowStart = now.AddDays(-1);
             ActivitySample[] activitySamples = HealthDataStore.GetActivitySamples(
-                new DateTime(now.Year, now.Month, now.Day, 0, 0, 0), nowEnd);
+                nowStart, now);
 
             if(activitySamples != null|| activitySamples.Length ==0)
             {
@@ -59,14 +60,20 @@ public class Graph_Initial_Window : MonoBehaviour
             }
 
             //달성률 수치로 알려줌
-            HealthReport report = HealthDataAnalyzer.GetDailyReport(
-                DateTime.Now,
-                6
-            );
+            //HealthReport report = HealthDataAnalyzer.GetDailyReport(
+            //    DateTime.Now,
+            //    6
+            //);
+            int lastIdx = 0;
+
+            for(int i = 0; i < activitySamples.Length; i++)
+            {
+                lastIdx = activitySamples[i].Date > activitySamples[lastIdx].Date ? i : lastIdx;
+            }
             //수면 관련 계산
             Calc_Sleep();
             //활동 관련 계산
-            Calc_Activity(activitySamples[0]);
+            Calc_Activity(activitySamples[lastIdx]);
         }
     }
     /// <summary>
