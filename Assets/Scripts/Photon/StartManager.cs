@@ -47,7 +47,7 @@ public class StartManager : MonoBehaviourPunCallbacks
 
         if (friendCode_InputField?.text != "")
         {
-            PhotonNetwork.Disconnect();
+            PhotonNetwork.LeaveRoom();
         }
         //else if (createCode_InputField?.text != "")
         //{
@@ -60,11 +60,11 @@ public class StartManager : MonoBehaviourPunCallbacks
     /// Disconnect할 시 다시 Connect를 하기
     /// </summary>
     /// <param name="cause"></param>
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        Debug.Log("내가 갈게 친구야~~");
-        OnConnect();
-    }
+    //public override void OnDisconnected(DisconnectCause cause)
+    //{
+    //    Debug.Log("내가 갈게 친구야~~");
+    //    OnConnect();
+    //}
     public void OnConnect()
     {
         //마스터 서버에 접속 요청
@@ -98,7 +98,6 @@ public class StartManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         print("OnJoinedRoom");
-        PhotonNetwork.LoadLevel("MyWorld");
     }
     //방 입장 실패시 호출되는 함수
     public override void OnJoinRoomFailed(short returnCode, string message)
