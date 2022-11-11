@@ -272,14 +272,14 @@ public class UI_Initial : MonoBehaviour
                 // 원래 이미지
                 bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
                 // 선택했을 때의 이미지
-                bottomUI.transform.GetChild(i).GetChild(2).gameObject.SetActive(true);
+                bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(true);
             }
             else
             {
                 // 원래 이미지
                 bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
                 // 선택했을 때의 이미지
-                bottomUI.transform.GetChild(i).GetChild(2).gameObject.SetActive(false);
+                bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(false);
             }
         }
     }
