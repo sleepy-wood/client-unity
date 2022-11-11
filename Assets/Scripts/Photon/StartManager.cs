@@ -85,10 +85,16 @@ public class StartManager : MonoBehaviourPunCallbacks
         //닉네임 설정
         PhotonNetwork.NickName = DataTemporary.MyUserData.nickname;
 
+        PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnJoinedLobby()
+    {
+        base.OnJoinedLobby();
         //Connect 후 친구방 들어가기
         JoinRoom(friendCode_InputField.text);
-
     }
+
     private void JoinRoom(string text)
     {
         PhotonNetwork.JoinRoom(text);
@@ -98,6 +104,7 @@ public class StartManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         print("OnJoinedRoom");
+        PhotonNetwork.LoadLevel("MyWorld");
     }
     //방 입장 실패시 호출되는 함수
     public override void OnJoinRoomFailed(short returnCode, string message)

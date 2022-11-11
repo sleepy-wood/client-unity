@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,9 +24,13 @@ public class UI_Chatting : MonoBehaviourPun
     private Vector3 startPos;
     private Vector3 endPos;
     private GameObject user;
+    private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
 
     private void Start()
     {
+        if (photonView.IsMine)
+            photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
+
         user = GameManager.Instance.User;
         trScrollView = transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<RectTransform>();
         chatting = transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<InputField>();
@@ -74,7 +79,7 @@ public class UI_Chatting : MonoBehaviourPun
         //        model = PhotonNetwork.PlayerList[(int)users[j].GetComponent<PhotonView>().ViewID.ToString()[0] - 49].NickName.Split('/')[1]; 
         //}
         //if (PhotonNetwork.PlayerList.Length <= 1) return;
-        photonView.RPC("RPC_EmojiButton", RpcTarget.All, i, DataTemporary.MyUserData.profileImg);
+        photonView.RPC("RPC_EmojiButton", RpcTarget.All, i, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
 
     }
     //bool isChatActive = false;
@@ -177,7 +182,7 @@ public class UI_Chatting : MonoBehaviourPun
     }
 
     [PunRPC]
-    public async void RPC_EmojiButton(int i, string model)
+    public void RPC_EmojiButton(int i, string model, string nickname)
     {
         GameObject emojiResource = Resources.Load<GameObject>("Emoji");
         GameObject emojiPrefab = Instantiate(emojiResource);
@@ -187,13 +192,15 @@ public class UI_Chatting : MonoBehaviourPun
         Sprite emojiImgResource = Resources.Load<Sprite>("Emoji_image/Emoji_" + i);
         Sprite emoji = Instantiate(emojiImgResource);
 
-
-        Texture2D texture = await DataModule.WebrequestTexture(model);
-        Sprite emoji_Profile = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 10);
-
         emojiPrefab.transform.GetChild(0).GetComponent<Image>().sprite = emoji;
-        emojiPrefab.GetComponent<Image>().sprite = emoji_Profile;
+        emojiPrefab.GetComponent<Image>().sprite = profileDic[nickname];
     }
-
+    [PunRPC]
+    public async void RPC_ProfileList(string url, string nickname)
+    {
+        Texture2D texture = await DataModule.WebrequestTexture(url);
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 10);
+        profileDic[nickname] = sprite;
+    }
     #endregion
 }

@@ -91,8 +91,9 @@ public class LoadingData : MonoBehaviourPunCallbacks
             DataModule.REPLACE_BEARER_TOKEN = login.data.token;
         }
         //Native Data Load
-        //nativeLoad.LoadNativeData();
-
+#if !UNITY_EDITOR
+        nativeLoad.LoadNativeData();
+#endif
         //AssetBundle Load
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
 

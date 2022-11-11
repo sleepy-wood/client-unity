@@ -17,6 +17,8 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
 
     private Vector3 receivePos;
     private Quaternion receiveRot;
+    private Dictionary<string, Sprite> dic = new Dictionary<string, Sprite>();
+    private int userNum = 0;
     private void Awake()
     {
         userInput = GetComponent<UserInput>();
@@ -25,7 +27,8 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     }
     private void Start()
     {
-        photonView.RPC("RPC_SettingProfile", RpcTarget.All, DataTemporary.MyUserData.profileImg);
+        if(photonView.IsMine)
+            photonView.RPC("RPC_SettingProfile", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg);
 
     }
     private void Update()
