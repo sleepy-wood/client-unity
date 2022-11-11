@@ -18,6 +18,7 @@ public class NativeLoadData
         }
     }
 
+
     void OnRequestAuthCompleted(bool granted)
     {
         Debug.Log("Start:RequestAuthCompleted: " + granted.ToString());
@@ -27,7 +28,7 @@ public class NativeLoadData
             HealthData.QuerySleepSamples(
                 new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                 DateTime.Now,
-                100
+                10000
             );
         }
     }
