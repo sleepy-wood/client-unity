@@ -27,6 +27,7 @@ public class Graph_Initial_Window : MonoBehaviour
     private TimeSpan preWeek;
     private TimeSpan curWeek;
     private int preDay = 0;
+    bool once = false;
     private void Awake()
     {
         sleepsData = DataTemporary.samples;
@@ -39,7 +40,6 @@ public class Graph_Initial_Window : MonoBehaviour
         HealthDataStore.Init();
     }
 
-    bool once = false;
 
     void Update()
     {
@@ -132,6 +132,7 @@ public class Graph_Initial_Window : MonoBehaviour
                     }
                     curWeek += diff;
                 }
+                preDay = startDay;
             }
         }
         //평균값 구하기
