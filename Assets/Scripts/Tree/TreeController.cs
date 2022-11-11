@@ -126,35 +126,35 @@ public class TreeController : MonoBehaviour
     #endregion
 
     #region 가상 수면 데이터 변수
-    // 총 수면 시간
-    public enum SleepAmount
-    {
-        Zero,
-        VeryInadequateBad,
-        Inadequate,
-        AdequateGood,
-        Excessive,
-    }
-    public SleepAmount sleepAmount;
+    //// 총 수면 시간
+    //public enum SleepAmount
+    //{
+    //    Zero,
+    //    VeryInadequateBad,
+    //    Inadequate,
+    //    AdequateGood,
+    //    Excessive,
+    //}
+    //public SleepAmount sleepAmount;
 
-    // 기상 시간의 오차
-    public enum SleepRiseTimeVariance
-    {
-        SmallGood,
-        LargeBad,
-    }
-    public SleepRiseTimeVariance sleepRiseTimeVariance;
+    //// 기상 시간의 오차
+    //public enum SleepRiseTimeVariance
+    //{
+    //    SmallGood,
+    //    LargeBad,
+    //}
+    //public SleepRiseTimeVariance sleepRiseTimeVariance;
 
-    // daytime에 낮잠 여부
-    public enum SleepyDayTimeNap
-    {
-        YesBad,
-        NoGood,
-    }
-    public SleepyDayTimeNap sleepyDayTimeNap;
+    //// daytime에 낮잠 여부
+    //public enum SleepyDayTimeNap
+    //{
+    //    YesBad,
+    //    NoGood,
+    //}
+    //public SleepyDayTimeNap sleepyDayTimeNap;
 
-    // Activity 목표 달성 확률
-    public float activityPercent;
+    //// Activity 목표 달성 확률
+    //public float activityPercent;
 
     #endregion
 
@@ -225,7 +225,7 @@ public class TreeController : MonoBehaviour
     bool isOnce;
     bool isOnce2;
     bool isOnce3;
-    public Texture2D barkTexture;
+    bool once = false;
     void Update()
     {
         #region 썩은잎 만들기 Test
@@ -320,6 +320,19 @@ public class TreeController : MonoBehaviour
         //    }
         //}
         #endregion
+
+        if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded && !once)
+        {
+            once = true;
+            Debug.Log("SleepSamples: " + HealthDataStore.SleepSamples.Length);
+            Debug.Log("ActivitySamples: " + HealthDataStore.ActivitySamples.Length);
+            // 올해 10월 날짜
+            HealthReport report = HealthDataAnalyzer.GetDailyReport(
+                new DateTime(2022, 10, 06, 17, 0, 0, 0, DateTimeKind.Local),
+                6
+            );
+            Debug.Log(JsonUtility.ToJson(report, true));
+        }
     }
 
     #region 씨앗 심기 코루틴
@@ -490,13 +503,13 @@ public class TreeController : MonoBehaviour
             sprout.SetActive(false);
             soil.SetActive(false);
             // 사용자 데이터로 나무 변화
-            SleepAmountToTree(sleepAmount);
-            SleepRiseToTree(sleepRiseTimeVariance);
-            NapToTree(sleepyDayTimeNap);
+            //SleepAmountToTree(sleepAmount);
+            //SleepRiseToTree(sleepRiseTimeVariance);
+            //NapToTree(sleepyDayTimeNap);
             //불러오기
             TreeReload();
             treeFactory.gameObject.SetActive(true);
-            ScaleChange(activityPercent);
+            //ScaleChange(activityPercent);
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             //SaveTreeData();
         }
@@ -738,17 +751,17 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// Daytime 낮잠 여부에 따른 나무 데이터 변경
     /// </summary>
-    public void NapToTree (SleepyDayTimeNap nap)
-    {
-        if (nap == SleepyDayTimeNap.NoGood)
-        {
-            BadChange(false);
-        }
-        else if (nap == SleepyDayTimeNap.YesBad)
-        {
-            BadChange(true);
-        }
-    }
+    //public void NapToTree (SleepyDayTimeNap nap)
+    //{
+    //    if (nap == SleepyDayTimeNap.NoGood)
+    //    {
+    //        BadChange(false);
+    //    }
+    //    else if (nap == SleepyDayTimeNap.YesBad)
+    //    {
+    //        BadChange(true);
+    //    }
+    //}
     /// <summary>
     /// Activity 달성 퍼센트에 따라 나무 Scale 조절하는 함수
     /// </summary>
