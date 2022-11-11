@@ -91,14 +91,14 @@ public class LoadingData : MonoBehaviourPunCallbacks
             DataModule.REPLACE_BEARER_TOKEN = login.data.token;
         }
         //Native Data Load
-#if !UNITY_EDITOR
+#if UNITY_IOS
         nativeLoad.LoadNativeData();
 #endif
         //AssetBundle Load
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
 
         //UserData 
-        ResultGetId <UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        ResultGetId<UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         //LandData Load
         //Root landData = await DataModule.WebRequest<Root>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
