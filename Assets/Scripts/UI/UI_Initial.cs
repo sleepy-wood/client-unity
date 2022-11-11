@@ -16,7 +16,7 @@ public class UI_Initial : MonoBehaviour
     #region Variable
 
     public GameObject profileUI;
-    public GameObject TreeListUI;
+    public GameObject myCollectionUI;
     public GameObject screenShotCam;
     public GameObject sleepDataUI;
     public GameObject plantNameUI;
@@ -89,16 +89,20 @@ public class UI_Initial : MonoBehaviour
     /// <summary>
     /// TreeList UI 활성화
     /// </summary>
-    public void onTreeList()
+    public void OnMyCollection()
     {
-        TreeListUI.gameObject.SetActive(true);
+        myCollectionUI.gameObject.SetActive(true);
     }
     /// <summary>
     /// TreeList UI 비활성화
     /// </summary>
-    public void onTreeListOff()
+    public Transform imgCollection;
+    public void OnMyCollectionOff()
     {
-        TreeListUI.gameObject.SetActive(false);
+        myCollectionUI.gameObject.SetActive(false);
+        // Bottom UI에서 컬렉션 메뉴 색상 변경
+        imgCollection.GetChild(1).gameObject.SetActive(false);
+        imgCollection.GetChild(0).gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -264,8 +268,7 @@ public class UI_Initial : MonoBehaviour
     
     public void OnClickBottomUI(int idx)
     {
-        print(idx);
-        for (int i=0; i<bottomUI.transform.childCount; i++)
+        for (int i=0; i<5; i++)
         {
             if (idx == i)
             {
