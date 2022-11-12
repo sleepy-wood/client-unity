@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class StartManager : MonoBehaviourPunCallbacks
+public class FriendVisitPhoton : MonoBehaviourPunCallbacks
 {
     public InputField friendCode_InputField;
     //public InputField createCode_InputField;
@@ -27,11 +27,10 @@ public class StartManager : MonoBehaviourPunCallbacks
         transform.GetChild(0).gameObject.SetActive(false);
     }
     /// <summary>
-    /// 친구방 입장 -> 먼저 서버 Disconnect를 한다.
+    /// 친구방 입장 -> 먼저 LeaveRoom를 한다.
     /// </summary>
     public void OnClickVisit()
     {
-
         if (friendCode_InputField?.text != "")
         {
             PhotonNetwork.LeaveRoom();

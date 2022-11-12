@@ -55,6 +55,11 @@ public class LoadingData : MonoBehaviourPunCallbacks
         //닉네임 설정
         PhotonNetwork.NickName = DataTemporary.MyUserData.nickname;
         Debug.Log(PhotonNetwork.NickName);
+        PhotonNetwork.JoinLobby();
+    }
+    public override void OnJoinedLobby()
+    {
+        base.OnJoinedLobby();
         CreateRoom();
     }
     private void CreateRoom()
