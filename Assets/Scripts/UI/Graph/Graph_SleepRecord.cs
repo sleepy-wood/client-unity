@@ -32,20 +32,6 @@ public class Graph_SleepRecord : MonoBehaviour
     [SerializeField] private Transform period_sleepGraph;
     [SerializeField] private float select_imageSpeed = 3;
 
-    //[Space]
-    //[Header("CoreSleepType")]
-    //[SerializeField] private Text coreSleepText;
-    //[SerializeField] private GameObject coreSleep_Yesterday;
-    //[SerializeField] private GameObject coreSleep_Today;
-    //[Header("DeepSleepType")]
-    //[SerializeField] private Text deepSleepText;
-    //[SerializeField] private GameObject deepSleep_Yesterday;
-    //[SerializeField] private GameObject deepSleep_Today;
-    //[Header("REMSleepType")]
-    //[SerializeField] private Text remSleepText;
-    //[SerializeField] private GameObject remSleep_Yesterday;
-    //[SerializeField] private GameObject remSleep_Today;
-
     [Space]
     [Header("SleepFlow")]
     [SerializeField] private Transform graphParent;
@@ -62,10 +48,25 @@ public class Graph_SleepRecord : MonoBehaviour
     {
         sleepsData = DataTemporary.samples;
     }
-    void Start()
+    void OnEnable()
     {
+        Init();
         OnClickChangeDate(0);
         Draw_SleepFlow();
+    }
+    void Init()
+    {
+        for(int i = 0; i < period_sleepGraph.childCount; i++)
+        {
+            period_sleepGraph.GetChild(i).GetComponent<Scrollbar>().size = 0;
+        }
+        for(int i = 0; i < graphParent.childCount; i++)
+        {
+            for(int j = graphParent.GetChild(i).childCount - 1; j>=0; j --)
+            {
+                Destroy(graphParent.GetChild(i).GetChild(j).gameObject);
+            }
+        }
     }
     #region Average_SleepTime
     private int preDay = 0;
@@ -125,7 +126,6 @@ public class Graph_SleepRecord : MonoBehaviour
                     today = new TimeSpan();
 
                 }
-                Debug.Log(NewDate.DayOfWeek);
                 preDay = startDay;
             }
         }
@@ -272,6 +272,10 @@ public class Graph_SleepRecord : MonoBehaviour
     private TimeSpan totalFlow = new TimeSpan();
     void Draw_SleepFlow()
     {
+        posX = 83f;
+        startDayGraph = 0;
+        endDayGraph = 0;
+        isGraphOnce = false;
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
             if (sleepsData[i].Type.ToString().Contains("Asleep"))

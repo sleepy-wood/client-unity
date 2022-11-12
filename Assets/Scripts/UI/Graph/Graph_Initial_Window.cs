@@ -43,6 +43,8 @@ public class Graph_Initial_Window : MonoBehaviour
 
     private void OnEnable()
     {
+        m_thisWeek_Scroll.size = 0;
+        m_lastWeek_Scroll.size = 0;
         once = false;
     }
     void Update()
@@ -96,6 +98,9 @@ public class Graph_Initial_Window : MonoBehaviour
         curWeekCnt = 1;
         preWeekCnt = 0;
         isOnce = false;
+        preWeek = new TimeSpan();
+        curWeek = new TimeSpan();
+        today = new TimeSpan();
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
             Debug.Log(sleepsData[i].Type);
@@ -118,7 +123,7 @@ public class Graph_Initial_Window : MonoBehaviour
                 NewDate.AddMinutes(diff.Minutes);
                 NewDate.AddSeconds(diff.Seconds);
                 //Debug.Log(NewDate);
-                Debug.Log(NewDate.DayOfWeek);
+                //Debug.Log(NewDate.DayOfWeek);
                 //중앙값의 날의 요일
                 startDay = (int)NewDate.DayOfWeek;
                 if (!isOnce)
@@ -134,13 +139,13 @@ public class Graph_Initial_Window : MonoBehaviour
                     //이미 저번주로 넘어간상태 였다면 저저번주로 넘어갔음
                     endPreWeek = startPreWeek == true ? true : false;
                     startPreWeek = true;
-                    Debug.Log("전주");
+                    //Debug.Log("전주");
                 }
                 //저저번주
                 if (endPreWeek)
                 {
                     //나가기
-                    Debug.Log("끝");
+                    //Debug.Log("끝");
                     break;
                 }
                 //저번주
@@ -149,7 +154,7 @@ public class Graph_Initial_Window : MonoBehaviour
                     if (preDay != startDay)
                         preWeekCnt++;
                     preWeek += diff;
-                    Debug.Log("preWeek = " + preWeek);
+                    //Debug.Log("preWeek = " + preWeek);
                 }
                 //이번주
                 else
@@ -161,7 +166,7 @@ public class Graph_Initial_Window : MonoBehaviour
                     {
                         today += diff;
                     }
-                    Debug.Log("curWeek = " + curWeek);
+                    //Debug.Log("curWeek = " + curWeek);
                     curWeek += diff;
                 }
                 preDay = startDay;
@@ -171,8 +176,8 @@ public class Graph_Initial_Window : MonoBehaviour
         curWeek /= curWeekCnt;
         preWeek /= preWeekCnt;
 
-        m_thisWeek_Aver.text = curWeek.Hours.ToString() + "시간 " + curWeek.Minutes.ToString() + "분 /";
-        m_lastWeek_Aver.text = preWeek.Hours.ToString() + "시간 " + preWeek.Minutes.ToString() + "분 /";
+        m_thisWeek_Aver.text = curWeek.Hours.ToString() + "시간 " + curWeek.Minutes.ToString() + "분";
+        m_lastWeek_Aver.text = preWeek.Hours.ToString() + "시간 " + preWeek.Minutes.ToString() + "분";
 
         StartCoroutine(GraphMove((float)(curWeek.TotalSeconds / 86400), (float)(preWeek.TotalSeconds / 86400)));
 
@@ -189,7 +194,7 @@ public class Graph_Initial_Window : MonoBehaviour
             m_sleepResultText.text = "이번주 하루 평균 수면시간이 지난주와 같습니다.";
         }
         //오늘 몇시간 잤는가?
-        m_todaySleep.text = today.Hours.ToString() + "시간 " + today.Minutes.ToString() + "분 /";
+        m_todaySleep.text = today.Hours.ToString() + "시간 " + today.Minutes.ToString() + "분 ";
     }
 
     /// <summary>
