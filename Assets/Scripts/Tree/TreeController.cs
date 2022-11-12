@@ -190,7 +190,7 @@ public class TreeController : MonoBehaviour
         // 나무 형태 Random 선택
         if (demoMode)
         {
-            pipeName = "DemoTree_Red";
+            pipeName = "DemoTree_Red 1";
             selectedSeed = SeedType.Demo;
         }
         else
@@ -448,8 +448,16 @@ public class TreeController : MonoBehaviour
                 // 저장값
                 MinMax store1 = element.minMaxList[i];
 
-                pipe1.minFrequency = store1.min;
-                pipe1.maxFrequency = store1.max;
+                if (badMode && dayCount > 3)
+                {
+                    pipe1.minFrequency = store1.min-2;
+                    pipe1.maxFrequency = store1.max-2;
+                }
+                else
+                {
+                    pipe1.minFrequency = store1.min;
+                    pipe1.maxFrequency = store1.max;
+                }
             }
             #endregion
 
@@ -457,14 +465,33 @@ public class TreeController : MonoBehaviour
             GirthTransformElement pipe4 = treePipeline._serializedPipeline.girthTransforms[0];
             float store4 = element.girthBase;
 
-            // Min Girth At Base
-            pipe4.minGirthAtBase = store4;
-            // Max Girth At Base
-            pipe4.maxGirthAtBase = store4;
+            if (badMode && dayCount > 3)
+            {
+                // Min Girth At Base
+                pipe4.minGirthAtBase = store4 - 1f;
+                // Max Girth At Base
+                pipe4.maxGirthAtBase = store4 - 1f;
+            }
+            else
+            {
+                // Min Girth At Base
+                pipe4.minGirthAtBase = store4;
+                // Max Girth At Base
+                pipe4.maxGirthAtBase = store4;
+            }
+            
             #endregion
 
             #region 3. Object scale
-            scaleTo = element.scale;
+            if (badMode && dayCount > 3)
+            {
+                scaleTo += 0.1f;
+            }
+            else
+            {
+                scaleTo = element.scale;
+            }
+            
             #endregion
         }
         else
@@ -505,13 +532,13 @@ public class TreeController : MonoBehaviour
             #endregion
 
             #region 4. Min/Max Girth At Base
-            //GirthTransformElement pipe4 = treePipeline._serializedPipeline.girthTransforms[0];
-            //float store4 = element.girthBase;
+            GirthTransformElement pipe4 = treePipeline._serializedPipeline.girthTransforms[0];
+            float store4 = element.girthBase;
 
-            //// Min Girth At Base
-            //pipe4.minGirthAtBase = store4;
-            //// Max Girth At Base
-            //pipe4.maxGirthAtBase = store4;
+            // Min Girth At Base
+            pipe4.minGirthAtBase = store4;
+            // Max Girth At Base
+            pipe4.maxGirthAtBase = store4;
             #endregion
 
             #region 5. Object scale
@@ -633,6 +660,7 @@ public class TreeController : MonoBehaviour
     public ParticleSystem changeParticle;
     public ParticleSystem snow;
     public ParticleSystem rain;
+    public bool badMode;
 
     public void LoadTree(int day, bool demo)
     {
@@ -666,7 +694,7 @@ public class TreeController : MonoBehaviour
         // 3일차
         else if (day == 3)
         {
-            rain.Stop();
+            rain.gameObject.SetActive(false);
             // SkyBox
             sky.Sunset();
             // Fire
@@ -679,39 +707,57 @@ public class TreeController : MonoBehaviour
             TreeReload();
             // Change Particle
             changeParticle.Play();
-
-
         }
         // 4일차
         else if (day == 4)
         {
             // SkyBox
             sky.Night();
-            // Sprout
-            SproutNumChange(true, 10);
+            
             // Tree Pipeline - Branch MinMax, Girth, Scale
-            PipelineSetting(4);
+            if (badMode)
+            {
+                SproutNumChange(false, 10);
+                // Tree Pipeline - Branch MinMax, Girth, Scale
+                PipelineSetting(4);
+                BadChange(true);
+            }
+            else
+            {
+                SproutNumChange(true, 10);
+                // Tree Pipeline - Branch MinMax, Girth, Scale
+                PipelineSetting(4);
+            }
             TreeReload();
             // Weather - Snow
             snow.Play();
             // Change Particle
             changeParticle.transform.position = new Vector3(0, 6.65f, 0);
             changeParticle.Play();
-
         }
         // 5일차
         else if (day == 5)
         {
-            snow.Stop();
+            snow.gameObject.SetActive(false);
             // SkyBox
             sky.Day();
             // Fire
             fire.GetChild(0).gameObject.SetActive(false);
             fire.GetChild(1).gameObject.SetActive(false);
-            // Sprout
-            SproutNumChange(true, 10);
-            // Tree Pipeline - Branch MinMax, Girth, Scale
-            PipelineSetting(5);
+            if (badMode)
+            {
+                SproutNumChange(false, 10);
+                // Tree Pipeline - Branch MinMax, Girth, Scale
+                PipelineSetting(5);
+                BadChange(true);
+            }
+            else
+            {
+                // Sprout
+                SproutNumChange(true, 10);
+                // Tree Pipeline - Branch MinMax, Girth, Scale
+                PipelineSetting(5);
+            }
             TreeReload();
             // Change Particle
             changeParticle.transform.position = new Vector3(0, 10.46f, 0);
@@ -1032,8 +1078,8 @@ public class TreeController : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 StructureGenerator.StructureLevel gravityPipe = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-                gravityPipe.minGravityAlignAtTop -= 0.1f;
-                gravityPipe.maxGravityAlignAtTop -= 0.1f;
+                gravityPipe.minGravityAlignAtTop -= 0.2f;
+                gravityPipe.maxGravityAlignAtTop -= 0.2f;
             }
         }
         // 나쁜 영향을 완화시킬 경우
@@ -1053,8 +1099,8 @@ public class TreeController : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 StructureGenerator.StructureLevel gravityPipe = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-                gravityPipe.minGravityAlignAtTop += 0.1f;
-                gravityPipe.maxGravityAlignAtTop += 0.1f;
+                gravityPipe.minGravityAlignAtTop += 0.2f;
+                gravityPipe.maxGravityAlignAtTop += 0.2f;
             }
         }
 
