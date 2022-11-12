@@ -31,45 +31,17 @@ public class StartManager : MonoBehaviourPunCallbacks
     /// </summary>
     public void OnClickVisit()
     {
-        //if (nickName_InputField.text != "")
-        //{
-        //if (friendCode_InputField?.text == "" && createCode_InputField?.text == "")
-        //{
-        //    //나중에 UI로 구현
-        //    Debug.Log("코드를 입력해주세요.");
-        //}
-        //else if (friendCode_InputField?.text != "" && createCode_InputField?.text != "")
-        //{
-        //    //나중에 UI로 구현
-        //    Debug.Log("둘 중 하나의 코드만 입력해주세요");
-        //}
-        //else 
 
         if (friendCode_InputField?.text != "")
         {
             PhotonNetwork.LeaveRoom();
         }
-        //else if (createCode_InputField?.text != "")
-        //{
-        //    Debug.Log("가~보자고~~");
-        //    CreateRoom();
-        //}
-        //}
     }
-    /// <summary>
-    /// Disconnect할 시 다시 Connect를 하기
-    /// </summary>
-    /// <param name="cause"></param>
-    //public override void OnDisconnected(DisconnectCause cause)
+    //public void OnConnect()
     //{
-    //    Debug.Log("내가 갈게 친구야~~");
-    //    OnConnect();
+    //    //마스터 서버에 접속 요청
+    //    PhotonNetwork.ConnectUsingSettings();
     //}
-    public void OnConnect()
-    {
-        //마스터 서버에 접속 요청
-        PhotonNetwork.ConnectUsingSettings();
-    }
     //마스터 서버에 접속 성공, 로비 생성 및 진입을 할 수 없는 상태
     public override void OnConnected()
     {

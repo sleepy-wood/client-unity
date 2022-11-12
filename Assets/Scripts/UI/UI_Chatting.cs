@@ -25,11 +25,18 @@ public class UI_Chatting : MonoBehaviourPun
     private Vector3 endPos;
     private GameObject user;
     private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
-
+    private AssetBundle stopwordsAsset;
+    private string[] stopwords;
+    
     private void Start()
     {
         if (photonView.IsMine)
             photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
+
+        //금칙어담기
+        stopwordsAsset = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/otherbundle");
+        TextAsset textFile = stopwordsAsset.LoadAsset<TextAsset>("stopwords");
+        stopwords = textFile.text.Split("\n");
 
         user = GameManager.Instance.User;
         trScrollView = transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<RectTransform>();
@@ -121,11 +128,23 @@ public class UI_Chatting : MonoBehaviourPun
     public void OnSubmit()
     {
         string s = chatting.text;
-        //<color=#색깔코드>닉네임</color>
-        //string chat = "<color=#" + ColorUtility.ToHtmlStringRGB(idColor) + ">"
-        //    + PhotonNetwork.NickName
-        //    + "</color>"
-        //    + ": " + s;
+
+        for(int i = 0;  i < stopwords.Length; i++)
+        {
+            if (s.Contains(stopwords[i]))
+            {
+                string[] texts = s.Split(stopwords[i]);
+                string stopword = "";
+                for (int j = 0; j < stopwords[i].Length; j++)
+                    stopword += "*";
+                s = texts[0];
+                for(int j = 1; j < texts.Length; j++)
+                {
+                    s += stopword;
+                    s += texts[j];
+                }
+            }
+        }
         string chat = ": " + s;
         photonView.RPC("RpcAddChat", RpcTarget.All, chat, DataTemporary.MyUserData.nickname);
 
