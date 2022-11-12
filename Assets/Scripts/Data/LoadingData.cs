@@ -6,6 +6,9 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using Random = UnityEngine.Random;
+using NativePlugin.HealthData;
+using System.Collections.Generic;
+using System.Linq;
 //using TreeEditor;
 
 public class LoadingData : MonoBehaviourPunCallbacks
@@ -72,6 +75,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
     }
     bool isLoadingComplete = false;
     bool isCreateComplete = false;
+
+
     private async void Start()
     {
         if (!m_testMode)
@@ -91,10 +96,19 @@ public class LoadingData : MonoBehaviourPunCallbacks
             DataModule.REPLACE_BEARER_TOKEN = login.data.token;
         }
         //Native Data Load
-//#if UNITY_IOS
         HealthDataStore.Init();
-        nativeLoad.LoadNativeData();
-//#endif
+        DataTemporary.samples = HealthDataStore.GetSleepSamples(new DateTime(2018, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                DateTime.Now);
+
+        SleepSample[] sleepsData = DataTemporary.samples;
+        List<SleepSample> sleepSamples = new List<SleepSample>();
+        //중복데이터 제거
+        sleepSamples = sleepsData.Distinct().ToList();
+        sleepSamples.Sort((x, y) => DateTime.Compare(x.StartDate, y.StartDate));
+        sleepsData = sleepSamples.ToArray();
+
+        DataTemporary.samples = sleepsData;
+
         //AssetBundle Load
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
 

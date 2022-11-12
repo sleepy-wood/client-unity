@@ -50,7 +50,7 @@ public class Graph_SleepRecord : MonoBehaviour
     private RecordDate curRecordDate = RecordDate.Day;
     void Start()
     {
-        
+        //OnClickChangeDate(0);
     }
     void ChangeGraph(RecordDate record)
     {
@@ -92,44 +92,48 @@ public class Graph_SleepRecord : MonoBehaviour
         {
             if (sleepsData[i].Type.ToString().Contains("Asleep"))
             {
-                if (!isOnce)
-                {
-                    endDay = ReturnDayOfWeek(sleepsData[i].EndDate.DayOfWeek);
-                    isOnce = true;
-                }
                 //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
                 TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
                 diff /= 2;
                 var NewDate = new DateTime(
                     sleepsData[i].StartDate.Year,
                     sleepsData[i].StartDate.Month,
-                    sleepsData[i].StartDate.Day + diff.Days,
-                    sleepsData[i].StartDate.Hour + diff.Hours,
-                    sleepsData[i].StartDate.Minute + diff.Minutes,
-                    sleepsData[i].StartDate.Second + diff.Seconds
+                    sleepsData[i].StartDate.Day,
+                    sleepsData[i].StartDate.Hour,
+                    sleepsData[i].StartDate.Minute,
+                    sleepsData[i].StartDate.Second
                     );
+                NewDate.AddDays(diff.Days);
+                NewDate.AddHours(diff.Hours);
+                NewDate.AddMinutes(diff.Minutes);
+                NewDate.AddSeconds(diff.Seconds);
                 //중앙값의 날의 요일
-                startDay = ReturnDayOfWeek(NewDate.DayOfWeek);
+                startDay = (int)(NewDate.DayOfWeek);
+                Debug.Log(NewDate.DayOfWeek);
 
+                if (!isOnce)
+                {
+                    endDay = (int)(sleepsData[i].EndDate.DayOfWeek);
+                    isOnce = true;
+                    preDay = startDay;
+                }
                 //갑자기 이전 계산한 preDay보다 startDay가 커진다면 - 저번주로 넘어감
                 if (startDay > preDay)
                 {
                     break;
                 }
-
                 //이번주
+                //오늘이면
+                if (startDay == endDay)
+                {
+                    today += diff;
+                }
                 else
                 {
-                    //오늘이면
-                    if (startDay == endDay)
-                    {
-                        today += diff;
-                    }
-                    else
-                    {
-                        endDay = startDay;
-                        timeSpans.Add(today);
-                    }
+                    endDay = startDay;
+                    timeSpans.Add(today);
+                    today = new TimeSpan();
+
                 }
                 preDay = startDay;
             }
@@ -140,13 +144,14 @@ public class Graph_SleepRecord : MonoBehaviour
                 period_sleepGraph.GetChild(i).gameObject.SetActive(true);
 
             TimeSpan time = timeSpans[timeSpans.Count - i - 1];
+            period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = ((DayOfWeek)(timeSpans.Count - i - 1)).ToString();
             day_totalTime += time;
             period_sleepGraph.GetChild(i).GetComponent<Scrollbar>().size = (float)(time.TotalSeconds / 86400);
         }
-        for(int i = timeSpans.Count - 1; i < period_sleepGraph.childCount; i++)
-        {
-            period_sleepGraph.GetChild(i).gameObject.SetActive(false);
-        }
+        //for(int i = timeSpans.Count - 1; i < period_sleepGraph.childCount; i++)
+        //{
+        //    period_sleepGraph.GetChild(i).gameObject.SetActive(false);
+        //}
         day_totalTime /= timeSpans.Count;
         sleep_averTime.text = "평균: " + day_totalTime.Hours + "시간 " + day_totalTime.Minutes + "분";
     }
@@ -161,25 +166,30 @@ public class Graph_SleepRecord : MonoBehaviour
         {
             if (sleepsData[i].Type.ToString().Contains("Asleep"))
             {
-                if (!isOnce)
-                {
-                    endDay = ReturnDayOfWeek(sleepsData[i].EndDate.DayOfWeek);
-                    isOnce = true;
-                }
                 //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
                 TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
                 diff /= 2;
                 var NewDate = new DateTime(
                     sleepsData[i].StartDate.Year,
                     sleepsData[i].StartDate.Month,
-                    sleepsData[i].StartDate.Day + diff.Days,
-                    sleepsData[i].StartDate.Hour + diff.Hours,
-                    sleepsData[i].StartDate.Minute + diff.Minutes,
-                    sleepsData[i].StartDate.Second + diff.Seconds
+                    sleepsData[i].StartDate.Day,
+                    sleepsData[i].StartDate.Hour,
+                    sleepsData[i].StartDate.Minute,
+                    sleepsData[i].StartDate.Second
                     );
+                NewDate.AddDays(diff.Days);
+                NewDate.AddHours(diff.Hours);
+                NewDate.AddMinutes(diff.Minutes);
+                NewDate.AddSeconds(diff.Seconds);
                 //중앙값의 날의 요일
-                startDay = ReturnDayOfWeek(NewDate.DayOfWeek);
+                startDay = (int)NewDate.DayOfWeek;
 
+                if (!isOnce)
+                {
+                    endDay = (int)sleepsData[i].EndDate.DayOfWeek;
+                    isOnce = true;
+                    preDay = startDay;
+                }
                 //갑자기 이전 계산한 preDay보다 startDay가 커진다면 - 저번주로 넘어감
                 if (startDay > preDay)
                 {
@@ -216,6 +226,7 @@ public class Graph_SleepRecord : MonoBehaviour
     
     public void OnClickChangeDate(int i)
     {
+        Debug.Log("클릭");
         switch (i)
         {
             case 0:
@@ -240,38 +251,6 @@ public class Graph_SleepRecord : MonoBehaviour
         ChangeGraph(curRecordDate);
     }
 
-    int ReturnDayOfWeek(DayOfWeek dayOfWeek)
-    {
-        int day = 0;
-        switch (sleepsData[sleepsData.Length - 1].EndDate.DayOfWeek)
-        {
-            case DayOfWeek.Monday:
-                day = 1;
-                break;
-            case DayOfWeek.Tuesday:
-                day = 2;
-                break;
-            case DayOfWeek.Wednesday:
-                day = 3;
-                break;
-            case DayOfWeek.Thursday:
-                day = 4;
-                break;
-            case DayOfWeek.Friday:
-                day = 5;
-                break;
-            case DayOfWeek.Saturday:
-                day = 6;
-                break;
-            case DayOfWeek.Sunday:
-                day = 0;
-                break;
-            default:
-                break;
-        }
-        return day;
-    }
-
     private bool isStartYesterDay = false;
     private TimeSpan today;
     private TimeSpan yesterday;
@@ -291,7 +270,7 @@ public class Graph_SleepRecord : MonoBehaviour
             {
                 if (!isOnce)
                 {
-                    endDay = ReturnDayOfWeek(sleepsData[i].EndDate.DayOfWeek);
+                    endDay = (int)(sleepsData[i].EndDate.DayOfWeek);
                     isOnce = true;
                 }
                 //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
@@ -306,7 +285,7 @@ public class Graph_SleepRecord : MonoBehaviour
                     sleepsData[i].StartDate.Second + diff.Seconds
                     );
                 //중앙값의 날의 요일
-                startDay = ReturnDayOfWeek(NewDate.DayOfWeek);
+                startDay = (int)(NewDate.DayOfWeek);
 
                 if (!isStartYesterDay)
                 {

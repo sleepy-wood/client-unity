@@ -1,11 +1,15 @@
 using NativePlugin.HealthData;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Graph_Initial_Window : MonoBehaviour
 {
     [Header("Highlight")]
+    [SerializeField] private Text m_sleepResultText;
     [SerializeField] private Text m_thisWeek_Aver;
     [SerializeField] private Text m_lastWeek_Aver;
     [SerializeField] private Scrollbar m_thisWeek_Scroll;
@@ -31,17 +35,10 @@ public class Graph_Initial_Window : MonoBehaviour
     private void Awake()
     {
         sleepsData = DataTemporary.samples;
-        Debug.Log(DataTemporary.samples.Length - 1);
     }
     private bool isOnce = false;
     private bool startPreWeek = false;
     private bool endPreWeek = false;
-    void Start()
-    {
-        //HealthDataStore.Init();
-        //수면 관련 계산
-        Calc_Sleep();
-    }
 
 
     void Update()
@@ -50,111 +47,138 @@ public class Graph_Initial_Window : MonoBehaviour
         {
             once = true;
 
-            DateTime now = DateTime.Now;
+            //DateTime now = DateTime.Now;
 
-            DateTime nowStart = now.AddDays(-1);
-            ActivitySample[] activitySamples = HealthDataStore.GetActivitySamples(
-                nowStart, now);
+            //DateTime nowStart = now.AddYears(-1);
+            //ActivitySample[] activitySamples = HealthDataStore.GetActivitySamples(
+            //    nowStart, now);
 
-            if(activitySamples != null|| activitySamples.Length ==0)
-            {
-                Debug.LogError("ActivitySamples is null or empty");
-                return;
-            }
+            //if (activitySamples != null || activitySamples.Length == 0)
+            //{
+            //    Debug.LogError("ActivitySamples is null or empty");
+            //    return;
+            //}
 
-            //달성률 수치로 알려줌
-            //HealthReport report = HealthDataAnalyzer.GetDailyReport(
-            //    DateTime.Now,
-            //    6
-            //);
-            int lastIdx = 0;
+            ////달성률 수치로 알려줌
+            ////HealthReport report = HealthDataAnalyzer.GetDailyReport(
+            ////    DateTime.Now,
+            ////    6
+            ////);
+            //int lastIdx = 0;
 
-            for(int i = 0; i < activitySamples.Length; i++)
-            {
-                lastIdx = activitySamples[i].Date > activitySamples[lastIdx].Date ? i : lastIdx;
-            }
+            //for (int i = 0; i < activitySamples.Length; i++)
+            //{
+            //    lastIdx = activitySamples[i].Date > activitySamples[lastIdx].Date ? i : lastIdx;
+            //}
             //수면 관련 계산
             Calc_Sleep();
             //활동 관련 계산
-            Calc_Activity(activitySamples[lastIdx]);
+            //Calc_Activity(activitySamples[lastIdx]);
         }
     }
+
+    //한주동안 데이터가 있는 날의 일수
+    //이번주는 맨 끝값을 갖고 preDay랑 같은값으로 시작하므로 하나 갖고 시작
+    private int curWeekCnt = 1;
+    private int preWeekCnt = 0;
     /// <summary>
     /// Sleep 관련 계산 - 저번주 평균 수면 시간, 이번주 평균 수면시간, 오늘 수면 시간
     /// </summary>
     void Calc_Sleep()
     {
-        Debug.Log(sleepsData.Length - 1);
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
             Debug.Log(sleepsData[i].Type);
             if (sleepsData[i].Type.ToString().Contains("Asleep"))
             {
-                if (!isOnce)
-                {
-                    endDay = ReturnDayOfWeek(sleepsData[i].EndDate.DayOfWeek);
-                    isOnce = true;
-                }
-                Debug.Log(endDay);
+                //Debug.Log("endDay = " + endDay);
                 //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
                 TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
                 diff /= 2;
                 var NewDate = new DateTime(
                     sleepsData[i].StartDate.Year,
                     sleepsData[i].StartDate.Month,
-                    sleepsData[i].StartDate.Day + diff.Days,
-                    sleepsData[i].StartDate.Hour + diff.Hours,
-                    sleepsData[i].StartDate.Minute + diff.Minutes,
-                    sleepsData[i].StartDate.Second + diff.Seconds
+                    sleepsData[i].StartDate.Day,
+                    sleepsData[i].StartDate.Hour,
+                    sleepsData[i].StartDate.Minute,
+                    sleepsData[i].StartDate.Second
                     );
-                Debug.Log(diff);
+                NewDate.AddDays(diff.Days);
+                NewDate.AddHours(diff.Hours);
+                NewDate.AddMinutes(diff.Minutes);
+                NewDate.AddSeconds(diff.Seconds);
+                //Debug.Log(NewDate);
+                Debug.Log(NewDate.DayOfWeek);
                 //중앙값의 날의 요일
-                startDay = ReturnDayOfWeek(NewDate.DayOfWeek);
-                Debug.Log(startDay);
+                startDay = (int)NewDate.DayOfWeek;
+                if (!isOnce)
+                {
+                    endDay = (int)sleepsData[i].EndDate.DayOfWeek;
+                    isOnce = true;
+                    preDay = startDay;
+                }
+                //Debug.Log("startDay = " + startDay);
                 //갑자기 이전 계산한 preDay보다 startDay가 커진다면 - 저번주로 넘어감
                 if (startDay > preDay)
                 {
                     //이미 저번주로 넘어간상태 였다면 저저번주로 넘어갔음
                     endPreWeek = startPreWeek == true ? true : false;
                     startPreWeek = true;
+                    Debug.Log("전주");
                 }
                 //저저번주
                 if (endPreWeek)
                 {
                     //나가기
+                    Debug.Log("끝");
                     break;
                 }
                 //저번주
                 else if (startPreWeek)
                 {
+                    if (preDay != startDay)
+                        preWeekCnt++;
                     preWeek += diff;
+                    Debug.Log("preWeek = " + preWeek);
                 }
                 //이번주
                 else
                 {
+                    if (preDay != startDay)
+                        curWeekCnt++;
                     //오늘이면
                     if (startDay == endDay)
                     {
                         today += diff;
                     }
+                    Debug.Log("curWeek = " + curWeek);
                     curWeek += diff;
                 }
                 preDay = startDay;
             }
         }
         //평균값 구하기
-        Debug.Log("curWeek1 = " + curWeek);
-        curWeek /= (endDay + 1);
-        Debug.Log("curWeek2 = " + curWeek);
-        Debug.Log("preWeek1 = " + preWeek);
-        preWeek /= 7;
-        Debug.Log("preWeek2 = " + preWeek);
+        curWeek /= curWeekCnt;
+        preWeek /= preWeekCnt;
+
         m_thisWeek_Aver.text = curWeek.Hours.ToString() + "시간 " + curWeek.Minutes.ToString() + "분 /";
         m_lastWeek_Aver.text = preWeek.Hours.ToString() + "시간 " + preWeek.Minutes.ToString() + "분 /";
 
         m_thisWeek_Scroll.size = (float)(curWeek.TotalSeconds / 86400);
         m_lastWeek_Scroll.size = (float)(preWeek.TotalSeconds / 86400);
 
+        if (m_thisWeek_Scroll.size < m_lastWeek_Scroll.size)
+        {
+            m_sleepResultText.text = "이번주 하루 평균 수면시간이 지난주보다 줄었습니다.";
+        }
+        else if (m_thisWeek_Scroll.size > m_lastWeek_Scroll.size)
+        {
+            m_sleepResultText.text = "이번주 하루 평균 수면시간이 지난주보다 늘었습니다.";
+        }
+        else
+        {
+            m_sleepResultText.text = "이번주 하루 평균 수면시간이 지난주와 같습니다.";
+        }
         //오늘 몇시간 잤는가?
         m_todaySleep.text = today.Hours.ToString() + "시간 " + today.Minutes.ToString() + "분 /";
     }
@@ -172,35 +196,4 @@ public class Graph_Initial_Window : MonoBehaviour
     }
 
 
-    int ReturnDayOfWeek(DayOfWeek dayOfWeek)
-    {
-        int day = 0;
-        switch (sleepsData[sleepsData.Length - 1].EndDate.DayOfWeek)
-        {
-            case DayOfWeek.Monday:
-                day = 1;
-                break;
-            case DayOfWeek.Tuesday:
-                day = 2;
-                break;
-            case DayOfWeek.Wednesday:
-                day = 3;
-                break;
-            case DayOfWeek.Thursday:
-                day = 4;
-                break;
-            case DayOfWeek.Friday:
-                day = 5;
-                break;
-            case DayOfWeek.Saturday:
-                day = 6;
-                break;
-            case DayOfWeek.Sunday:
-                day = 0;
-                break;
-            default:
-                break;
-        }
-        return day;
-    }
 }
