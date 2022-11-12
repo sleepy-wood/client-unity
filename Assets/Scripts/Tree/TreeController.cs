@@ -190,7 +190,7 @@ public class TreeController : MonoBehaviour
         // 나무 형태 Random 선택
         if (demoMode)
         {
-            pipeName = "DemoTree_Red 1";
+            pipeName = "DemoTree_Red1";
             selectedSeed = SeedType.Demo;
         }
         else
@@ -292,12 +292,26 @@ public class TreeController : MonoBehaviour
         // 4. 나무
         if (dayCount == 4)
         {
-            Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.9f, -44.2f, 6.2f), 2 * Time.deltaTime);
+            if (badMode)
+            {
+                Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.7f, -37.8f, 3.2f), 2 * Time.deltaTime);
+            }
+            else
+            {
+                Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.9f, -44.2f, 6.2f), 2 * Time.deltaTime);
+            }
         }
         // 5. 열매
         if (dayCount == 5)
         {
-            Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.2f, -54.7f, 9.1f), 2 * Time.deltaTime);
+            if (badMode)
+            {
+                Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.3f, -40.9f, 3.7f), 2 * Time.deltaTime);
+            }
+            else
+            {
+                Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.2f, -54.7f, 9.1f), 2 * Time.deltaTime);
+            }
         }
         #endregion
 
@@ -381,19 +395,18 @@ public class TreeController : MonoBehaviour
         seed.SetActive(true);
         yield return new WaitForSeconds(2);
         sproutParticle.Play();
-        sprout.transform.localScale = new Vector3(0f, 0f, 0f);
         sprout.SetActive(true);
         
-
-        t = 0.4f;
-        while (t <= 0.6f)
+        // 새싹 자라기
+        t = 0;
+        while (t <= 1f)
         {
             t += Time.deltaTime * 0.5f;
-            sprout.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            sprout.transform.localScale = new Vector3(t, t, t);
             yield return null;
         }
-        sprout.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-        
+        sprout.transform.localScale = new Vector3(1, 1, 1);
+
 
 
         // 새싹잎 자라기
@@ -660,8 +673,12 @@ public class TreeController : MonoBehaviour
     public ParticleSystem changeParticle;
     public ParticleSystem snow;
     public ParticleSystem rain;
+    public ParticleSystem rottenLeafParticle;
     public bool badMode;
-
+    public GameObject day2CustomObj;
+    public GameObject day3CustomObj;
+    public GameObject day4CustomObj;
+    
     public void LoadTree(int day, bool demo)
     {
         // 1일차 (씨앗 심기)
@@ -679,6 +696,7 @@ public class TreeController : MonoBehaviour
             seed.SetActive(false);
             sprout.SetActive(false);
             soil.SetActive(false);
+            day2CustomObj.SetActive(true);
             // Sprout
             SproutNumChange(true, 10);
             // 트리 기본 세팅 값 로드
@@ -695,6 +713,7 @@ public class TreeController : MonoBehaviour
         else if (day == 3)
         {
             rain.gameObject.SetActive(false);
+            day3CustomObj.SetActive(true);
             // SkyBox
             sky.Sunset();
             // Fire
@@ -711,16 +730,17 @@ public class TreeController : MonoBehaviour
         // 4일차
         else if (day == 4)
         {
+            day4CustomObj.SetActive(true);
             // SkyBox
             sky.Night();
-            
             // Tree Pipeline - Branch MinMax, Girth, Scale
             if (badMode)
             {
                 SproutNumChange(false, 10);
                 // Tree Pipeline - Branch MinMax, Girth, Scale
                 PipelineSetting(4);
-                BadChange(true);
+                BadChange(true, 0.4f);
+                rottenLeafParticle.Play();
             }
             else
             {
@@ -732,12 +752,14 @@ public class TreeController : MonoBehaviour
             // Weather - Snow
             snow.Play();
             // Change Particle
-            changeParticle.transform.position = new Vector3(0, 6.65f, 0);
+            if (badMode) changeParticle.transform.position = new Vector3(0, 5.32f, 0);
+            else changeParticle.transform.position = new Vector3(0, 6.65f, 0);
             changeParticle.Play();
         }
         // 5일차
         else if (day == 5)
         {
+            rottenLeafParticle.gameObject.SetActive(false);
             snow.gameObject.SetActive(false);
             // SkyBox
             sky.Day();
@@ -749,7 +771,9 @@ public class TreeController : MonoBehaviour
                 SproutNumChange(false, 10);
                 // Tree Pipeline - Branch MinMax, Girth, Scale
                 PipelineSetting(5);
-                BadChange(true);
+                BadChange(true, 0.2f);
+                rottenLeafParticle.gameObject.SetActive(true);
+                rottenLeafParticle.Play();
             }
             else
             {
@@ -760,7 +784,7 @@ public class TreeController : MonoBehaviour
             }
             TreeReload();
             // Change Particle
-            changeParticle.transform.position = new Vector3(0, 10.46f, 0);
+            if (!badMode) changeParticle.transform.position = new Vector3(0, 10.46f, 0);
             changeParticle.Play();
             assetBundle.Unload(false);
         }
@@ -1059,7 +1083,7 @@ public class TreeController : MonoBehaviour
     /// 나무의 상한잎, 중력 조절하는 함수
     /// </summary>
     /// <param name="yesBad"> 나쁜 영향을 줄 것인지, 나쁜 영향을 완화시킬 것인지 </param>
-    public void BadChange(bool yesBad)
+    public void BadChange(bool yesBad, float gravity=0.2f)
     {
         // 나쁜 영향을 줄 경우
         if (yesBad)
@@ -1078,8 +1102,8 @@ public class TreeController : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 StructureGenerator.StructureLevel gravityPipe = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-                gravityPipe.minGravityAlignAtTop -= 0.2f;
-                gravityPipe.maxGravityAlignAtTop -= 0.2f;
+                gravityPipe.minGravityAlignAtTop -= gravity;
+                gravityPipe.maxGravityAlignAtTop -= gravity;
             }
         }
         // 나쁜 영향을 완화시킬 경우
@@ -1099,8 +1123,8 @@ public class TreeController : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 StructureGenerator.StructureLevel gravityPipe = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-                gravityPipe.minGravityAlignAtTop += 0.2f;
-                gravityPipe.maxGravityAlignAtTop += 0.2f;
+                gravityPipe.minGravityAlignAtTop += gravity;
+                gravityPipe.maxGravityAlignAtTop += gravity;
             }
         }
 
