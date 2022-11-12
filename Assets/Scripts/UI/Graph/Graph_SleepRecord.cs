@@ -269,6 +269,7 @@ public class Graph_SleepRecord : MonoBehaviour
     private int startDayGraph = 0;
     private int endDayGraph = 0;
     private bool isGraphOnce = false;
+    private TimeSpan totalFlow = new TimeSpan();
     void Draw_SleepFlow()
     {
         for (int i = sleepsData.Length - 1; i >= 0; i--)
@@ -313,9 +314,11 @@ public class Graph_SleepRecord : MonoBehaviour
                     float per = (float)(diff.TotalSeconds / 28800);
                     StartCoroutine(MoveSleepFlow(graphGO, per));
                     posX += 750 * per;
+                    totalFlow += diff;
                 }
                 else
                 {
+                    //Debug.Log(totalFlow.Hours + "시간 " + totalFlow.Minutes + "분 " + totalFlow.Seconds + "초");
                     break;
                 }
             }
@@ -417,7 +420,6 @@ public class Graph_SleepRecord : MonoBehaviour
                     }
                     else
                     {
-                        //yesterDay 나타내기
                         break;
                     }
                 }
