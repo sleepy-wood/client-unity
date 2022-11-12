@@ -278,36 +278,35 @@ public class Graph_SleepRecord : MonoBehaviour
         isGraphOnce = false;
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
-            if (sleepsData[i].Type.ToString().Contains("Asleep"))
+            if (!isGraphOnce)
             {
-                if (sleepsData[i].Type == SleepType.AsleepUnspecified)
-                    continue;
-                if (!isGraphOnce)
-                {
-                    endDayGraph = (int)(sleepsData[i].EndDate.DayOfWeek);
-                    isGraphOnce = true;
-                }
-                //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
-                TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
-                diff /= 2;
+                endDayGraph = (int)(sleepsData[i].EndDate.DayOfWeek);
+                isGraphOnce = true;
+            }
+            //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
+            TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
+            diff /= 2;
 
-                var NewDate = new DateTime(
-                    sleepsData[i].StartDate.Year,
-                    sleepsData[i].StartDate.Month,
-                    sleepsData[i].StartDate.Day,
-                    sleepsData[i].StartDate.Hour,
-                    sleepsData[i].StartDate.Minute,
-                    sleepsData[i].StartDate.Second
-                    );
-                NewDate.AddDays(diff.Days);
-                NewDate.AddHours(diff.Hours);
-                NewDate.AddMinutes(diff.Minutes);
-                NewDate.AddSeconds(diff.Seconds);
-                //중앙값의 날의 요일
-                startDayGraph = (int)(NewDate.DayOfWeek);
+            var NewDate = new DateTime(
+                sleepsData[i].StartDate.Year,
+                sleepsData[i].StartDate.Month,
+                sleepsData[i].StartDate.Day,
+                sleepsData[i].StartDate.Hour,
+                sleepsData[i].StartDate.Minute,
+                sleepsData[i].StartDate.Second
+                );
+            NewDate.AddDays(diff.Days);
+            NewDate.AddHours(diff.Hours);
+            NewDate.AddMinutes(diff.Minutes);
+            NewDate.AddSeconds(diff.Seconds);
+            //중앙값의 날의 요일
+            startDayGraph = (int)(NewDate.DayOfWeek);
 
-                //오늘이면
-                if (startDayGraph == endDayGraph)
+            //오늘이면
+            if (startDayGraph == endDayGraph)
+            {
+                float per = (float)(diff.TotalSeconds / 28800);
+                if (sleepsData[i].Type.ToString().Contains("Asleep") && sleepsData[i].Type != SleepType.AsleepUnspecified)
                 {
                     GraphSleepType type = (GraphSleepType)Enum.Parse(typeof(GraphSleepType), sleepsData[i].Type.ToString());
                     GameObject resource = Resources.Load<GameObject>("GraphUI/" + type.ToString());
@@ -315,16 +314,15 @@ public class Graph_SleepRecord : MonoBehaviour
                     Vector2 rect = graphGO.GetComponent<RectTransform>().anchoredPosition;
                     rect.x = posX;
                     graphGO.GetComponent<RectTransform>().anchoredPosition = rect;
-                    float per = (float)(diff.TotalSeconds / 28800);
                     StartCoroutine(MoveSleepFlow(graphGO, per));
-                    posX += 750 * per;
                     totalFlow += diff;
                 }
-                else
-                {
-                    //Debug.Log(totalFlow.Hours + "시간 " + totalFlow.Minutes + "분 " + totalFlow.Seconds + "초");
-                    break;
-                }
+                posX += 750 * per;
+            }
+            else
+            {
+                //Debug.Log(totalFlow.Hours + "시간 " + totalFlow.Minutes + "분 " + totalFlow.Seconds + "초");
+                break;
             }
         }
         CalcSleep(SleepType.AsleepREM, graphResult);
