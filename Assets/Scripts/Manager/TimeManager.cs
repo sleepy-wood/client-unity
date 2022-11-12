@@ -114,16 +114,14 @@ public class TimeManager : MonoBehaviour
             if (totalPlantDay == 0 && Input.GetKeyDown(KeyCode.Alpha1))
             {
                 CalculatePlantDays(firstPlantDate, now);
-                GameManager.Instance.treeController.LoadTree(1);
-                skyChangeDone = true;
+                GameManager.Instance.treeController.LoadTree(1, true);
                 //txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
             }
-            else if (skyChangeDone && Input.GetKeyDown(KeyCode.Alpha2) && totalPlantDay < 5)
+            else if (Input.GetKeyDown(KeyCode.Alpha2) && totalPlantDay < 5)
             {
-                print("Plus Day");
                 now = now.dateTime.AddHours(25);//AddDays(1);
                 CalculatePlantDays(firstPlantDate, now);
-                GameManager.Instance.treeController.LoadTree(totalPlantDay);
+                GameManager.Instance.treeController.LoadTree(totalPlantDay, true);
                 //txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
             }
         }
