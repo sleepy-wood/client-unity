@@ -35,7 +35,7 @@ public class TreeController : MonoBehaviour
     // 랜덤으로 선택된 SeedType
     public SeedType selectedSeed = SeedType.None;
     // pipeNameList
-    List<string> pipeNameList = new List<string>() { "BasicTree", "OakTree", "SakuraTree", "DRTree"};
+    List<string> pipeNameList = new List<string>() { "BasicTree", "OakTree", "SakuraTree", "DRTree" };
     // pipeName별 SeedType
     Dictionary<string, SeedType> pipeNameDict = new Dictionary<string, SeedType>()
     {
@@ -123,6 +123,8 @@ public class TreeController : MonoBehaviour
     public string treeName;
     // 현재 나무의 DB id
     public int dbId;
+    // Demo Mode
+    public bool demoMode;
     #endregion
 
     #region 가상 수면 데이터 변수
@@ -181,14 +183,22 @@ public class TreeController : MonoBehaviour
         // 방문 타입에 따라 시나리오 선택
         //if (visitType == VisitType.First)
         //{
-            // 나무 형태 Random 선택
+        // 나무 형태 Random 선택
+        if (demoMode) pipeName = pipeNameList[0];
+        else
+        {
             int i = UnityEngine.Random.Range(0, pipeNameList.Count);
-            pipeName = pipeNameList[i]; 
-            selectedSeed = pipeNameDict[pipeName];  
-            print(pipeName + " Selected");
-            // Tree Pipeline 로드
-            treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
-            // sprout Texture 랜덤 선택
+            pipeName = pipeNameList[i];
+        }
+        selectedSeed = pipeNameDict[pipeName];
+        print(pipeName + " Selected");
+
+        // Tree Pipeline 로드
+        treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+
+        // sprout Texture 랜덤 선택
+        if (!demoMode)
+        {
             int s = UnityEngine.Random.Range(0, 4);
             treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[s].enabled = true;
             print("sprout texture index : " + s);
@@ -197,17 +207,19 @@ public class TreeController : MonoBehaviour
             int b = UnityEngine.Random.Range(0, 5);
             Texture2D texture = Resources.Load("Tree/Sprites/Tree_Bark_" + name[b]) as Texture2D;
             treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
-            // 랜덤 선택된 Seed로 기본 세팅값 찾기
-            FindtreeSetting();
+        }
+        
+        // 랜덤 선택된 Seed로 기본 세팅값 찾기
+        FindtreeSetting();
 
-            // Pipeline 기본 세팅
-            PipelineSetting(2);
+        // Pipeline 기본 세팅
+        PipelineSetting(2);
         //}
         //else if (visitType == VisitType.ReVisit)
         //{
         //    // DB에 저장해놓은 나무 변수 가져와 로드
         //}
-         
+
         // 헬스데이터 불러오기 ( 로딩바에서 )
         HealthDataStore.Init();
 
@@ -396,7 +408,7 @@ public class TreeController : MonoBehaviour
     public void PipelineSetting(int day)
     {
         // 기본 세팅 성장 데이터 정보 지닌 요소
-        TreeSetting element = selectedTreeSetting[day-2];
+        TreeSetting element = selectedTreeSetting[day - 2];
 
 
         #region 1. Element MinMax Frequency
@@ -478,7 +490,7 @@ public class TreeController : MonoBehaviour
         Resources.UnloadAsset(loadedPipeline);
     }
 
-    
+
     /// <summary>
     /// dayCount에 맞게 Tree 업데이트
     /// </summary>
@@ -585,14 +597,14 @@ public class TreeController : MonoBehaviour
         treeData.barkTexture = treePipeline._serializedPipeline.barkMappers[0].mainTexture.name;
         // 9. Sprout Index
         int id = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas.Count;
-        for (int i=0; i<id; i++)
+        for (int i = 0; i < id; i++)
         {
             if (treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled)
             {
                 treeData.sproutIndex = i;
             }
         }
-        
+
         string treeJsonData = JsonUtility.ToJson(treeData);
 
         // Web
@@ -614,7 +626,7 @@ public class TreeController : MonoBehaviour
 
         treeDatas.Add(treeData);
         ArrayTreeData arrayTreeData = new ArrayTreeData();
-        arrayTreeData.treeDataList = treeDatas;                       
+        arrayTreeData.treeDataList = treeDatas;
 
         // DataTemporary
         DataTemporary.MyTreeData = arrayTreeData;
