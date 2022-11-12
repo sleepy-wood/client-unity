@@ -91,9 +91,10 @@ public class LoadingData : MonoBehaviourPunCallbacks
             DataModule.REPLACE_BEARER_TOKEN = login.data.token;
         }
         //Native Data Load
-#if UNITY_IOS
+//#if UNITY_IOS
+        HealthDataStore.Init();
         nativeLoad.LoadNativeData();
-#endif
+//#endif
         //AssetBundle Load
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
 

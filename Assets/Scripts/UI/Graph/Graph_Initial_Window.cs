@@ -31,13 +31,16 @@ public class Graph_Initial_Window : MonoBehaviour
     private void Awake()
     {
         sleepsData = DataTemporary.samples;
+        Debug.Log(DataTemporary.samples.Length - 1);
     }
     private bool isOnce = false;
     private bool startPreWeek = false;
     private bool endPreWeek = false;
     void Start()
     {
-        HealthDataStore.Init();
+        //HealthDataStore.Init();
+        //수면 관련 계산
+        Calc_Sleep();
     }
 
 
@@ -81,8 +84,10 @@ public class Graph_Initial_Window : MonoBehaviour
     /// </summary>
     void Calc_Sleep()
     {
+        Debug.Log(sleepsData.Length - 1);
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
+            Debug.Log(sleepsData[i].Type);
             if (sleepsData[i].Type.ToString().Contains("Asleep"))
             {
                 if (!isOnce)
@@ -90,6 +95,7 @@ public class Graph_Initial_Window : MonoBehaviour
                     endDay = ReturnDayOfWeek(sleepsData[i].EndDate.DayOfWeek);
                     isOnce = true;
                 }
+                Debug.Log(endDay);
                 //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
                 TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
                 diff /= 2;
@@ -101,9 +107,10 @@ public class Graph_Initial_Window : MonoBehaviour
                     sleepsData[i].StartDate.Minute + diff.Minutes,
                     sleepsData[i].StartDate.Second + diff.Seconds
                     );
+                Debug.Log(diff);
                 //중앙값의 날의 요일
                 startDay = ReturnDayOfWeek(NewDate.DayOfWeek);
-
+                Debug.Log(startDay);
                 //갑자기 이전 계산한 preDay보다 startDay가 커진다면 - 저번주로 넘어감
                 if (startDay > preDay)
                 {
@@ -136,8 +143,12 @@ public class Graph_Initial_Window : MonoBehaviour
             }
         }
         //평균값 구하기
+        Debug.Log("curWeek1 = " + curWeek);
         curWeek /= (endDay + 1);
+        Debug.Log("curWeek2 = " + curWeek);
+        Debug.Log("preWeek1 = " + preWeek);
         preWeek /= 7;
+        Debug.Log("preWeek2 = " + preWeek);
         m_thisWeek_Aver.text = curWeek.Hours.ToString() + "시간 " + curWeek.Minutes.ToString() + "분 /";
         m_lastWeek_Aver.text = preWeek.Hours.ToString() + "시간 " + preWeek.Minutes.ToString() + "분 /";
 
