@@ -1,5 +1,6 @@
 using NativePlugin.HealthData;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -40,7 +41,10 @@ public class Graph_Initial_Window : MonoBehaviour
     private bool startPreWeek = false;
     private bool endPreWeek = false;
 
-
+    private void OnEnable()
+    {
+        once = false;
+    }
     void Update()
     {
         if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded && !once)
@@ -86,6 +90,12 @@ public class Graph_Initial_Window : MonoBehaviour
     /// </summary>
     void Calc_Sleep()
     {
+        startPreWeek = false;
+        endPreWeek = false;
+        //초기화
+        curWeekCnt = 1;
+        preWeekCnt = 0;
+        isOnce = false;
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
             Debug.Log(sleepsData[i].Type);
@@ -164,8 +174,7 @@ public class Graph_Initial_Window : MonoBehaviour
         m_thisWeek_Aver.text = curWeek.Hours.ToString() + "시간 " + curWeek.Minutes.ToString() + "분 /";
         m_lastWeek_Aver.text = preWeek.Hours.ToString() + "시간 " + preWeek.Minutes.ToString() + "분 /";
 
-        m_thisWeek_Scroll.size = (float)(curWeek.TotalSeconds / 86400);
-        m_lastWeek_Scroll.size = (float)(preWeek.TotalSeconds / 86400);
+        StartCoroutine(GraphMove((float)(curWeek.TotalSeconds / 86400), (float)(preWeek.TotalSeconds / 86400)));
 
         if (m_thisWeek_Scroll.size < m_lastWeek_Scroll.size)
         {
@@ -195,5 +204,16 @@ public class Graph_Initial_Window : MonoBehaviour
         m_Stand_Count.text = activitySample.StandHours.ToString() + "회 / 시간";
     }
 
+    private IEnumerator GraphMove(float endSize_this, float endSize_last)
+    {
+        float t = 0;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * 0.1f;
+            m_thisWeek_Scroll.size = Mathf.Lerp(m_thisWeek_Scroll.size, endSize_this, t);
+            m_lastWeek_Scroll.size = Mathf.Lerp(m_lastWeek_Scroll.size, endSize_last, t);
+            yield return null;
+        }
+    }
 
 }
