@@ -9,36 +9,6 @@ using UnityEngine.UI;
 
 public class Graph_SleepRecord : MonoBehaviour
 {
-    [Header("Priod")]
-    [SerializeField] private RectTransform selectButton;
-    [SerializeField] private Transform periodParent;
-    [SerializeField] private Text sleep_averTime;
-    [SerializeField] private Transform period_sleepGraph;
-    [SerializeField] private float select_imageSpeed = 3;
-
-    [Space]
-    [Header("CoreSleepType")]
-    [SerializeField] private Text coreSleepText;
-    [SerializeField] private GameObject coreSleep_Yesterday;
-    [SerializeField] private GameObject coreSleep_Today;
-    [Header("DeepSleepType")]
-    [SerializeField] private Text deepSleepText;
-    [SerializeField] private GameObject deepSleep_Yesterday;
-    [SerializeField] private GameObject deepSleep_Today;
-    [Header("REMSleepType")]
-    [SerializeField] private Text remSleepText;
-    [SerializeField] private GameObject remSleep_Yesterday;
-    [SerializeField] private GameObject remSleep_Today;
-
-
-    private SleepSample[] sleepsData;
-    bool isOnce = false;
-    private int startDay = 0;
-    private int endDay = 0;
-    private void Awake()
-    {
-        sleepsData = DataTemporary.samples;
-    }
     public enum RecordDate
     {
         Day = 0,
@@ -48,12 +18,56 @@ public class Graph_SleepRecord : MonoBehaviour
         Year = 4
     }
 
+    public enum GraphSleepType
+    {
+        AsleepREM = 0,
+        AsleepCore = 1,
+        AsleepDeep = 2
+    }
+
+    [Header("Priod")]
+    [SerializeField] private RectTransform selectButton;
+    [SerializeField] private Transform periodParent;
+    [SerializeField] private Text sleep_averTime;
+    [SerializeField] private Transform period_sleepGraph;
+    [SerializeField] private float select_imageSpeed = 3;
+
+    //[Space]
+    //[Header("CoreSleepType")]
+    //[SerializeField] private Text coreSleepText;
+    //[SerializeField] private GameObject coreSleep_Yesterday;
+    //[SerializeField] private GameObject coreSleep_Today;
+    //[Header("DeepSleepType")]
+    //[SerializeField] private Text deepSleepText;
+    //[SerializeField] private GameObject deepSleep_Yesterday;
+    //[SerializeField] private GameObject deepSleep_Today;
+    //[Header("REMSleepType")]
+    //[SerializeField] private Text remSleepText;
+    //[SerializeField] private GameObject remSleep_Yesterday;
+    //[SerializeField] private GameObject remSleep_Today;
+
+    [Space]
+    [Header("SleepFlow")]
+    [SerializeField] private Transform graphParent;
+    [SerializeField] private Text graphResult;
+
+    private SleepSample[] sleepsData;
+    bool isOnce = false;
+    private int startDay = 0;
+    private int endDay = 0;
+
     private RecordDate curRecordDate = RecordDate.Day;
+
+    private void Awake()
+    {
+        sleepsData = DataTemporary.samples;
+    }
     void Start()
     {
         OnClickChangeDate(0);
+        Draw_SleepFlow();
     }
-
+    #region Average_SleepTime
     private int preDay = 0;
     TimeSpan day_totalTime;
     void Graph_Day()
@@ -248,6 +262,69 @@ public class Graph_SleepRecord : MonoBehaviour
 
         }
     }
+    #endregion
+
+    #region Sleep_Flow
+    private float posX = 83f;
+    private int startDayGraph = 0;
+    private int endDayGraph = 0;
+    private bool isGraphOnce = false;
+    void Draw_SleepFlow()
+    {
+        for (int i = sleepsData.Length - 1; i >= 0; i--)
+        {
+            if (sleepsData[i].Type.ToString().Contains("Asleep"))
+            {
+                if (sleepsData[i].Type == SleepType.AsleepUnspecified)
+                    continue;
+                if (!isGraphOnce)
+                {
+                    endDayGraph = (int)(sleepsData[i].EndDate.DayOfWeek);
+                    isGraphOnce = true;
+                }
+                //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
+                TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
+                diff /= 2;
+
+                var NewDate = new DateTime(
+                    sleepsData[i].StartDate.Year,
+                    sleepsData[i].StartDate.Month,
+                    sleepsData[i].StartDate.Day,
+                    sleepsData[i].StartDate.Hour,
+                    sleepsData[i].StartDate.Minute,
+                    sleepsData[i].StartDate.Second
+                    );
+                NewDate.AddDays(diff.Days);
+                NewDate.AddHours(diff.Hours);
+                NewDate.AddMinutes(diff.Minutes);
+                NewDate.AddSeconds(diff.Seconds);
+                //중앙값의 날의 요일
+                startDayGraph = (int)(NewDate.DayOfWeek);
+
+                //오늘이면
+                if (startDayGraph == endDayGraph)
+                {
+                    GraphSleepType type = (GraphSleepType)Enum.Parse(typeof(GraphSleepType), sleepsData[i].Type.ToString());
+                    GameObject resource = Resources.Load<GameObject>("GraphUI/" + type.ToString());
+                    GameObject graphGO = Instantiate(resource, graphParent.GetChild((int)type));
+                    Vector2 rect = graphGO.GetComponent<RectTransform>().anchoredPosition;
+                    rect.x = posX;
+                    graphGO.GetComponent<RectTransform>().anchoredPosition = rect;
+                    float per = (float)(diff.TotalSeconds / 28800);
+                    StartCoroutine(MoveSleepFlow(graphGO, per));
+                    posX += 750 * per;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        CalcSleep(SleepType.AsleepREM, graphResult);
+    }
+    #endregion
+
+
     /// <summary>
     /// 단위 Button 이벤트
     /// </summary>
@@ -286,10 +363,8 @@ public class Graph_SleepRecord : MonoBehaviour
     /// SleepType에 따라 어제와 오늘을 비교하는 결과 계산
     /// </summary>
     /// <param name="sleepType"></param>
-    /// <param name="yesterDay"></param>
-    /// <param name="toDay"></param>
     /// <param name="sleepDiffResult"></param>
-    public void CalcSleep(SleepType sleepType, GameObject yesterDay, GameObject toDay, Text sleepDiffResult)
+    public void CalcSleep(SleepType sleepType, Text sleepDiffResult)
     {
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
@@ -303,14 +378,19 @@ public class Graph_SleepRecord : MonoBehaviour
                 //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
                 TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
                 diff /= 2;
+
                 var NewDate = new DateTime(
                     sleepsData[i].StartDate.Year,
                     sleepsData[i].StartDate.Month,
-                    sleepsData[i].StartDate.Day + diff.Days,
-                    sleepsData[i].StartDate.Hour + diff.Hours,
-                    sleepsData[i].StartDate.Minute + diff.Minutes,
-                    sleepsData[i].StartDate.Second + diff.Seconds
+                    sleepsData[i].StartDate.Day,
+                    sleepsData[i].StartDate.Hour,
+                    sleepsData[i].StartDate.Minute,
+                    sleepsData[i].StartDate.Second
                     );
+                NewDate.AddDays(diff.Days);
+                NewDate.AddHours(diff.Hours);
+                NewDate.AddMinutes(diff.Minutes);
+                NewDate.AddSeconds(diff.Seconds);
                 //중앙값의 날의 요일
                 startDay = (int)(NewDate.DayOfWeek);
 
@@ -359,7 +439,16 @@ public class Graph_SleepRecord : MonoBehaviour
 
 
     #region Coroutine
-
+    private IEnumerator MoveSleepFlow(GameObject graphGO,  float endSize)
+    {
+        float t = 0;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * 0.05f;
+            graphGO.GetComponent<Scrollbar>().size = Mathf.Lerp(graphGO.GetComponent<Scrollbar>().size, endSize, t);
+            yield return null;
+        }
+    }
     /// <summary>
     /// Select Button 선택 이미지 이동
     /// </summary>
