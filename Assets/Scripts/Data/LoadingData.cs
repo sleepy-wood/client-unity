@@ -90,9 +90,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
             StartCoroutine(StartLoading());
         }
 
+        //커스텀 관련 에셋번들
         DataTemporary.assetBundleCustom = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustombundle");
         DataTemporary.assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustomimg");
-
+        //금칙어번들 풀기
+        DataTemporary.stopwordsAsset = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/otherbundle");
+        
         //로그인
         //"/api/v1/auth/login/temp/{id}"
         ResultPost<UserLogin> login = await DataModule.WebRequestBuffer<ResultPost<UserLogin>>("/api/v1/auth/login/temp/" + loginId, DataModule.NetworkType.POST, DataModule.DataType.BUFFER);

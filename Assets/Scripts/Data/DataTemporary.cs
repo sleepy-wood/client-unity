@@ -16,6 +16,7 @@ public class DataTemporary
     public static AssetBundle assetBundle;
     public static AssetBundle assetBundleCustom;
     public static AssetBundle assetBundleImg;
+    public static AssetBundle stopwordsAsset;
     public static ArraySleepData ArraySleepData = new ArraySleepData();
     public static SleepSample[] samples = new SleepSample[100];
     // Tree Data

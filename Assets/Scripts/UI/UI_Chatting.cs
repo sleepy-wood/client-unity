@@ -25,17 +25,13 @@ public class UI_Chatting : MonoBehaviourPun
     private Vector3 endPos;
     private GameObject user;
     private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
-    private AssetBundle stopwordsAsset;
     private string[] stopwords;
     
     private void Start()
     {
-        if (photonView.IsMine)
-            photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
+        photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
 
-        //금칙어담기
-        stopwordsAsset = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/otherbundle");
-        TextAsset textFile = stopwordsAsset.LoadAsset<TextAsset>("stopwords");
+        TextAsset textFile = DataTemporary.stopwordsAsset.LoadAsset<TextAsset>("stopwords");
         stopwords = textFile.text.Split("\n");
 
         user = GameManager.Instance.User;
