@@ -203,7 +203,7 @@ public class Graph_Initial_Window : MonoBehaviour
         Debug.Log(activitySample.StandHours);
         m_Stand_Count.text = activitySample.StandHours.ToString() + "회 / 시간";
     }
-
+    #region Coroutine
     private IEnumerator GraphMove(float endSize_this, float endSize_last)
     {
         float t = 0;
@@ -215,5 +215,6 @@ public class Graph_Initial_Window : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
 
 }
