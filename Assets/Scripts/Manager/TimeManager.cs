@@ -21,6 +21,7 @@ public class TimeManager : MonoBehaviour
     private void Awake()
     {
         GameManager.Instance.treeController.visitType = TreeController.VisitType.First;
+
         // firstPlantDate로 방문타입 결정  => 5일차 후 새로운 Seed심기 전 null값 처리필요
         //if (firstPlantDate.dateTime == DateTime.Parse("0001-01-01 오전 12:00:00"))
         //{
@@ -41,7 +42,7 @@ public class TimeManager : MonoBehaviour
         //txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
 
         // 현재시간
-        //txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
+        // txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
 
         // 현재 시간 고려해 SkyBox 세팅
         // 낮 : 오전 7시~ / 일몰 : 오후 5시~ / 저녁 : 오후 6시~
@@ -57,6 +58,10 @@ public class TimeManager : MonoBehaviour
                 sky.Night();
             }
         }
+        else
+        {
+            firstPlantDate = DateTime.Now;
+        }
     }
 
     bool isOnce;
@@ -65,6 +70,7 @@ public class TimeManager : MonoBehaviour
     {
         //now = DateTime.Now;
         //txtCurrentTime.text = now.dateTime.ToString("tt h : mm : ss");
+
 
 
         #region skyBox 변화 시연
@@ -103,19 +109,25 @@ public class TimeManager : MonoBehaviour
         #endregion
 
         #region Day ++
-        //if (totalPlantDay==0 && Input.GetKeyDown(KeyCode.Alpha0))
-        //{
-        //    CalculatePlantDays(firstPlantDate, now);
-        //    GameManager.Instance.treeController.LoadTree();
-        //    txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
-        //}
-        //else if(skyChaneDone && Input.GetKeyDown(KeyCode.Alpha1) && totalPlantDay < 5)
-        //{
-        //    now = now.dateTime.AddDays(1);
-        //    CalculatePlantDays(firstPlantDate, now);
-        //    GameManager.Instance.treeController.LoadTree();
-        //    txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
-        //}
+        if (GameManager.Instance.treeController.demoMode)
+        {
+            if (totalPlantDay == 0 && Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                CalculatePlantDays(firstPlantDate, now);
+                GameManager.Instance.treeController.LoadTree(1);
+                skyChangeDone = true;
+                //txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
+            }
+            else if (skyChangeDone && Input.GetKeyDown(KeyCode.Alpha2) && totalPlantDay < 5)
+            {
+                print("Plus Day");
+                now = now.dateTime.AddHours(25);//AddDays(1);
+                CalculatePlantDays(firstPlantDate, now);
+                GameManager.Instance.treeController.LoadTree(totalPlantDay);
+                //txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
+            }
+        }
+        
         #endregion
 
         #region SkyBox 변경

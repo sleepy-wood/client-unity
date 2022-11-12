@@ -98,6 +98,8 @@ public class TreeController : MonoBehaviour
     public Text txtDayCount;
     // sprout
     public GameObject sprout;
+    // sprout Leaf
+    public GameObject sproutLeaf;
     //public GameObject sproutFactory;
     // seed
     public GameObject seed;
@@ -114,7 +116,7 @@ public class TreeController : MonoBehaviour
     // user
     public GameObject user;
     // previewTree Scale Value
-    float scaleTo = 1;
+    public float scaleTo = 1;
     // AssetBundle
     AssetBundle assetBundle;
     // 나무 이름 입력 UI
@@ -184,17 +186,22 @@ public class TreeController : MonoBehaviour
         //if (visitType == VisitType.First)
         //{
         // 나무 형태 Random 선택
-        if (demoMode) pipeName = pipeNameList[0];
+        if (demoMode)
+        {
+            pipeName = "DemoTree_Red";
+            selectedSeed = SeedType.Basic;
+            treePipeline = assetBundle.LoadAsset<Pipeline>("BasicTree");
+        }
         else
         {
             int i = UnityEngine.Random.Range(0, pipeNameList.Count);
             pipeName = pipeNameList[i];
+            selectedSeed = pipeNameDict[pipeName];
+            treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
         }
-        selectedSeed = pipeNameDict[pipeName];
         print(pipeName + " Selected");
 
-        // Tree Pipeline 로드
-        treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+        
 
         // sprout Texture 랜덤 선택
         if (!demoMode)
@@ -238,6 +245,7 @@ public class TreeController : MonoBehaviour
     bool isOnce2;
     bool isOnce3;
     bool once = false;
+    bool once2 = false;
     void Update()
     {
         #region 썩은잎 만들기 Test
@@ -345,6 +353,10 @@ public class TreeController : MonoBehaviour
             );
             Debug.Log(JsonUtility.ToJson(report, true));
         }
+        //if (!GameManager.Instance.timeManager.enabled)
+        //{
+        //    GameManager.Instance.timeManager.enabled = true;
+        //}
     }
 
     #region 씨앗 심기 코루틴
@@ -362,23 +374,34 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 씨앗 심기
-        seed.transform.localPosition = new Vector3(0, 2.5f, 0);
-        seed.gameObject.SetActive(true);
+        //seed.transform.localPosition = new Vector3(0, 2.5f, 0);
+        seed.SetActive(true);
         yield return new WaitForSeconds(2);
-        DestroyImmediate(seed, true);
-
-        // 새싹 자라기
-        t = 0;
-        sprout.transform.localScale = new Vector3(0, 0, 0);
+        //DestroyImmediate(seed, true);
+        sprout.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
         sprout.SetActive(true);
+        
+        t = 0.4f;
+        while (t <= 0.6f)
+        {
+            t += Time.deltaTime * 0.5f;
+            sprout.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            yield return null;
+        }
+        sprout.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        seed.SetActive(false);
+
+
+        // 새싹잎 자라기
+        t = 0;
+        sproutLeaf.transform.localScale = new Vector3(0, 0, 0);
         while (t <= targetScale)
         {
             t += Time.deltaTime * 0.5f;
-            sprout.transform.localScale = new Vector3(t, t, t);
+            sproutLeaf.transform.localScale = new Vector3(t, t, t);
             yield return null;
-
         }
-        sprout.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
+        sproutLeaf.transform.localScale = new Vector3(targetScale, targetScale, targetScale);
         yield return new WaitForSeconds(1);
 
         #region 카메라 줌 아웃
@@ -393,7 +416,7 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 식물 이름 UI 띄우기
-        treeNameUI.gameObject.SetActive(true);
+        if (!demoMode) treeNameUI.gameObject.SetActive(true);
     }
     #endregion
 
@@ -483,10 +506,19 @@ public class TreeController : MonoBehaviour
     /// </summary>
     public void TreeReload()
     {
+        if (demoMode) pipeName = "BasicTree";
         Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
         treeFactory.UnloadAndClearPipeline();
-        treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
+        if (!demoMode)
+        {
+            treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
+        }
+        else
+        {
+            treeFactory.transform.GetChild(0).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
+        }
+        
         Resources.UnloadAsset(loadedPipeline);
     }
 
@@ -501,8 +533,7 @@ public class TreeController : MonoBehaviour
         // 씨앗 심기
         if (day == 1)
         {
-            StartCoroutine(PlantSeed(0.5f));
-            seed.SetActive(true);
+            StartCoroutine(PlantSeed(1.02f));
             // 나무 심은 시간 저장
             //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
