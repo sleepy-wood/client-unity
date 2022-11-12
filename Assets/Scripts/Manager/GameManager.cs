@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (!User)
             User = PhotonNetwork.Instantiate("User", new Vector3(Random.Range(-3, 3), 2, Random.Range(-3, 3)), Quaternion.identity);
 
+        
+
     }
     private void Start()
     {
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             UI_Canvas.SetActive(false);
         }
+
     }
     public GameObject User { get; set; }
 
