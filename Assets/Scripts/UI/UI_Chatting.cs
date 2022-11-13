@@ -32,15 +32,15 @@ public class UI_Chatting : MonoBehaviourPun
         photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
 
         TextAsset textFile = DataTemporary.stopwordsAsset.LoadAsset<TextAsset>("stopwords");
-        stopwords = textFile.text.Split("\n");
+        stopwords = textFile.text.Split("\r\n");
 
         user = GameManager.Instance.User;
-        trScrollView = transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<RectTransform>();
-        chatting = transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<InputField>();
+        trScrollView = transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<RectTransform>();
+        chatting = transform.GetChild(0).GetChild(3).GetChild(1).GetComponent<InputField>();
         chatPrefab = Resources.Load<GameObject>("Chatting_Text");
-        content = transform.GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetComponent<RectTransform>();
-        startPos = transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().position + new Vector3(-140, 0, 0);
-        endPos = transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().position;
+        content = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetComponent<RectTransform>();
+        startPos = transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().position + new Vector3(-140, 0, 0);
+        endPos = transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().position;
         
         //InputField에서 엔터를 쳤을 때 호출되는 함수 등록
         //chatting.onSubmit.AddListener(OnSubmit);
@@ -110,10 +110,10 @@ public class UI_Chatting : MonoBehaviourPun
     {
         while (true)
         {
-            transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().position = 
-                Vector3.Lerp(transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().position, endPosition, Time.deltaTime * 5f);
+            transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().position = 
+                Vector3.Lerp(transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().position, endPosition, Time.deltaTime * 5f);
             
-            if( Vector3.Distance(transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().position,endPosition) < 0.1f)
+            if( Vector3.Distance(transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().position,endPosition) < 0.1f)
             {
                 yield break;
             }
