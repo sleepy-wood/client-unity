@@ -57,26 +57,25 @@ public class UI_Chatting : MonoBehaviourPun
                 user.GetComponent<UserInput>().InputControl = false;
             }
         }
-
-        transform.GetChild(1).gameObject.SetActive(true);
-
-        if (!transform.GetChild(1).GetChild(0).gameObject.activeSelf)
+        if (PhotonNetwork.PlayerList.Length <= 1)
         {
-            if (Input.GetMouseButtonDown(0))
+            transform.GetChild(1).gameObject.SetActive(false);
+        }
+        else
+        {
+            transform.GetChild(1).gameObject.SetActive(true);
+
+            if (!transform.GetChild(1).GetChild(0).gameObject.activeSelf)
             {
-                if (!EventSystem.current.IsPointerOverGameObject())
+                if (Input.GetMouseButtonDown(0))
                 {
-                    OnClickActiveChat();
+                    if (!EventSystem.current.IsPointerOverGameObject())
+                    {
+                        OnClickActiveChat();
+                    }
                 }
             }
         }
-        //if (PhotonNetwork.PlayerList.Length <= 1)
-        //{
-        //    transform.GetChild(1).gameObject.SetActive(false);
-        //}
-        //else
-        //{
-        //}
     }
     public void OnClickEmojiButton(int i)
     {
