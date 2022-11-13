@@ -15,6 +15,15 @@ public class UI_Initial : MonoBehaviour
 {
     #region Variable
 
+    [Header("Menu Bar Canvas")]
+    [SerializeField] private GameObject healthCanvas;
+    [SerializeField] private GameObject shareCanvas;
+    [SerializeField] private GameObject marketCanvas;
+
+    
+    [Space]
+
+    
     public GameObject profileUI;
     public GameObject myCollectionUI;
     public GameObject screenShotCam;
@@ -54,6 +63,51 @@ public class UI_Initial : MonoBehaviour
         developerUI.anchoredPosition = new Vector2(-570, -211);
 
     }
+
+    /// <summary>
+    /// 건강기록 창 켜기
+    /// </summary>
+    public void OnClickHealthActive()
+    {
+        healthCanvas.SetActive(true);
+    }
+    /// <summary>
+    /// 건강기록 창 끄기
+    /// </summary>
+    public void OnClickHealthNotActive()
+    {
+        healthCanvas.SetActive(false);
+    }
+
+    /// <summary>
+    /// 공유하기 창 켜기
+    /// </summary>
+    public void OnClickShareActive()
+    {
+        shareCanvas.SetActive(true);
+    }
+    /// <summary>
+    /// 공유하기 창 끄기
+    /// </summary>
+    public void OnClickShareNotActive()
+    {
+        shareCanvas.SetActive(false);
+    }
+    /// <summary>
+    /// 마켓 창 켜기
+    /// </summary>
+    public void OnClickMarketActive()
+    {
+        marketCanvas.SetActive(true);
+    }
+    /// <summary>
+    /// 마켓 창 끄기
+    /// </summary>
+    public void OnClickMarketNotActive()
+    {
+        marketCanvas.SetActive(false);
+    }
+
 
     /// <summary>
     /// 프로필 UI 활성화
@@ -268,6 +322,7 @@ public class UI_Initial : MonoBehaviour
     
     public void OnClickBottomUI(int idx)
     {
+        print("버튼 눌림");
         for (int i=0; i<5; i++)
         {
             if (idx == i)

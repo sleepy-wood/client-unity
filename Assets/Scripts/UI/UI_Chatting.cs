@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
 public class UI_Chatting : MonoBehaviourPun
 {
 
@@ -57,7 +57,6 @@ public class UI_Chatting : MonoBehaviourPun
                 user.GetComponent<UserInput>().InputControl = false;
             }
         }
-
         if (PhotonNetwork.PlayerList.Length <= 1)
         {
             transform.GetChild(1).gameObject.SetActive(false);
@@ -65,6 +64,17 @@ public class UI_Chatting : MonoBehaviourPun
         else
         {
             transform.GetChild(1).gameObject.SetActive(true);
+
+            if (!transform.GetChild(1).GetChild(0).gameObject.activeSelf)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (!EventSystem.current.IsPointerOverGameObject())
+                    {
+                        OnClickActiveChat();
+                    }
+                }
+            }
         }
     }
     public void OnClickEmojiButton(int i)
@@ -104,27 +114,34 @@ public class UI_Chatting : MonoBehaviourPun
     {
         if (!isActiveChat)
         {
+            transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
+
             Vector2  endPos =
                 new Vector2(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x, 
                 transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y + chatMoveDistance);
+
             Vector2 endPos2 =
                 new Vector2(transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
                 transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y + chatMoveDistance);
 
             StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
-            StartCoroutine(ChatActive(transform.GetChild(1).GetChild(0), endPos));
+            StartCoroutine(ChatActive(transform.GetChild(1).GetChild(0), endPos2));
             isActiveChat = true;
         }
         else
         {
+            transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+
             Vector2 endPos =
                 new Vector2(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
                 transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y- chatMoveDistance);
+
             Vector2 endPos2 =
                 new Vector2(transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
                 transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatMoveDistance);
+
             StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
-            StartCoroutine(ChatActive(transform.GetChild(1).GetChild(0), endPos));
+            StartCoroutine(ChatActive(transform.GetChild(1).GetChild(0), endPos2));
             isActiveChat = false;
         }
 
@@ -136,7 +153,7 @@ public class UI_Chatting : MonoBehaviourPun
         {
             t += 2 * Time.deltaTime;
             activeObject.GetComponent<RectTransform>().anchoredPosition =
-                Vector2.Lerp(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition, endPosition, t);
+                Vector2.Lerp(activeObject.GetComponent<RectTransform>().anchoredPosition, endPosition, t);
             yield return null;
         }
     }
