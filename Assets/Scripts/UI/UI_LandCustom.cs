@@ -65,12 +65,12 @@ public class UI_LandCustom : MonoBehaviourPun
             Debug.Log(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1]);
             Debug.Log(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
             Sprite resource = DataTemporary.assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
-            itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().sprite =
+            itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().sprite =
                 Instantiate(resource);
-            Color color = itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().color;
+            Color color = itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().color;
 
             color.a = 1;
-            itemWindow.transform.GetChild(cnt / 5).GetChild(cnt % 5).GetComponent<Image>().color = color;
+            itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().color = color;
 
             cnt++;
         }
