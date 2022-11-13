@@ -109,8 +109,8 @@ public class TreeController : MonoBehaviour
     // soil
     public GameObject soil;
     // FOV
-    public float defaultFOV = 10.29f;
-    public float targetFOV = 3.11f;
+    //public float defaultFOV = 10.29f;
+    //public float targetFOV = 3.11f;
     // TreeData
     public TreeData data;
     // leafTexture
@@ -127,8 +127,13 @@ public class TreeController : MonoBehaviour
     public string treeName;
     // 현재 나무의 DB id
     public int dbId;
+    // Play Mode - Good Grow
+    public bool playMode;
+    // Play Mode - Bad Grow
+    public bool badMode;
     // Demo Mode
     public bool demoMode;
+
     #endregion
 
     #region 가상 수면 데이터 변수
@@ -188,7 +193,7 @@ public class TreeController : MonoBehaviour
         //if (visitType == VisitType.First)
         //{
         // 나무 형태 Random 선택
-        if (demoMode)
+        if (playMode)
         {
             pipeName = "DemoTree_Red1";
             selectedSeed = SeedType.Demo;
@@ -205,7 +210,7 @@ public class TreeController : MonoBehaviour
 
 
         // sprout Texture 랜덤 선택
-        if (!demoMode)
+        if (!playMode)
         {
             int s = UnityEngine.Random.Range(0, 4);
             treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[s].enabled = true;
@@ -434,7 +439,7 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 식물 이름 UI 띄우기
-        if (!demoMode) treeNameUI.gameObject.SetActive(true);
+        if (!playMode) treeNameUI.gameObject.SetActive(true);
     }
     #endregion
 
@@ -451,7 +456,7 @@ public class TreeController : MonoBehaviour
         // 기본 세팅 성장 데이터 정보 지닌 요소
         TreeSetting element = selectedTreeSetting[day - 2];
 
-        if (demoMode)
+        if (playMode)
         {
             #region 1. Branch Element MinMax Frequency
             for (int i = 0; i < 4; i++)
@@ -586,7 +591,7 @@ public class TreeController : MonoBehaviour
         Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
         treeFactory.UnloadAndClearPipeline();
-        if (!demoMode)
+        if (!playMode)
         {
             treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         }
@@ -674,7 +679,6 @@ public class TreeController : MonoBehaviour
     public ParticleSystem snow;
     public ParticleSystem rain;
     public ParticleSystem rottenLeafParticle;
-    public bool badMode;
     public GameObject day2CustomObj;
     public GameObject day3CustomObj;
     public GameObject day4CustomObj;
