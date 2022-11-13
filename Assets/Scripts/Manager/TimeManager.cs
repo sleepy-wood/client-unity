@@ -12,8 +12,8 @@ public class TimeManager : MonoBehaviour
     public UDateTime now;
     // 나무 심은 누적 일
     public int totalPlantDay;
-    // ChangeSky Script
-    public ChangeSky sky;
+    // SkyController Script
+    public SkyController sky;
     // 나무를 처음 심은 날
     public UDateTime firstPlantDate;
     public Text txtAge;
@@ -44,24 +44,7 @@ public class TimeManager : MonoBehaviour
         // 현재시간
         // txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
 
-        // 현재 시간 고려해 SkyBox 세팅
-        // 낮 : 오전 7시~ / 일몰 : 오후 5시~ / 저녁 : 오후 6시~
-        if (!GameManager.Instance.treeController.demoMode)
-        {
-            if (DateTime.Now.Hour > 7 && DateTime.Now.Hour < 17) sky.Day();
-            else if (DateTime.Now.Hour > 17 && DateTime.Now.Hour < 18) sky.Sunset();
-            else
-            {
-                txtCurrentDate.color = Color.white;
-                txtCurrentTime.color = Color.white;
-                txtUserData.color = Color.white;
-                sky.Night();
-            }
-        }
-        else
-        {
-            firstPlantDate = DateTime.Now;
-        }
+        
     }
 
     bool isOnce;
