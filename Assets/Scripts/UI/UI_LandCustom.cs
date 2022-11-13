@@ -12,6 +12,7 @@ public class UI_LandCustom : MonoBehaviourPun
     [SerializeField] private List<GameObject> objects = new List<GameObject>();
     [SerializeField] private GameObject button;
     public GameObject menuBar;
+    public GameObject menuBar2;
 
     private GameObject itemWindow;
     private int selectCat = 0;
@@ -188,6 +189,7 @@ public class UI_LandCustom : MonoBehaviourPun
         if (!isActiveCanvase)
         {
             menuBar.SetActive(false);
+            menuBar2.SetActive(false);
             isActiveCanvase = true;
             GameManager.Instance.User.GetComponent<UserInput>().InputControl = true;
             for (int i = 0; i < objects.Count; i++)
@@ -202,6 +204,7 @@ public class UI_LandCustom : MonoBehaviourPun
         else
         {
             menuBar.SetActive(true);
+            menuBar2.SetActive(true);
             //SkyLandManager.Instance.SaveData();
             GameManager.Instance.User.GetComponent<UserInput>().InputControl = false;
             isActiveCanvase = false;
@@ -216,29 +219,29 @@ public class UI_LandCustom : MonoBehaviourPun
         }
     }
 
-    /// <summary>
-    /// 카테고리 패널 선택 시 색깔 변경
-    /// </summary>
-    /// <param name="idx"></param>
-    public Transform objPanel;
-    public void OnClickPanel(int idx)
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            if (idx == i)
-            {
-                // Navy 이미지 Alpha값 조정
-                objPanel.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 1);  
-                // Text 하얀색
-                objPanel.transform.GetChild(i).GetChild(0).GetComponent<Text>().color = new Color(1, 1, 1, 1);
-            }
-            else
-            {
-                // Navy 이미지 Alpha값 조정
-                objPanel.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0);
-                // Text 검은색
-                objPanel.transform.GetChild(i).GetChild(0).GetComponent<Text>().color = new Color(0, 0, 0, 1);
-            }
-        }
-    }
+    ///// <summary>
+    ///// 카테고리 패널 선택 시 색깔 변경
+    ///// </summary>
+    ///// <param name="idx"></param>
+    //public Transform objPanel;
+    //public void OnClickPanel(int idx)
+    //{
+    //    for (int i = 0; i < 5; i++)
+    //    {
+    //        if (idx == i)
+    //        {
+    //            // Navy 이미지 Alpha값 조정
+    //            objPanel.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 1);  
+    //            // Text 하얀색
+    //            objPanel.transform.GetChild(i).GetChild(0).GetComponent<Text>().color = new Color(1, 1, 1, 1);
+    //        }
+    //        else
+    //        {
+    //            // Navy 이미지 Alpha값 조정
+    //            objPanel.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0);
+    //            // Text 검은색
+    //            objPanel.transform.GetChild(i).GetChild(0).GetComponent<Text>().color = new Color(0, 0, 0, 1);
+    //        }
+    //    }
+    //}
 }

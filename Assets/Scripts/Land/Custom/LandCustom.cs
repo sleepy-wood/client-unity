@@ -20,8 +20,6 @@ public class LandCustom : MonoBehaviour
     [SerializeField] private float zoomSpeed = 20;
     [Header("Edit Custom Tool")]
     [SerializeField] private GameObject editButton;
-    [Header("Edit Check Canvas")]
-    [SerializeField] private RectTransform checkCanvas;
 
     //현재 고른 상태인가?
     private SelectState selectState = SelectState.None;
@@ -44,7 +42,6 @@ public class LandCustom : MonoBehaviour
         if (selectState == SelectState.None)
         {
             //선택
-            checkCanvas.gameObject.SetActive(false);
             editButton.transform.GetChild(1).gameObject.SetActive(false);
             if (userInput.Interact)
             {
@@ -102,7 +99,6 @@ public class LandCustom : MonoBehaviour
             switch (editType)
             {
                 case EditType.Editor:
-                    checkCanvas.gameObject.SetActive(true);
                     editButton.transform.GetChild(1).gameObject.SetActive(true);
                     RotateMode();
                     MoveMode();
@@ -111,7 +107,6 @@ public class LandCustom : MonoBehaviour
                 default:
                     break;
             }
-            CanvasSetting();
         }
         switch (editType)
         {
@@ -157,14 +152,6 @@ public class LandCustom : MonoBehaviour
         isActiveMove = false;
         selectState = SelectState.None;
         editType = EditType.Camera;
-    }
-    /// <summary>
-    /// 확정여부와 삭제 여부를 결정한 캔버스가 나를 쳐다보게 하
-    /// </summary>
-    void CanvasSetting()
-    {
-        checkCanvas.position = selectedObject.transform.position + new Vector3(selectedObject.transform.localScale.x/2, selectedObject.transform.localScale.y / 2 + 1, 0);
-        checkCanvas.LookAt(transform);
     }
 
     float preZoom = 0;
