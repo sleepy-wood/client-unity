@@ -58,25 +58,25 @@ public class UI_Chatting : MonoBehaviourPun
             }
         }
 
-        if (PhotonNetwork.PlayerList.Length <= 1)
-        {
-            transform.GetChild(1).gameObject.SetActive(false);
-        }
-        else
-        {
-            transform.GetChild(1).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(true);
 
-            if (!transform.GetChild(1).GetChild(0).gameObject.activeSelf)
+        if (!transform.GetChild(1).GetChild(0).gameObject.activeSelf)
+        {
+            if (Input.GetMouseButtonDown(0))
             {
-                if (Input.GetMouseButtonDown(0))
+                if (!EventSystem.current.IsPointerOverGameObject())
                 {
-                    if (!EventSystem.current.IsPointerOverGameObject())
-                    {
-                        OnClickActiveChat();
-                    }
+                    OnClickActiveChat();
                 }
             }
         }
+        //if (PhotonNetwork.PlayerList.Length <= 1)
+        //{
+        //    transform.GetChild(1).gameObject.SetActive(false);
+        //}
+        //else
+        //{
+        //}
     }
     public void OnClickEmojiButton(int i)
     {
