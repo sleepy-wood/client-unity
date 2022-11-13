@@ -46,7 +46,7 @@ public class TimeManager : MonoBehaviour
 
         // 현재 시간 고려해 SkyBox 세팅
         // 낮 : 오전 7시~ / 일몰 : 오후 5시~ / 저녁 : 오후 6시~
-        if (!GameManager.Instance.treeController.playMode)
+        if (!GameManager.Instance.treeController.demoMode)
         {
             if (DateTime.Now.Hour > 7 && DateTime.Now.Hour < 17) sky.Day();
             else if (DateTime.Now.Hour > 17 && DateTime.Now.Hour < 18) sky.Sunset();

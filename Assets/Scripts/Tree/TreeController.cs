@@ -113,8 +113,6 @@ public class TreeController : MonoBehaviour
     //public float targetFOV = 3.11f;
     // TreeData
     public TreeData data;
-    // leafTexture
-    public Texture2D leafText;
     // user
     public GameObject user;
     // previewTree Scale Value
@@ -126,7 +124,7 @@ public class TreeController : MonoBehaviour
     // 나무 이름
     public string treeName;
     // 현재 나무의 DB id
-    public int dbId;
+    //public int dbId;
     // Play Mode - Good Grow
     public bool playMode;
     // Play Mode - Bad Grow
@@ -171,7 +169,6 @@ public class TreeController : MonoBehaviour
 
     void Start()
     {
-        treeFactory.gameObject.SetActive(false);
         assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
 
         #region Build
