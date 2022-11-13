@@ -101,6 +101,7 @@ public class Graph_Initial_Window : MonoBehaviour
         preWeek = new TimeSpan();
         curWeek = new TimeSpan();
         today = new TimeSpan();
+        Debug.Log("sleepsData.Length = " + sleepsData.Length);
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
             Debug.Log(sleepsData[i].Type);
@@ -109,7 +110,9 @@ public class Graph_Initial_Window : MonoBehaviour
                 //Debug.Log("endDay = " + endDay);
                 //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
                 TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
+                Debug.Log("1");
                 diff /= 2;
+                Debug.Log("2");
                 var NewDate = new DateTime(
                     sleepsData[i].StartDate.Year,
                     sleepsData[i].StartDate.Month,
@@ -154,7 +157,7 @@ public class Graph_Initial_Window : MonoBehaviour
                     if (preDay != startDay)
                         preWeekCnt++;
                     preWeek += diff;
-                    //Debug.Log("preWeek = " + preWeek);
+                    Debug.Log("preWeek = " + preWeek);
                 }
                 //이번주
                 else
@@ -172,15 +175,19 @@ public class Graph_Initial_Window : MonoBehaviour
                 preDay = startDay;
             }
         }
+        Debug.Log("cur = "+ curWeekCnt);
+        Debug.Log("pre = " + preWeekCnt);
         //평균값 구하기
         curWeek /= curWeekCnt;
         preWeek /= preWeekCnt;
+        Debug.Log("3");
 
         m_thisWeek_Aver.text = curWeek.Hours.ToString() + "시간 " + curWeek.Minutes.ToString() + "분";
         m_lastWeek_Aver.text = preWeek.Hours.ToString() + "시간 " + preWeek.Minutes.ToString() + "분";
 
         StartCoroutine(GraphMove((float)(curWeek.TotalSeconds / 86400), (float)(preWeek.TotalSeconds / 86400)));
 
+        Debug.Log("4");
         if (m_thisWeek_Scroll.size < m_lastWeek_Scroll.size)
         {
             m_sleepResultText.text = "이번주 하루 평균 수면시간이 지난주보다 줄었습니다.";

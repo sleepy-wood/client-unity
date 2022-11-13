@@ -168,6 +168,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
         if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded && !once && isLoadingComplete)
         {
+            Debug.Log("load");
             once = true;
             isLoadingComplete = false;
 
