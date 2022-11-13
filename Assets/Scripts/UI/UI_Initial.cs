@@ -251,12 +251,24 @@ public class UI_Initial : MonoBehaviour
 
     #region 개발자 모드
     /// <summary>
-    /// 개발자 모드 버튼 나오게 하기
+    /// 개발자 모드 버튼 왔다갔다하는 버튼
     /// </summary>
+    bool once;
     public void OnDevloperUI()
     {
-        Vector2 pos = developerUI.anchoredPosition;
-        StartCoroutine(UILerp(pos, new Vector2(512, pos.y), 2, developerUI));
+        if (!once)
+        {
+            Vector2 pos = developerUI.anchoredPosition;
+            StartCoroutine(UILerp(pos, new Vector2(120, pos.y), 2, developerUI));
+            once = true;
+        }
+        else
+        {
+            Vector2 pos = developerUI.anchoredPosition;
+            StartCoroutine(UILerp(pos, new Vector2(-160, pos.y), 2, developerUI));
+            once = false;
+        }
+        
     }
     /// <summary>
     /// UI Lerp 이동
