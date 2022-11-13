@@ -215,4 +215,30 @@ public class UI_LandCustom : MonoBehaviourPun
             }
         }
     }
+
+    /// <summary>
+    /// 카테고리 패널 선택 시 색깔 변경
+    /// </summary>
+    /// <param name="idx"></param>
+    public Transform objPanel;
+    public void OnClickPanel(int idx)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (idx == i)
+            {
+                // Navy 이미지 Alpha값 조정
+                objPanel.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 1);  
+                // Text 하얀색
+                objPanel.transform.GetChild(i).GetChild(0).GetComponent<Text>().color = new Color(1, 1, 1, 1);
+            }
+            else
+            {
+                // Navy 이미지 Alpha값 조정
+                objPanel.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                // Text 검은색
+                objPanel.transform.GetChild(i).GetChild(0).GetComponent<Text>().color = new Color(0, 0, 0, 1);
+            }
+        }
+    }
 }

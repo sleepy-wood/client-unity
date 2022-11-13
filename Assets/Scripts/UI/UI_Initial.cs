@@ -113,46 +113,30 @@ public class UI_Initial : MonoBehaviour
     /// <summary>
     /// 홈 버튼 ( = 모든 UI 끄기 )
     /// </summary>
-    public void OnClickBack()
-    {
-        healthCanvas.SetActive(false);
-        shareCanvas.SetActive(false);
-        //marketCanvas.SetActive(false);
-        myCollectionUI.SetActive(false);
-        // Bottom UI 색 모두 원래대로
-        for (int i = 0; i < 5; i++)
-        {
-            // 원래 이미지
-            bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
-            // 선택했을 때의 이미지
-            bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(false);
-        }
-    }
-
     public void OnClickHome()
     {
         healthCanvas.SetActive(false);
         shareCanvas.SetActive(false);
         //marketCanvas.SetActive(false);
         myCollectionUI.SetActive(false);
-        // Home Button만 색 Change
-        //for (int i = 0; i < 5; i++)
-        //{
-        //    if (i == 2)
-        //    {
-        //        // 원래 이미지
-        //        bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
-        //        // 선택했을 때의 이미지
-        //        bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(true);
-        //    }
-        //    else
-        //    {
-        //        // 원래 이미지
-        //        bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
-        //        // 선택했을 때의 이미지
-        //        bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(false);
-        //    }
-        //}
+        // Bottom UI 색 Home 제외 모두 원래대로
+        for (int i = 0; i < 5; i++)
+        {
+            if (i==2)
+            {
+                // 원래 이미지
+                bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                // 선택했을 때의 이미지
+                bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                // 원래 이미지
+                bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                // 선택했을 때의 이미지
+                bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(false);
+            }
+        }
     }
 
     /// <summary>
@@ -162,6 +146,14 @@ public class UI_Initial : MonoBehaviour
     {
         customCanvas.SetActive(true);
         landCanvas.SetActive(false);
+    }
+    /// <summary>
+    /// 커스텀 UI 비활성화, Land UI 활성화
+    /// </summary>
+    public void OnClickCustomNotActive()
+    {
+        customCanvas.SetActive(false);
+        landCanvas.SetActive(true);
     }
 
 
@@ -379,7 +371,6 @@ public class UI_Initial : MonoBehaviour
 
     public void OnClickBottomUI(int idx)
     {
-        print("버튼 눌림");
         for (int i=0; i<5; i++)
         {
             if (idx == i)
