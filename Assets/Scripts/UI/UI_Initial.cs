@@ -129,6 +129,32 @@ public class UI_Initial : MonoBehaviour
         }
     }
 
+    public void OnClickHome()
+    {
+        healthCanvas.SetActive(false);
+        shareCanvas.SetActive(false);
+        //marketCanvas.SetActive(false);
+        myCollectionUI.SetActive(false);
+        // Home Button만 색 Change
+        //for (int i = 0; i < 5; i++)
+        //{
+        //    if (i == 2)
+        //    {
+        //        // 원래 이미지
+        //        bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+        //        // 선택했을 때의 이미지
+        //        bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        // 원래 이미지
+        //        bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+        //        // 선택했을 때의 이미지
+        //        bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(false);
+        //    }
+        //}
+    }
+
     /// <summary>
     /// 커스텀 UI 활성화, Land UI 비활성화
     /// </summary>
