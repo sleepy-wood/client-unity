@@ -57,6 +57,7 @@ public class UI_Chatting : MonoBehaviourPun
                 user.GetComponent<UserInput>().InputControl = false;
             }
         }
+
         if (PhotonNetwork.PlayerList.Length <= 1)
         {
             transform.GetChild(1).gameObject.SetActive(false);
@@ -114,6 +115,10 @@ public class UI_Chatting : MonoBehaviourPun
     {
         if (!isActiveChat)
         {
+            if (transform.GetChild(1).GetChild(1).gameObject.activeSelf)
+            {
+                transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
+            }
             transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
 
             Vector2  endPos =
@@ -186,6 +191,10 @@ public class UI_Chatting : MonoBehaviourPun
         chat.transform.GetChild(0).GetComponent<ChatItem>().SetText(rpcChat);
         chat.transform.GetChild(1).GetComponent<Image>().sprite = profileDic[nickname];
         StartCoroutine(AutoScrollBotton());
+        if (!isActiveChat)
+        {
+            transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
+        }
     }
 
     [PunRPC]
