@@ -105,17 +105,6 @@ public class LoadingData : MonoBehaviourPunCallbacks
         }
         //Native Data Load
         HealthDataStore.Init();
-        DataTemporary.samples = HealthDataStore.GetSleepSamples(new DateTime(2018, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                DateTime.Now);
-
-        SleepSample[] sleepsData = DataTemporary.samples;
-        List<SleepSample> sleepSamples = new List<SleepSample>();
-        //중복데이터 제거
-        sleepSamples = sleepsData.Distinct().ToList();
-        sleepSamples.Sort((x, y) => DateTime.Compare(x.StartDate, y.StartDate));
-        sleepsData = sleepSamples.ToArray();
-
-        DataTemporary.samples = sleepsData;
 
         //AssetBundle Load
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
@@ -173,13 +162,31 @@ public class LoadingData : MonoBehaviourPunCallbacks
         }
     }
     private float curTime = 0;
+    bool once = false;
     private void Update()
     {
-        if (isLoadingComplete)
+
+        if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded && !once && isLoadingComplete)
         {
-            OnConnect();
+            once = true;
             isLoadingComplete = false;
+
+            DataTemporary.samples = HealthDataStore.GetSleepSamples(new DateTime(2018, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                    DateTime.Now);
+
+            SleepSample[] sleepsData = DataTemporary.samples;
+            List<SleepSample> sleepSamples = new List<SleepSample>();
+            //중복데이터 제거
+            sleepSamples = sleepsData.Distinct().ToList();
+            sleepSamples.Sort((x, y) => DateTime.Compare(x.StartDate, y.StartDate));
+            sleepsData = sleepSamples.ToArray();
+
+            DataTemporary.samples = sleepsData;
+
+            OnConnect();
+
         }
+
         if (isCreateComplete)
         {
             curTime += Time.deltaTime;
