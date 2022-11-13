@@ -21,9 +21,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             Instance = this;
         }
         if (!User)
-            User = PhotonNetwork.Instantiate("User", new Vector3(Random.Range(-3, 3), 2, Random.Range(-3, 3)), Quaternion.identity);
-
-        
+            User = PhotonNetwork.Instantiate("User", new Vector3(0.2f, 1.27f, 2.6f), Quaternion.identity);
 
     }
     private void Start()
