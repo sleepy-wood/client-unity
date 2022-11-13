@@ -24,14 +24,14 @@ public class UI_LandCustom : MonoBehaviourPun
             button.SetActive(false);
         }
         
-        itemWindow = transform.GetChild(0).gameObject;
+        itemWindow = transform.GetChild(2).gameObject;
 
         //버튼 이벤트 등록
         for(int i = 0; i < transform.GetChild(1).childCount; i++)
         {
             int temp = i;
             transform.GetChild(1).GetChild(temp).GetComponent<Button>().onClick.AddListener(
-                () => OnClickCategoryActive(transform.GetChild(1).GetChild(temp).GetChild(0).GetComponent<Text>().text, temp));
+                () => OnClickCategoryActive(transform.GetChild(1).GetChild(temp).GetChild(0).gameObject.name, temp));
         }
 
         //초기값 0번째 버튼 활성화
@@ -63,8 +63,8 @@ public class UI_LandCustom : MonoBehaviourPun
 
             //Sprite resource = DataTemporary.assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "\\")[1].Split('.')[0]);
             Debug.Log(fileEntries[i]);
-            Debug.Log(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1]);
-            Debug.Log(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
+            //Debug.Log(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1]);
+            //Debug.Log(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
             Sprite resource = DataTemporary.assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
             itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().sprite =
                 Instantiate(resource);
