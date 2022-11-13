@@ -172,7 +172,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
             once = true;
             isLoadingComplete = false;
 
-            DataTemporary.samples = HealthDataStore.GetSleepSamples(new DateTime(2018, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+            DataTemporary.samples = HealthDataStore.GetSleepSamples(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                     DateTime.Now);
 
             SleepSample[] sleepsData = DataTemporary.samples;

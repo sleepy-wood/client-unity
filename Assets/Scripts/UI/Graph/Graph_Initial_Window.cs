@@ -110,9 +110,7 @@ public class Graph_Initial_Window : MonoBehaviour
                 //Debug.Log("endDay = " + endDay);
                 //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
                 TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
-                Debug.Log("1");
                 diff /= 2;
-                Debug.Log("2");
                 var NewDate = new DateTime(
                     sleepsData[i].StartDate.Year,
                     sleepsData[i].StartDate.Month,
@@ -157,7 +155,6 @@ public class Graph_Initial_Window : MonoBehaviour
                     if (preDay != startDay)
                         preWeekCnt++;
                     preWeek += diff;
-                    Debug.Log("preWeek = " + preWeek);
                 }
                 //이번주
                 else
@@ -175,12 +172,9 @@ public class Graph_Initial_Window : MonoBehaviour
                 preDay = startDay;
             }
         }
-        Debug.Log("cur = "+ curWeekCnt);
-        Debug.Log("pre = " + preWeekCnt);
         //평균값 구하기
         curWeek /= curWeekCnt;
         preWeek /= preWeekCnt;
-        Debug.Log("3");
 
         m_thisWeek_Aver.text = curWeek.Hours.ToString() + "시간 " + curWeek.Minutes.ToString() + "분";
         m_lastWeek_Aver.text = preWeek.Hours.ToString() + "시간 " + preWeek.Minutes.ToString() + "분";
