@@ -17,8 +17,6 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
 
     private Vector3 receivePos;
     private Quaternion receiveRot;
-    private Dictionary<string, Sprite> dic = new Dictionary<string, Sprite>();
-    private int userNum = 0;
     private void Awake()
     {
         userInput = GetComponent<UserInput>();
@@ -27,8 +25,11 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     }
     private void Start()
     {
-        if(photonView.IsMine)
-            photonView.RPC("RPC_SettingProfile", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg);
+        if (photonView.IsMine)
+        {
+            transform.GetChild(4).GetChild(5).gameObject.SetActive(false);
+            photonView.RPC("RPC_SettingProfile", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
+        }
 
     }
     private void Update()
@@ -150,6 +151,20 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
             return null;
         }
     }
+    bool isActiveProfile = false;
+    public void OnClickMyProfile()
+    {
+        if (!isActiveProfile)
+        {
+            transform.GetChild(4).gameObject.SetActive(true);
+            isActiveProfile = true;
+        }
+        else
+        {
+            transform.GetChild(4).gameObject.SetActive(false);
+            isActiveProfile = false;
+        }
+    }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -164,6 +179,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
             receiveRot = (Quaternion)stream.ReceiveNext();
         }
     }
+    
     #region RPC
 
     //[PunRPC]
@@ -186,11 +202,14 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     //}
 
     [PunRPC]
-    public async void RPC_SettingProfile(string imgURL)
+    public async void RPC_SettingProfile(string imgURL, string nickName)
     {
         Texture2D texture = await DataModule.WebrequestTexture(imgURL);
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 10);
         profileImage.sprite = sprite;
+        transform.GetChild(4).GetChild(1).GetComponent<Image>().sprite = sprite;
+        transform.GetChild(4).GetChild(2).GetComponent<Text>().text = nickName;
+
     }
 
     [PunRPC]

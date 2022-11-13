@@ -18,7 +18,6 @@ public class FriendVisitPhoton : MonoBehaviourPunCallbacks
     {
         transform.GetChild(0).gameObject.SetActive(true);
     }
-
     /// <summary>
     /// 친구 방 입장 창 끄기
     /// </summary>

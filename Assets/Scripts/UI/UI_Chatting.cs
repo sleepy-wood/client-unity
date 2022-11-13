@@ -1,11 +1,15 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_Chatting : MonoBehaviourPun
 {
+
+    [SerializeField] private float chatMoveDistance = 836f;
     public Transform windowContent;
     public GameObject menuBar;
 
@@ -20,9 +24,6 @@ public class UI_Chatting : MonoBehaviourPun
     //ScrollView의 H (멘토님 설명 중 H1역할)
     private RectTransform trScrollView;
     //내 아이디 색
-    Color32 idColor;
-    private Vector3 startPos;
-    private Vector3 endPos;
     private GameObject user;
     private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
     private string[] stopwords;
@@ -35,17 +36,11 @@ public class UI_Chatting : MonoBehaviourPun
         stopwords = textFile.text.Split("\r\n");
 
         user = GameManager.Instance.User;
-        trScrollView = transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<RectTransform>();
-        chatting = transform.GetChild(0).GetChild(3).GetChild(1).GetComponent<InputField>();
+        trScrollView = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetComponent<RectTransform>();
+        chatting = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetComponent<InputField>();
         chatPrefab = Resources.Load<GameObject>("Chatting_Text");
-        content = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetComponent<RectTransform>();
-        startPos = transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().position + new Vector3(-140, 0, 0);
-        endPos = transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().position;
+        content = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetComponent<RectTransform>();
         
-        //InputField에서 엔터를 쳤을 때 호출되는 함수 등록
-        //chatting.onSubmit.AddListener(OnSubmit);
-        //idColor를 랜덤하게
-        idColor = new Color32((byte)Random.Range(0, 256), (byte)Random.Range(0, 256), (byte)Random.Range(0, 256), 255);
     }
     private void Update()
     {
@@ -74,52 +69,8 @@ public class UI_Chatting : MonoBehaviourPun
     }
     public void OnClickEmojiButton(int i)
     {
-        //string model = "";
-        //UserInteract[] users = GameObject.FindObjectsOfType<UserInteract>();
-        //for (int j = 0; j < users.Length; j++)
-        //{
-        //    if (users[j].GetComponent<PhotonView>().IsMine)
-        //        model = PhotonNetwork.PlayerList[(int)users[j].GetComponent<PhotonView>().ViewID.ToString()[0] - 49].NickName.Split('/')[1]; 
-        //}
-        //if (PhotonNetwork.PlayerList.Length <= 1) return;
         photonView.RPC("RPC_EmojiButton", RpcTarget.All, i, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
 
-    }
-    //bool isChatActive = false;
-    ///// <summary>
-    ///// Chatting Button을 눌렀을 때, 판넬을 활성화
-    ///// </summary>
-    //public void OnClickChat()
-    //{
-    //    if (isChatActive)
-    //    {
-    //        isChatActive = false;
-    //        StopAllCoroutines();
-    //        //오른쪽으로 140정도 이동
-    //        StartCoroutine(ChatActive(endPos));
-    //    }
-    //    else
-    //    {
-    //        isChatActive = true;
-    //        StopAllCoroutines();
-    //        //왼쪽으로 140정도 이동
-    //        StartCoroutine(ChatActive(startPos));
-    //    }
-    //}
-    private IEnumerator ChatActive(Vector3 endPosition)
-    {
-        while (true)
-        {
-            transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().position = 
-                Vector3.Lerp(transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().position, endPosition, Time.deltaTime * 5f);
-            
-            if( Vector3.Distance(transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().position,endPosition) < 0.1f)
-            {
-                yield break;
-            }
-
-            yield return null;
-        }
     }
     public void OnSubmit()
     {
@@ -153,19 +104,41 @@ public class UI_Chatting : MonoBehaviourPun
     {
         if (!isActiveChat)
         {
-            Debug.Log(transform.GetChild(0).gameObject);
-            transform.GetChild(0).gameObject.SetActive(true);
-            menuBar.SetActive(true);
+            Vector2  endPos =
+                new Vector2(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x, 
+                transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y + chatMoveDistance);
+            Vector2 endPos2 =
+                new Vector2(transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
+                transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y + chatMoveDistance);
+
+            StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
+            StartCoroutine(ChatActive(transform.GetChild(1).GetChild(0), endPos));
             isActiveChat = true;
         }
         else
         {
-            Debug.Log(transform.GetChild(0).gameObject);
-            transform.GetChild(0).gameObject.SetActive(false);
-            menuBar.SetActive(false);
+            Vector2 endPos =
+                new Vector2(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
+                transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y- chatMoveDistance);
+            Vector2 endPos2 =
+                new Vector2(transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
+                transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatMoveDistance);
+            StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
+            StartCoroutine(ChatActive(transform.GetChild(1).GetChild(0), endPos));
             isActiveChat = false;
         }
 
+    }
+    private IEnumerator ChatActive(Transform activeObject ,Vector2 endPosition)
+    {
+        float t = 0;
+        while (t < 1f)
+        {
+            t += 2 * Time.deltaTime;
+            activeObject.GetComponent<RectTransform>().anchoredPosition =
+                Vector2.Lerp(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition, endPosition, t);
+            yield return null;
+        }
     }
     IEnumerator AutoScrollBotton()
     {
