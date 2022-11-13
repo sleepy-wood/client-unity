@@ -30,6 +30,8 @@ public class UI_Initial : MonoBehaviour
     public GameObject sleepDataUI;
     public GameObject plantNameUI;
     public GameObject bottomUI;
+    public GameObject landCanvas;
+    public GameObject customCanvas;
 
     public RectTransform developerUI;
     public RectTransform dayCountFlag;
@@ -106,6 +108,34 @@ public class UI_Initial : MonoBehaviour
     public void OnClickMarketNotActive()
     {
         marketCanvas.SetActive(false);
+    }
+
+    /// <summary>
+    /// 홈 버튼 ( = 모든 UI 끄기 )
+    /// </summary>
+    public void OnClickBack()
+    {
+        healthCanvas.SetActive(false);
+        shareCanvas.SetActive(false);
+        //marketCanvas.SetActive(false);
+        myCollectionUI.SetActive(false);
+        // Bottom UI 색 모두 원래대로
+        for (int i = 0; i < 5; i++)
+        {
+            // 원래 이미지
+            bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+            // 선택했을 때의 이미지
+            bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 커스텀 UI 활성화, Land UI 비활성화
+    /// </summary>
+    public void OnClickCustomActive()
+    {
+        customCanvas.SetActive(true);
+        landCanvas.SetActive(false);
     }
 
 
@@ -201,6 +231,7 @@ public class UI_Initial : MonoBehaviour
         plantNameUI.SetActive(false);
     }
 
+    #region 개발자 모드
     /// <summary>
     /// 개발자 모드 버튼 나오게 하기
     /// </summary>
@@ -318,8 +349,8 @@ public class UI_Initial : MonoBehaviour
         Vector2 pos = developerUI.anchoredPosition;
         StartCoroutine(UILerp(pos, new Vector2(-570, pos.y), 2, developerUI));
     }
+# endregion
 
-    
     public void OnClickBottomUI(int idx)
     {
         print("버튼 눌림");
