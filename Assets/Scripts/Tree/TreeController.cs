@@ -195,6 +195,10 @@ public class TreeController : MonoBehaviour
             pipeName = "DemoTree_Red1";
             selectedSeed = SeedType.Demo;
         }
+        else if (demoMode)
+        {
+            pipeName = "DemoTree_Cherry";
+        }
         else
         {
             int i = UnityEngine.Random.Range(0, pipeNameList.Count-1);  //Demo Tree 빼고 랜덤 선택
@@ -207,7 +211,7 @@ public class TreeController : MonoBehaviour
 
 
         // sprout Texture 랜덤 선택
-        if (!playMode)
+        if (!playMode && !demoMode)
         {
             int s = UnityEngine.Random.Range(0, 4);
             treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[s].enabled = true;
@@ -219,11 +223,15 @@ public class TreeController : MonoBehaviour
             treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
         }
         
-        // 랜덤 선택된 Seed로 기본 세팅값 찾기
-        FindtreeSetting();
+        if (!demoMode)
+        {
+            // 랜덤 선택된 Seed로 기본 세팅값 찾기
+            FindtreeSetting();
 
-        // Pipeline 기본 세팅
-        PipelineSetting(2);
+            // Pipeline 기본 세팅
+            PipelineSetting(2);
+        }
+        
         //}
         //else if (visitType == VisitType.ReVisit)
         //{
@@ -669,7 +677,7 @@ public class TreeController : MonoBehaviour
     /// <param name="day"></param>
     /// <param name="demo"></param>
     
-    public ChangeSky sky;
+    public SkyController sky;
     public Transform fire;
     public ParticleSystem sproutParticle;
     public ParticleSystem changeParticle;

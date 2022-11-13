@@ -12,6 +12,8 @@ public class WeatherController : MonoBehaviour
         public string time;
     }
     WeatherData weatherData = new WeatherData();
+
+
     /* const weatherCategory = {'0': '맑음',
                                 '1': '비',
                                 '2': '비/눈',
@@ -19,11 +21,21 @@ public class WeatherController : MonoBehaviour
                                 '4': '소나기',}; */
 
 
+    public ParticleSystem rainParticle;
+    public ParticleSystem snowParticle;
+    public ParticleSystem flowerParticle;
+
     void Start()
     {
+        rainParticle.Stop();
+        snowParticle.Stop();
+        flowerParticle.Stop();
         GetWeatherData();
     }
 
+    /// <summary>
+    /// 현재 날씨 가져오기
+    /// </summary>
     public async void GetWeatherData()
     {
         // 오늘의 날씨 가져오기
@@ -45,5 +57,33 @@ public class WeatherController : MonoBehaviour
             weatherData.weather = resultGet.data.weather;
             weatherData.time = resultGet.data.time;
         }
+    }
+
+
+    /// <summary>
+    /// 날씨 적용
+    /// </summary>
+    public void Sunny()
+    {
+        rainParticle.Stop();
+        snowParticle.Stop();
+    }
+    public void Rain()
+    {
+        rainParticle.Play();
+        snowParticle.Stop();
+    }
+    public void Snow()
+    {
+        rainParticle.Stop();
+        snowParticle.Play();
+        flowerParticle.Stop();
+    }
+    
+    public void Flower()
+    {
+        flowerParticle.Play();
+        rainParticle.Stop();
+        snowParticle.Stop();
     }
 }
