@@ -78,8 +78,8 @@ public class LandDataManager : MonoBehaviour
             if (!isOnce)
             {
                 isOnce = true;
-                LoadLandData();
-                LoadBridge();
+                //LoadLandData();
+                //LoadBridge();
                 if (buildMode == BuildMode.Bridge)
                     BuildBridge();
                 else if (buildMode == BuildMode.None)
