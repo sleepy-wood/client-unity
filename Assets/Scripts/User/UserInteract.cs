@@ -141,16 +141,15 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     public GameObject OnLand()
     {
         RaycastHit hit;
-        Ray ray = new Ray(new Vector3(transform.position.x, transform.position.y * 2, transform.position.z), -transform.up * 10);
-        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
-        if (Physics.Raycast(ray, out hit, 10f))
+        Ray ray = new Ray(new Vector3(transform.position.x, transform.position.y, transform.position.z), -transform.up * 100);
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
+        LayerMask layer = 1 << LayerMask.NameToLayer("User");
+        if (Physics.Raycast(ray, out hit, 100f,~layer))
         {
-            return hit.transform.gameObject;
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                return hit.transform.gameObject;
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
     bool isActiveProfile = false;
     public void OnClickMyProfile()

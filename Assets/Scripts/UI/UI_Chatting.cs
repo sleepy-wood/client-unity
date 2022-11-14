@@ -48,7 +48,7 @@ public class UI_Chatting : MonoBehaviourPun
         if (user)
         {
             //사용자 입력 제어
-            if (transform.GetChild(0).gameObject.activeSelf)
+            if (isActiveChat)
             {
                 user.GetComponent<UserInput>().InputControl = true;
             }

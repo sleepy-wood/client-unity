@@ -40,10 +40,13 @@ public class Portal : MonoBehaviour
     }
     public void OnClickNextSceneButton()
     {
-        string name = user.GetComponent<UserInteract>().OnLand().name;
-        //한개의 땅으로 데이터를 로드해서 하는 방식
-        //문제점: Land 입장 시 딜레이가 발생하긴한다.
-        DataTemporary.MyUserData.currentLandId = Convert.ToInt32(name[name.Length -1 ]);
-        PhotonNetwork.LoadLevel("SkyLand");
+        if (user.GetComponent<UserInteract>().OnLand())
+        {
+            string name = user.GetComponent<UserInteract>().OnLand().name;
+            //한개의 땅으로 데이터를 로드해서 하는 방식
+            //문제점: Land 입장 시 딜레이가 발생하긴한다.
+            DataTemporary.MyUserData.currentLandId = Convert.ToInt32(name[name.Length - 1]);
+            PhotonNetwork.LoadLevel("SkyLand");
+        }
     }
 }
