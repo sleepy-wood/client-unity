@@ -71,7 +71,7 @@ public class UI_Chatting : MonoBehaviourPun
                 {
                     if (!EventSystem.current.IsPointerOverGameObject())
                     {
-                        OnClickActiveChat();
+                        transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
                     }
                 }
             }

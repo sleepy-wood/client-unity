@@ -47,7 +47,18 @@ public class UI_LandCustom : MonoBehaviourPun
             transform.GetChild(i).gameObject.SetActive(false);
         }
     }
+    private void Update()
+    {
 
+        if (PhotonNetwork.PlayerList.Length != 1)
+        {
+            button.SetActive(false);
+        }
+        else
+        {
+            button.SetActive(true);
+        }
+    }
     public void OnClickCategoryActive(string Cat, int num)
     {
         string customPath = Application.streamingAssetsPath + "/LandCustom/" + Cat;

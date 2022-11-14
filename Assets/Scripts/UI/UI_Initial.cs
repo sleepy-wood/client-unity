@@ -145,7 +145,6 @@ public class UI_Initial : MonoBehaviour
     public void OnClickCustomActive()
     {
         customCanvas.SetActive(true);
-        landCanvas.SetActive(false);
     }
     /// <summary>
     /// 커스텀 UI 비활성화, Land UI 활성화
@@ -153,7 +152,6 @@ public class UI_Initial : MonoBehaviour
     public void OnClickCustomNotActive()
     {
         customCanvas.SetActive(false);
-        landCanvas.SetActive(true);
     }
 
 

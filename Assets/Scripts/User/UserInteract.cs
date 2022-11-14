@@ -30,6 +30,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
             transform.GetChild(4).GetChild(5).gameObject.SetActive(false);
             photonView.RPC("RPC_SettingProfile", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
         }
+        
 
     }
     private void Update()
