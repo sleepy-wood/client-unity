@@ -134,7 +134,7 @@ public class UserInput : MonoBehaviour
                     Vector3 mousePos = Input.mousePosition;
                     Ray ray = Camera.main.ScreenPointToRay(mousePos);
                     RaycastHit hit;
-                    LayerMask layer = 1 << LayerMask.NameToLayer("Portal") + LayerMask.NameToLayer("Plant");
+                    LayerMask layer = 1 << LayerMask.NameToLayer("Portal");
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~layer))
                     {
                         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground") ||
