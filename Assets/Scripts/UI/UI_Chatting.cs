@@ -33,7 +33,11 @@ public class UI_Chatting : MonoBehaviourPun
         photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
 
         TextAsset textFile = DataTemporary.stopwordsAsset.LoadAsset<TextAsset>("stopwords");
+#if UNITY_STANDALONE
         stopwords = textFile.text.Split("\r\n");
+#elif UNITY_IOS || UNITY_ANDROID
+        stopwords = textFile.text.Split("\n");
+#endif
 
         user = GameManager.Instance.User;
         trScrollView = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetComponent<RectTransform>();
@@ -175,7 +179,7 @@ public class UI_Chatting : MonoBehaviourPun
             }
         }
     }
-    #region RPC
+#region RPC
     [PunRPC]
     public void RpcAddChat(string rpcChat, string nickname)
     {
@@ -217,5 +221,5 @@ public class UI_Chatting : MonoBehaviourPun
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 10);
         profileDic[nickname] = sprite;
     }
-    #endregion
+#endregion
 }
