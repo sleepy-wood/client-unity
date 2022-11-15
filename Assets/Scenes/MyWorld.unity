@@ -15953,7 +15953,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5651768279811905928}
-  m_RootOrder: 32
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 42.124, y: -221.193, z: -9.74}
 --- !u!108 &745417980
 Light:
@@ -29516,7 +29516,7 @@ Transform:
   - {fileID: 740302816}
   - {fileID: 1926820121}
   m_Father: {fileID: 5651768279811905928}
-  m_RootOrder: 24
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1295016788
 GameObject:
@@ -31570,7 +31570,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5651768279811905928}
-  m_RootOrder: 35
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &1420703797
 Light:
@@ -43519,7 +43519,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 9122588950822231716, guid: 24828df776e35d745938fa95688897bd, type: 3}
       propertyPath: m_RootOrder
-      value: 25
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 9122588950822231716, guid: 24828df776e35d745938fa95688897bd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -47074,7 +47074,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5651768279811905928}
-  m_RootOrder: 38
+  m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2048165452
 MonoBehaviour:
@@ -49345,6 +49345,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5651768279811905928}
+  - component: {fileID: 5651768279811905929}
   m_Layer: 6
   m_Name: SkyLand1
   m_TagString: Untagged
@@ -49387,22 +49388,22 @@ Transform:
   - {fileID: 1004346659}
   - {fileID: 422959187}
   - {fileID: 180309155}
-  - {fileID: 1899779244}
   - {fileID: 1294561103}
+  - {fileID: 1899779244}
+  - {fileID: 745417979}
   - {fileID: 842243916}
   - {fileID: 2055459449}
   - {fileID: 1147060194}
   - {fileID: 1778723128}
   - {fileID: 1072620234}
+  - {fileID: 1420703796}
   - {fileID: 998420217}
   - {fileID: 980286066}
-  - {fileID: 745417979}
   - {fileID: 1334735207}
   - {fileID: 247592442}
-  - {fileID: 1420703796}
   - {fileID: 1505072227}
-  - {fileID: 2007150433}
   - {fileID: 2048165451}
+  - {fileID: 2007150433}
   - {fileID: 283699557}
   - {fileID: 1728586329}
   - {fileID: 1885534689}
@@ -49410,6 +49411,19 @@ Transform:
   m_Father: {fileID: 782833769}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5651768279811905929
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4982333461641691954}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.74, y: 1, z: 10.72}
+  m_Center: {x: 0, y: -1.11, z: 0}
 --- !u!1001 &6209799367929713274
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49535,7 +49549,7 @@ MeshCollider:
   m_GameObject: {fileID: 4559406576660886172}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
