@@ -37,9 +37,9 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     {
         //혼자 있을 시 프로필 비활성화
         if (PhotonNetwork.CountOfPlayers < 2)
-            transform.GetChild(4).gameObject.SetActive(false);
+            transform.GetChild(3).gameObject.SetActive(false);
         else  
-            transform.GetChild(4).gameObject.SetActive(true);
+            transform.GetChild(3).gameObject.SetActive(true);
 
 
         if (!moveControl)
