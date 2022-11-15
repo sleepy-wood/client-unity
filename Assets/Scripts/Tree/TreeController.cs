@@ -226,7 +226,7 @@ public class TreeController : MonoBehaviour
         if (!demoMode)
         {
             // 랜덤 선택된 Seed로 기본 세팅값 찾기
-            FindtreeSetting();
+            FindTreeSetting();
 
             // Pipeline 기본 세팅
             PipelineSetting(2);
@@ -252,12 +252,7 @@ public class TreeController : MonoBehaviour
         #endregion
     }
 
-    bool isOnce;
-    bool isOnce2;
-    bool isOnce3;
     bool once = false;
-    bool once2 = false;
-    bool once3 = false;
     public float camMoveSpeed = 1f;
     void Update()
     {
@@ -361,7 +356,7 @@ public class TreeController : MonoBehaviour
         //            StructureGenerator.StructureLevel branchPipe = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
         //            branchPipe.minFrequency += 1;
         //            branchPipe.maxFrequency += 1;
-        //            TreeReload();
+        //            PipelineReload();
         //            print(i);
         //        }
         //    }
@@ -575,14 +570,14 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// treeStores에서 씨앗 종류에 맞는 Tree Settings 찾는 함수
     /// </summary>
-    public void FindtreeSetting()
+    public void FindTreeSetting()
     {
         for (int i = 0; i < treeStores.Count; i++)
         {
             if (treeStores[i].seedType == selectedSeed)
             {
                 selectedTreeSetting = treeStores[i].treeSettings;
-                print($"기본 세팅 : {treeStores[i].seedType}");
+                print($"나무 기본 세팅 : {treeStores[i].seedType}");
             }
         }
     }
@@ -591,7 +586,7 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// 업데이트한 나무 정보를 기반으로 나무 다시 로드
     /// </summary>
-    public void TreeReload()
+    public void PipelineReload()
     {
         Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
@@ -614,7 +609,7 @@ public class TreeController : MonoBehaviour
     /// </summary>
     
     Transform campos;
-    public void LoadTree(int day)
+    public void SetTree(int day)
     {
         // 씨앗 심기
         if (day == 1)
@@ -624,7 +619,7 @@ public class TreeController : MonoBehaviour
             //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             //SaveTreeData();
-            TreeReload();
+            PipelineReload();
         }
         // 2일차
         else if (day == 2)
@@ -637,7 +632,7 @@ public class TreeController : MonoBehaviour
             //NapToTree(sleepyDayTimeNap);
             
             //불러오기
-            TreeReload();
+            PipelineReload();
             treeFactory.gameObject.SetActive(true);
             //ScaleChange(activityPercent);
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
@@ -647,7 +642,7 @@ public class TreeController : MonoBehaviour
         else if (day == 3)
         {
             PipelineSetting(3);
-            TreeReload();
+            PipelineReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             campos = Camera.main.gameObject.transform;
             //SaveTreeData();
@@ -656,7 +651,7 @@ public class TreeController : MonoBehaviour
         else if (day == 4)
         {
             PipelineSetting(4);
-            TreeReload();
+            PipelineReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             //SaveTreeData();
         }
@@ -664,7 +659,7 @@ public class TreeController : MonoBehaviour
         else if (day == 5)
         {
             PipelineSetting(5);
-            TreeReload();
+            PipelineReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             assetBundle.Unload(false);
             //SaveTreeData();
@@ -672,7 +667,7 @@ public class TreeController : MonoBehaviour
     }
 
     /// <summary>
-    /// 데모할 때의 LoadTree 함수
+    /// 데모할 때의 SetTree 함수
     /// </summary>
     /// <param name="day"></param>
     /// <param name="demo"></param>
@@ -688,7 +683,7 @@ public class TreeController : MonoBehaviour
     public GameObject day3CustomObj;
     public GameObject day4CustomObj;
     
-    public void LoadTree(int day, bool demo)
+    public void SetTree(int day, bool demo)
     {
         // 1일차 (씨앗 심기)
         if (day == 1)
@@ -697,7 +692,7 @@ public class TreeController : MonoBehaviour
             // 나무 심은 시간 저장
             //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
-            TreeReload();
+            PipelineReload();
         }
         // 2일차
         else if (day == 2)
@@ -709,7 +704,7 @@ public class TreeController : MonoBehaviour
             // Sprout
             SproutNumChange(true, 10);
             // 트리 기본 세팅 값 로드
-            TreeReload();
+            PipelineReload();
             treeFactory.gameObject.SetActive(true);
             // Change Particle
             changeParticle.Play();
@@ -732,7 +727,7 @@ public class TreeController : MonoBehaviour
             SproutNumChange(true, 5);
             // Tree Pipeline - Branch MinMax, Girth, Scale
             PipelineSetting(3);
-            TreeReload();
+            PipelineReload();
             // Change Particle
             changeParticle.Play();
         }
@@ -757,7 +752,7 @@ public class TreeController : MonoBehaviour
                 // Tree Pipeline - Branch MinMax, Girth, Scale
                 PipelineSetting(4);
             }
-            TreeReload();
+            PipelineReload();
             // Weather - Snow
             snow.Play();
             // Change Particle
@@ -791,7 +786,7 @@ public class TreeController : MonoBehaviour
                 // Tree Pipeline - Branch MinMax, Girth, Scale
                 PipelineSetting(5);
             }
-            TreeReload();
+            PipelineReload();
             // Change Particle
             if (!badMode) changeParticle.transform.position = new Vector3(0, 10.46f, 0);
             changeParticle.Play();
@@ -803,7 +798,7 @@ public class TreeController : MonoBehaviour
         yield return new WaitForSeconds(second);
     }
 
-    #region DB
+    #region Tree Data
     /// <summary>
     /// 일차 수 별로 User의 Tree Data 저장
     /// </summary>
@@ -859,7 +854,7 @@ public class TreeController : MonoBehaviour
 
         // Web
         ResultPost<TreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeData>>(
-            "/api/v1/trees",
+            "/api/v1/tree-growths",
             DataModule.NetworkType.POST,
             DataModule.DataType.BUFFER,
             treeJsonData);
@@ -890,13 +885,13 @@ public class TreeController : MonoBehaviour
     /// </summary>
     public Text txtTreeName;
     public int rotten;
-    //public async void LoadTreeData()
+    //public async void SetTreeData()
     //{
     //    ArrayTreeData arrayTreeData = DataTemporary.MyTreeData;
     //    assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/newtreebundle");
 
     //    // 기본 세팅값 찾기
-    //    FindtreeSetting();
+    //    FindTreeSetting();
 
     //    // Tree Pipeline 로드
     //    TreeData treeData = arrayTreeData.treeDataList[0];
