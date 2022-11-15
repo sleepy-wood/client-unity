@@ -62,7 +62,8 @@ public class CameraController : MonoBehaviourPun
                     {
                         StartCoroutine(CameraMoving());
                     }
-                    transform.parent.Rotate(user.transform.up, userInput.RotateX);
+                    transform.forward = camPos.forward;
+                    //transform.parent.Rotate(user.transform.up, userInput.RotateX);
                 }
                 else
                 {
