@@ -58,7 +58,7 @@ public class CameraController : MonoBehaviourPun
                     }
 
                     //플레이어와 카메라의 거리가 5정도 떨어지면 따라가기
-                    if (Vector3.Distance(camPos.position, transform.position) > 3)
+                    if (Vector3.Distance(camPos.position, transform.position) > 1)
                     {
                         StartCoroutine(CameraMoving());
                     }
