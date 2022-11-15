@@ -54,7 +54,7 @@ public class CameraController : MonoBehaviourPun
 
                         //카메라 Zoom in / out
                         myCamera.fieldOfView -= userInput.Zoom * wheelScrollSpeed;
-                        myCamera.fieldOfView = Mathf.Clamp(myCamera.fieldOfView, initialOrthographicSize - 30, initialOrthographicSize + 30);
+                        myCamera.fieldOfView = Mathf.Clamp(myCamera.fieldOfView, initialOrthographicSize - 15, initialOrthographicSize + 30);
                     }
 
                     //플레이어와 카메라의 거리가 5정도 떨어지면 따라가기
