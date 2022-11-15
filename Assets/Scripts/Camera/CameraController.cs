@@ -57,11 +57,12 @@ public class CameraController : MonoBehaviourPun
                         myCamera.fieldOfView = Mathf.Clamp(myCamera.fieldOfView, initialOrthographicSize - 15, initialOrthographicSize + 30);
                     }
 
+                    transform.position = camPos.position;
                     //플레이어와 카메라의 거리가 5정도 떨어지면 따라가기
-                    if (Vector3.Distance(camPos.position, transform.position) > 1)
-                    {
-                        StartCoroutine(CameraMoving());
-                    }
+                    //if (Vector3.Distance(camPos.position, transform.position) > 1)
+                    //{
+                    //    StartCoroutine(CameraMoving());
+                    //}
                     transform.forward = camPos.forward;
                     //transform.parent.Rotate(user.transform.up, userInput.RotateX);
                 }
