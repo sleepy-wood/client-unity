@@ -131,6 +131,8 @@ public class TreeController : MonoBehaviour
     public bool badMode;
     // Demo Mode
     public bool demoMode;
+    // User의 HealthData
+    HealthReport report;
 
     #endregion
 
@@ -203,6 +205,7 @@ public class TreeController : MonoBehaviour
             }
             else
             {
+                // Shape 랜덤 선택
                 int i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo Tree 빼고 랜덤 선택
                 pipeName = pipeNameList[i];
                 selectedSeed = pipeNameDict[pipeName];
@@ -223,29 +226,24 @@ public class TreeController : MonoBehaviour
             print(pipeName + " Selected");
 
 
-            // Tree Grow 기본 세팅값
+            // Tree Grow 기본 세팅
             if (!demoMode)
             {
                 // 랜덤 선택된 Seed로 기본 세팅값 찾기
                 FindTreeSetting();
 
-                // Pipeline 1일차 기본 세팅
+                // 1일차 기본 세팅
                 PipelineSetting(2);
                 SetTree(1);
             }
         }
         else if (visitType == VisitType.ReVisit)
         {
-            
+            // count Day에 따라 나무 
         }
-        
 
-
-        // 헬스데이터 불러오기 ( 로딩바에서 )
+        // 헬스데이터 불러오기 ( 로딩바로 옮기기 )
         HealthDataStore.Init();
-
-
-        
 
         #region 기존 코드
         //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
@@ -373,14 +371,15 @@ public class TreeController : MonoBehaviour
         if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded && !once)
         {
             once = true;
-            Debug.Log("SleepSamples: " + HealthDataStore.SleepSamples.Length);
-            Debug.Log("ActivitySamples: " + HealthDataStore.ActivitySamples.Length);
-            // 올해 10월 날짜
-            HealthReport report = HealthDataAnalyzer.GetDailyReport(
+            //Debug.Log("SleepSamples: " + HealthDataStore.SleepSamples.Length);
+            //Debug.Log("ActivitySamples: " + HealthDataStore.ActivitySamples.Length);
+            // 올해 10월 날짜로 하는 것이 가장 좋음
+            report = HealthDataAnalyzer.GetDailyReport(
                 new DateTime(2022, 10, 06, 17, 0, 0, 0, DateTimeKind.Local),
                 6
             );
-            Debug.Log(JsonUtility.ToJson(report, true));
+            //Debug.Log(JsonUtility.ToJson(report, true));
+            if (report != null) Debug.Log("HealthData 불러오기 성공");
         }
     }
 
@@ -803,9 +802,10 @@ public class TreeController : MonoBehaviour
 
     #region Tree Data
     /// <summary>
-    /// 일차 수 별로 User의 Tree Data 저장
+    /// Tree Data 생성 및 1일차 Data 저장
     /// </summary>
     public Transform previewTree;
+    string saveUrl;
     public async void SaveTreeData()
     {
         List<TreeData> treeDatas = new List<TreeData>();
@@ -856,8 +856,13 @@ public class TreeController : MonoBehaviour
         string treeJsonData = JsonUtility.ToJson(treeData);
 
         // Web
+        // 1일차의 경우
+        if (dayCount == 1) saveUrl = "/api/v1/trees";
+        // 2일차 이후의 경우
+        else if (dayCount > 1 && dayCount < 6) saveUrl = "/api/v1/tree-growths";
+
         ResultPost<TreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeData>>(
-            "/api/v1/tree-growths",
+            saveUrl,
             DataModule.NetworkType.POST,
             DataModule.DataType.BUFFER,
             treeJsonData);
@@ -881,6 +886,11 @@ public class TreeController : MonoBehaviour
 
         // File 형식으로 Update or Save
         FileManager.SaveDataFile("TreeData", arrayTreeData);
+    }
+
+    public void OnClickSave()
+    {
+        SaveTreeData();
     }
 
     /// <summary>
@@ -968,28 +978,55 @@ public class TreeController : MonoBehaviour
     #endregion
 
     #region User Data to Tree
+
+    /// <summary>
+    /// 이전 날의 HealthData를 나무에 적용
+    /// </summary>
+    public void SetHealthDataToTree(DateTime yesterday)
+    {
+        // 이전날의 HealthData 분석 결과 가져오기
+        report = HealthDataAnalyzer.GetDailyReport(
+                new DateTime(yesterday.Year, yesterday.Month, yesterday.Day, yesterday.Hour, yesterday.Minute, yesterday.Second, yesterday.Millisecond, DateTimeKind.Local),
+                6
+                );
+
+        // Sleep Data
+        int sleepAmount = (int) report.SleepReport.SleepAmount;
+        SleepAmountToTree(sleepAmount);
+        int sleepRiseTimeVariance = (int) report.SleepReport.SleepRiseTimeVariance;
+        SleepRiseToTree(sleepRiseTimeVariance);
+        int sleepDaytimeNap = (int)report.SleepReport.SleepDaytimeNap;
+        NapToTree(sleepDaytimeNap);
+
+        // Activity Data
+        float activeEnergyBurnedGoalAchieved = (float)report.ActivityReport.ActiveEnergyBurnedGoalAchieved;
+        ScaleChange(activeEnergyBurnedGoalAchieved);
+        float exerciseTimeGoalAchieved = (float)report.ActivityReport.ExerciseTimeGoalAchieved;
+        float standHoursGoalAchieved = (float)report.ActivityReport.StandHoursGoalAchieved;
+
+    }
     /// <summary>
     /// 수면양 타입에 따른 나무 데이터 변경
     /// </summary>
-    public void SleepAmountToTree(SleepAmount sleep)
+    public void SleepAmountToTree(int sleepAmount)
     {
-        if (sleep == SleepAmount.Zero)
+        if (sleepAmount == 0)
         {
             BadChange(true);
         }
-        else if (sleep == SleepAmount.VeryInadequateBad)
+        else if (sleepAmount == 1)
         {
             BranchNumChange(false, 2);
         }
-        else if (sleep == SleepAmount.Inadequate)
+        else if (sleepAmount == 2)
         {
             BranchNumChange(false, 1);
         }
-        else if (sleep == SleepAmount.AdequateGood)
+        else if (sleepAmount == 3)
         {
             BranchNumChange(true, 1);
         }
-        else if (sleep == SleepAmount.Excessive)
+        else if (sleepAmount == 4)
         {
             BranchNumChange(true, 2);
         }
@@ -997,13 +1034,13 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// 기상 시간 오차에 따른 나무 데이터 변경
     /// </summary>
-    public void SleepRiseToTree(SleepRiseTimeVariance riseTime)
+    public void SleepRiseToTree(int riseTime)
     {
-        if (riseTime == SleepRiseTimeVariance.LargeBad)
+        if (riseTime == 0)
         {
             SproutNumChange(false, 10);
         }
-        else if (riseTime == SleepRiseTimeVariance.SmallGood)
+        else if (riseTime == 1)
         {
             SproutNumChange(true, 10);
         }
@@ -1011,17 +1048,17 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// Daytime 낮잠 여부에 따른 나무 데이터 변경
     /// </summary>
-    //public void NapToTree (SleepyDayTimeNap nap)
-    //{
-    //    if (nap == SleepyDayTimeNap.NoGood)
-    //    {
-    //        BadChange(false);
-    //    }
-    //    else if (nap == SleepyDayTimeNap.YesBad)
-    //    {
-    //        BadChange(true);
-    //    }
-    //}
+    public void NapToTree(int isNap)
+    {
+        if (isNap == 0)
+        {
+            BadChange(false);
+        }
+        else if (isNap == 1)
+        {
+            BadChange(true);
+        }
+    }
     /// <summary>
     /// Activity 달성 퍼센트에 따라 나무 Scale 조절하는 함수
     /// </summary>
