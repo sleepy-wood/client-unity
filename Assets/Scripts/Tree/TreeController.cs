@@ -186,60 +186,66 @@ public class TreeController : MonoBehaviour
         //treeFactory = TreeFactory.GetFactory();
         #endregion
 
-        // 방문 타입에 따라 시나리오 선택
-        //if (visitType == VisitType.First)
-        //{
-        // 나무 형태 Random 선택
-        if (playMode)
+         
+        if (visitType == VisitType.First)
         {
-            pipeName = "DemoTree_Red1";
-            selectedSeed = SeedType.Demo;
-        }
-        else if (demoMode)
-        {
-            pipeName = "DemoTree_Cherry";
-        }
-        else
-        {
-            int i = UnityEngine.Random.Range(0, pipeNameList.Count-1);  //Demo Tree 빼고 랜덤 선택
-            pipeName = pipeNameList[i];
-            selectedSeed = pipeNameDict[pipeName];
-        }
-        print(pipeName + " Selected");
-        treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+            // Mode에 따른 Pipeline 선택
+            if (playMode)
+            {
+                pipeName = "DemoTree_Red1";
+                selectedSeed = SeedType.Demo;
+                treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+            }
+            else if (demoMode)
+            {
+                pipeName = "DemoTree_Cherry";
+                treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+            }
+            else
+            {
+                int i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo Tree 빼고 랜덤 선택
+                pipeName = pipeNameList[i];
+                selectedSeed = pipeNameDict[pipeName];
+                treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+
+                // Sprout Texture 랜덤 선택
+                treeFactory.gameObject.SetActive(false);
+                int s = UnityEngine.Random.Range(0, 4);
+                treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[s].enabled = true;
+                print("sprout texture index : " + s);
+
+                // Bark Texture 랜덤 선택
+                List<string> name = new List<string>() { "A", "B", "C", "D", "E" };
+                int b = UnityEngine.Random.Range(0, 5);
+                Texture2D texture = Resources.Load("Tree/Sprites/Tree_Bark_" + name[b]) as Texture2D;
+                treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
+            }
+            print(pipeName + " Selected");
 
 
+            // Tree Grow 기본 세팅값
+            if (!demoMode)
+            {
+                // 랜덤 선택된 Seed로 기본 세팅값 찾기
+                FindTreeSetting();
 
-        // sprout Texture 랜덤 선택
-        if (!playMode && !demoMode)
+                // Pipeline 1일차 기본 세팅
+                PipelineSetting(2);
+                SetTree(1);
+            }
+        }
+        else if (visitType == VisitType.ReVisit)
         {
-            int s = UnityEngine.Random.Range(0, 4);
-            treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[s].enabled = true;
-            print("sprout texture index : " + s);
-            // bark Texture 랜덤 선택
-            List<string> name = new List<string>() { "A", "B", "C", "D", "E" };
-            int b = UnityEngine.Random.Range(0, 5);
-            Texture2D texture = Resources.Load("Tree/Sprites/Tree_Bark_" + name[b]) as Texture2D;
-            treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
+            
         }
         
-        if (!demoMode)
-        {
-            // 랜덤 선택된 Seed로 기본 세팅값 찾기
-            FindTreeSetting();
 
-            // Pipeline 기본 세팅
-            PipelineSetting(2);
-        }
-        
-        //}
-        //else if (visitType == VisitType.ReVisit)
-        //{
-        //    // DB에 저장해놓은 나무 변수 가져와 로드
-        //}
 
         // 헬스데이터 불러오기 ( 로딩바에서 )
         HealthDataStore.Init();
+
+
+        
 
         #region 기존 코드
         //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
@@ -253,6 +259,7 @@ public class TreeController : MonoBehaviour
     }
 
     bool once = false;
+    bool once2 = false;
     public float camMoveSpeed = 1f;
     void Update()
     {
@@ -284,40 +291,40 @@ public class TreeController : MonoBehaviour
         #endregion
 
         #region Camera Moving
-        // 2. 작은 묘목
-        if (dayCount == 2)
-        {
-            Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.7f, -19.7f, 3.2f), 2 * Time.deltaTime);
-        }
-        // 3. 묘목
-        if (dayCount == 3)
-        {
-            Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.7f, -29.8f, 2.6f), 2 * Time.deltaTime);
-        }
-        // 4. 나무
-        if (dayCount == 4)
-        {
-            if (badMode)
-            {
-                Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.7f, -37.8f, 3.2f), 2 * Time.deltaTime);
-            }
-            else
-            {
-                Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.9f, -44.2f, 6.2f), 2 * Time.deltaTime);
-            }
-        }
-        // 5. 열매
-        if (dayCount == 5)
-        {
-            if (badMode)
-            {
-                Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.3f, -40.9f, 3.7f), 2 * Time.deltaTime);
-            }
-            else
-            {
-                Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.2f, -54.7f, 9.1f), 2 * Time.deltaTime);
-            }
-        }
+        //// 2. 작은 묘목
+        //if (dayCount == 2)
+        //{
+        //    Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.7f, -19.7f, 3.2f), 2 * Time.deltaTime);
+        //}
+        //// 3. 묘목
+        //if (dayCount == 3)
+        //{
+        //    Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.7f, -29.8f, 2.6f), 2 * Time.deltaTime);
+        //}
+        //// 4. 나무
+        //if (dayCount == 4)
+        //{
+        //    if (badMode)
+        //    {
+        //        Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.7f, -37.8f, 3.2f), 2 * Time.deltaTime);
+        //    }
+        //    else
+        //    {
+        //        Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.9f, -44.2f, 6.2f), 2 * Time.deltaTime);
+        //    }
+        //}
+        //// 5. 열매
+        //if (dayCount == 5)
+        //{
+        //    if (badMode)
+        //    {
+        //        Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.3f, -40.9f, 3.7f), 2 * Time.deltaTime);
+        //    }
+        //    else
+        //    {
+        //        Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.2f, -54.7f, 9.1f), 2 * Time.deltaTime);
+        //    }
+        //}
         #endregion
 
         #region 가지 추가  Test Code
@@ -375,10 +382,6 @@ public class TreeController : MonoBehaviour
             );
             Debug.Log(JsonUtility.ToJson(report, true));
         }
-        //if (!GameManager.Instance.timeManager.enabled)
-        //{
-        //    GameManager.Instance.timeManager.enabled = true;
-        //}
     }
 
     #region 씨앗 심기 코루틴
@@ -964,7 +967,7 @@ public class TreeController : MonoBehaviour
     //}
     #endregion
 
-    #region User Data
+    #region User Data to Tree
     /// <summary>
     /// 수면양 타입에 따른 나무 데이터 변경
     /// </summary>

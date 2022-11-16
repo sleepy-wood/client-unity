@@ -620,7 +620,7 @@ namespace Broccoli.Generator
 					}
 					sproutPosition = Mathf.Lerp (minRange, maxRange, sproutPosition);
 
-					twirlToAdd = Mathf.PI * Random.Range (minTwirl, maxTwirl);
+                    twirlToAdd = Mathf.PI * Random.Range (minTwirl, maxTwirl);
 
 					for (int j = 0; j < childrenPerNode; j++) {
 						if (IsSproutInRange (sproutPosition, minMaskRange, maxMaskRange)) {
@@ -634,8 +634,8 @@ namespace Broccoli.Generator
 							} else {
 								firstDistributionSpacingVariance = false;
 							}
-							// Twirl.
-							spawnedSprout.rollAngle = accumAngleBetweenNodes + (intraNodesAngle * j) + (twirlToAdd * i) + 
+                            // Twirl.
+                            spawnedSprout.rollAngle = accumAngleBetweenNodes + (intraNodesAngle * j) + (twirlToAdd * i) + 
 								(Random.Range (-halfTwirlStep, halfTwirlStep) * distributionAngleVariance) + twirlOffset;
 							
 							SetSproutRelativeAngle (spawnedSprout, 
