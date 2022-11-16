@@ -30,6 +30,8 @@ public class TimeManager : MonoBehaviour
         {
             print("Revisit");
             GameManager.Instance.treeController.visitType = TreeController.VisitType.ReVisit;
+            // totalPlantDay, dayCount 계산
+            CalculatePlantDays(firstPlantDate, DateTime.Now);
         }
     }
 
@@ -141,10 +143,11 @@ public class TimeManager : MonoBehaviour
     /// 내가 계산하고자 하는 Date (to) - 나무 처음 심은 Date (from)
     /// </summary>
     /// <returns>나무 심은지 몇일이 지났는지 int로 반환</returns>
-    public void CalculatePlantDays(DateTime from, DateTime to)
+    public int CalculatePlantDays(DateTime from, DateTime to)
     {
         TimeSpan timeDif = to - from;
         totalPlantDay = (int)timeDif.Days + 1;
         GameManager.Instance.treeController.dayCount = totalPlantDay;
+        return totalPlantDay;
     }
 }
