@@ -382,15 +382,6 @@ public class TreeController : MonoBehaviour
             );
             Debug.Log(JsonUtility.ToJson(report, true));
         }
-
-        SetTree(dayCount);
-
-        if (Input.GetKeyDown(KeyCode.Alpha5)&&!once2)
-        {
-            print("썩은 잎 만들기");
-            treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[1].groupId = 2;
-            PipelineReload();
-        }
     }
 
     #region 씨앗 심기 코루틴
