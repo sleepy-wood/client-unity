@@ -20,11 +20,11 @@ public class TimeManager : MonoBehaviour
 
     private async void Awake()
     {
-        AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
-        ResultGet<GetTreeData> treeData = await DataModule.WebRequestBuffer<ResultGet<GetTreeData>>("/api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-        ArrayGetTreeData arrayTreeData = new ArrayGetTreeData();
-        arrayTreeData.getTreeDataList = treeData.data;
-        DataTemporary.GetTreeData = arrayTreeData;
+        //AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
+        //ResultGet<GetTreeData> treeData = await DataModule.WebRequestBuffer<ResultGet<GetTreeData>>("/api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        //ArrayGetTreeData arrayTreeData = new ArrayGetTreeData();
+        //arrayTreeData.getTreeDataList = treeData.data;
+        //DataTemporary.GetTreeData = arrayTreeData;
 
         // 해당 Land의 firstPlantDate 알아내기
         int idx = DataTemporary.GetTreeData.getTreeDataList.Count;

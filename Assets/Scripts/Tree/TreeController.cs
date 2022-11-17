@@ -173,9 +173,6 @@ public class TreeController : MonoBehaviour
 
     private void Start()
     {
-        // Tree Data의 Tree id 저장
-        treeId = DataTemporary.GetTreeData.getTreeDataList[dataIdx].id;
-
         #region Build
         // Build mesh 오류 해결 코드
         //print(Application.dataPath);
@@ -242,7 +239,8 @@ public class TreeController : MonoBehaviour
         }
         else if (visitType == VisitType.ReVisit)
         {
-            
+            // Tree Data의 Tree id 저장
+            treeId = DataTemporary.GetTreeData.getTreeDataList[dataIdx].id;
         }
 
         // 헬스데이터 불러오기 ( 로딩바로 옮기기 )
