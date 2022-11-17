@@ -112,7 +112,7 @@ public class TreeController : MonoBehaviour
     //public float defaultFOV = 10.29f;
     //public float targetFOV = 3.11f;
     // TreeData
-    public TreeData data;
+    public PutTreeData data;
     // user
     public GameObject user;
     // previewTree Scale Value
@@ -123,8 +123,10 @@ public class TreeController : MonoBehaviour
     public GameObject treeNameUI;
     // 나무 이름
     public string treeName;
-    // 현재 나무의 DB id
-    //public int dbId;
+    // Tree Data에서의 현재 랜드 나무의 index
+    public int dataIdx;
+    // 현재 나무의 id
+    public int treeId;
     // Play Mode - Good Grow
     public bool playMode;
     // Play Mode - Bad Grow
@@ -169,9 +171,10 @@ public class TreeController : MonoBehaviour
 
     #endregion
 
-    void Start()
+    private void Start()
     {
-        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
+        // Tree Data의 Tree id 저장
+        treeId = DataTemporary.GetTreeData.getTreeDataList[dataIdx].id;
 
         #region Build
         // Build mesh 오류 해결 코드
@@ -188,7 +191,7 @@ public class TreeController : MonoBehaviour
         //treeFactory = TreeFactory.GetFactory();
         #endregion
 
-         
+
         if (visitType == VisitType.First)
         {
             // Mode에 따른 Pipeline 선택
@@ -200,7 +203,7 @@ public class TreeController : MonoBehaviour
             }
             else if (demoMode)
             {
-                pipeName = "New";//"DemoTree_Cherry";
+                pipeName = "DemoTree_Cherry";
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
             }
             else
@@ -239,7 +242,7 @@ public class TreeController : MonoBehaviour
         }
         else if (visitType == VisitType.ReVisit)
         {
-            // count Day에 따라 나무 
+            
         }
 
         // 헬스데이터 불러오기 ( 로딩바로 옮기기 )
@@ -853,8 +856,8 @@ public class TreeController : MonoBehaviour
     string saveUrl;
     public async void SaveTreeData()
     {
-        List<TreeData> treeDatas = new List<TreeData>();
-        TreeData treeData = new TreeData();
+        List<PutTreeData> treeDatas = new List<PutTreeData>();
+        PutTreeData treeData = new PutTreeData();
         
         if (dayCount == 1)
         {
@@ -943,7 +946,8 @@ public class TreeController : MonoBehaviour
         string treeJsonData = JsonUtility.ToJson(treeData);
         Debug.Log(JsonUtility.ToJson(treeData, true));
 
-        ResultPost<TreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeData>>(
+        // PUT Tree Data
+        ResultPost<PutTreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<PutTreeData>>(
             saveUrl,
             DataModule.NetworkType.POST,
             DataModule.DataType.BUFFER,
@@ -960,11 +964,11 @@ public class TreeController : MonoBehaviour
         treeDatas.Add(treeData);
 
         treeDatas.Add(treeData);
-        ArrayTreeData arrayTreeData = new ArrayTreeData();
-        arrayTreeData.treeDataList = treeDatas;
+        ArrayPutTreeData arrayTreeData = new ArrayPutTreeData();
+        arrayTreeData.putTreeDataList = treeDatas;
 
         // DataTemporary
-        DataTemporary.MyTreeData = arrayTreeData;
+        DataTemporary.PutTreeData = arrayTreeData;
 
         // File 형식으로 Update or Save
         FileManager.SaveDataFile("TreeData", arrayTreeData);

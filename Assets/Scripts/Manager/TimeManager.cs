@@ -18,9 +18,28 @@ public class TimeManager : MonoBehaviour
     public UDateTime firstPlantDate;
     public Text txtAge;
 
-    private void Awake()
+    private async void Awake()
     {
-        // firstPlantDate로 방문타입 결정  => 5일차 후 새로운 Seed심기 전 null값 처리필요
+        AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
+        ResultGet<GetTreeData> treeData = await DataModule.WebRequestBuffer<ResultGet<GetTreeData>>("/api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        ArrayGetTreeData arrayTreeData = new ArrayGetTreeData();
+        arrayTreeData.getTreeDataList = treeData.data;
+        DataTemporary.GetTreeData = arrayTreeData;
+
+        // 해당 Land의 firstPlantDate 알아내기
+        int idx = DataTemporary.GetTreeData.getTreeDataList.Count;
+        for (int i = 0; i < idx; i++)
+        {
+            // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
+            if (DataTemporary.GetTreeData.getTreeDataList[i].landId == 3)//DataTemporary.MyUserData.currentLandId)
+            {
+                firstPlantDate = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
+                GameManager.Instance.treeController.dataIdx = i;
+                print($"{i}번째 트리 데이터");
+                print("나무 처음 심은 시간 : " + firstPlantDate.dateTime);
+            }
+        }
+        // firstPlantDate로 방문타입 결정  => 5일차 후 새로운 Seed 심기 전 null값 처리필요
         if (firstPlantDate.dateTime == DateTime.MinValue)
         {
             print("First Visit");

@@ -9,35 +9,40 @@ using System;
 // User - Tree - TreeMetaData (1일차,2일차,3일차,4일차,5일차) - TreePipelineData
 
 [Serializable]
-public class TreeGrowth
+public class TreePipeline
 {
-    public int treeId;
-    // 나무 scale
+    public int id;
     public float scale;
-    // 나무 가지 개수
     public int branch1;
     public int branch2;
     public int branch3;
     public int branch4;
-    // 나무 기둥 길이
     public float trunkLength;
-    // 나뭇잎 개수
     public int sproutNum;
-    // 나뭇잎 썩은 비율
     public float rottenRate;
-    // 중력
     public float gravity;
-    // 뿌리 개수
     public int rootNum;
-    // 나무가지 텍스처 이름
     public string? barkTexture;
-    // 활성화할 sprout Texture index
     public int sproutIndex;
+    public int treeGrowthId;
+    public string? createdAt;
+    public string? updateAt;
+}
+
+[Serializable]
+public class TreeGrowth
+{
+    public int id;
+    public int treeDay;
+    public int treeId;
+    public string? createdAt;
+    public string? updatedAt;
+    public List<TreePipeline>? treePipeline;
 }
 
 // String만 nullable 가능
 [Serializable]
-public class TreeData
+public class PutTreeData
 {
     // 나무 이름
     public string? treeName;
@@ -71,11 +76,31 @@ public class TreeData
     // 활성화할 sprout Texture index
     public int sproutIndex;
 }
+[Serializable]
+public class GetTreeData
+{
+    public int id;
+    public string? treeName;
+    public int seedNumber;
+    public string? seedType;
+    public int landId;
+    public int userId;
+    public string? createdAt;
+    public string? updatedAt;
+    public List<TreeGrowth>? treeGrowths;
+}
 
 [Serializable]
-public class ArrayTreeData
+public class ArrayPutTreeData
 {
-    public List<TreeData>? treeDataList;
+    public List<PutTreeData>? putTreeDataList;
+}
+
+
+[Serializable]
+public class ArrayGetTreeData
+{
+    public List<GetTreeData>? getTreeDataList;
 }
 
 
