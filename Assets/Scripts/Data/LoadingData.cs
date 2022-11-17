@@ -95,7 +95,9 @@ public class LoadingData : MonoBehaviourPunCallbacks
         DataTemporary.assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustomimg");
         //금칙어번들 풀기
         DataTemporary.stopwordsAsset = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/otherbundle");
-        
+        // tree Pipeline 에셋번들
+        DataTemporary.assetBundleTreePipeline = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
+
         //로그인
         //"/api/v1/auth/login/temp/{id}"
         ResultPost<UserLogin> login = await DataModule.WebRequestBuffer<ResultPost<UserLogin>>("/api/v1/auth/login/temp/" + loginId, DataModule.NetworkType.POST, DataModule.DataType.BUFFER);
@@ -117,8 +119,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
         ResultGet<LandData> landData = await DataModule.WebRequestBuffer<ResultGet<LandData>>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         ResultGet<BridgeData> bridgeData = await DataModule.WebRequestBuffer<ResultGet<BridgeData>>("/api/v1/bridges", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
-        // TreeData Load
-        //ResultGet<TreeData> treeData = await DataModule.WebRequest<ResultGet<TreeData>>("api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        // TreeData Get
+        ResultGet<GetTreeData> treeData = await DataModule.WebRequestBuffer<ResultGet<GetTreeData>>("/api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         ArrayLandData arrayLandData = new ArrayLandData();
         arrayLandData.landLists = landData.data;
@@ -128,8 +130,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
         arrayBridgeData.bridgeLists = bridgeData.data;
         //DataTemporary.MyBridgeData = arrayBridgeData;
 
-        //ArrayTreeData arrayTreeData = new ArrayTreeData();
-        //arrayTreeData.treeDataList = treeData.data;
+        ArrayGetTreeData arrayTreeData = new ArrayGetTreeData();
+        arrayTreeData.getTreeDataList = treeData.data;
 
 
         if (landData.result)
@@ -146,16 +148,16 @@ public class LoadingData : MonoBehaviourPunCallbacks
         {
             DataTemporary.MyUserData = userData.data;
         }
-        //if (treeData.result)
-        //{
-        //    Debug.Log(treeData.data);
-        //    DataTemporary.MyTreeData = arrayTreeData;
-        //}
+        if (treeData.result)
+        {
+            Debug.Log(treeData.data);
+            DataTemporary.GetTreeData = arrayTreeData;
+        }
 
         if (!m_testMode)
         {
              //&& treeData.result
-            if (landData.result && bridgeData.result && userData.result && login.result)
+            if (landData.result && bridgeData.result && userData.result && login.result && treeData.result)
             {
                 isLoadingComplete = true;
             }

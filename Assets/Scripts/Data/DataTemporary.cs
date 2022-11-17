@@ -20,6 +20,7 @@ public class DataTemporary
     public static ArraySleepData ArraySleepData = new ArraySleepData();
     public static SleepSample[] samples = new SleepSample[100];
     // Tree Data
+    public static AssetBundle assetBundleTreePipeline;
     public static ArrayPutTreeData PutTreeData = new ArrayPutTreeData();
     public static ArrayGetTreeData GetTreeData = new ArrayGetTreeData();
 }

@@ -178,7 +178,6 @@ public class TreeController : MonoBehaviour
     private void Start()
     {
         AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
-
         #region Build
         // Build mesh 오류 해결 코드
         //print(Application.dataPath);
@@ -271,7 +270,7 @@ public class TreeController : MonoBehaviour
             else
             {
                 
-            }                       
+            }    
 
             // Tree 로드
             PipelineReload();

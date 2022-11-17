@@ -148,7 +148,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     public GameObject OnLand()
     {
         RaycastHit hit;
-        Ray ray = new Ray(new Vector3(transform.position.x, transform.position.y, transform.position.z), -transform.up * 100);
+        Ray ray = new Ray(new Vector3(transform.position.x, transform.position.y +  0.3f , transform.position.z), -transform.up * 100);
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
         LayerMask layer = 1 << LayerMask.NameToLayer("User");
         if (Physics.Raycast(ray, out hit, 100f,~layer))
@@ -211,7 +211,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public async void RPC_SettingProfile(string imgURL, string nickName)
     {
-        Texture2D texture = await DataModule.WebrequestTexture(imgURL);
+        Texture2D texture = await DataModule.WebrequestTexture(imgURL, DataModule.NetworkType.GET);
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 10);
         profileImage.sprite = sprite;
         transform.GetChild(4).GetChild(1).GetComponent<Image>().sprite = sprite;
