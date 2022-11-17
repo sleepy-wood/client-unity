@@ -14,5 +14,7 @@ public class Cine_Anim : MonoBehaviour
     {
         if (isNext)
             anim.SetTrigger("Next");
+        else
+            anim.ResetTrigger("Next");
     }
 }
