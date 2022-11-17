@@ -35,6 +35,7 @@ public class TreeGrowth
     public int sproutIndex;
 }
 
+// String만 nullable 가능
 [Serializable]
 public class TreeData
 {
@@ -43,6 +44,7 @@ public class TreeData
     // seed 번호
     public int seedNumber;
     // 나무 종류
+
     public string? seedType;
     // 현재 land ID
     public int landId;
