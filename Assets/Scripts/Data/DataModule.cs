@@ -135,11 +135,12 @@ public class DataModule
     }
 
     /// <summary>
-    /// Texture Webrequest
+    /// Texture Webrequest.
+    /// Post일때는 받는 것이 default(return). 
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
-    public static async UniTask<Texture2D> WebrequestTexture(string url)
+    public static async UniTask<Texture2D> WebrequestTexture(string url, NetworkType networkType, List<IMultipartFormSection> form = null)
     {
 
         //네트워크 체킹
@@ -152,7 +153,10 @@ public class DataModule
 
         UnityWebRequest request;
         //Texture인가 Buffer인가?
-        request = UnityWebRequestTexture.GetTexture(requestURL);
+        if (networkType == NetworkType.GET)
+            request = UnityWebRequestTexture.GetTexture(requestURL);
+        else
+            request = UnityWebRequest.Post(requestURL, form);
 
         //Body 정보 입력
         DownloadHandlerTexture handlerTexture =  request.downloadHandler as DownloadHandlerTexture;
@@ -168,10 +172,16 @@ public class DataModule
 
         try
         {
-
             var res = await request.SendWebRequest().WithCancellation(cts.Token);
-            Texture2D result = handlerTexture.texture;
-            return result;
+            if (networkType == NetworkType.POST)
+            {
+                return default;
+            }
+            else
+            {
+                Texture2D result = handlerTexture.texture;
+                return result;
+            }
         }
         catch (OperationCanceledException ex)
         {
@@ -181,7 +191,7 @@ public class DataModule
                 //TODO: 네트워크 재시도 팝업 호출.
 
                 //재시도
-                return await WebrequestTexture(url);
+                return await WebrequestTexture(url,networkType);
             }
         }
         catch (Exception e)

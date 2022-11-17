@@ -217,7 +217,7 @@ public class UI_Chatting : MonoBehaviourPun
     [PunRPC]
     public async void RPC_ProfileList(string url, string nickname)
     {
-        Texture2D texture = await DataModule.WebrequestTexture(url);
+        Texture2D texture = await DataModule.WebrequestTexture(url, DataModule.NetworkType.GET);
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 10);
         profileDic[nickname] = sprite;
     }
