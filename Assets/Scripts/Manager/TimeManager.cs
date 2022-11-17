@@ -25,6 +25,8 @@ public class TimeManager : MonoBehaviour
         {
             print("First Visit");
             GameManager.Instance.treeController.visitType = TreeController.VisitType.First;
+            firstPlantDate = DateTime.Now;
+            CalculatePlantDays(firstPlantDate, DateTime.Now);
         }
         else
         {
@@ -149,5 +151,12 @@ public class TimeManager : MonoBehaviour
         totalPlantDay = (int)timeDif.Days + 1;
         GameManager.Instance.treeController.dayCount = totalPlantDay;
         return totalPlantDay;
+    }
+
+    public void OnPlusDay()
+    {
+        now = now.dateTime.AddDays(1);
+        CalculatePlantDays(firstPlantDate, now);
+        GameManager.Instance.treeController.SetTree(totalPlantDay);
     }
 }

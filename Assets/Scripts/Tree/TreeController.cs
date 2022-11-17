@@ -200,7 +200,7 @@ public class TreeController : MonoBehaviour
             }
             else if (demoMode)
             {
-                pipeName = "DemoTree_Cherry";
+                pipeName = "New";//"DemoTree_Cherry";
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
             }
             else
@@ -380,6 +380,51 @@ public class TreeController : MonoBehaviour
             );
             //Debug.Log(JsonUtility.ToJson(report, true));
             if (report != null) Debug.Log("HealthData 불러오기 성공");
+        }
+
+        if (Input.GetMouseButtonDown(0) && !once2)
+        {
+            once2 = true;
+            print("Mouse Click");
+            SproutSeed sproutSeed = new SproutSeed();
+            treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+            treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 4;
+            PipelineReload();
+        }
+        if (Input.GetMouseButton(1) && once2)
+        {
+            //Broccoli.Pipe.Pipeline pipelineToAsset =
+            //            AssetDatabase.LoadAssetAtPath<Broccoli.Pipe.Pipeline>(pathToAsset);
+            //if (pipelineToAsset != null && asNewAsset)
+            //{
+            //    AssetDatabase.DeleteAsset(pathToAsset);
+            //    DestroyImmediate(pipelineToAsset, true);
+            //}
+            //pipelineToAsset = treeFactory.localPipeline.Clone(pipelineToAsset);
+            //if (pipelineToAsset.isCatalogItem &&
+            //    GlobalSettings.editCatalogEnabled == false &&
+            //    asNewAsset)
+            //{
+            //    pipelineToAsset.isCatalogItem = false;
+            //}
+            //pipelineToAsset.treeFactoryPreferences = treeFactory.treeFactoryPreferences.Clone();
+            //if (asNewAsset)
+            //{
+            //    AssetDatabase.CreateAsset(pipelineToAsset, pathToAsset);
+            //}
+            //else
+            //{
+            //    EditorUtility.SetDirty(pipelineToAsset);
+            //}
+
+            //List<PipelineElement> pipelineElements = pipelineToAsset.GetElements();
+            //for (int i = 0; i < pipelineElements.Count; i++)
+            //{
+            //    AssetDatabase.AddObjectToAsset(pipelineElements[i], pathToAsset);
+            //}
+
+            //AssetDatabase.SaveAssets();
+            //Resources.UnloadAsset(pipelineToAsset);
         }
     }
 
@@ -802,7 +847,7 @@ public class TreeController : MonoBehaviour
 
     #region Tree Data
     /// <summary>
-    /// Tree Data 생성 및 1일차 Data 저장
+    /// Tree Data 저장
     /// </summary>
     public Transform previewTree;
     string saveUrl;
@@ -810,56 +855,93 @@ public class TreeController : MonoBehaviour
     {
         List<TreeData> treeDatas = new List<TreeData>();
         TreeData treeData = new TreeData();
-
-        // Tree Name
-        treeData.treeName = treeName;
-        // seed Number
-        treeData.seedNumber = treePipeline.seed;
-        // Seed Type
-        treeData.seedType = selectedSeed.ToString();
-        // Land ID
-        treeData.landId = 3;  // 변경 필요
-
-        // Tree Pipeline Data //
-        // 1. Scale
-        if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
-        treeData.scale = previewTree.localScale.x;
-        // 2. Branch Numbers
-        List<StructureGenerator.StructureLevel> level = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels;
-        treeData.branch1 = level[0].minFrequency;
-        treeData.branch2 = level[1].minFrequency;
-        treeData.branch3 = level[2].minFrequency;
-        treeData.branch4 = level[3].minFrequency;
-        // 3. Trunk Length
-        treeData.trunkLength = treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase;
-        // 4. Sprout Number
-        treeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].minFrequency;
-        // 5. Rotten Rate
-        treeData.rottenRate = 20;
-        // 6. Gravity
-        treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
-        // 7. Root Num                                                                                                                                                                                                                                          -000000000000000000
-        int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
-        treeData.rootNum = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[idx - 1].minFrequency;
-        // 8. Bark Texture Name
-        treeData.barkTexture = treePipeline._serializedPipeline.barkMappers[0].mainTexture.name;
-        // 9. Sprout Index
-        int id = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas.Count;
-        for (int i = 0; i < id; i++)
+        
+        if (dayCount == 1)
         {
-            if (treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled)
+            saveUrl = "/api/v1/trees";
+
+            // Tree Name
+            treeData.treeName = treeName;
+            // seed Number
+            treeData.seedNumber = 0;
+            // Seed Type
+            treeData.seedType = selectedSeed.ToString();
+            // Land ID 
+            treeData.landId = 3;  //DataTemporary.MyUserData.currentLandId;
+
+            // Tree Pipeline Data //
+            // 1. Scale
+            treeData.scale = 0;
+            // 2. Branch Numbers
+            treeData.branch1 = 0;
+            treeData.branch2 = 0;
+            treeData.branch3 = 0;
+            treeData.branch4 = 0;
+            // 3. Trunk Length
+            treeData.trunkLength = 0;
+            // 4. Sprout Number
+            treeData.sproutNum = 0;
+            // 5. Rotten Rate
+            treeData.rottenRate = 0;
+            // 6. Gravity
+            treeData.gravity = 0;
+            // 7. Root Num                                                                              
+            treeData.rootNum = 0;
+            // 8. Bark Texture Name
+            treeData.barkTexture = ".";
+            // 9. Sprout Index
+            treeData.sproutIndex = 0;
+        }
+        else if (dayCount > 1 && dayCount < 6)
+        {
+            saveUrl = "/api/v1/tree-growths";
+
+            // Tree Name
+            treeData.treeName = treeName;
+            // seed Number
+            treeData.seedNumber = treePipeline.seed;
+            // Seed Type
+            treeData.seedType = selectedSeed.ToString();
+            // Land ID
+            treeData.landId = 3;  // 변경 필요
+
+            // Tree Pipeline Data //
+            // 1. Scale
+            if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
+            treeData.scale = previewTree.localScale.x;
+            // 2. Branch Numbers
+            List<StructureGenerator.StructureLevel> level = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels;
+            treeData.branch1 = level[0].minFrequency;
+            treeData.branch2 = level[1].minFrequency;
+            treeData.branch3 = level[2].minFrequency;
+            treeData.branch4 = level[3].minFrequency;
+            // 3. Trunk Length
+            treeData.trunkLength = treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase;
+            // 4. Sprout Number
+            treeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].minFrequency;
+            // 5. Rotten Rate
+            treeData.rottenRate = 20;
+            // 6. Gravity
+            treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
+            // 7. Root Num                                                                                                                                                                                                                                          -000000000000000000
+            int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
+            treeData.rootNum = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[idx - 1].minFrequency;
+            // 8. Bark Texture Name
+            treeData.barkTexture = treePipeline._serializedPipeline.barkMappers[0].mainTexture.name;
+            // 9. Sprout Index
+            int id = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas.Count;
+            for (int i = 0; i < id; i++)
             {
-                treeData.sproutIndex = i;
+                if (treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled)
+                {
+                    treeData.sproutIndex = i;
+                }
             }
         }
 
-        string treeJsonData = JsonUtility.ToJson(treeData);
 
-        // Web
-        // 1일차의 경우
-        if (dayCount == 1) saveUrl = "/api/v1/trees";
-        // 2일차 이후의 경우
-        else if (dayCount > 1 && dayCount < 6) saveUrl = "/api/v1/tree-growths";
+        string treeJsonData = JsonUtility.ToJson(treeData);
+        Debug.Log(JsonUtility.ToJson(treeData, true));
 
         ResultPost<TreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeData>>(
             saveUrl,
@@ -873,7 +955,7 @@ public class TreeController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Tree Save 성공");
+            Debug.Log("Tree Data Save 성공");
         }
         treeDatas.Add(treeData);
 
@@ -1006,7 +1088,7 @@ public class TreeController : MonoBehaviour
 
     }
     /// <summary>
-    /// 수면양 타입에 따른 나무 데이터 변경
+    /// 수면양 enum 타입에 따른 나무 데이터 변경
     /// </summary>
     public void SleepAmountToTree(int sleepAmount)
     {
