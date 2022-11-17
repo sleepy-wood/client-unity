@@ -131,22 +131,32 @@ public class UserInput : MonoBehaviour
             #region 이동 
                 if (currentState == TouchState.Move)
                 {
-                    Vector3 mousePos = Input.mousePosition;
-                    Ray ray = Camera.main.ScreenPointToRay(mousePos);
-                    RaycastHit hit;
-                    LayerMask layer = 1 << LayerMask.NameToLayer("Portal");
-                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~layer))
-                    {
-                        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground") ||
-                            hit.transform.gameObject.layer == LayerMask.NameToLayer("Bridge"))
-                        {
-                            //맞은 곳과 플레이어의 방향 벡터 구하기
-                            Vector3 dir = hit.point - transform.position;
-                            dir.Normalize();
-                            MoveX = dir.x;
-                            MoveZ = dir.z;
-                        }
-                    }
+                    Touch touchFirstFinger = Input.GetTouch(0);
+                    Vector2 touchMoveBeforePos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
+
+                    Vector2 dir = touchFirstFinger.position - touchMoveBeforePos;
+                    dir.Normalize();
+                    MoveX = dir.x;
+                    MoveZ = dir.y;
+
+                    #region Legacy
+                    //Vector3 mousePos = Input.mousePosition;
+                    //Ray ray = Camera.main.ScreenPointToRay(mousePos);
+                    //RaycastHit hit;
+                    //LayerMask layer = 1 << LayerMask.NameToLayer("Portal");
+                    //if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~layer))
+                    //{
+                    //    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground") ||
+                    //        hit.transform.gameObject.layer == LayerMask.NameToLayer("Bridge"))
+                    //    {
+                    //        //맞은 곳과 플레이어의 방향 벡터 구하기
+                    //        Vector3 dir = hit.point - transform.position;
+                    //        dir.Normalize();
+                    //        MoveX = dir.x;
+                    //        MoveZ = dir.z;
+                    //    }
+                    //}
+                    #endregion
                 }
                 else
                 {
