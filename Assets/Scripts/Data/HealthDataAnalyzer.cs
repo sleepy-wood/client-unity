@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -228,7 +228,7 @@ public static class HealthDataAnalyzer
 
     private static SleepAmount GetSleepAmount(double totalSleepTime)
     {
-        Debug.Log("totalSleepTime: " + totalSleepTime);
+        //Debug.Log("totalSleepTime: " + totalSleepTime);
         if (totalSleepTime == 0)
         {
             return SleepAmount.Zero;
@@ -278,7 +278,7 @@ public static class HealthDataAnalyzer
             {
                 riseTimes.Add(eDate.TimeOfDay.TotalHours);
             }
-            Debug.Log("RiseTimes: " + string.Join(", ", riseTimes));
+            //Debug.Log("RiseTimes: " + string.Join(", ", riseTimes));
             double totalVariance = 0;
             for (int i = 0; i < riseTimes.Count - 1; i++)
             {
@@ -332,7 +332,7 @@ public static class HealthDataAnalyzer
                     ).TotalHours;
                 }
             }
-            Debug.Log("TotalDaytimeNap: " + totalDaytimeNap);
+            //Debug.Log("TotalDaytimeNap: " + totalDaytimeNap);
             if (totalDaytimeNap > 0.5) // 30분 이상 daytime 수면
             {
                 return SleepDaytimeNap.YesBad;

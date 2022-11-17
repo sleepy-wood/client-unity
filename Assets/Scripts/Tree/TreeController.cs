@@ -71,7 +71,7 @@ public class TreeController : MonoBehaviour
         Basic,
         Oak,
         Sakura,
-        DR, 
+        DR,
         Demo
     }
     // 나무 종류별 관련 변수 클래스
@@ -123,7 +123,7 @@ public class TreeController : MonoBehaviour
     public GameObject treeNameUI;
     // 나무 이름
     public string treeName;
-    // Tree Data에서의 현재 랜드 나무의 index
+    // 자신의 Tree들 중에서 현재 랜드 나무의 index 
     public int dataIdx;
     // 현재 나무의 id
     public int treeId;
@@ -135,6 +135,10 @@ public class TreeController : MonoBehaviour
     public bool demoMode;
     // User의 HealthData
     HealthReport report;
+    // 로드해야하는 나무의 데이터
+    GetTreeData currentTreeData;
+    // 마이 컬렉션 - 나무 이름
+    public Text txtTreeName;
 
     #endregion
 
@@ -173,6 +177,7 @@ public class TreeController : MonoBehaviour
 
     private void Start()
     {
+        AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
         #region Build
         // Build mesh 오류 해결 코드
         //print(Application.dataPath);
@@ -221,6 +226,7 @@ public class TreeController : MonoBehaviour
                 List<string> name = new List<string>() { "A", "B", "C", "D", "E" };
                 int b = UnityEngine.Random.Range(0, 5);
                 Texture2D texture = Resources.Load("Tree/Sprites/Tree_Bark_" + name[b]) as Texture2D;
+                print("Tree_Bark_" + name[b]);
                 treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
             }
             print(pipeName + " Selected");
@@ -239,11 +245,37 @@ public class TreeController : MonoBehaviour
         }
         else if (visitType == VisitType.ReVisit)
         {
+            // 로드한 데이터로 나무 파이프라인 로드
+            // DayCount해서 Health Data 반영
+
+
             // Tree Data의 Tree id 저장
             treeId = DataTemporary.GetTreeData.getTreeDataList[dataIdx].id;
-        }
 
-        // 헬스데이터 불러오기 ( 로딩바로 옮기기 )
+            // Tree Data통해서 Pipeline 세팅
+            //for (int i = 0; i < DataTemporary.GetTreeData.getTreeDataList.Count; i++)
+            //{
+            //    if (DataTemporary.GetTreeData.getTreeDataList[i].id == treeId)
+            //    {
+            //        currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
+            //    }
+            //}
+            //LoadDataSetting(currentTreeData);
+
+            // firstPlantDate와 dayCount에 따라 그에 맞는 HealthData 반영
+            if (dayCount > 1)
+            {
+                //SetHealthData();
+            }
+            else
+            {
+                
+            }    
+
+            // Tree 로드
+            PipelineReload();
+        }
+        // 헬스데이터 불러오기 ( 로딩바로 옮기기 )     
         HealthDataStore.Init();
 
         #region 기존 코드
@@ -255,6 +287,82 @@ public class TreeController : MonoBehaviour
         //        positionerElement.positions.Clear();
         //}
         #endregion
+    }
+
+    /// <summary>
+    /// 이전 날의 헬스데이터 반영
+    /// </summary>
+    public void SetHealthData(DateTime yesterday)
+    {
+
+    }
+
+    /// <summary>
+    /// 로드한 데이터로 나무 세팅
+    /// </summary>
+    public void LoadDataSetting(GetTreeData treeData)        
+    {
+        // Tree Name
+        txtTreeName.text = treeData.treeName;
+        // Seed Number
+        treePipeline.seed = treeData.seedNumber;
+        // Seed Type
+        selectedSeed = (SeedType)System.Enum.Parse(typeof(SeedType), treeData.seedType);
+        // First Plant Date
+        GameManager.Instance.timeManager.firstPlantDate = DateTime.Parse(treeData.treeGrowths[0].createdAt);
+        // 현재 랜드 나무의 dayCount에 맞는 Tree Pipeline Data
+        TreePipeline pipeData = treeData.treeGrowths[dayCount - 1].treePipeline[0];
+        #region TreeGrowth
+        // 1. Scale
+        float p = pipeData.scale;
+        previewTree.localScale = new Vector3(p, p, p);
+        // 2. Branch Number
+        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minFrequency = pipeData.branch1;
+        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxFrequency = pipeData.branch1;
+        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].minFrequency = pipeData.branch2;
+        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].maxFrequency = pipeData.branch2;
+        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].minFrequency = pipeData.branch3;
+        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].maxFrequency = pipeData.branch3;
+        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].minFrequency = pipeData.branch4;
+        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].maxFrequency = pipeData.branch4;
+        // 3. Trunk Length
+        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxLengthAtBase = pipeData.trunkLength;
+        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase = pipeData.trunkLength;
+        // 4. Sprout Number
+        treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = pipeData.sproutNum;
+        treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = pipeData.sproutNum;
+        // 5. Ratio of Rotten Sprout
+
+
+        // 6. Gravity
+        for (int i = 0; i < 4; i++)
+        {
+            if (!treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].isRoot)
+            {
+                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minGravityAlignAtBase = pipeData.gravity;
+                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxGravityAlignAtBase = pipeData.gravity;
+            }
+        }
+        // 7. Root Number
+        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = pipeData.rootNum;
+        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = pipeData.rootNum;
+        // 8. Bark Texture
+        string name = pipeData.barkTexture;
+        Texture2D texture = Resources.Load("Tree/Sprites/" + name) as Texture2D;
+        treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
+        // 9. Sprout Texture
+        for (int i = 0; i < 5; i++)
+        {
+            if (i == pipeData.sproutIndex)
+            {
+                treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = true;
+            }
+            else
+            {
+                treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = false;
+            }
+        }
+
     }
 
     bool once = false;
@@ -449,7 +557,7 @@ public class TreeController : MonoBehaviour
         yield return new WaitForSeconds(2);
         sproutParticle.Play();
         sprout.SetActive(true);
-        
+
         // 새싹 자라기
         t = 0;
         while (t <= 1f)
@@ -516,8 +624,8 @@ public class TreeController : MonoBehaviour
 
                 if (badMode && dayCount > 3)
                 {
-                    pipe1.minFrequency = store1.min-2;
-                    pipe1.maxFrequency = store1.max-2;
+                    pipe1.minFrequency = store1.min - 2;
+                    pipe1.maxFrequency = store1.max - 2;
                 }
                 else
                 {
@@ -545,7 +653,7 @@ public class TreeController : MonoBehaviour
                 // Max Girth At Base
                 pipe4.maxGirthAtBase = store4;
             }
-            
+
             #endregion
 
             #region 3. Object scale
@@ -557,7 +665,7 @@ public class TreeController : MonoBehaviour
             {
                 scaleTo = element.scale;
             }
-            
+
             #endregion
         }
         else
@@ -647,7 +755,7 @@ public class TreeController : MonoBehaviour
         {
             treeFactory.transform.GetChild(0).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         }
-        
+
         Resources.UnloadAsset(loadedPipeline);
     }
 
@@ -655,7 +763,7 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// dayCount에 맞게 Tree 업데이트
     /// </summary>
-    
+
     Transform campos;
     public void SetTree(int day)
     {
@@ -678,7 +786,7 @@ public class TreeController : MonoBehaviour
             //SleepAmountToTree(sleepAmount);
             //SleepRiseToTree(sleepRiseTimeVariance);
             //NapToTree(sleepyDayTimeNap);
-            
+
             //불러오기
             PipelineReload();
             treeFactory.gameObject.SetActive(true);
@@ -719,7 +827,7 @@ public class TreeController : MonoBehaviour
     /// </summary>
     /// <param name="day"></param>
     /// <param name="demo"></param>
-    
+
     public SkyController sky;
     public Transform fire;
     public ParticleSystem sproutParticle;
@@ -730,7 +838,7 @@ public class TreeController : MonoBehaviour
     public GameObject day2CustomObj;
     public GameObject day3CustomObj;
     public GameObject day4CustomObj;
-    
+
     public void SetTree(int day, bool demo)
     {
         // 1일차 (씨앗 심기)
@@ -856,7 +964,7 @@ public class TreeController : MonoBehaviour
     {
         List<PutTreeData> treeDatas = new List<PutTreeData>();
         PutTreeData treeData = new PutTreeData();
-        
+
         if (dayCount == 1)
         {
             saveUrl = "/api/v1/trees";
@@ -980,7 +1088,6 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// 내 나무 목록 가져오기
     /// </summary>
-    public Text txtTreeName;
     public int rotten;
     //public async void SetTreeData()
     //{
@@ -1075,9 +1182,9 @@ public class TreeController : MonoBehaviour
                 );
 
         // Sleep Data
-        int sleepAmount = (int) report.SleepReport.SleepAmount;
+        int sleepAmount = (int)report.SleepReport.SleepAmount;
         SleepAmountToTree(sleepAmount);
-        int sleepRiseTimeVariance = (int) report.SleepReport.SleepRiseTimeVariance;
+        int sleepRiseTimeVariance = (int)report.SleepReport.SleepRiseTimeVariance;
         SleepRiseToTree(sleepRiseTimeVariance);
         int sleepDaytimeNap = (int)report.SleepReport.SleepDaytimeNap;
         NapToTree(sleepDaytimeNap);
@@ -1211,7 +1318,7 @@ public class TreeController : MonoBehaviour
     /// 나무의 상한잎, 중력 조절하는 함수
     /// </summary>
     /// <param name="yesBad"> 나쁜 영향을 줄 것인지, 나쁜 영향을 완화시킬 것인지 </param>
-    public void BadChange(bool yesBad, float gravity=0.2f)
+    public void BadChange(bool yesBad, float gravity = 0.2f)
     {
         // 나쁜 영향을 줄 경우
         if (yesBad)
@@ -1258,4 +1365,6 @@ public class TreeController : MonoBehaviour
 
     }
     #endregion
+
 }
+#endregion

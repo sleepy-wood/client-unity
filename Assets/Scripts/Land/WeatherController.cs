@@ -51,7 +51,7 @@ public class WeatherController : MonoBehaviour
         }
         else
         {
-            Debug.Log($"WeatherRequestSuccess : {resultGet.data.weather}");
+            Debug.Log($"Weather : {resultGet.data.weather}");
             //Debug.Log($"Time : {resultGet.data.time}");
             weatherData.weather = resultGet.data.weather;
             weatherData.time = resultGet.data.time;

@@ -50,7 +50,7 @@ public class SkyController : MonoBehaviour
 
     public void Day()
     {
-        print("Day Sky");
+        //print("Day Sky");
         RenderSettings.skybox = daySky;
         //ltSetting = daySetting;
         //postProcessVolume.profile = dayPp;
@@ -60,7 +60,7 @@ public class SkyController : MonoBehaviour
 
     public void Night()
     {
-        print("Day Night");
+        //print("Day Night");
         RenderSettings.skybox = nightSky;
         //ltSetting = sunsetSetting;
         //postProcessVolume.profile = nightPp;
@@ -70,7 +70,7 @@ public class SkyController : MonoBehaviour
 
     public void Sunset()
     {
-        print("Day Sunset");
+        //print("Day Sunset");
         RenderSettings.skybox = sunsetSky;
         //ltSetting = sunsetSetting;
         //postProcessVolume.profile = sunsetPp;
