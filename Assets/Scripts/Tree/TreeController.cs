@@ -147,21 +147,6 @@ public class TreeController : MonoBehaviour
     private void Start()
     {
         assetBundle = DataTemporary.assetBundleTreePipeline;
-        #region Build
-        // Build mesh 오류 해결 코드
-        //print(Application.dataPath);
-        //string resPath = Application.dataPath + "/Resources/Tree/NewTreePipeline4.asset";
-        //if (!File.Exists(resPath))
-        //{
-        //        path = Application.dataPath + "Tree/NewTreePipeline4.asset";
-        //        byte[] data = File.ReadAllBytes(resPath);
-        //        File.WriteAllBytes(path, data);
-        //}
-
-        //// treeFactory
-        //treeFactory = TreeFactory.GetFactory();
-        #endregion
-
 
         if (visitType == VisitType.First)
         {
@@ -189,16 +174,17 @@ public class TreeController : MonoBehaviour
                 treeFactory.gameObject.SetActive(false);
                 int s = UnityEngine.Random.Range(0, 4);
                 treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[s].enabled = true;
-                print("sprout texture index : " + s);
+                print("Sprout texture index : " + s);
 
                 // Bark Material 랜덤 선택
-                string filePath = @"C:\Users\HP\UnityProject\client_unity\Assets\Resources";
-                string path = Directory.GetFiles(SrcPath, "*.*", SearchOption.TopDirectoryOnly);
-                int b = UnityEngine.Random.Range(0, 7);
-
-                Texture2D texture = Resources.Load("Tree/Sprites/Tree_Bark_" + name[b]) as Texture2D;
-                print("Tree_Bark_" + name[b]);
-                treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
+                string path = Application.dataPath + "/Resources/Tree/Materials";
+                string[] dirs = Directory.GetFiles(path, "*.mat", SearchOption.AllDirectories);
+                print("Number of Bark Materials : " + dirs.Length);
+                int b = UnityEngine.Random.Range(0, dirs.Length);
+                string[] fileName = dirs[b].Split("/Resources/");
+                Material mat = Resources.Load(fileName[1]) as Material;
+                print("Selected : " + fileName[1]);
+                treePipeline._serializedPipeline.barkMappers[0].customMaterial = mat;
             }
             print(pipeName + " Selected");
 

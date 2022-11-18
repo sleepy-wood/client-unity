@@ -53,7 +53,7 @@ public class TimeManager : MonoBehaviour
         else
         {
             print("Revisit");
-            GameManager.Instance.treeController.visitType = TreeController.VisitType.ReVisit;
+            GameManager.Instance.treeController.visitType = TreeController.VisitType.First;//ReVisit;
             // totalPlantDay, dayCount 계산
             CalculatePlantDays(firstPlantDate, DateTime.Now);
         }
