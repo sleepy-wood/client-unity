@@ -131,10 +131,10 @@ public class TreeGraph_UI : MonoBehaviour
         while (t < 1f)
         {
             t += Time.deltaTime * 0.05f;
-            m_scrollBarParent.GetChild(idx).GetComponent<Scrollbar>().size = Mathf.Lerp(m_scrollBarParent.GetChild(idx).GetComponent<Scrollbar>().size, size, t);
+            m_scrollBarParent.GetChild(idx).GetChild(1).GetComponent<Image>().fillAmount = Mathf.Lerp(m_scrollBarParent.GetChild(idx).GetChild(1).GetComponent<Image>().fillAmount, size, t);
             yield return null;
         }
-        m_scrollBarParent.GetChild(idx).GetComponent<Scrollbar>().size = size;
+        m_scrollBarParent.GetChild(idx).GetChild(1).GetComponent<Image>().fillAmount = size;
     }
     #endregion
 }
