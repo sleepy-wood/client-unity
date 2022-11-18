@@ -16,15 +16,16 @@ public class TreeGraph_UI : MonoBehaviour
     bool isOnce = false;
     private void Awake()
     {
-       for(int i = 0; i <  DataTemporary.GetTreeData.getTreeDataList.Count; i++)
-       {
-            if(DataTemporary.MyUserData.currentLandId == DataTemporary.GetTreeData.getTreeDataList[i].landId)
-            {
-                treeData = DataTemporary.GetTreeData.getTreeDataList[i];
-                break;
-            }
-       }
-       samples = DataTemporary.samples;
+        //for(int i = 0; i <  DataTemporary.GetTreeData.getTreeDataList.Count; i++)
+        //{
+        //     if(DataTemporary.MyUserData.currentLandId == DataTemporary.GetTreeData.getTreeDataList[i].landId)
+        //     {
+        //         treeData = DataTemporary.GetTreeData.getTreeDataList[i];
+        //         break;
+        //     }
+        //}
+        treeData = DataTemporary.GetTreeData.getTreeDataList[0];
+        samples = DataTemporary.samples;
     }
     private void OnEnable()
     {
@@ -34,9 +35,9 @@ public class TreeGraph_UI : MonoBehaviour
     {
         DateTime treeDateTime = DateTime.Parse(treeData.createdAt);
         //시작점을 구하자
-        int i = 0;
+        int temp = 0;
         bool isStartDay = false;
-        for (i = samples.Length - 1; i >=0; i--)
+        for (int i = samples.Length - 1; i >=0; i--)
         {
             if (samples[i].Type.ToString().Contains("Asleep"))
             {
@@ -63,7 +64,7 @@ public class TreeGraph_UI : MonoBehaviour
                 {
                     if (isStartDay)
                     {
-                        i++;
+                        temp = i + 1;
                         break;
                     }
                 }
@@ -74,7 +75,7 @@ public class TreeGraph_UI : MonoBehaviour
         int preDay = 0;
         int cnt = 0;
         float times = 0;
-        for (int j = i; j < samples.Length; j++)
+        for (int j = temp; j < samples.Length; j++)
         {
             if (samples[j].Type.ToString().Contains("Asleep"))
             {
@@ -118,20 +119,22 @@ public class TreeGraph_UI : MonoBehaviour
         }
         for(int j = 0;j < treeSleepTimes.Count; j++)
         {
-            StartCoroutine(GraphMove(m_scrollBarParent.GetChild(j).GetComponent<Scrollbar>(), treeSleepTimes[j] / 86400));
+            StartCoroutine(GraphMove(j, treeSleepTimes[j] / 86400));
         }
     }
 
     #region Coroutine
-    private IEnumerator GraphMove(Scrollbar scrollbar, float size)
+    private IEnumerator GraphMove(int idx, float size)
     {
+        Debug.Log(size);
         float t = 0;
         while (t < 1f)
         {
             t += Time.deltaTime * 0.05f;
-            scrollbar.size = Mathf.Lerp(scrollbar.size, size, t);
+            m_scrollBarParent.GetChild(idx).GetComponent<Scrollbar>().size = Mathf.Lerp(m_scrollBarParent.GetChild(idx).GetComponent<Scrollbar>().size, size, t);
             yield return null;
         }
+        m_scrollBarParent.GetChild(idx).GetComponent<Scrollbar>().size = size;
     }
     #endregion
 }
