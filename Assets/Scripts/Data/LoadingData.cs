@@ -111,8 +111,11 @@ public class LoadingData : MonoBehaviourPunCallbacks
         //AssetBundle Load
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
 
+        //마켓에서 산 것이 있으면 다운로드
+        ResultGet<MarketData> marketData = await DataModule.WebRequestBuffer<ResultGet<MarketData>>("/api/v1/orders", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+
         //UserData 
-        ResultGetId<UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        ResultGetId <UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         //LandData Load
         //Root landData = await DataModule.WebRequest<Root>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
@@ -122,26 +125,19 @@ public class LoadingData : MonoBehaviourPunCallbacks
         // TreeData Get
         ResultGet<GetTreeData> treeData = await DataModule.WebRequestBuffer<ResultGet<GetTreeData>>("/api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
-        ArrayLandData arrayLandData = new ArrayLandData();
-        arrayLandData.landLists = landData.data;
-        //DataTemporary.MyLandData = arrayLandData;
-
-        ArrayBridgeData arrayBridgeData = new ArrayBridgeData();
-        arrayBridgeData.bridgeLists = bridgeData.data;
-        //DataTemporary.MyBridgeData = arrayBridgeData;
-
-        ArrayGetTreeData arrayTreeData = new ArrayGetTreeData();
-        arrayTreeData.getTreeDataList = treeData.data;
-
 
         if (landData.result)
         {
             Debug.Log(landData.data);
+            ArrayLandData arrayLandData = new ArrayLandData();
+            arrayLandData.landLists = landData.data;
             DataTemporary.MyLandData = arrayLandData;
         }
         if (bridgeData.result)
         {
             Debug.Log(bridgeData.data);
+            ArrayBridgeData arrayBridgeData = new ArrayBridgeData();
+            arrayBridgeData.bridgeLists = bridgeData.data;
             DataTemporary.MyBridgeData = arrayBridgeData;
         }
         if (userData.result)
@@ -151,13 +147,27 @@ public class LoadingData : MonoBehaviourPunCallbacks
         if (treeData.result)
         {
             Debug.Log(treeData.data);
+            ArrayGetTreeData arrayTreeData = new ArrayGetTreeData();
+            arrayTreeData.getTreeDataList = treeData.data;
             DataTemporary.GetTreeData = arrayTreeData;
+        }
+        if (marketData.result)
+        {
+            Debug.Log(marketData.result);
+            ArrayMarketData arrayMarket = new ArrayMarketData();
+            arrayMarket.marketData = marketData.data;
+            DataTemporary.arrayMarketData = arrayMarket;
         }
 
         if (!m_testMode)
         {
              //&& treeData.result
-            if (landData.result && bridgeData.result && userData.result && login.result && treeData.result)
+            if (landData.result 
+                && bridgeData.result
+                && userData.result
+                && login.result
+                && treeData.result
+                && marketData.result)
             {
                 isLoadingComplete = true;
             }
