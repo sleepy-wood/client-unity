@@ -71,6 +71,10 @@ public class Graph_SleepRecord : MonoBehaviour
     #region Average_SleepTime
     private int preDay = 0;
     TimeSpan day_totalTime;
+
+    /// <summary>
+    /// 하루 주기 단위로 계산
+    /// </summary>
     void Graph_Day()
     {
         //초기화
@@ -149,6 +153,9 @@ public class Graph_SleepRecord : MonoBehaviour
 
     TimeSpan week = new TimeSpan();
     TimeSpan week_totalTime;
+    /// <summary>
+    /// 한 주 주기 단위로 계산
+    /// </summary>
     void Graph_Week()
     {
         //초기화
@@ -222,6 +229,302 @@ public class Graph_SleepRecord : MonoBehaviour
         week_totalTime /= timeSpans.Count;
         sleep_averTime.text = "평균: " + week_totalTime.Hours + "시간 " + week_totalTime.Minutes + "분";
     }
+
+    /// <summary>
+    /// 한 달 주기 단위로 계산
+    /// </summary>
+    void Graph_Month()
+    {
+        int cnt = 0;
+        int startMonth = 0;
+        int preMonth = 0;
+        int startDay = 0;
+        int preDay = 0;
+        List<TimeSpan> month_result = new List<TimeSpan>();
+        TimeSpan month_TotalTime = new TimeSpan();
+        TimeSpan month = new TimeSpan();
+        bool isEnd = false;
+        for (int i = sleepsData.Length - 1; i >= 0; i--)
+        {
+            if (sleepsData[i].Type.ToString().Contains("Asleep"))
+            {
+                //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
+                TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
+                diff /= 2;
+                var NewDate = new DateTime(
+                    sleepsData[i].StartDate.Year,
+                    sleepsData[i].StartDate.Month,
+                    sleepsData[i].StartDate.Day,
+                    sleepsData[i].StartDate.Hour,
+                    sleepsData[i].StartDate.Minute,
+                    sleepsData[i].StartDate.Second
+                    );
+                NewDate.AddDays(diff.Days);
+                NewDate.AddHours(diff.Hours);
+                NewDate.AddMinutes(diff.Minutes);
+                NewDate.AddSeconds(diff.Seconds);
+                //중앙값의 날의 요일
+                startMonth = NewDate.Month;
+                startDay = (int)NewDate.DayOfWeek;
+
+                if (!isOnce)
+                {
+                    isOnce = true;
+                    preMonth = startMonth;
+                    preDay = startDay;
+                }
+                //month가 같지 않으면 개월 수가 다름
+                if (startMonth != preMonth)
+                {
+                    month_result.Add(month / cnt);
+                    if (month_result.Count < 7)
+                    {
+                        month = new TimeSpan();
+                        cnt = 0;
+                    }
+                    else
+                    {
+                        isEnd = true;
+                        break;
+                    }
+                }
+                if (preDay != startDay)
+                {
+                    cnt++;
+                }
+                month += diff;
+                preMonth = startMonth;
+                preDay = startDay;
+            }
+        }
+        //수면 데이터가 7개보다 부족한 경우
+        if (!isEnd)
+        {
+            isEnd = true;
+            month_result.Add(month / cnt);
+        }
+
+        
+        for(int i = 0; i < month_result.Count; i++)
+        {
+            if (!period_sleepGraph.GetChild(i).gameObject.activeSelf)
+                period_sleepGraph.GetChild(i).gameObject.SetActive(true);
+
+            TimeSpan time = month_result[i];
+            month_TotalTime += time;
+            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 86400)));
+            if (i == 0)
+                period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = "이번 달";
+            else
+                period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = i.ToString() + "달 전";
+        }
+        for (int i = month_result.Count; i < period_sleepGraph.childCount; i++)
+        {
+            period_sleepGraph.GetChild(i).gameObject.SetActive(false);
+        }
+        month_TotalTime /= month_result.Count;
+        sleep_averTime.text = "평균: " + month_TotalTime.Hours + "시간 " + month_TotalTime.Minutes + "분";
+    }
+
+
+    /// <summary>
+    /// 6 달 주기 단위로 계산
+    /// </summary>
+    void Graph_SixMonth()
+    {
+        int cnt = 0;
+        int startMonth = 0;
+        int preMonth = 0;
+        int startDay = 0;
+        int preDay = 0;
+        int monthCnt = 0;
+        List<TimeSpan> sixMonth_result = new List<TimeSpan>();
+        TimeSpan sixMonth_TotalTime = new TimeSpan();
+        TimeSpan sixMonth = new TimeSpan();
+        bool isEnd = false;
+        for (int i = sleepsData.Length - 1; i >= 0; i--)
+        {
+            if (sleepsData[i].Type.ToString().Contains("Asleep"))
+            {
+                //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
+                TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
+                diff /= 2;
+                var NewDate = new DateTime(
+                    sleepsData[i].StartDate.Year,
+                    sleepsData[i].StartDate.Month,
+                    sleepsData[i].StartDate.Day,
+                    sleepsData[i].StartDate.Hour,
+                    sleepsData[i].StartDate.Minute,
+                    sleepsData[i].StartDate.Second
+                    );
+                NewDate.AddDays(diff.Days);
+                NewDate.AddHours(diff.Hours);
+                NewDate.AddMinutes(diff.Minutes);
+                NewDate.AddSeconds(diff.Seconds);
+                //중앙값의 날의 요일
+                startMonth = NewDate.Month;
+                startDay = (int)NewDate.DayOfWeek;
+
+                if (!isOnce)
+                {
+                    isOnce = true;
+                    preMonth = startMonth;
+                    preDay = startDay;
+                }
+                //month가 같지 않으면 개월 수가 다름
+                if (startMonth != preMonth)
+                {
+                    if (monthCnt > 6)
+                    {
+                        sixMonth_result.Add(sixMonth / cnt);
+                        if (sixMonth_result.Count < 7)
+                        {
+                            sixMonth = new TimeSpan();
+                            cnt = 0;
+                            monthCnt = 0;
+                        }
+                        else
+                        {
+                            isEnd = true;
+                            break;
+                        }
+                    }
+                }
+                if (preDay != startDay)
+                {
+                    cnt++;
+                }
+                sixMonth += diff;
+                preMonth = startMonth;
+                preDay = startDay;
+            }
+        }
+        //수면 데이터가 7개보다 부족한 경우
+        if (!isEnd)
+        {
+            isEnd = true;
+            sixMonth_result.Add(sixMonth / cnt);
+        }
+
+
+        for (int i = 0; i < sixMonth_result.Count; i++)
+        {
+            if (!period_sleepGraph.GetChild(i).gameObject.activeSelf)
+                period_sleepGraph.GetChild(i).gameObject.SetActive(true);
+
+            TimeSpan time = sixMonth_result[i];
+            sixMonth_TotalTime += time;
+            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 86400)));
+            if (i == 0)
+                period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = "최근 6달";
+            else
+                period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = ((i + 1) * 6).ToString() + "달 전";
+        }
+        for (int i = sixMonth_result.Count; i < period_sleepGraph.childCount; i++)
+        {
+            period_sleepGraph.GetChild(i).gameObject.SetActive(false);
+        }
+        sixMonth_TotalTime /= sixMonth_result.Count;
+        sleep_averTime.text = "평균: " + sixMonth_TotalTime.Hours + "시간 " + sixMonth_TotalTime.Minutes + "분";
+    }
+
+
+    /// <summary>
+    /// 1년 주기 단위로 계산
+    /// </summary>
+    void Graph_Year()
+    {
+        int cnt = 0;
+        int startYear = 0;
+        int preYear = 0;
+        int startDay = 0;
+        int preDay = 0;
+        List<TimeSpan> year_result = new List<TimeSpan>();
+        TimeSpan year_TotalTime = new TimeSpan();
+        TimeSpan year = new TimeSpan();
+        bool isEnd = false;
+        for (int i = sleepsData.Length - 1; i >= 0; i--)
+        {
+            if (sleepsData[i].Type.ToString().Contains("Asleep"))
+            {
+                //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
+                TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
+                diff /= 2;
+                var NewDate = new DateTime(
+                    sleepsData[i].StartDate.Year,
+                    sleepsData[i].StartDate.Month,
+                    sleepsData[i].StartDate.Day,
+                    sleepsData[i].StartDate.Hour,
+                    sleepsData[i].StartDate.Minute,
+                    sleepsData[i].StartDate.Second
+                    );
+                NewDate.AddDays(diff.Days);
+                NewDate.AddHours(diff.Hours);
+                NewDate.AddMinutes(diff.Minutes);
+                NewDate.AddSeconds(diff.Seconds);
+                //중앙값의 날의 요일
+                startYear = NewDate.Year;
+                startDay = (int)NewDate.DayOfWeek;
+
+                if (!isOnce)
+                {
+                    isOnce = true;
+                    preYear = startYear;
+                    preDay = startDay;
+                }
+                //month가 같지 않으면 년 수가 다름
+                if (startYear != preYear)
+                {
+                    year_result.Add(year / cnt);
+                    if (year_result.Count < 7)
+                    {
+                        year = new TimeSpan();
+                        cnt = 0;
+                    }
+                    else
+                    {
+                        isEnd = true;
+                        break;
+                    }
+                }
+                if (preDay != startDay)
+                {
+                    cnt++;
+                }
+                year += diff;
+                preYear = startYear;
+                preDay = startDay;
+            }
+        }
+        //수면 데이터가 7개보다 부족한 경우
+        if (!isEnd)
+        {
+            isEnd = true;
+            year_result.Add(year / cnt);
+        }
+
+
+        for (int i = 0; i < year_result.Count; i++)
+        {
+            if (!period_sleepGraph.GetChild(i).gameObject.activeSelf)
+                period_sleepGraph.GetChild(i).gameObject.SetActive(true);
+
+            TimeSpan time = year_result[i];
+            year_TotalTime += time;
+            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 86400)));
+            if (i == 0)
+                period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = "이번 년";
+            else
+                period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = i.ToString() + "년 전";
+        }
+        for (int i = year_result.Count; i < period_sleepGraph.childCount; i++)
+        {
+            period_sleepGraph.GetChild(i).gameObject.SetActive(false);
+        }
+        year_TotalTime /= year_result.Count;
+        sleep_averTime.text = "평균: " + year_TotalTime.Hours + "시간 " + year_TotalTime.Minutes + "분";
+    }
+
     /// <summary>
     /// 상단바 제어
     /// </summary>
@@ -258,6 +561,15 @@ public class Graph_SleepRecord : MonoBehaviour
                 break;
             case 1:
                 Graph_Week();
+                break;
+            case 2:
+                Graph_Month();
+                break;
+            case 3:
+                Graph_SixMonth();
+                break;
+            case 4:
+                Graph_Year();
                 break;
 
         }
