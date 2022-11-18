@@ -67,6 +67,13 @@ public class Graph_SleepRecord : MonoBehaviour
             }
         }
     }
+    void Graph_Init()
+    {
+        for (int i = 0; i < period_sleepGraph.childCount; i++)
+        {
+            period_sleepGraph.GetChild(i).GetComponent<Scrollbar>().size = 0;
+        }
+    }
     #region Average_SleepTime
     private int preDay = 0;
     TimeSpan day_totalTime;
@@ -76,7 +83,7 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Day()
     {
-        Init();
+        Graph_Init();
         //초기화
         day_totalTime = new TimeSpan();
         bool isOnce = false;
@@ -158,7 +165,7 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Week()
     {
-        Init();
+        Graph_Init();
         //초기화
         int cnt = 1;
         List<TimeSpan> timeSpans = new List<TimeSpan>();
@@ -236,7 +243,7 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Month()
     {
-        Init();
+        Graph_Init();
         int cnt = 0;
         int startMonth = 0;
         int preMonth = 0;
@@ -338,7 +345,7 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_SixMonth()
     {
-        Init();
+        Graph_Init();
         int cnt = 0;
         int startMonth = 0;
         int preMonth = 0;
@@ -382,7 +389,7 @@ public class Graph_SleepRecord : MonoBehaviour
                 //month가 같지 않으면 개월 수가 다름
                 if (startMonth != preMonth)
                 {
-                    if (monthCnt > 6)
+                    if (monthCnt >= 6)
                     {
                         if (sixMonth.TotalSeconds == 0)
                             break;
@@ -399,6 +406,8 @@ public class Graph_SleepRecord : MonoBehaviour
                             break;
                         }
                     }
+                    else
+                        monthCnt++;
                 }
                 if (preDay != startDay)
                 {
@@ -444,7 +453,7 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Year()
     {
-        Init();
+        Graph_Init();
         int cnt = 0;
         int startYear = 0;
         int preYear = 0;
@@ -798,6 +807,8 @@ public class Graph_SleepRecord : MonoBehaviour
             selectButton.anchoredPosition = Vector2.Lerp(start, end, t);
             yield return null;
         }
+        selectButton.anchoredPosition = end;
+
     }
 
     private IEnumerator GraphMove(int idx, float endSize)
@@ -805,10 +816,12 @@ public class Graph_SleepRecord : MonoBehaviour
         float t = 0;
         while (t < 1f)
         {
-            t += Time.deltaTime * 0.1f;
+            t += Time.deltaTime * 0.3f;
             period_sleepGraph.GetChild(idx).GetComponent<Scrollbar>().size = Mathf.Lerp(period_sleepGraph.GetChild(idx).GetComponent<Scrollbar>().size, endSize, t);
             yield return null;
         }
+        period_sleepGraph.GetChild(idx).GetComponent<Scrollbar>().size = endSize;
+
     }
     #endregion
 }
