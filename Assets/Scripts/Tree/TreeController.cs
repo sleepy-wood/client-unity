@@ -123,8 +123,6 @@ public class TreeController : MonoBehaviour
     public GameObject treeNameUI;
     // 나무 이름
     public string treeName;
-    // 자신의 Tree들 중에서 현재 랜드 나무의 index 
-    public int dataIdx;
     // 현재 나무의 id
     public int treeId;
     // Play Mode - Good Grow
@@ -139,41 +137,12 @@ public class TreeController : MonoBehaviour
     public GetTreeData currentTreeData;
     // 마이 컬렉션 - 나무 이름
     public Text txtTreeName;
+    // SkyLand Main Text
+    public Text txtMain;
+    public Text txtSub;
 
     #endregion
 
-    #region 가상 수면 데이터 변수
-    //// 총 수면 시간
-    //public enum SleepAmount
-    //{
-    //    Zero,
-    //    VeryInadequateBad,
-    //    Inadequate,
-    //    AdequateGood,
-    //    Excessive,
-    //}
-    //public SleepAmount sleepAmount;
-
-    //// 기상 시간의 오차
-    //public enum SleepRiseTimeVariance
-    //{
-    //    SmallGood,
-    //    LargeBad,
-    //}
-    //public SleepRiseTimeVariance sleepRiseTimeVariance;
-
-    //// daytime에 낮잠 여부
-    //public enum SleepyDayTimeNap
-    //{
-    //    YesBad,
-    //    NoGood,
-    //}
-    //public SleepyDayTimeNap sleepyDayTimeNap;
-
-    //// Activity 목표 달성 확률
-    //public float activityPercent;
-
-    #endregion
 
     private void Start()
     {
@@ -237,75 +206,80 @@ public class TreeController : MonoBehaviour
             if (!demoMode)
             {
                 // 랜덤 선택된 Seed로 기본 세팅값 찾기
-                FindTreeSetting();
-
+                for (int i = 0; i < treeStores.Count; i++)
+                {
+                    if (treeStores[i].seedType == selectedSeed)
+                    {
+                        selectedTreeSetting = treeStores[i].treeSettings;
+                        print($"나무 기본 세팅 : {treeStores[i].seedType}");
+                    }
+                }
                 // 1일차 기본 세팅
-                PipelineSetting(2);
+                PipelineSetting(0);
                 SetTree(1);
             }
         }
         else if (visitType == VisitType.ReVisit)
         {
-            ApplyHealthData();
             // 로드한 데이터 세팅
-            //treeId = currentTreeData.id;
-            //txtTreeName.text = currentTreeData.treeName;
-            //selectedSeed = pipeNameDict[currentTreeData.seedType];
-            //pipeName = currentTreeData.seedType;
+            treeId = currentTreeData.id;
+            txtTreeName.text = currentTreeData.treeName;
+            selectedSeed = pipeNameDict[currentTreeData.seedType];
+            pipeName = currentTreeData.seedType;
 
-            //// firstPlantDate와 dayCount에 따라 그에 맞는 HealthData 반영
-            //if (dayCount > 1)
-            //{
-            //    soil.SetActive(false);
-            //    // HealthData 나무에 반영
-            //    ApplyHealthData();//GameManager.Instance.timeManager.firstPlantDate);
-            //    SaveTreeData();
-            //}
-            //else
-            //{
-            //    sprout.SetActive(true);
-            //    sproutLeaf.transform.localScale = new Vector3(1, 1, 1);
-            //}    
-
-            //// Tree 로드
-            //PipelineReload();
-            //treeFactory.gameObject.SetActive(true);
+            // firstPlantDate와 dayCount에 따라 그에 맞는 HealthData 반영
+            if (dayCount > 1)
+            {
+                soil.SetActive(false);
+                // ReVisit했는데 해당 DayCount와 저장한 나무 데이터 수가 동일하지 않을 경우
+                if (dayCount != currentTreeData.treeGrowths.Count)
+                {
+                    // 이전 날의 HealthData 반영 + 데이터 저장 + 나무 변경 Text
+                    ApplyHealthData();
+                    SaveTreeData();
+                    txtMain.text = "나무가 성장했어요!";
+                    txtSub.text = "나만의 아이템으로 랜드를 꾸며보세요.";
+                    // Tree 로드
+                    PipelineReload();
+                    changeParticle.Play();
+                    treeFactory.gameObject.SetActive(true);
+                }
+                // ReVisit했는데 해당 DayCount와 저장한 나무 데이터 수가 동일할 경우 
+                else
+                {
+                    // 해당 데이터 나무에 반영
+                    ApplyHealthData();
+                    // Tree 로드
+                    PipelineReload();
+                    treeFactory.gameObject.SetActive(true);
+                }
+            }
+            // 1일차의 경우
+            else
+            {
+                sprout.SetActive(true);
+                sproutLeaf.transform.localScale = new Vector3(1, 1, 1);
+            }
         }
-         
-
-        #region 기존 코드
-        //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
-        //// pipeline에서 positioner 요소 가져오기(위치 동적 할당)
-        //if (pipeline != null && pipeline.Validate())
-        //{
-        //        positionerElement = (PositionerElemeft)pipeline.root.GetDownstreamElement(PipelineElement.ClassType.Positioner);
-        //        positionerElement.positions.Clear();
-        //}
-        #endregion
     }
 
     /// <summary>
-    /// 이전 날의 헬스데이터 나무에 반영
+    /// 나무 처음 심은 날을 기반으로 해당 dayCount에 맞는 헬스 데이터 가져오기
     /// </summary>
-    public void ApplyHealthData() //DateTime startDate)
+    public void ApplyHealthData() 
     {
-        // ex. 2일차 + 5시간 => 2일차 헬스데이터 반영
-        DateTime startDate = DateTime.Parse("10/18/2022 07:22:16");
-        TimeSpan timeDif = startDate.AddDays(2) - startDate;
-        int dayDif = timeDif.Days;
-        DateTime date = startDate.AddDays(dayDif);
-
+        DateTime date = GameManager.Instance.timeManager.firstPlantDate;
 
         // 헬스 데이터 받아오기
         if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
         {
             report = HealthDataAnalyzer.GetDailyReport(
                 new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond, DateTimeKind.Local),
-                6
+                dayCount
             );
             if (report != null)
             {
-                Debug.Log(date + "의 HealthData");
+                Debug.Log(date + " 의 HealthData");
                 Debug.Log(JsonUtility.ToJson(report, true));
             }
         }
@@ -578,10 +552,10 @@ public class TreeController : MonoBehaviour
     /// "girthBase" > Min/Max Girth At Base
     /// "scale" > Object scale
     /// </summary>
-    public void PipelineSetting(int day)
+    public void PipelineSetting(int index)
     {
         // 기본 세팅 성장 데이터 정보 지닌 요소
-        TreeSetting element = selectedTreeSetting[day - 2];
+        TreeSetting element = selectedTreeSetting[index];
 
         if (playMode)
         {
@@ -694,21 +668,6 @@ public class TreeController : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// treeStores에서 씨앗 종류에 맞는 Tree Settings 찾는 함수
-    /// </summary>
-    public void FindTreeSetting()
-    {
-        for (int i = 0; i < treeStores.Count; i++)
-        {
-            if (treeStores[i].seedType == selectedSeed)
-            {
-                selectedTreeSetting = treeStores[i].treeSettings;
-                print($"나무 기본 세팅 : {treeStores[i].seedType}");
-            }
-        }
-    }
-
 
     /// <summary>
     /// 업데이트한 나무 정보를 기반으로 나무 다시 로드
@@ -767,7 +726,7 @@ public class TreeController : MonoBehaviour
         // 3일차
         else if (day == 3)
         {
-            PipelineSetting(3);
+            PipelineSetting(1);
             PipelineReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             campos = Camera.main.gameObject.transform;
@@ -776,7 +735,7 @@ public class TreeController : MonoBehaviour
         // 4일차
         else if (day == 4)
         {
-            PipelineSetting(4);
+            PipelineSetting(2);
             PipelineReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             //SaveTreeData();
@@ -784,7 +743,7 @@ public class TreeController : MonoBehaviour
         // 5일차
         else if (day == 5)
         {
-            PipelineSetting(5);
+            PipelineSetting(3);
             PipelineReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             assetBundle.Unload(false);
@@ -854,7 +813,7 @@ public class TreeController : MonoBehaviour
             // Sprout
             SproutNumChange(true, 5);
             // Tree Pipeline - Branch MinMax, Girth, Scale
-            PipelineSetting(3);
+            PipelineSetting(1);
             PipelineReload();
             // Change Particle
             changeParticle.Play();
@@ -871,7 +830,7 @@ public class TreeController : MonoBehaviour
             {
                 SproutNumChange(false, 10);
                 // Tree Pipeline - Branch MinMax, Girth, Scale
-                PipelineSetting(4);
+                PipelineSetting(2);
                 BadChange(true, 0.4f);
                 rottenLeafParticle.Play();
             }
@@ -904,7 +863,7 @@ public class TreeController : MonoBehaviour
             {
                 SproutNumChange(false, 10);
                 // Tree Pipeline - Branch MinMax, Girth, Scale
-                PipelineSetting(5);
+                PipelineSetting(3);
                 BadChange(true, 0.2f);
                 rottenLeafParticle.gameObject.SetActive(true);
                 rottenLeafParticle.Play();
@@ -1275,17 +1234,17 @@ public class TreeController : MonoBehaviour
     /// 나뭇잎 개수 조절하는 함수
     /// </summary>
     /// <param name="addSprout"> 나뭇잎 개수 더할 것인지, 뺄 것인지 </param>
-    public void SproutNumChange(bool addSprout, int branchNum)
+    public void SproutNumChange(bool addSprout, int sproutNum)
     {
         if (addSprout)
         {
-            treePipeline._serializedPipeline.sproutGenerators[0].minFrequency += branchNum;
-            treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency += branchNum;
+            treePipeline._serializedPipeline.sproutGenerators[0].minFrequency += sproutNum;
+            treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency += sproutNum;
         }
         else
         {
-            treePipeline._serializedPipeline.sproutGenerators[0].minFrequency -= branchNum;
-            treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency -= branchNum;
+            treePipeline._serializedPipeline.sproutGenerators[0].minFrequency -= sproutNum;
+            treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency -= sproutNum;
         }
     }
     /// <summary>
