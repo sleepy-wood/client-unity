@@ -195,8 +195,6 @@ public class TreeController : MonoBehaviour
         #endregion
 
 
-
-
         if (visitType == VisitType.First)
         {
             // Mode에 따른 Pipeline 선택
@@ -253,51 +251,14 @@ public class TreeController : MonoBehaviour
             txtTreeName.text = currentTreeData.treeName;
             selectedSeed = pipeNameDict[currentTreeData.seedType];
             pipeName = currentTreeData.seedType;
-            // DayCount해서 Health Data 반영
 
-
-            // Tree Data의 Tree id 저장
-            //treeId = DataTemporary.GetTreeData.getTreeDataList[dataIdx].id;
-
-            // Tree Data통해서 Pipeline 세팅
-            //for (int i = 0; i < DataTemporary.GetTreeData.getTreeDataList.Count; i++)
-            //{
-            //    if (DataTemporary.GetTreeData.getTreeDataList[i].id == treeId)
-            //    {
-            //        currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
-            //    }
-            //}
-            //LoadDataSetting(currentTreeData); 
-
-
-
-            // 헬스데이터 불러오기 ( 삭제 )    
-            HealthDataStore.Init();
-
-            DateTime startDate = GameManager.Instance.timeManager.firstPlantDate;
-
-            //if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
-            //{
-            //    //Debug.Log("SleepSamples: " + HealthDataStore.SleepSamples.Length);
-            //    //Debug.Log("ActivitySamples: " + HealthDataStore.ActivitySamples.Length);
-            //    // 올해 10월 날짜로 하는 것이 가장 좋음
-            //    report = HealthDataAnalyzer.GetDailyReport(
-            //        new DateTime(startDate.Year, startDate.Month, startDate.Day, startDate.Hour, startDate.Minute, startDate.Second, startDate.Millisecond, DateTimeKind.Local),
-            //        1
-            //    );
-            //    if (report != null)
-            //    {
-            //        Debug.Log("HealthData 불러오기 성공");
-            //        Debug.Log(JsonUtility.ToJson(report, true));
-            //    }
-            //}
             // firstPlantDate와 dayCount에 따라 그에 맞는 HealthData 반영
             if (dayCount > 1)
             {
                 soil.SetActive(false);
                 // HealthData 나무에 반영
-                ApplyHealthData(report, startDate);
-                treeFactory.gameObject.SetActive(true);
+                ApplyHealthData();//GameManager.Instance.timeManager.firstPlantDate);
+                SaveTreeData();
             }
             else
             {
@@ -307,6 +268,7 @@ public class TreeController : MonoBehaviour
 
             // Tree 로드
             PipelineReload();
+            treeFactory.gameObject.SetActive(true);
         }
          
 
@@ -322,51 +284,45 @@ public class TreeController : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// 이전 날의 헬스데이터 나무에 반영
     /// </summary>
-    //public void 
-
-    /// <summary>
-    /// 헬스데이터 나무에 반영
-    /// </summary>
-    public void ApplyHealthData(HealthReport healthReport, DateTime startDate)
+    public void ApplyHealthData()//DateTime startDate)
     {
         // ex. 2일차 + 5시간 => 2일차 헬스데이터 반영
-        TimeSpan timeDif = DateTime.Now - startDate;
-        if (timeDif.Hours < 24*dayCount)
+        DateTime startDate = DateTime.Parse("10/18/2022 07:22:16");
+        TimeSpan timeDif = startDate.AddDays(2) - startDate;
+        int dayDif = timeDif.Days;
+        DateTime date = startDate.AddDays(dayDif);
+
+
+        // 헬스 데이터 받아오기
+        if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
         {
-            if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
-            {
-                DateTime date = startDate.AddDays(-1);
-                report = HealthDataAnalyzer.GetDailyReport(
-                    new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond, DateTimeKind.Local),
-                    1
-                );
-                if (report != null)
-                {
-                    Debug.Log(date+"의 HealthData");
-                    Debug.Log(JsonUtility.ToJson(report, true));
-                }
-            }
-        }
-        else if (timeDif.Hours == 24*dayCount)
-        {
-            // HealthData 반영
-            DateTime date = startDate.AddDays(1);
             report = HealthDataAnalyzer.GetDailyReport(
                 new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond, DateTimeKind.Local),
-                1
+                6
             );
             if (report != null)
             {
                 Debug.Log(date + "의 HealthData");
                 Debug.Log(JsonUtility.ToJson(report, true));
             }
-
-            // Tree Data Save
-            SaveTreeData();
         }
 
+        // 헬스데이터 나무에 반영
+        // Sleep Data
+        int sleepAmount = (int)report.SleepReport.SleepAmount;
+        SleepAmountToTree(sleepAmount);
+        int sleepRiseTimeVariance = (int)report.SleepReport.SleepRiseTimeVariance;
+        SleepRiseToTree(sleepRiseTimeVariance);
+        int sleepDaytimeNap = (int)report.SleepReport.SleepDaytimeNap;
+        NapToTree(sleepDaytimeNap);
+
+        // Activity Data
+        float activeEnergyBurnedGoalAchieved = (float)report.ActivityReport.ActiveEnergyBurnedGoalAchieved;
+        ScaleChange(activeEnergyBurnedGoalAchieved);
+        float exerciseTimeGoalAchieved = (float)report.ActivityReport.ExerciseTimeGoalAchieved;
+        float standHoursGoalAchieved = (float)report.ActivityReport.StandHoursGoalAchieved;
 
     }
 
@@ -994,7 +950,7 @@ public class TreeController : MonoBehaviour
             // Seed Type
             treeData.seedType = pipeName; // selectedSeed.ToString();
             // Land ID 
-            treeData.landId = 1; //DataTemporary.MyUserData.currentLandId;
+            treeData.landId = DataTemporary.MyUserData.currentLandId;
 
             // Tree Pipeline Data //
             // 1. Scale
@@ -1213,32 +1169,6 @@ public class TreeController : MonoBehaviour
 
     #region User Data to Tree
 
-    /// <summary>
-    /// 이전 날의 HealthData를 나무에 적용
-    /// </summary>
-    public void SetHealthDataToTree(DateTime yesterday)
-    {
-        // 이전날의 HealthData 분석 결과 가져오기
-        report = HealthDataAnalyzer.GetDailyReport(
-                new DateTime(yesterday.Year, yesterday.Month, yesterday.Day, yesterday.Hour, yesterday.Minute, yesterday.Second, yesterday.Millisecond, DateTimeKind.Local),
-                6
-                );
-
-        // Sleep Data
-        int sleepAmount = (int)report.SleepReport.SleepAmount;
-        SleepAmountToTree(sleepAmount);
-        int sleepRiseTimeVariance = (int)report.SleepReport.SleepRiseTimeVariance;
-        SleepRiseToTree(sleepRiseTimeVariance);
-        int sleepDaytimeNap = (int)report.SleepReport.SleepDaytimeNap;
-        NapToTree(sleepDaytimeNap);
-
-        // Activity Data
-        float activeEnergyBurnedGoalAchieved = (float)report.ActivityReport.ActiveEnergyBurnedGoalAchieved;
-        ScaleChange(activeEnergyBurnedGoalAchieved);
-        float exerciseTimeGoalAchieved = (float)report.ActivityReport.ExerciseTimeGoalAchieved;
-        float standHoursGoalAchieved = (float)report.ActivityReport.StandHoursGoalAchieved;
-
-    }
     /// <summary>
     /// 수면양 enum 타입에 따른 나무 데이터 변경
     /// </summary>
