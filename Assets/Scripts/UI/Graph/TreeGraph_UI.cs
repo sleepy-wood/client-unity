@@ -36,7 +36,7 @@ public class TreeGraph_UI : MonoBehaviour
         //시작점을 구하자
         int i = 0;
         bool isStartDay = false;
-        for (i = 0; i < samples.Length; i++)
+        for (i = samples.Length - 1; i >=0; i--)
         {
             if (samples[i].Type.ToString().Contains("Asleep"))
             {
@@ -63,7 +63,7 @@ public class TreeGraph_UI : MonoBehaviour
                 {
                     if (isStartDay)
                     {
-                        i--;
+                        i++;
                         break;
                     }
                 }
@@ -74,7 +74,7 @@ public class TreeGraph_UI : MonoBehaviour
         int preDay = 0;
         int cnt = 0;
         float times = 0;
-        for (int j = i; j >= 0; j--)
+        for (int j = i; j < samples.Length; j++)
         {
             if (samples[j].Type.ToString().Contains("Asleep"))
             {
