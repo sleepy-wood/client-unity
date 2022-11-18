@@ -179,7 +179,7 @@ public class Graph_Initial_Window : MonoBehaviour
         m_thisWeek_Aver.text = curWeek.Hours.ToString() + "시간 " + curWeek.Minutes.ToString() + "분";
         m_lastWeek_Aver.text = preWeek.Hours.ToString() + "시간 " + preWeek.Minutes.ToString() + "분";
 
-        StartCoroutine(GraphMove((float)(curWeek.TotalSeconds / 86400), (float)(preWeek.TotalSeconds / 86400)));
+        StartCoroutine(GraphMove((float)(curWeek.TotalSeconds / 28800), (float)(preWeek.TotalSeconds / 28800)));
 
         Debug.Log("4");
         if (m_thisWeek_Scroll.size < m_lastWeek_Scroll.size)

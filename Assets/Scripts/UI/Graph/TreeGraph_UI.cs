@@ -119,7 +119,7 @@ public class TreeGraph_UI : MonoBehaviour
         }
         for(int j = 0;j < treeSleepTimes.Count; j++)
         {
-            StartCoroutine(GraphMove(j, treeSleepTimes[j] / 86400));
+            StartCoroutine(GraphMove(j, treeSleepTimes[j] / 28800));
         }
     }
 

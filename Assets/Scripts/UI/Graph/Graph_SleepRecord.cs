@@ -140,7 +140,7 @@ public class Graph_SleepRecord : MonoBehaviour
             TimeSpan time = timeSpans[(timeSpans.Count - 1) - i];
             period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = ((DayOfWeek)i).ToString();
             day_totalTime += time;
-            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 86400)));
+            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 28800)));
         }
         for (int i = timeSpans.Count; i < period_sleepGraph.childCount; i++)
         {
@@ -219,7 +219,7 @@ public class Graph_SleepRecord : MonoBehaviour
 
             TimeSpan time = timeSpans[i];
             week_totalTime += time;
-            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 86400)));
+            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 28800)));
             if(i == 0)
                 period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = "이번주";
             else
@@ -315,7 +315,7 @@ public class Graph_SleepRecord : MonoBehaviour
 
             TimeSpan time = month_result[i];
             month_TotalTime += time;
-            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 86400)));
+            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 28800)));
             if (i == 0)
                 period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = "이번 달";
             else
@@ -422,7 +422,7 @@ public class Graph_SleepRecord : MonoBehaviour
 
             TimeSpan time = sixMonth_result[i];
             sixMonth_TotalTime += time;
-            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 86400)));
+            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 28800)));
             if (i == 0)
                 period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = "최근 6달";
             else
@@ -523,7 +523,7 @@ public class Graph_SleepRecord : MonoBehaviour
 
             TimeSpan time = year_result[i];
             year_TotalTime += time;
-            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 86400)));
+            StartCoroutine(GraphMove(i, (float)(time.TotalSeconds / 28800)));
             if (i == 0)
                 period_sleepGraph.GetChild(i).GetChild(0).GetComponent<Text>().text = "이번 년";
             else
