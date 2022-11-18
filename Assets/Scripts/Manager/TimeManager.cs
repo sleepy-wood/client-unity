@@ -30,7 +30,8 @@ public class TimeManager : MonoBehaviour
             if (DataTemporary.GetTreeData.getTreeDataList[i].landId == DataTemporary.MyUserData.currentLandId)
             {
                 // 처음 심은 날 저장
-                firstPlantDate = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
+                //firstPlantDate = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
+                firstPlantDate = DateTime.Parse("10/18/2022 07:22:16");
                 // Tree Data 저장
                 GameManager.Instance.treeController.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
                 // Tree Data 인덱스
@@ -41,7 +42,7 @@ public class TimeManager : MonoBehaviour
         }
 
         // firstPlantDate로 방문타입 결정 => 5일차 후 새로운 Seed 심기 전 null값 처리필요
-        if (firstPlantDate.dateTime == DateTime.MinValue)//DateTime.Parse("08/18/2018 07:22:16"))  //DateTime.MinValue)
+        if (firstPlantDate.dateTime == DateTime.MinValue) // DateTime.Parse("08/18/2018 07:22:16"))  //DateTime.MinValue)
         {
             print("First Visit");
             GameManager.Instance.treeController.visitType = TreeController.VisitType.First;
@@ -166,8 +167,8 @@ public class TimeManager : MonoBehaviour
     public int CalculatePlantDays(DateTime from, DateTime to)
     {
         TimeSpan timeDif = to - from;
-        totalPlantDay = (int)timeDif.Days + 1;
-        GameManager.Instance.treeController.dayCount = totalPlantDay;
+        totalPlantDay = 2;// (int)timeDif.Days + 1;
+        GameManager.Instance.treeController.dayCount = 2;// totalPlantDay;
         return totalPlantDay;
     }
 
