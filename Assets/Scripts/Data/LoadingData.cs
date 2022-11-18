@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 using NativePlugin.HealthData;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 //using TreeEditor;
 
 public class LoadingData : MonoBehaviourPunCallbacks
@@ -113,7 +114,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
         //마켓에서 산 것이 있으면 다운로드
         ResultGet<MarketData> marketData = await DataModule.WebRequestBuffer<ResultGet<MarketData>>("/api/v1/orders", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-
+        
         //UserData 
         ResultGetId <UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
@@ -157,6 +158,25 @@ public class LoadingData : MonoBehaviourPunCallbacks
             ArrayMarketData arrayMarket = new ArrayMarketData();
             arrayMarket.marketData = marketData.data;
             DataTemporary.arrayMarketData = arrayMarket;
+            //이모지 다운로드
+            for(int i = 0; i < marketData.data.Count; i++)
+            {
+                for(int j = 0; j < marketData.data[i].orderDetails.Count; j++)
+                {
+                    List<ProductImages> productImages = new List<ProductImages>();
+                    productImages = marketData.data[i].orderDetails[j].product.productImages;
+                    for (int k = 0; k < productImages.Count; k++)
+                    {
+                        Texture2D texture = await DataModule.WebrequestTexture(productImages[k].path, DataModule.NetworkType.GET);
+                        byte[] bytes = texture.EncodeToPNG();
+                        string path = Application.persistentDataPath + "/TextureImg/Emoji";
+                        if (Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                    }
+                }
+            }
         }
 
         if (!m_testMode)
