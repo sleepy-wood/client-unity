@@ -543,6 +543,8 @@ public class Graph_SleepRecord : MonoBehaviour
     /// <param name="record"></param>
     void ChangeGraph(RecordDate record)
     {
+        //그래프 올라가고 있는거 있으면 멈추기
+        StopAllCoroutines();
         //스크롤바 초기화
         for (int i = 0; i < period_sleepGraph.childCount; i++)
         {
