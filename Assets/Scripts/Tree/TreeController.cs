@@ -246,29 +246,30 @@ public class TreeController : MonoBehaviour
         }
         else if (visitType == VisitType.ReVisit)
         {
+            ApplyHealthData();
             // 로드한 데이터 세팅
-            treeId = currentTreeData.id;
-            txtTreeName.text = currentTreeData.treeName;
-            selectedSeed = pipeNameDict[currentTreeData.seedType];
-            pipeName = currentTreeData.seedType;
+            //treeId = currentTreeData.id;
+            //txtTreeName.text = currentTreeData.treeName;
+            //selectedSeed = pipeNameDict[currentTreeData.seedType];
+            //pipeName = currentTreeData.seedType;
 
-            // firstPlantDate와 dayCount에 따라 그에 맞는 HealthData 반영
-            if (dayCount > 1)
-            {
-                soil.SetActive(false);
-                // HealthData 나무에 반영
-                ApplyHealthData();//GameManager.Instance.timeManager.firstPlantDate);
-                SaveTreeData();
-            }
-            else
-            {
-                sprout.SetActive(true);
-                sproutLeaf.transform.localScale = new Vector3(1, 1, 1);
-            }    
+            //// firstPlantDate와 dayCount에 따라 그에 맞는 HealthData 반영
+            //if (dayCount > 1)
+            //{
+            //    soil.SetActive(false);
+            //    // HealthData 나무에 반영
+            //    ApplyHealthData();//GameManager.Instance.timeManager.firstPlantDate);
+            //    SaveTreeData();
+            //}
+            //else
+            //{
+            //    sprout.SetActive(true);
+            //    sproutLeaf.transform.localScale = new Vector3(1, 1, 1);
+            //}    
 
-            // Tree 로드
-            PipelineReload();
-            treeFactory.gameObject.SetActive(true);
+            //// Tree 로드
+            //PipelineReload();
+            //treeFactory.gameObject.SetActive(true);
         }
          
 
@@ -286,7 +287,7 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// 이전 날의 헬스데이터 나무에 반영
     /// </summary>
-    public void ApplyHealthData()//DateTime startDate)
+    public void ApplyHealthData() //DateTime startDate)
     {
         // ex. 2일차 + 5시간 => 2일차 헬스데이터 반영
         DateTime startDate = DateTime.Parse("10/18/2022 07:22:16");
