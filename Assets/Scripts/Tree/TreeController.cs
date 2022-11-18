@@ -37,7 +37,7 @@ public class TreeController : MonoBehaviour
     // pipeNameList
     List<string> pipeNameList = new List<string>() { "BasicTree", "OakTree", "SakuraTree", "DRTree", "DemoTree_Red" };
     // pipeName별 SeedType
-    Dictionary<string, SeedType> pipeNameDict = new Dictionary<string, SeedType>()
+    public Dictionary<string, SeedType> pipeNameDict = new Dictionary<string, SeedType>()
     {
         { "BasicTree", SeedType.Basic },
         { "OakTree", SeedType.Oak },
@@ -136,7 +136,7 @@ public class TreeController : MonoBehaviour
     // User의 HealthData
     HealthReport report;
     // 로드해야하는 나무의 데이터
-    GetTreeData currentTreeData;
+    public GetTreeData currentTreeData;
     // 마이 컬렉션 - 나무 이름
     public Text txtTreeName;
 
@@ -177,8 +177,8 @@ public class TreeController : MonoBehaviour
 
     private void Start()
     {
-        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
-        print("assetBundle : " + assetBundle);
+        assetBundle = DataTemporary.assetBundleTreePipeline;
+
         #region Build
         // Build mesh 오류 해결 코드
         //print(Application.dataPath);
@@ -193,6 +193,8 @@ public class TreeController : MonoBehaviour
         //// treeFactory
         //treeFactory = TreeFactory.GetFactory();
         #endregion
+
+
 
 
         if (visitType == VisitType.First)
@@ -242,12 +244,15 @@ public class TreeController : MonoBehaviour
                 // 1일차 기본 세팅
                 PipelineSetting(2);
                 SetTree(1);
-                //SaveTreeData();
             }
         }
         else if (visitType == VisitType.ReVisit)
         {
-            // 로드한 데이터로 나무 파이프라인 로드
+            // 로드한 데이터 세팅
+            treeId = currentTreeData.id;
+            txtTreeName.text = currentTreeData.treeName;
+            selectedSeed = pipeNameDict[currentTreeData.seedType];
+            pipeName = currentTreeData.seedType;
             // DayCount해서 Health Data 반영
 
 
@@ -264,27 +269,29 @@ public class TreeController : MonoBehaviour
             //}
             //LoadDataSetting(currentTreeData); 
 
+
+
             // 헬스데이터 불러오기 ( 삭제 )    
             HealthDataStore.Init();
 
             DateTime startDate = GameManager.Instance.timeManager.firstPlantDate;
+
+            //if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
+            //{
+            //    //Debug.Log("SleepSamples: " + HealthDataStore.SleepSamples.Length);
+            //    //Debug.Log("ActivitySamples: " + HealthDataStore.ActivitySamples.Length);
+            //    // 올해 10월 날짜로 하는 것이 가장 좋음
+            //    report = HealthDataAnalyzer.GetDailyReport(
+            //        new DateTime(startDate.Year, startDate.Month, startDate.Day, startDate.Hour, startDate.Minute, startDate.Second, startDate.Millisecond, DateTimeKind.Local),
+            //        1
+            //    );
+            //    if (report != null)
+            //    {
+            //        Debug.Log("HealthData 불러오기 성공");
+            //        Debug.Log(JsonUtility.ToJson(report, true));
+            //    }
+            //}
             // firstPlantDate와 dayCount에 따라 그에 맞는 HealthData 반영
-            if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
-            {
-                //Debug.Log("SleepSamples: " + HealthDataStore.SleepSamples.Length);
-                //Debug.Log("ActivitySamples: " + HealthDataStore.ActivitySamples.Length);
-                // 올해 10월 날짜로 하는 것이 가장 좋음
-                report = HealthDataAnalyzer.GetDailyReport(
-                    new DateTime(startDate.Year, startDate.Month, startDate.Day, startDate.Hour, startDate.Minute, startDate.Second, startDate.Millisecond, DateTimeKind.Local),
-                    1
-                );
-                if (report != null)
-                {
-                    Debug.Log("HealthData 불러오기 성공");
-                    Debug.Log(JsonUtility.ToJson(report, true));
-                }
-            }
-            
             if (dayCount > 1)
             {
                 soil.SetActive(false);
@@ -313,6 +320,11 @@ public class TreeController : MonoBehaviour
         //}
         #endregion
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    //public void 
 
     /// <summary>
     /// 헬스데이터 나무에 반영
@@ -776,7 +788,6 @@ public class TreeController : MonoBehaviour
             // 나무 심은 시간 저장
             //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
-            //SaveTreeData();
             PipelineReload();
         }
         // 2일차
@@ -970,9 +981,6 @@ public class TreeController : MonoBehaviour
     string saveUrl;
     public async void SaveTreeData()
     {
-        
-        
-
         if (dayCount == 1)
         {
             saveUrl = "/api/v1/trees";
@@ -980,13 +988,13 @@ public class TreeController : MonoBehaviour
             List<PutTreeData> treeDatas = new List<PutTreeData>();
 
             // Tree Name
-            treeData.treeName = "슬리피우드";
+            treeData.treeName = txtTreeName.text;
             // seed Number
             treeData.seedNumber = 0;
             // Seed Type
-            treeData.seedType = selectedSeed.ToString();
+            treeData.seedType = pipeName; // selectedSeed.ToString();
             // Land ID 
-            treeData.landId = 3;  //DataTemporary.MyUserData.currentLandId;
+            treeData.landId = 1; //DataTemporary.MyUserData.currentLandId;
 
             // Tree Pipeline Data //
             // 1. Scale
@@ -1007,7 +1015,7 @@ public class TreeController : MonoBehaviour
             // 7. Root Num                                                                              
             treeData.rootNum = 0;
             // 8. Bark Texture Name
-            treeData.barkTexture = ".";
+            treeData.barkTexture = "None";
             // 9. Sprout Index
             treeData.sproutIndex = 0;
 
@@ -1046,11 +1054,8 @@ public class TreeController : MonoBehaviour
             TreePipeline treeData = new TreePipeline();
             List<TreePipeline> treeDatas = new List<TreePipeline>();
 
-            // 내 나무 목록 중 현재 나무 이름과 같은 나무의 아이디 찾기
-
-
             // Tree Id
-            treeData.treeId = 28;
+            treeData.treeId = treeId;
 
             // Tree Pipeline Data //
             // 1. Scale
@@ -1089,20 +1094,20 @@ public class TreeController : MonoBehaviour
             Debug.Log(JsonUtility.ToJson(treeData, true));
 
             // PUT Tree Data
-            ResultPost<PutTreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<PutTreeData>>(
-                saveUrl,
-                DataModule.NetworkType.POST,
-                DataModule.DataType.BUFFER,
-                treeJsonData);
+            //ResultPost<PutTreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<PutTreeData>>(
+            //    saveUrl,
+            //    DataModule.NetworkType.POST,
+            //    DataModule.DataType.BUFFER,
+            //    treeJsonData);
 
-            if (!resultPost.result)
-            {
-                Debug.LogError("WebRequestError : NetworkType[Post]");
-            }
-            else
-            {
-                Debug.Log($"{dayCount}일차 Tree Data Save 성공");
-            }
+            //if (!resultPost.result)
+            //{
+            //    Debug.LogError("WebRequestError : NetworkType[Post]");
+            //}
+            //else
+            //{
+            //    Debug.Log($"{dayCount}일차 Tree Data Save 성공");
+            //}
             //treeDatas.Add(treeData);
 
             //ArrayPutTreeData arrayTreeData = new ArrayPutTreeData();
