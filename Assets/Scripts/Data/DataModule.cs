@@ -38,11 +38,10 @@ public class ResultPut
 }
 public class DataModule
 {
-    private const string DOMAIN = "http://192.168.0.115:4000"; //"https://dev.team-buildup.shop";
+    private const string DOMAIN = "http://14.47.254.38:4000/"; //"https://dev.team-buildup.shop";
     //public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY4MDkwMDkzLCJleHAiOjMzMjI1NjkwMDkzfQ.9WI6YXZlRLiB8dIb-Fea4AzMZocUQKkHjVZ0NeAyS2I";
     public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY4NjY3NjYyLCJleHAiOjMzMjI2MjY3NjYyfQ.xfMelHxCCAcqzXtsR6DPESWBOJf-ty20UP0y1f0sTis";
-    //public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY4NzQ4ODIyLCJleHAiOjMzMjI2MzQ4ODIyfQ.knYOL83La3qxndeOiq3Zf8o9OeQ0T9-uaKR3VdiUO9o";
-
+    
     /// <summary>
     /// Network Type 설정
     /// </summary>
