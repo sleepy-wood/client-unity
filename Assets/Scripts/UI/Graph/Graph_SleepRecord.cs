@@ -76,6 +76,7 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Day()
     {
+        Init();
         //초기화
         day_totalTime = new TimeSpan();
         bool isOnce = false;
@@ -157,6 +158,7 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Week()
     {
+        Init();
         //초기화
         int cnt = 1;
         List<TimeSpan> timeSpans = new List<TimeSpan>();
@@ -234,6 +236,7 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Month()
     {
+        Init();
         int cnt = 0;
         int startMonth = 0;
         int preMonth = 0;
@@ -335,6 +338,7 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_SixMonth()
     {
+        Init();
         int cnt = 0;
         int startMonth = 0;
         int preMonth = 0;
@@ -440,6 +444,7 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Year()
     {
+        Init();
         int cnt = 0;
         int startYear = 0;
         int preYear = 0;
