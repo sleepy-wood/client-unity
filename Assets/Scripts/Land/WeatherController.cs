@@ -27,9 +27,9 @@ public class WeatherController : MonoBehaviour
 
     void Start()
     {
-        rainParticle.Stop();
-        snowParticle.Stop();
-        flowerParticle.Stop();
+        //rainParticle.Stop();
+        //snowParticle.Stop();
+        //flowerParticle.Stop();
         GetWeatherData();
     }
 
