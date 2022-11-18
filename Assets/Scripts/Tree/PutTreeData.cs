@@ -6,8 +6,6 @@ using System;
 
 #nullable enable
 
-// User - Tree - TreeMetaData (1일차,2일차,3일차,4일차,5일차) - TreePipelineData
-
 [Serializable]
 public class TreePipeline
 {
@@ -87,7 +85,7 @@ public class GetTreeData
     public int userId;
     public string? createdAt;
     public string? updatedAt;
-    public List<TreeGrowth>? treeGrowths;
+    public List<TreeGrowth>? treeGrowths;  // 일차별로 저장
 }
 
 [Serializable]

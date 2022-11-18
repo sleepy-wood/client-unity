@@ -21,25 +21,26 @@ public class TimeManager : MonoBehaviour
     private void Awake()
     {
         print("Land Id : " + DataTemporary.MyUserData.currentLandId);
-        // 해당 Land의 firstPlantDate 알아내기
-        int idx = DataTemporary.GetTreeData.getTreeDataList.Count;
-        print($"DB Tree Data 개수 : {idx}개");
-        for (int i = 0; i < idx; i++)
+        int treeDataCount = DataTemporary.GetTreeData.getTreeDataList.Count;
+        print($"Tree Data Count : {treeDataCount}개");
+        // 해당 랜드의 firstPlantDate 알아내기
+        if (treeDataCount > 0)
         {
-            // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
-            if (DataTemporary.GetTreeData.getTreeDataList[i].landId == DataTemporary.MyUserData.currentLandId)
+            for (int i = 0; i < treeDataCount; i++)
             {
-                // 처음 심은 날 저장
-                //firstPlantDate = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
-                firstPlantDate = DateTime.Parse("10/18/2022 07:22:16");
-                // Tree Data 저장
-                GameManager.Instance.treeController.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
-                // Tree Data 인덱스
-                GameManager.Instance.treeController.dataIdx = i;
-                print($"{i}번째 트리 데이터");  // 심은 순서대로 저장 
-                print("나무 처음 심은 시간 : " + firstPlantDate.dateTime);
+                // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
+                if (DataTemporary.GetTreeData.getTreeDataList[i].landId == DataTemporary.MyUserData.currentLandId)
+                {
+                    // 처음 심은 날 저장
+                    firstPlantDate = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
+                    // 현재 랜드의 나무 데이터
+                    GameManager.Instance.treeController.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
+                    print($"{i}번째 트리 데이터");  // 심은 순서대로 저장 
+                    print("나무 처음 심은 시간 : " + firstPlantDate.dateTime);
+                }
             }
         }
+        
 
         // firstPlantDate로 방문타입 결정 => 5일차 후 새로운 Seed 심기 전 null값 처리필요
         if (firstPlantDate.dateTime == DateTime.MinValue) // DateTime.Parse("08/18/2018 07:22:16"))  //DateTime.MinValue)
@@ -167,8 +168,8 @@ public class TimeManager : MonoBehaviour
     public int CalculatePlantDays(DateTime from, DateTime to)
     {
         TimeSpan timeDif = to - from;
-        totalPlantDay = 2;// (int)timeDif.Days + 1;
-        GameManager.Instance.treeController.dayCount = 2;// totalPlantDay;
+        totalPlantDay = (int)timeDif.Days + 1;
+        GameManager.Instance.treeController.dayCount = totalPlantDay;
         return totalPlantDay;
     }
 
