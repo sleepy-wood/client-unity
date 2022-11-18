@@ -61,12 +61,12 @@ public class UI_Chatting : MonoBehaviourPun
                 user.GetComponent<UserInput>().InputControl = false;
             }
         }
-        if (PhotonNetwork.PlayerList.Length <= 1)
-        {
-            transform.GetChild(1).gameObject.SetActive(false);
-        }
-        else
-        {
+        //if (PhotonNetwork.PlayerList.Length <= 1)
+        //{
+        //    transform.GetChild(1).gameObject.SetActive(false);
+        //}
+        //else
+        //{
             transform.GetChild(1).gameObject.SetActive(true);
 
             if (!transform.GetChild(1).GetChild(0).gameObject.activeSelf)
@@ -79,7 +79,7 @@ public class UI_Chatting : MonoBehaviourPun
                     }
                 }
             }
-        }
+        //}
     }
     public void OnClickEmojiButton(int i)
     {

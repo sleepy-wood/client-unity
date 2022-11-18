@@ -51,7 +51,6 @@ public class NativeLoadData
             }
 
             DataTemporary.samples = samples;
-            DataTemporary.ArraySleepData.arraySleepData = sleepDataArray;
         }
     }
 }
