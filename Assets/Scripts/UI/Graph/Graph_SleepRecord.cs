@@ -67,13 +67,6 @@ public class Graph_SleepRecord : MonoBehaviour
             }
         }
     }
-    void Graph_Init()
-    {
-        for (int i = 0; i < period_sleepGraph.childCount; i++)
-        {
-            period_sleepGraph.GetChild(i).GetComponent<Scrollbar>().size = 0;
-        }
-    }
     #region Average_SleepTime
     private int preDay = 0;
     TimeSpan day_totalTime;
@@ -83,7 +76,6 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Day()
     {
-        Graph_Init();
         //초기화
         day_totalTime = new TimeSpan();
         bool isOnce = false;
@@ -165,7 +157,6 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Week()
     {
-        Graph_Init();
         //초기화
         int cnt = 1;
         List<TimeSpan> timeSpans = new List<TimeSpan>();
@@ -243,7 +234,6 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Month()
     {
-        Graph_Init();
         int cnt = 0;
         int startMonth = 0;
         int preMonth = 0;
@@ -345,7 +335,6 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_SixMonth()
     {
-        Graph_Init();
         int cnt = 0;
         int startMonth = 0;
         int preMonth = 0;
@@ -453,7 +442,6 @@ public class Graph_SleepRecord : MonoBehaviour
     /// </summary>
     void Graph_Year()
     {
-        Graph_Init();
         int cnt = 0;
         int startYear = 0;
         int preYear = 0;
