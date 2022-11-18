@@ -11,7 +11,7 @@ using System;
 [Serializable]
 public class TreePipeline
 {
-    public int id;
+    public int treeId;
     public float scale;
     public int branch1;
     public int branch2;
@@ -95,6 +95,7 @@ public class ArrayPutTreeData
 {
     public List<PutTreeData>? putTreeDataList;
 }
+
 
 
 [Serializable]

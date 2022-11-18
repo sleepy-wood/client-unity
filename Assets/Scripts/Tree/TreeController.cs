@@ -177,7 +177,8 @@ public class TreeController : MonoBehaviour
 
     private void Start()
     {
-        AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
+        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
+        print("assetBundle : " + assetBundle);
         #region Build
         // Build mesh 오류 해결 코드
         //print(Application.dataPath);
@@ -241,6 +242,7 @@ public class TreeController : MonoBehaviour
                 // 1일차 기본 세팅
                 PipelineSetting(2);
                 SetTree(1);
+                //SaveTreeData();
             }
         }
         else if (visitType == VisitType.ReVisit)
@@ -250,7 +252,7 @@ public class TreeController : MonoBehaviour
 
 
             // Tree Data의 Tree id 저장
-            treeId = DataTemporary.GetTreeData.getTreeDataList[dataIdx].id;
+            //treeId = DataTemporary.GetTreeData.getTreeDataList[dataIdx].id;
 
             // Tree Data통해서 Pipeline 세팅
             //for (int i = 0; i < DataTemporary.GetTreeData.getTreeDataList.Count; i++)
@@ -260,23 +262,46 @@ public class TreeController : MonoBehaviour
             //        currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
             //    }
             //}
-            //LoadDataSetting(currentTreeData);
+            //LoadDataSetting(currentTreeData); 
 
+            // 헬스데이터 불러오기 ( 삭제 )    
+            HealthDataStore.Init();
+
+            DateTime startDate = GameManager.Instance.timeManager.firstPlantDate;
             // firstPlantDate와 dayCount에 따라 그에 맞는 HealthData 반영
+            if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
+            {
+                //Debug.Log("SleepSamples: " + HealthDataStore.SleepSamples.Length);
+                //Debug.Log("ActivitySamples: " + HealthDataStore.ActivitySamples.Length);
+                // 올해 10월 날짜로 하는 것이 가장 좋음
+                report = HealthDataAnalyzer.GetDailyReport(
+                    new DateTime(startDate.Year, startDate.Month, startDate.Day, startDate.Hour, startDate.Minute, startDate.Second, startDate.Millisecond, DateTimeKind.Local),
+                    1
+                );
+                if (report != null)
+                {
+                    Debug.Log("HealthData 불러오기 성공");
+                    Debug.Log(JsonUtility.ToJson(report, true));
+                }
+            }
+            
             if (dayCount > 1)
             {
-                //SetHealthData();
+                soil.SetActive(false);
+                // HealthData 나무에 반영
+                ApplyHealthData(report, startDate);
+                treeFactory.gameObject.SetActive(true);
             }
             else
             {
-                
+                sprout.SetActive(true);
+                sproutLeaf.transform.localScale = new Vector3(1, 1, 1);
             }    
 
             // Tree 로드
             PipelineReload();
         }
-        // 헬스데이터 불러오기 ( 로딩바로 옮기기 )     
-        HealthDataStore.Init();
+         
 
         #region 기존 코드
         //pipeline = treeFactory.LoadPipeline(runtimePipelineResourcePath);
@@ -290,10 +315,46 @@ public class TreeController : MonoBehaviour
     }
 
     /// <summary>
-    /// 이전 날의 헬스데이터 반영
+    /// 헬스데이터 나무에 반영
     /// </summary>
-    public void SetHealthData(DateTime yesterday)
+    public void ApplyHealthData(HealthReport healthReport, DateTime startDate)
     {
+        // ex. 2일차 + 5시간 => 2일차 헬스데이터 반영
+        TimeSpan timeDif = DateTime.Now - startDate;
+        if (timeDif.Hours < 24*dayCount)
+        {
+            if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
+            {
+                DateTime date = startDate.AddDays(-1);
+                report = HealthDataAnalyzer.GetDailyReport(
+                    new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond, DateTimeKind.Local),
+                    1
+                );
+                if (report != null)
+                {
+                    Debug.Log(date+"의 HealthData");
+                    Debug.Log(JsonUtility.ToJson(report, true));
+                }
+            }
+        }
+        else if (timeDif.Hours == 24*dayCount)
+        {
+            // HealthData 반영
+            DateTime date = startDate.AddDays(1);
+            report = HealthDataAnalyzer.GetDailyReport(
+                new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond, DateTimeKind.Local),
+                1
+            );
+            if (report != null)
+            {
+                Debug.Log(date + "의 HealthData");
+                Debug.Log(JsonUtility.ToJson(report, true));
+            }
+
+            // Tree Data Save
+            SaveTreeData();
+        }
+
 
     }
 
@@ -476,65 +537,6 @@ public class TreeController : MonoBehaviour
         //    }
         //}
         #endregion
-
-        if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded && !once)
-        {
-            once = true;
-            //Debug.Log("SleepSamples: " + HealthDataStore.SleepSamples.Length);
-            //Debug.Log("ActivitySamples: " + HealthDataStore.ActivitySamples.Length);
-            // 올해 10월 날짜로 하는 것이 가장 좋음
-            report = HealthDataAnalyzer.GetDailyReport(
-                new DateTime(2022, 10, 06, 17, 0, 0, 0, DateTimeKind.Local),
-                6
-            );
-            //Debug.Log(JsonUtility.ToJson(report, true));
-            if (report != null) Debug.Log("HealthData 불러오기 성공");
-        }
-
-        if (Input.GetMouseButtonDown(0) && !once2)
-        {
-            once2 = true;
-            print("Mouse Click");
-            SproutSeed sproutSeed = new SproutSeed();
-            treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
-            treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 4;
-            PipelineReload();
-        }
-        if (Input.GetMouseButton(1) && once2)
-        {
-            //Broccoli.Pipe.Pipeline pipelineToAsset =
-            //            AssetDatabase.LoadAssetAtPath<Broccoli.Pipe.Pipeline>(pathToAsset);
-            //if (pipelineToAsset != null && asNewAsset)
-            //{
-            //    AssetDatabase.DeleteAsset(pathToAsset);
-            //    DestroyImmediate(pipelineToAsset, true);
-            //}
-            //pipelineToAsset = treeFactory.localPipeline.Clone(pipelineToAsset);
-            //if (pipelineToAsset.isCatalogItem &&
-            //    GlobalSettings.editCatalogEnabled == false &&
-            //    asNewAsset)
-            //{
-            //    pipelineToAsset.isCatalogItem = false;
-            //}
-            //pipelineToAsset.treeFactoryPreferences = treeFactory.treeFactoryPreferences.Clone();
-            //if (asNewAsset)
-            //{
-            //    AssetDatabase.CreateAsset(pipelineToAsset, pathToAsset);
-            //}
-            //else
-            //{
-            //    EditorUtility.SetDirty(pipelineToAsset);
-            //}
-
-            //List<PipelineElement> pipelineElements = pipelineToAsset.GetElements();
-            //for (int i = 0; i < pipelineElements.Count; i++)
-            //{
-            //    AssetDatabase.AddObjectToAsset(pipelineElements[i], pathToAsset);
-            //}
-
-            //AssetDatabase.SaveAssets();
-            //Resources.UnloadAsset(pipelineToAsset);
-        }
     }
 
     #region 씨앗 심기 코루틴
@@ -849,6 +851,7 @@ public class TreeController : MonoBehaviour
             //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             PipelineReload();
+            
         }
         // 2일차
         else if (day == 2)
@@ -856,7 +859,7 @@ public class TreeController : MonoBehaviour
             seed.SetActive(false);
             sprout.SetActive(false);
             soil.SetActive(false);
-            day2CustomObj.SetActive(true);
+            //day2CustomObj.SetActive(true);
             // Sprout
             SproutNumChange(true, 10);
             // 트리 기본 세팅 값 로드
@@ -868,12 +871,13 @@ public class TreeController : MonoBehaviour
             StartCoroutine(Delay(25));
             // Weather - Rain
             rain.Play();
+            SaveTreeData();
         }
         // 3일차
         else if (day == 3)
         {
             rain.gameObject.SetActive(false);
-            day3CustomObj.SetActive(true);
+            //day3CustomObj.SetActive(true);
             // SkyBox
             sky.Sunset();
             // Fire
@@ -886,11 +890,12 @@ public class TreeController : MonoBehaviour
             PipelineReload();
             // Change Particle
             changeParticle.Play();
+            SaveTreeData();
         }
         // 4일차
         else if (day == 4)
         {
-            day4CustomObj.SetActive(true);
+            //day4CustomObj.SetActive(true);
             // SkyBox
             sky.Night();
             // Tree Pipeline - Branch MinMax, Girth, Scale
@@ -915,6 +920,7 @@ public class TreeController : MonoBehaviour
             if (badMode) changeParticle.transform.position = new Vector3(0, 5.32f, 0);
             else changeParticle.transform.position = new Vector3(0, 6.65f, 0);
             changeParticle.Play();
+            SaveTreeData();
         }
         // 5일차
         else if (day == 5)
@@ -946,7 +952,9 @@ public class TreeController : MonoBehaviour
             // Change Particle
             if (!badMode) changeParticle.transform.position = new Vector3(0, 10.46f, 0);
             changeParticle.Play();
+            SaveTreeData();
             assetBundle.Unload(false);
+
         }
     }
     IEnumerator Delay(float second)
@@ -962,15 +970,17 @@ public class TreeController : MonoBehaviour
     string saveUrl;
     public async void SaveTreeData()
     {
-        List<PutTreeData> treeDatas = new List<PutTreeData>();
-        PutTreeData treeData = new PutTreeData();
+        
+        
 
         if (dayCount == 1)
         {
             saveUrl = "/api/v1/trees";
+            PutTreeData treeData = new PutTreeData();
+            List<PutTreeData> treeDatas = new List<PutTreeData>();
 
             // Tree Name
-            treeData.treeName = treeName;
+            treeData.treeName = "슬리피우드";
             // seed Number
             treeData.seedNumber = 0;
             // Seed Type
@@ -1000,19 +1010,47 @@ public class TreeController : MonoBehaviour
             treeData.barkTexture = ".";
             // 9. Sprout Index
             treeData.sproutIndex = 0;
+
+            string treeJsonData = JsonUtility.ToJson(treeData);
+            Debug.Log(JsonUtility.ToJson(treeData, true));
+
+            // PUT Tree Data
+            ResultPost<PutTreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<PutTreeData>>(
+                saveUrl,
+                DataModule.NetworkType.POST,
+                DataModule.DataType.BUFFER,
+                treeJsonData);
+
+            if (!resultPost.result)
+            {
+                Debug.LogError("WebRequestError : NetworkType[Post]");
+            }
+            else
+            {
+                Debug.Log($"{dayCount}일차 Tree Data Save 성공");
+            }
+            treeDatas.Add(treeData);
+
+            ArrayPutTreeData arrayTreeData = new ArrayPutTreeData();
+            arrayTreeData.putTreeDataList = treeDatas;
+
+            // DataTemporary
+            DataTemporary.PutTreeData = arrayTreeData;
+
+            // File 형식으로 Update or Save
+            FileManager.SaveDataFile("TreeData", arrayTreeData);
         }
         else if (dayCount > 1 && dayCount < 6)
         {
             saveUrl = "/api/v1/tree-growths";
+            TreePipeline treeData = new TreePipeline();
+            List<TreePipeline> treeDatas = new List<TreePipeline>();
 
-            // Tree Name
-            treeData.treeName = treeName;
-            // seed Number
-            treeData.seedNumber = treePipeline.seed;
-            // Seed Type
-            treeData.seedType = selectedSeed.ToString();
-            // Land ID
-            treeData.landId = 3;  // 변경 필요
+            // 내 나무 목록 중 현재 나무 이름과 같은 나무의 아이디 찾기
+
+
+            // Tree Id
+            treeData.treeId = 28;
 
             // Tree Pipeline Data //
             // 1. Scale
@@ -1046,38 +1084,38 @@ public class TreeController : MonoBehaviour
                     treeData.sproutIndex = i;
                 }
             }
+
+            string treeJsonData = JsonUtility.ToJson(treeData);
+            Debug.Log(JsonUtility.ToJson(treeData, true));
+
+            // PUT Tree Data
+            ResultPost<PutTreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<PutTreeData>>(
+                saveUrl,
+                DataModule.NetworkType.POST,
+                DataModule.DataType.BUFFER,
+                treeJsonData);
+
+            if (!resultPost.result)
+            {
+                Debug.LogError("WebRequestError : NetworkType[Post]");
+            }
+            else
+            {
+                Debug.Log($"{dayCount}일차 Tree Data Save 성공");
+            }
+            //treeDatas.Add(treeData);
+
+            //ArrayPutTreeData arrayTreeData = new ArrayPutTreeData();
+            //arrayTreeData.putTreeDataList = treeDatas;
+
+            //// DataTemporary
+            //DataTemporary.PutTreeData = arrayTreeData;
+
+            //// File 형식으로 Update or Save
+            //FileManager.SaveDataFile("TreeData", arrayTreeData);
         }
 
-
-        string treeJsonData = JsonUtility.ToJson(treeData);
-        Debug.Log(JsonUtility.ToJson(treeData, true));
-
-        // PUT Tree Data
-        ResultPost<PutTreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<PutTreeData>>(
-            saveUrl,
-            DataModule.NetworkType.POST,
-            DataModule.DataType.BUFFER,
-            treeJsonData);
-
-        if (!resultPost.result)
-        {
-            Debug.LogError("WebRequestError : NetworkType[Post]");
-        }
-        else
-        {
-            Debug.Log("Tree Data Save 성공");
-        }
-        treeDatas.Add(treeData);
-
-        treeDatas.Add(treeData);
-        ArrayPutTreeData arrayTreeData = new ArrayPutTreeData();
-        arrayTreeData.putTreeDataList = treeDatas;
-
-        // DataTemporary
-        DataTemporary.PutTreeData = arrayTreeData;
-
-        // File 형식으로 Update or Save
-        FileManager.SaveDataFile("TreeData", arrayTreeData);
+        
     }
 
     public void OnClickSave()

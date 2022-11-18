@@ -40,7 +40,12 @@ public class TimeManager : MonoBehaviour
         //    }
         //}
         // firstPlantDate로 방문타입 결정 => 5일차 후 새로운 Seed 심기 전 null값 처리필요
-        if (firstPlantDate.dateTime == DateTime.Parse("08/18/2018 07:22:16"))  //DateTime.MinValue)
+
+
+        //firstPlantDate = DateTime.Now;  // 삭제할 것
+
+
+        if (firstPlantDate.dateTime == DateTime.MinValue)//DateTime.Parse("08/18/2018 07:22:16"))  //DateTime.MinValue)
         {
             print("First Visit");
             GameManager.Instance.treeController.visitType = TreeController.VisitType.First;
@@ -74,8 +79,6 @@ public class TimeManager : MonoBehaviour
     {
         //now = DateTime.Now;
         //txtCurrentTime.text = now.dateTime.ToString("tt h : mm : ss");
-
-
 
         #region skyBox 변화 시연
         // 특정 시간 지정
@@ -123,7 +126,7 @@ public class TimeManager : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2) && totalPlantDay < 5)
             {
-                now = now.dateTime.AddHours(25);//AddDays(1);
+                now = now.dateTime.AddDays(1);
                 CalculatePlantDays(firstPlantDate, now);
                 GameManager.Instance.treeController.SetTree(totalPlantDay, true);
                 //txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
