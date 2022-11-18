@@ -229,7 +229,7 @@ public class UI_Initial : MonoBehaviour
     }
 
     /// <summary>
-    /// 식물 이름 입력하면 다음 버튼 활성화
+    /// 나무 이름 입력하면 다음 버튼 활성화
     /// </summary>
     /// <param name="s">식물 이름</param>
     void onValueChanged(string s)
@@ -238,16 +238,19 @@ public class UI_Initial : MonoBehaviour
     }
 
     /// <summary>
-    /// 식물 이름 결정 버튼 누르면 나무 이름 저장 & UI 비활성화
+    /// 나무 이름 결정 버튼 누르면 나무 이름 저장 & UI 비활성화
     /// </summary>
     public void onConfirmPlantName()
     {
         treeName.text = inputPlantName.text;
         GameManager.Instance.treeController.treeName = inputPlantName.text;
+        // TreeData 저장
+        GameManager.Instance.treeController.SaveTreeData();
         plantNameUI.SetActive(false);
     }
 
     #region 개발자 모드
+
     /// <summary>
     /// 개발자 모드 버튼 왔다갔다하는 버튼
     /// </summary>
