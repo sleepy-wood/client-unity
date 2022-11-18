@@ -167,13 +167,20 @@ public class LoadingData : MonoBehaviourPunCallbacks
                     productImages = marketData.data[i].orderDetails[j].product.productImages;
                     for (int k = 0; k < productImages.Count; k++)
                     {
+                        DataTemporary.image_Url.Add(productImages[k].path);
                         Texture2D texture = await DataModule.WebrequestTexture(productImages[k].path, DataModule.NetworkType.GET);
                         byte[] bytes = texture.EncodeToPNG();
-                        string path = Application.persistentDataPath + "/TextureImg/Emoji";
+
+#if UNITY_STANDALONE
+                        string path = Application.dataPath + "/TextureImg/Market_Emoji_" + k + ".png";
+#elif UNITY_IOS || UNITY_ANDROID
+                        string path = Application.persistentDataPath + "/TextureImg/Market_Emoji_" + k + ".png";
+#endif
                         if (Directory.Exists(path))
                         {
                             Directory.CreateDirectory(path);
                         }
+                        File.WriteAllBytes(path, bytes);
                     }
                 }
             }

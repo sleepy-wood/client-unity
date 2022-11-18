@@ -30,4 +30,5 @@ public class DataTemporary
     public static ArrayGetTreeData GetTreeData = new ArrayGetTreeData();
     //Market Data
     public static ArrayMarketData arrayMarketData = new ArrayMarketData();
+    public static List<string> image_Url = new List<string>();
 }

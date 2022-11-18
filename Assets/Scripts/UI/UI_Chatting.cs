@@ -1,11 +1,16 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.XR;
+using static Autodesk.Fbx.FbxTime;
+
 public class UI_Chatting : MonoBehaviourPun
 {
 
@@ -19,6 +24,8 @@ public class UI_Chatting : MonoBehaviourPun
     private GameObject chatPrefab;
     //ScrollView의 Content
     private RectTransform content;
+    //EmojiChatting의 Content
+    private RectTransform chat_content;
     //이전 Content의 H (멘토님 설명 중 H2역할)
     private float prevContentH;
     //ScrollView의 H (멘토님 설명 중 H1역할)
@@ -31,20 +38,47 @@ public class UI_Chatting : MonoBehaviourPun
     private void Start()
     {
         photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
-
         TextAsset textFile = DataTemporary.stopwordsAsset.LoadAsset<TextAsset>("stopwords");
+
 #if UNITY_STANDALONE
         stopwords = textFile.text.Split("\r\n");
-#elif UNITY_IOS || UNITY_ANDROID
+        string path = Application.dataPath + "/TextureImg";
+#elif UNITY_IOS
         stopwords = textFile.text.Split("\n");
+        string path = Application.persistentDataPath + "/TextureImg";
 #endif
-
         user = GameManager.Instance.User;
         trScrollView = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetComponent<RectTransform>();
         chatting = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetComponent<InputField>();
         chatPrefab = Resources.Load<GameObject>("Chatting_Text");
         content = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetComponent<RectTransform>();
-        
+
+        DirectoryInfo di = new DirectoryInfo(path);
+        string[] fileEntries = Directory.GetFiles(path, "*.png");
+
+        int i = 15;
+        //썸네일 넣기
+        foreach (string fileName in fileEntries)
+        {
+            //GameObject resource = fileName.Split("/TextureImg/")[1].Split('.')[0];
+            GameObject resource = Resources.Load<GameObject>("Emoji_");
+            GameObject prefab = Instantiate(resource);
+            prefab.name = "Custom_" + fileName.Split("/TextureImg/")[1].Split('.')[0];
+            byte[] byteTexture = File.ReadAllBytes(path + fileName.Split("/TextureImg/")[1].Split('.')[0] + ".png");
+            if (byteTexture.Length > 0)
+            {
+                Texture2D texture = new Texture2D(0, 0);
+                texture.LoadImage(byteTexture);
+                Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                prefab.GetComponent<Image>().sprite = sprite;
+            }
+            int temp = i;
+            prefab.GetComponent<Button>().onClick.AddListener(
+                () => OnClickEmojiButton(temp, DataTemporary.image_Url[i - 15]));
+            i++;
+        }
+
+
     }
     private void Update()
     {
@@ -81,10 +115,9 @@ public class UI_Chatting : MonoBehaviourPun
             }
         //}
     }
-    public void OnClickEmojiButton(int i)
+    public void OnClickEmojiButton(int i, string img_url = null)
     {
-        photonView.RPC("RPC_EmojiButton", RpcTarget.All, i, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
-
+        photonView.RPC("RPC_EmojiButton", RpcTarget.All, i, DataTemporary.MyUserData.nickname, img_url);
     }
     public void OnSubmit()
     {
@@ -201,17 +234,26 @@ public class UI_Chatting : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void RPC_EmojiButton(int i, string model, string nickname)
+    public async Task RPC_EmojiButtonAsync(int i, string nickname, string url = null)
     {
         GameObject emojiResource = Resources.Load<GameObject>("Emoji");
         GameObject emojiPrefab = Instantiate(emojiResource);
 
         emojiPrefab.transform.parent = windowContent.transform;
 
-        Sprite emojiImgResource = Resources.Load<Sprite>("Emoji_image/Emoji_" + i);
-        Sprite emoji = Instantiate(emojiImgResource);
+        if (i >= 15)
+        {
+            Texture2D texture = await DataModule.WebrequestTexture(url, DataModule.NetworkType.GET);
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            emojiPrefab.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
+        }
+        else
+        {
+            Sprite emojiImgResource = Resources.Load<Sprite>("Emoji_image/Emoji_" + i);
+            Sprite emoji = Instantiate(emojiImgResource);
 
-        emojiPrefab.transform.GetChild(0).GetComponent<Image>().sprite = emoji;
+            emojiPrefab.transform.GetChild(0).GetComponent<Image>().sprite = emoji;
+        }
         emojiPrefab.GetComponent<Image>().sprite = profileDic[nickname];
     }
     [PunRPC]
