@@ -38,7 +38,6 @@ public class Graph_SleepRecord : MonoBehaviour
     [SerializeField] private Text graphResult;
 
     private SleepSample[] sleepsData;
-    bool isOnce = false;
     private int startDay = 0;
     private int endDay = 0;
 
@@ -47,7 +46,7 @@ public class Graph_SleepRecord : MonoBehaviour
     private void Awake()
     {
         sleepsData = DataTemporary.samples;
-    }
+    } 
     void OnEnable()
     {
         Init();
@@ -79,7 +78,7 @@ public class Graph_SleepRecord : MonoBehaviour
     {
         //초기화
         day_totalTime = new TimeSpan();
-        isOnce = false;
+        bool isOnce = false;
         List<TimeSpan> timeSpans = new List<TimeSpan>();
         TimeSpan today = new TimeSpan();
 
@@ -161,7 +160,7 @@ public class Graph_SleepRecord : MonoBehaviour
         //초기화
         int cnt = 1;
         List<TimeSpan> timeSpans = new List<TimeSpan>();
-        isOnce = false;
+        bool isOnce = false;
         week_totalTime = new TimeSpan();
         week = new TimeSpan();
 
@@ -240,6 +239,7 @@ public class Graph_SleepRecord : MonoBehaviour
         int preMonth = 0;
         int startDay = 0;
         int preDay = 0;
+        bool isOnce = false;
         List<TimeSpan> month_result = new List<TimeSpan>();
         TimeSpan month_TotalTime = new TimeSpan();
         TimeSpan month = new TimeSpan();
@@ -276,6 +276,9 @@ public class Graph_SleepRecord : MonoBehaviour
                 //month가 같지 않으면 개월 수가 다름
                 if (startMonth != preMonth)
                 {
+                    if (month.TotalSeconds == 0)
+                        break;
+                   
                     month_result.Add(month / cnt);
                     if (month_result.Count < 7)
                     {
@@ -298,7 +301,7 @@ public class Graph_SleepRecord : MonoBehaviour
             }
         }
         //수면 데이터가 7개보다 부족한 경우
-        if (!isEnd)
+        if (!isEnd && month.TotalSeconds != 0)
         {
             isEnd = true;
             month_result.Add(month / cnt);
@@ -338,6 +341,7 @@ public class Graph_SleepRecord : MonoBehaviour
         int startDay = 0;
         int preDay = 0;
         int monthCnt = 0;
+        bool isOnce = false;
         List<TimeSpan> sixMonth_result = new List<TimeSpan>();
         TimeSpan sixMonth_TotalTime = new TimeSpan();
         TimeSpan sixMonth = new TimeSpan();
@@ -376,6 +380,8 @@ public class Graph_SleepRecord : MonoBehaviour
                 {
                     if (monthCnt > 6)
                     {
+                        if (sixMonth.TotalSeconds == 0)
+                            break;
                         sixMonth_result.Add(sixMonth / cnt);
                         if (sixMonth_result.Count < 7)
                         {
@@ -400,7 +406,7 @@ public class Graph_SleepRecord : MonoBehaviour
             }
         }
         //수면 데이터가 7개보다 부족한 경우
-        if (!isEnd)
+        if (!isEnd && sixMonth.TotalSeconds != 0)
         {
             isEnd = true;
             sixMonth_result.Add(sixMonth / cnt);
@@ -443,6 +449,7 @@ public class Graph_SleepRecord : MonoBehaviour
         TimeSpan year_TotalTime = new TimeSpan();
         TimeSpan year = new TimeSpan();
         bool isEnd = false;
+        bool isOnce = false;
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
             if (sleepsData[i].Type.ToString().Contains("Asleep"))
@@ -475,6 +482,9 @@ public class Graph_SleepRecord : MonoBehaviour
                 //month가 같지 않으면 년 수가 다름
                 if (startYear != preYear)
                 {
+                    if (year.TotalSeconds == 0)
+                        break;
+
                     year_result.Add(year / cnt);
                     if (year_result.Count < 7)
                     {
@@ -497,7 +507,7 @@ public class Graph_SleepRecord : MonoBehaviour
             }
         }
         //수면 데이터가 7개보다 부족한 경우
-        if (!isEnd)
+        if (!isEnd && year.TotalSeconds != 0)
         {
             isEnd = true;
             year_result.Add(year / cnt);
@@ -570,6 +580,8 @@ public class Graph_SleepRecord : MonoBehaviour
                 break;
             case 4:
                 Graph_Year();
+                break;
+            default:
                 break;
 
         }
@@ -683,6 +695,7 @@ public class Graph_SleepRecord : MonoBehaviour
     /// <param name="sleepDiffResult"></param>
     public void CalcSleep(SleepType sleepType, Text sleepDiffResult)
     {
+        bool isOnce = false;
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
             if (sleepsData[i].Type == SleepType.AsleepREM)
