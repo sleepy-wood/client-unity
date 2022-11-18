@@ -147,7 +147,6 @@ public class TreeController : MonoBehaviour
     private void Start()
     {
         assetBundle = DataTemporary.assetBundleTreePipeline;
-
         #region Build
         // Build mesh 오류 해결 코드
         //print(Application.dataPath);
@@ -192,9 +191,11 @@ public class TreeController : MonoBehaviour
                 treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[s].enabled = true;
                 print("sprout texture index : " + s);
 
-                // Bark Texture 랜덤 선택
-                List<string> name = new List<string>() { "A", "B", "C", "D", "E" };
-                int b = UnityEngine.Random.Range(0, 5);
+                // Bark Material 랜덤 선택
+                string filePath = @"C:\Users\HP\UnityProject\client_unity\Assets\Resources";
+                string path = Directory.GetFiles(SrcPath, "*.*", SearchOption.TopDirectoryOnly);
+                int b = UnityEngine.Random.Range(0, 7);
+
                 Texture2D texture = Resources.Load("Tree/Sprites/Tree_Bark_" + name[b]) as Texture2D;
                 print("Tree_Bark_" + name[b]);
                 treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
