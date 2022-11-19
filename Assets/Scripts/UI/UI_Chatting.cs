@@ -65,6 +65,7 @@ public class UI_Chatting : MonoBehaviourPun
         filenames.Sort((x, y) => int.Parse(x.Split("Market_Emoji_")[1]).CompareTo(int.Parse(y.Split("Market_Emoji_")[1])));
         for (int k = 0; k < filenames.Count; k++)
         {
+            int temp = k;
             //GameObject resource = fileName.Split("/TextureImg/")[1].Split('.')[0];
             GameObject resource = Resources.Load<GameObject>("Emoji_");
             GameObject prefab = Instantiate(resource, emoji_content);
@@ -79,7 +80,7 @@ public class UI_Chatting : MonoBehaviourPun
                 prefab.GetComponent<Image>().sprite = sprite;
             }
             prefab.GetComponent<Button>().onClick.AddListener(
-                () => OnClickEmojiButton(k + 15));
+                () => OnClickEmojiButton(temp + 15));
         }
     }
     private void Update()
@@ -247,7 +248,6 @@ public class UI_Chatting : MonoBehaviourPun
         if (i >= 15)
         {
             Texture2D texture = await DataModule.WebrequestTexture(DataTemporary.image_Url[i - 15], DataModule.NetworkType.GET);
-            Debug.Log(i - 15);
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             emojiPrefab.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
         }
