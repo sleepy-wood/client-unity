@@ -234,12 +234,25 @@ public class TreeController : MonoBehaviour
                 string path = Application.persistentDataPath + "/Resources/Tree/Materials";
 #endif
                 Material[] mat = barkAssetBundle.LoadAllAssets<Material>();
-                int randNum = UnityEngine.Random.Range(0, mat.Length);
-                Material selectedMat = Instantiate(mat[randNum]) as Material;
-                print("Selected Bark Material: " + mat[randNum].name);
-                treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
+                int randNum = UnityEngine.Random.Range(0, 10);
+                // General Material (70%)
+                if (randNum < 7)
+                {
+                    int r1 = UnityEngine.Random.Range(0, 5);
+                    Material selectedMat = Instantiate(mat[r1]);
+                    print("Selected Bark Material: " + mat[r1].name);
+                    treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
+                }
+                // Special Material (30%)
+                else
+                {
+                    int r2 = UnityEngine.Random.Range(5, 9);
+                    Material selectedMat = Instantiate(mat[r2]);
+                    print("Selected Bark Material: " + mat[r2].name);
+                    treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
+                }
             }
-            print(" Selected pipe = " + pipeName);
+            print("Selected pipe = " + pipeName);
 
             // Tree Grow 기본 세팅
             if (!demoMode)
@@ -343,7 +356,6 @@ public class TreeController : MonoBehaviour
     public void LoadDataSetting()        
     {
         print("===========LoadDataSetting=================");
-        
         
         // Tree Id
         treeId = currentTreeData.id;
