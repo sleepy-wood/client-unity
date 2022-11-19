@@ -170,6 +170,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
             arrayMarket.marketData = marketData.data;
             DataTemporary.arrayMarketData = arrayMarket;
             //이모지 다운로드
+            int l = 0;
             for(int i = 0; i < marketData.data.Count; i++)
             {
                 for(int j = 0; j < marketData.data[i].orderDetails.Count; j++)
@@ -181,7 +182,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
                         DataTemporary.image_Url.Add(productImages[k].path);
                         Texture2D texture = await DataModule.WebrequestTexture(productImages[k].path, DataModule.NetworkType.GET);
                         byte[] bytes = texture.EncodeToPNG();
-                        File.WriteAllBytes(path + "/Market_Emoji_" + k + ".png", bytes);
+                        File.WriteAllBytes(path + "/Market_Emoji_" + l + ".png", bytes);
+                        l++;
                     }
                 }
             }
@@ -216,6 +218,15 @@ public class LoadingData : MonoBehaviourPunCallbacks
                     DateTime.Now);
 
             SleepSample[] sleepsData = DataTemporary.samples;
+
+            List<SleepSample> sleepSamples = new List<SleepSample>();
+            //중복데이터 제거
+            sleepSamples = sleepsData.Distinct().ToList();
+            sleepSamples.Sort((x, y) => DateTime.Compare(x.StartDate, y.StartDate));
+            sleepsData = sleepSamples.ToArray();
+
+            DataTemporary.samples = sleepsData;
+
             ResultGet<SleepData> sleepResultGet = await DataModule.WebRequestBuffer<ResultGet<SleepData>>("/api/v1/sleeps", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
             for (int i = sleepResultGet.count; i < sleepsData.Length; i++)
             {
@@ -237,6 +248,15 @@ public class LoadingData : MonoBehaviourPunCallbacks
                     DateTime.Now);
 
             ActivitySample[] activitySamepls = DataTemporary.activitySamples;
+
+            //중복데이터 제거
+            List<ActivitySample> activityList = new List<ActivitySample>();
+            activityList = activitySamepls.Distinct().ToList();
+            activityList.Sort((x, y) => DateTime.Compare(x.Date, y.Date));
+            activitySamepls = activityList.ToArray();
+
+            DataTemporary.activitySamples = activitySamepls;
+
             ResultGet<ActivityData> activityResultGet = await DataModule.WebRequestBuffer<ResultGet<ActivityData>>("/api/v1/activities", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
             for (int i = activityResultGet.count; i < activitySamepls.Length; i++)
             {
@@ -262,15 +282,6 @@ public class LoadingData : MonoBehaviourPunCallbacks
             //새로운 산소포화도
             
             //새로운 분당 호흡수
-
-
-            List<SleepSample> sleepSamples = new List<SleepSample>();
-            //중복데이터 제거
-            sleepSamples = sleepsData.Distinct().ToList();
-            sleepSamples.Sort((x, y) => DateTime.Compare(x.StartDate, y.StartDate));
-            sleepsData = sleepSamples.ToArray();
-
-            DataTemporary.samples = sleepsData;
 
             OnConnect();
 

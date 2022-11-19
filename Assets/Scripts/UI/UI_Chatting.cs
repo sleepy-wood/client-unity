@@ -52,20 +52,25 @@ public class UI_Chatting : MonoBehaviourPun
         DirectoryInfo di = new DirectoryInfo(path);
         string[] fileEntries = Directory.GetFiles(path, "*.png");
 
-        int i = 15;
+        List<string> filenames = new List<string>();
         //썸네일 넣기
         foreach (string fileName in fileEntries)
+        {
+#if UNITY_STANDALONE
+            filenames.Add(fileName.Split("/TextureImg\\")[1].Split('.')[0]);
+#elif UNITY_IOS || UNITY_ANDROID
+            filenames.Add(fileName.Split("/TextureImg/")[1].Split('.')[0]);
+#endif
+        }
+        filenames.Sort((x, y) => int.Parse(x.Split("Market_Emoji_")[1]).CompareTo(int.Parse(y.Split("Market_Emoji_")[1])));
+        for (int k = 0; k < filenames.Count; k++)
         {
             //GameObject resource = fileName.Split("/TextureImg/")[1].Split('.')[0];
             GameObject resource = Resources.Load<GameObject>("Emoji_");
             GameObject prefab = Instantiate(resource, emoji_content);
-#if UNITY_STANDALONE
-            prefab.name = "Custom_" + fileName.Split("/TextureImg\\")[1].Split('.')[0];
-            byte[] byteTexture = File.ReadAllBytes(path + "/" + fileName.Split("/TextureImg\\")[1].Split('.')[0] + ".png");
-#elif UNITY_IOS || UNITY_ANDROID
-            prefab.name = "Custom_" + fileName.Split("/TextureImg/")[1].Split('.')[0];
-            byte[] byteTexture = File.ReadAllBytes(path + fileName.Split("/TextureImg/")[1].Split('.')[0] + ".png");
-#endif
+
+            prefab.name = "Custom_" + filenames[k];
+            byte[] byteTexture = File.ReadAllBytes(path + "/" + filenames[k] + ".png");
             if (byteTexture.Length > 0)
             {
                 Texture2D texture = new Texture2D(0, 0);
@@ -73,15 +78,12 @@ public class UI_Chatting : MonoBehaviourPun
                 Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
                 prefab.GetComponent<Image>().sprite = sprite;
             }
-            int temp = i;
             prefab.GetComponent<Button>().onClick.AddListener(
-                () => OnClickEmojiButton(temp));
-            i++;
+                () => OnClickEmojiButton(k + 15));
         }
     }
     private void Update()
     {
-
         if (user)
         {
             //사용자 입력 제어
@@ -120,7 +122,6 @@ public class UI_Chatting : MonoBehaviourPun
     /// <param name="i"></param>
     public void OnClickEmojiButton(int i)
     {
-        Debug.Log("누름");
         photonView.RPC("RPC_EmojiButtonAsync", RpcTarget.All, i, DataTemporary.MyUserData.nickname);
     }
     public void OnSubmit()
@@ -240,14 +241,13 @@ public class UI_Chatting : MonoBehaviourPun
     [PunRPC]
     public async Task RPC_EmojiButtonAsync(int i, string nickname)
     {
-        GameObject emojiResource = Resources.Load<GameObject>("Emoji");
-        GameObject emojiPrefab = Instantiate(emojiResource);
-
-        emojiPrefab.transform.parent = windowContent.transform;
+        GameObject emojiResource = Resources.Load<GameObject>("Chat_Emoji");
+        GameObject emojiPrefab = Instantiate(emojiResource, windowContent);
 
         if (i >= 15)
         {
             Texture2D texture = await DataModule.WebrequestTexture(DataTemporary.image_Url[i - 15], DataModule.NetworkType.GET);
+            Debug.Log(i - 15);
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             emojiPrefab.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
         }
