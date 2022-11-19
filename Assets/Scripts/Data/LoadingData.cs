@@ -24,6 +24,18 @@ public class LoadingData : MonoBehaviourPunCallbacks
     private Scrollbar right;
     private Scrollbar left;
 
+    public enum Category
+    {
+        collection = 0,
+        emoticon = 1,
+        flower = 2,
+        plants = 3,
+        mushroom = 4,
+        rock = 5,
+        wooden = 6,
+        light = 7
+    }        
+
     private void Awake()
     {
         if (!m_testMode)
@@ -113,7 +125,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
         //await DataModule.WebRequestAssetBundle("/assets/testbundle", DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
 
         //마켓에서 산 것이 있으면 다운로드
-        ResultGet<MarketData> marketData = await DataModule.WebRequestBuffer<ResultGet<MarketData>>("/api/v1/orders", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+        List<ResultGet<MarketData>> marketsData = new List<ResultGet<MarketData>>();
+        for(int i = 0; i < 8; i++)
+        {
+            ResultGet<MarketData> marketData = await DataModule.WebRequestBuffer<ResultGet<MarketData>>("/api/v1/orders?category=" + (Category)i, DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+            marketsData.Add(marketData);
+        }
         
         //UserData 
         ResultGetId <UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
@@ -152,38 +169,44 @@ public class LoadingData : MonoBehaviourPunCallbacks
             arrayTreeData.getTreeDataList = treeData.data;
             DataTemporary.GetTreeData = arrayTreeData;
         }
-        if (marketData.result)
+        for (int h = 0; h < marketsData.Count; h++)
         {
+            if (h == (int)Category.emoticon)
+            {
+                if (marketsData[h].result)
+                {
 
 #if UNITY_STANDALONE
-            string path = Application.dataPath + "/TextureImg";
+                    string path = Application.dataPath + "/TextureImg";
 #elif UNITY_IOS || UNITY_ANDROID
             string path = Application.persistentDataPath + "/TextureImg";
 #endif
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            //Debug.Log(marketData.result);
-            ArrayMarketData arrayMarket = new ArrayMarketData();
-            arrayMarket.marketData = marketData.data;
-            DataTemporary.arrayMarketData = arrayMarket;
-            //이모지 다운로드
-            int l = 0;
-            for(int i = 0; i < marketData.data.Count; i++)
-            {
-                for(int j = 0; j < marketData.data[i].orderDetails.Count; j++)
-                {
-                    List<ProductImages> productImages = new List<ProductImages>();
-                    productImages = marketData.data[i].orderDetails[j].product.productImages;
-                    for (int k = 0; k < productImages.Count - 1; k++)
+                    if (!Directory.Exists(path))
                     {
-                        DataTemporary.image_Url.Add(productImages[k].path);
-                        Texture2D texture = await DataModule.WebrequestTexture(productImages[k].path, DataModule.NetworkType.GET);
-                        byte[] bytes = texture.EncodeToPNG();
-                        File.WriteAllBytes(path + "/Market_Emoji_" + l + ".png", bytes);
-                        l++;
+                        Directory.CreateDirectory(path);
+                    }
+
+                    //Debug.Log(marketData.result);
+                    ArrayMarketData arrayMarket = new ArrayMarketData();
+                    arrayMarket.marketData = marketsData[h].data;
+                    DataTemporary.arrayMarketData = arrayMarket;
+                    //이모지 다운로드
+                    int l = 0;
+                    for (int i = 0; i < marketsData[h].data.Count; i++)
+                    {
+                        for (int j = 0; j < marketsData[h].data[i].orderDetails.Count; j++)
+                        {
+                            List<ProductImages> productImages = new List<ProductImages>();
+                            productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
+                            for (int k = 0; k < productImages.Count - 1; k++)
+                            {
+                                DataTemporary.image_Url.Add(productImages[k].path);
+                                Texture2D texture = await DataModule.WebrequestTexture(productImages[k].path, DataModule.NetworkType.GET);
+                                byte[] bytes = texture.EncodeToPNG();
+                                File.WriteAllBytes(path + "/Market_Emoji_" + l + ".png", bytes);
+                                l++;
+                            }
+                        }
                     }
                 }
             }
@@ -196,9 +219,16 @@ public class LoadingData : MonoBehaviourPunCallbacks
                 && bridgeData.result
                 && userData.result
                 && login.result
-                && treeData.result
-                && marketData.result)
+                && treeData.result)
             {
+                for(int i =0; i < marketsData.Count; i++)
+                {
+                    if (!marketsData[i].result)
+                    {
+                        Debug.LogError("Market data Error! : [Category] " + (Category)i);
+                        return;
+                    }
+                }
                 isLoadingComplete = true;
             }
         }
