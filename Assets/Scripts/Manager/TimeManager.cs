@@ -44,21 +44,18 @@ public class TimeManager : MonoBehaviour
             }
         }
 
-        print(DateTime.MinValue == firstPlantDate.dateTime);
-        print(DateTime.MinValue.GetType());
-        print(firstPlantDate.dateTime.GetType());
         // firstPlantDate로 방문타입 결정 => 5일차 후 새로운 Seed 심기 전 null값 처리필요
         if (firstPlantDate.dateTime == DateTime.MinValue) // DateTime.Parse("08/18/2018 07:22:16"))  //DateTime.MinValue)
         {
             print("First Visit");
-            GameManager.Instance.treeController.visitType = TreeController.VisitType.First;
+            treeControll.visitType = TreeController.VisitType.First;
             firstPlantDate = DateTime.Now;
             CalculatePlantDays(firstPlantDate, DateTime.Now);
         }
         else
         {
             print("Revisit");
-            GameManager.Instance.treeController.visitType = TreeController.VisitType.First;//ReVisit;
+            treeControll.visitType = TreeController.VisitType.ReVisit;
             // totalPlantDay, dayCount 계산
             CalculatePlantDays(firstPlantDate, DateTime.Now);
         }
@@ -80,8 +77,6 @@ public class TimeManager : MonoBehaviour
     bool skyChangeDone;
     private void Update()
     {
-        //now = DateTime.Now;
-        //txtCurrentTime.text = now.dateTime.ToString("tt h : mm : ss");
 
         #region skyBox 변화 시연
         // 특정 시간 지정
@@ -174,7 +169,7 @@ public class TimeManager : MonoBehaviour
     {
         TimeSpan timeDif = to - from;
         totalPlantDay = (int)timeDif.Days + 1;
-        GameManager.Instance.treeController.dayCount = totalPlantDay;
+        treeControll.dayCount = totalPlantDay;
         return totalPlantDay;
     }
 
@@ -185,6 +180,6 @@ public class TimeManager : MonoBehaviour
     {
         now = now.dateTime.AddDays(1);
         CalculatePlantDays(firstPlantDate, now);
-        GameManager.Instance.treeController.SetTree(totalPlantDay);
+        treeControll.SetTree(totalPlantDay);
     }
 }
