@@ -49,7 +49,6 @@ public class UI_LandCustom : MonoBehaviourPun
     }
     private void Update()
     {
-
         if (PhotonNetwork.PlayerList.Length != 1)
         {
             button.SetActive(false);
@@ -64,18 +63,13 @@ public class UI_LandCustom : MonoBehaviourPun
         string customPath = Application.streamingAssetsPath + "/LandCustom/" + Cat;
         string imagePath = Application.streamingAssetsPath + "/LandCustomImage/";
         selectCatName = Cat;
-        selectCat = num;
         int cnt = 0;
         //썸네일 넣기
         string[] fileEntries = Directory.GetFiles(customPath, "*.prefab");
 
         for (int i = 0; i < fileEntries.Length; i++)
         {
-
-            //Sprite resource = DataTemporary.assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "\\")[1].Split('.')[0]);
             Debug.Log(fileEntries[i]);
-            //Debug.Log(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1]);
-            //Debug.Log(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
             Sprite resource = DataTemporary.assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
             itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().sprite =
                 Instantiate(resource);
@@ -86,6 +80,54 @@ public class UI_LandCustom : MonoBehaviourPun
 
             cnt++;
         }
+        //마켓에서 샀을경우
+        int h = 0;
+        for(int i = 0; i < 8; i++)
+        {
+            string category = ((Category)i).ToString();
+            category = category.Remove(0, 1);
+            if (Cat.Contains(category))
+            {
+                h = i;
+                selectCat = h;
+                break;
+            }
+        }
+#if UNITY_STANDALONE
+        string path = Application.dataPath + "/" + (Category)h;
+#elif UNITY_IOS || UNITY_ANDROID
+        string path = Application.persistentDataPath + "/" + (Category)h;
+#endif
+
+        string[] fileMarket = Directory.GetFiles(path, "*.png");
+
+        for(int i = 0; i < fileMarket.Length; i++)
+        {
+            Debug.Log(fileMarket[i]);
+
+            byte[] byteTexture = File.ReadAllBytes(path + "/" + fileMarket[i].Split("/Market_")[1]);
+            if (byteTexture.Length > 0)
+            {
+                Texture2D texture = new Texture2D(0, 0);
+                texture.LoadImage(byteTexture);
+                Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().sprite = sprite;
+            }
+            Color color = itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().color;
+            color.a = 1;
+            itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().color = color;
+
+            cnt++;
+        }
+        //나머지 버튼들은 비활성화
+        for (int i = cnt; i < 15; i++)
+        {
+            itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().sprite = Instantiate(DataTemporary.assetBundleImg.LoadAsset<Sprite>("ButtonBg"));
+            Color color = itemWindow.transform.GetChild(i / 4).GetChild(i % 4).GetComponent<Image>().color;
+            color.a = 0.3f;
+            itemWindow.transform.GetChild(i / 4).GetChild(i % 4).GetComponent<Image>().color = color;
+        }
+        #region Legacy
         //foreach (FileInfo fi in di.GetFiles())
         //{
         //    if (fi.Name.Split('.').Length > 2)
@@ -105,14 +147,7 @@ public class UI_LandCustom : MonoBehaviourPun
         //    cnt++;
         //}
 
-        //나머지 버튼들은 비활성화
-        for (int i = cnt; i < 15; i++)
-        {
-            itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().sprite = Instantiate(DataTemporary.assetBundleImg.LoadAsset<Sprite>("ButtonBg"));
-            Color color = itemWindow.transform.GetChild(i / 4).GetChild(i % 4).GetComponent<Image>().color;
-            color.a = 0.3f;
-            itemWindow.transform.GetChild(i / 4).GetChild(i % 4).GetComponent<Image>().color = color;
-        }
+        #endregion
     }
 
     /// <summary>
@@ -130,7 +165,6 @@ public class UI_LandCustom : MonoBehaviourPun
         string[] fileEntries = Directory.GetFiles(customPath, "*.prefab");
 
         //썸네일 넣기
-                
         foreach(string fileName in fileEntries)
         {
             if (cnt == i)
@@ -159,6 +193,46 @@ public class UI_LandCustom : MonoBehaviourPun
             cnt++;
         }
 
+        //마켓에서 샀을경우 
+
+#if UNITY_STANDALONE
+        string assetBundleDirectory = Application.dataPath + "/MarketBundle/" + (Category)selectCat;
+#elif UNITY_IOS
+        string assetBundleDirectory = Application.persistentDataPath + "/MarketBundle/" + (Category)selectCat;
+#endif
+        string[] bundles = Directory.GetFiles(customPath);
+
+        //썸네일 넣기
+        foreach (string fileName in bundles)
+        {
+            if (cnt == i)
+            {
+                var myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
+                GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]);
+
+                //GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
+                GameObject prefab = Instantiate(resource);
+                prefab.name = prefab.name.Split('(')[0];
+                prefab.transform.position = new Vector3(0, 0.5f, 0);
+                //landDecorations라는 가방에 담기 => 존재하지 않으면 만들자
+                for (int j = 0; j < land.childCount; j++)
+                {
+                    if (land.GetChild(j).gameObject.name == "landDecorations")
+                    {
+                        prefab.transform.parent = land.GetChild(j);
+                        return;
+                    }
+                }
+                GameObject landDecorations = new GameObject("landDecorations");
+                landDecorations.transform.parent = land;
+                landDecorations.transform.position = Vector3.zero;
+                prefab.transform.parent = landDecorations.transform;
+                return;
+            }
+
+            cnt++;
+        }
+        #region Legacy
         //foreach (FileInfo fi in di.GetFiles())
         //{
         //    if (fi.Name.Split('.').Length > 2)
@@ -189,6 +263,7 @@ public class UI_LandCustom : MonoBehaviourPun
 
         //    cnt++;
         //}
+        #endregion
     }
 
     private bool isActiveCanvase = false;

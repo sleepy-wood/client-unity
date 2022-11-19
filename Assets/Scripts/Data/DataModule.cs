@@ -1,15 +1,11 @@
-using Broccoli.Pipe;
 using Cysharp.Threading.Tasks;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using static DataModule;
-
 
 [Serializable]
 public class ResultGet<T>
@@ -212,7 +208,7 @@ public class DataModule
     /// <param name="data"></param>
     /// <param name="filePath"></param>
     /// <returns></returns>
-    public static async UniTask<AssetBundle> WebRequestAssetBundle(string _url, NetworkType networkType, DataType dataType, string filePath = null)
+    public static async UniTask<AssetBundle> WebRequestAssetBundle(string _url, NetworkType networkType, DataType dataType, string bundleName, string filePath = null)
     {
         //네트워크 체킹
         await CheckNetwork();
@@ -242,9 +238,21 @@ public class DataModule
         {
             var res = await request.SendWebRequest().WithCancellation(cts.Token);
             AssetBundle result = DownloadHandlerAssetBundle.GetContent(request);
-           
-            //temporary에 저장
-            DataTemporary.assetBundle = result;
+
+#if UNITY_STANDALONE
+            //번들을 로컬에 저장한다.
+            string assetBundleDirectory = Application.dataPath + "/MarketBundle";
+#elif UNITY_IOS
+            string assetBundleDirectory = Application.persistentDataPath + "/MarketBundle";
+#endif
+            if (!Directory.Exists(assetBundleDirectory))
+            {
+                Directory.CreateDirectory(assetBundleDirectory);
+            }
+            FileStream fs = new FileStream(assetBundleDirectory + "/" + bundleName, System.IO.FileMode.Create);
+            fs.Write(request.downloadHandler.data, 0, (int)request.downloadedBytes);
+            fs.Close();
+
             request.Dispose();
             return result;
         }
@@ -256,7 +264,7 @@ public class DataModule
                 //TODO: 네트워크 재시도 팝업 호출.
 
                 //재시도
-                return await WebRequestAssetBundle(_url, networkType, dataType);
+                return await WebRequestAssetBundle(_url, networkType, dataType, bundleName);
             }
         }
         catch (Exception e)

@@ -225,10 +225,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
                         Directory.CreateDirectory(path);
                     }
 
-                    List<AssetBundle> assetBundles = new List<AssetBundle>();
                     if (marketsData[h].data.Count == 0)
                     {
-                        DataTemporary.market_Asset.Add(assetBundles);
                         continue;
                     }
 
@@ -250,11 +248,9 @@ public class LoadingData : MonoBehaviourPunCallbacks
                                 {
                                     if (productImages[k].path.Split('.').Length > 0)
                                         continue;
-                                    AssetBundle assetBundle = await DataModule.WebRequestAssetBundle(productImages[k].path, DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
-                                    assetBundles.Add(assetBundle);
+                                    AssetBundle assetBundle = await DataModule.WebRequestAssetBundle(productImages[k].path, DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE, (Category)h + "/" +productImages[k].originalName);
                                 }
                             }
-                            DataTemporary.market_Asset.Add(assetBundles);
                         }
                     }
                 }

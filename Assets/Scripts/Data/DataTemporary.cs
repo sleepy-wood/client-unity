@@ -35,6 +35,5 @@ public class DataTemporary
     public static ArrayMarketData arrayMarketData = new ArrayMarketData();
     public static List<string> emoji_Url = new List<string>();
     public static List<List<string>> market_url = new List<List<string>>();
-    public static List<List<AssetBundle>> market_Asset = new List<List<AssetBundle>>();
 
 }
