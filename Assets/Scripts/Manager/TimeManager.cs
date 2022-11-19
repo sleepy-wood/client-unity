@@ -28,20 +28,14 @@ public class TimeManager : MonoBehaviour
         // 해당 랜드의 firstPlantDate 알아내기
         if (treeDataCount > 0)
         {
-            print("1");
             for (int i = 0; i < treeDataCount; i++)
             {
-                print("2");
                 // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
                 if (DataTemporary.GetTreeData.getTreeDataList[i].landId == DataTemporary.MyUserData.currentLandId)
                 {
-                    print("3");
                     // 처음 심은 날 저장
                     firstPlantDate.dateTime = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
-                    print("4");
-                    // 현재 랜드의 나무 데이터
-                    print(treeControll.currentTreeData);
-                    print(treeControll);
+
                     // 현재 랜드의 나무 데이터
                     treeControll.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
                     print($"{i}번째 트리 데이터");  // 심은 순서대로 저장 
@@ -49,8 +43,10 @@ public class TimeManager : MonoBehaviour
                 }
             }
         }
-        
 
+        print(DateTime.MinValue == firstPlantDate.dateTime);
+        print(DateTime.MinValue.GetType());
+        print(firstPlantDate.dateTime.GetType());
         // firstPlantDate로 방문타입 결정 => 5일차 후 새로운 Seed 심기 전 null값 처리필요
         if (firstPlantDate.dateTime == DateTime.MinValue) // DateTime.Parse("08/18/2018 07:22:16"))  //DateTime.MinValue)
         {
