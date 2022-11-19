@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance;
-
+    public bool test = false;
     public GameObject UI_Canvas;
     private void Awake()
     {
@@ -20,11 +20,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Instance = this;
         }
-        if (!User)
-            User = PhotonNetwork.Instantiate("User", new Vector3(0.2f + Random.Range(0, 2), 1.27f, 2.6f), Quaternion.identity);
-        //if (!User)
-        //    User = GameObject.Find("User");
-
+        if (!test)
+        {
+            if (!User)
+                User = PhotonNetwork.Instantiate("User", new Vector3(0.2f + Random.Range(0, 2), 1.27f, 2.6f), Quaternion.identity);
+        }
+        else
+        {
+            if (!User)
+                User = GameObject.Find("User");
+        }
     }
     private void Start()
     {
