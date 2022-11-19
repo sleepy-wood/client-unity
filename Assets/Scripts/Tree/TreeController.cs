@@ -333,13 +333,22 @@ public class TreeController : MonoBehaviour
     public void LoadDataSetting()        
     {
         print("===========LoadDataSetting=================");
+        
+        
         // Tree Id
         treeId = currentTreeData.id;
         print("1");
         pipeName = currentTreeData.treePipeName;
+        print("pipeName = " + pipeName);
+        // Tree Pipeline
+        treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+        print(treePipeline == null);
+        print(treePipeline);
         print("2");
         // Tree Name
         txtTreeName.text = currentTreeData.treeName;
+        print("treePipeline.seed = " + treePipeline.seed);
+        print("currentTreeData.seedNumber = " + currentTreeData.seedNumber);
         print("3");
         // Seed Number
         treePipeline.seed = currentTreeData.seedNumber;
