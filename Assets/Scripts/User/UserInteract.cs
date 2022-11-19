@@ -68,7 +68,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
                 transform.position += moveSpeed * moveDir * Time.deltaTime;
 
                 //회전
-                transform.Rotate(transform.up, userInput.RotateX);
+                transform.Rotate(transform.up, userInput.DragX);
             }
             else
             {

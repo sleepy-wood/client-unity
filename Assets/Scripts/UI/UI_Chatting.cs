@@ -82,6 +82,7 @@ public class UI_Chatting : MonoBehaviourPun
             prefab.GetComponent<Button>().onClick.AddListener(
                 () => OnClickEmojiButton(temp + 15));
         }
+        emoji_content.offsetMax = new Vector2(110 * (14 + filenames.Count), emoji_content.offsetMax.y);
     }
     private void Update()
     {

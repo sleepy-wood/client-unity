@@ -59,11 +59,11 @@ public class UserInput : MonoBehaviour
     /// <summary>
     /// Mouse Drag -> RotateX
     /// </summary>c
-    public float RotateX { get; private set; }
+    public float DragX { get; private set; }
     /// <summary>
     /// Mouse Drag -> RotateY
     /// </summary>c
-    public float RotateY { get; private set; }
+    public float DragY { get; private set; }
 
 
     private void Update()
@@ -88,13 +88,13 @@ public class UserInput : MonoBehaviour
             #region 회전 
             if (Input.GetButton(RightClickName))
             {
-                RotateX = Input.GetAxis(MouseXName);
-                RotateY = Input.GetAxis(MouseYName);
+                DragX = Input.GetAxis(MouseXName);
+                DragY = Input.GetAxis(MouseYName);
             }
             else
             {
-                RotateX = 0;
-                RotateY = 0;
+                DragX = 0;
+                DragY = 0;
             }
             #endregion
 
@@ -139,7 +139,7 @@ public class UserInput : MonoBehaviour
                     MoveX = dir.x;
                     MoveZ = dir.y;
 
-                    #region Legacy
+            #region Legacy
                     //Vector3 mousePos = Input.mousePosition;
                     //Ray ray = Camera.main.ScreenPointToRay(mousePos);
                     //RaycastHit hit;
@@ -156,7 +156,7 @@ public class UserInput : MonoBehaviour
                     //        MoveZ = dir.z;
                     //    }
                     //}
-                    #endregion
+            #endregion
                 }
                 else
                 {
@@ -217,8 +217,8 @@ public class UserInput : MonoBehaviour
                     {
                         if (Input.touches[i].phase == TouchPhase.Moved)
                         {
-                            RotateX = (touchFirstFingerPos.x - touchFirstFinger.position.x) * 0.07f;
-                            RotateY = (touchFirstFingerPos.y - touchFirstFinger.position.y) * 0.07f;
+                            DragX = (touchFirstFingerPos.x - touchFirstFinger.position.x) * 0.07f;
+                            DragY = (touchFirstFingerPos.y - touchFirstFinger.position.y) * 0.07f;
                         }
                     }
                 }
@@ -228,8 +228,8 @@ public class UserInput : MonoBehaviour
             else
             {
                 Zoom = 0;
-                RotateX = 0;
-                RotateY = 0;
+                DragX = 0;
+                DragY = 0;
             }
 #endif
         }

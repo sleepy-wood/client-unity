@@ -59,13 +59,13 @@ public class CharactorChoice : MonoBehaviourPunCallbacks
     private void Update()
     {
         //Rotate를 하면 안내문 끄기
-        if (userInput.RotateX != 0 && explainText.gameObject.activeSelf)
+        if (userInput.DragX != 0 && explainText.gameObject.activeSelf)
         {
             StopAllCoroutines();
             explainText.gameObject.SetActive(false);
         }
 
-        transform.GetChild(selectedIndex).Rotate(transform.up, -userInput.RotateX * 2);
+        transform.GetChild(selectedIndex).Rotate(transform.up, -userInput.DragX * 2);
         //다음씬으로 넘어가자
         if (isNextScene)
         {

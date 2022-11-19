@@ -160,8 +160,8 @@ public class LandCustom : MonoBehaviour
     /// </summary>
     void CameraMode()
     {
-        transform.parent.Rotate(new Vector3(0, 1, 0), userInput.RotateX * 10);
-        transform.Rotate(new Vector3(transform.parent.right.x, 0, 0), userInput.RotateY * 3);
+        transform.parent.Rotate(new Vector3(0, 1, 0), userInput.DragX * 10);
+        transform.Rotate(new Vector3(transform.parent.right.x, 0, 0), userInput.DragY * 3);
         //zoom을 했을 경우
         if (userInput.Zoom != 0 && preZoom != userInput.Zoom)
         {
@@ -191,7 +191,7 @@ public class LandCustom : MonoBehaviour
     /// </summary>
     void RotateMode()
     {
-        selectedObject.transform.Rotate(selectedObject.transform.up, -userInput.RotateX * 2);
+        selectedObject.transform.Rotate(selectedObject.transform.up, -userInput.DragX * 2);
     }
 
     bool isActiveMove = false;
