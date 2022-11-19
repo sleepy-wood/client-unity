@@ -158,7 +158,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
 #if UNITY_STANDALONE
             string path = Application.dataPath + "/TextureImg";
 #elif UNITY_IOS || UNITY_ANDROID
-                        string path = Application.persistentDataPath + "/TextureImg/Market_Emoji_" + k + ".png";
+            string path = Application.persistentDataPath + "/TextureImg";
 #endif
             if (!Directory.Exists(path))
             {
