@@ -5568,8 +5568,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 354470178}
   m_HandleRect: {fileID: 354470177}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: -0.000118145945
+  m_Size: 0.81358063
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -29009,8 +29009,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -540, y: -0.000045776367}
-  m_SizeDelta: {x: 3949.1543, y: 136.4}
+  m_AnchoredPosition: {x: -540, y: 31.2585}
+  m_SizeDelta: {x: 3949.1543, y: 167.6585}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1449460822
 MonoBehaviour:
@@ -29027,7 +29027,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
+    m_Top: 15
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 8
@@ -41002,8 +41002,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chatMoveDistance: 731
-  windowContent: {fileID: 1107683731}
+  windowContent: {fileID: 1449460821}
   menuBar: {fileID: 839149014}
+  emoji_content: {fileID: 1449460821}
 --- !u!4 &1960897335
 Transform:
   m_ObjectHideFlags: 0
@@ -41012,7 +41013,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960897332}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -540, y: -662, z: 0}
+  m_LocalPosition: {x: -540, y: -486, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

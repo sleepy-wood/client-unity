@@ -154,7 +154,18 @@ public class LoadingData : MonoBehaviourPunCallbacks
         }
         if (marketData.result)
         {
-            Debug.Log(marketData.result);
+
+#if UNITY_STANDALONE
+            string path = Application.dataPath + "/TextureImg";
+#elif UNITY_IOS || UNITY_ANDROID
+                        string path = Application.persistentDataPath + "/TextureImg/Market_Emoji_" + k + ".png";
+#endif
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            //Debug.Log(marketData.result);
             ArrayMarketData arrayMarket = new ArrayMarketData();
             arrayMarket.marketData = marketData.data;
             DataTemporary.arrayMarketData = arrayMarket;
@@ -165,22 +176,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
                 {
                     List<ProductImages> productImages = new List<ProductImages>();
                     productImages = marketData.data[i].orderDetails[j].product.productImages;
-                    for (int k = 0; k < productImages.Count; k++)
+                    for (int k = 0; k < productImages.Count - 1; k++)
                     {
                         DataTemporary.image_Url.Add(productImages[k].path);
                         Texture2D texture = await DataModule.WebrequestTexture(productImages[k].path, DataModule.NetworkType.GET);
                         byte[] bytes = texture.EncodeToPNG();
-
-#if UNITY_STANDALONE
-                        string path = Application.dataPath + "/TextureImg/Market_Emoji_" + k + ".png";
-#elif UNITY_IOS || UNITY_ANDROID
-                        string path = Application.persistentDataPath + "/TextureImg/Market_Emoji_" + k + ".png";
-#endif
-                        if (Directory.Exists(path))
-                        {
-                            Directory.CreateDirectory(path);
-                        }
-                        File.WriteAllBytes(path, bytes);
+                        File.WriteAllBytes(path + "/Market_Emoji_" + k + ".png", bytes);
                     }
                 }
             }
@@ -202,19 +203,67 @@ public class LoadingData : MonoBehaviourPunCallbacks
     }
     private float curTime = 0;
     bool once = false;
-    private void Update()
+    private async void Update()
     {
 
         if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded && !once && isLoadingComplete)
         {
-            Debug.Log("load");
             once = true;
             isLoadingComplete = false;
 
+            //새로운 수면 데이터 보내기
             DataTemporary.samples = HealthDataStore.GetSleepSamples(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                     DateTime.Now);
 
             SleepSample[] sleepsData = DataTemporary.samples;
+            ResultGet<SleepData> sleepResultGet = await DataModule.WebRequestBuffer<ResultGet<SleepData>>("/api/v1/sleeps", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+            for (int i = sleepResultGet.count; i < sleepsData.Length; i++)
+            {
+                SleepData data = new SleepData();
+                data.startDate = sleepsData[i].StartDate;
+                data.endDate = sleepsData[i].EndDate;
+                data.type = (int)sleepsData[i].Type;
+                string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+                ResultPost<SleepData> sleepResultPost = await DataModule.WebRequestBuffer<ResultPost<SleepData>>("/api/v1/sleeps", DataModule.NetworkType.POST, DataModule.DataType.BUFFER, jsonData);
+                if (!sleepResultPost.result)
+                {
+                    Debug.Log("Fail Posting Sleep Data!");
+                    return;
+                }
+            }
+
+            //새로운 활동 데이터 보내기
+            DataTemporary.activitySamples = HealthDataStore.GetActivitySamples(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                    DateTime.Now);
+
+            ActivitySample[] activitySamepls = DataTemporary.activitySamples;
+            ResultGet<ActivityData> activityResultGet = await DataModule.WebRequestBuffer<ResultGet<ActivityData>>("/api/v1/activities", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+            for (int i = activityResultGet.count; i < activitySamepls.Length; i++)
+            {
+                ActivityData data = new ActivityData();
+                data.activeEnergyBurnedInKcal = activitySamepls[i].ActiveEnergyBurnedInKcal;
+                data.activeEnergyBurnedInKcal = activitySamepls[i].ActiveEnergyBurnedInKcal;
+                data.exerciseTimeInMinutes = activitySamepls[i].ExerciseTimeInMinutes;
+                data.exerciseTimeGoalInMinutes = activitySamepls[i].ExerciseTimeGoalInMinutes;
+                data.standHours = activitySamepls[i].StandHours;
+                data.standHoursGoal = activitySamepls[i].StandHoursGoal;
+                data.date = activitySamepls[i].Date;
+
+                string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+                ResultPost<SleepData> sleepResultPost = await DataModule.WebRequestBuffer<ResultPost<SleepData>>("/api/v1/activities", DataModule.NetworkType.POST, DataModule.DataType.BUFFER, jsonData);
+                if (!sleepResultPost.result)
+                {
+                    Debug.Log("Fail Posting Acitvity Data!");
+                    return;
+                }
+            }
+            //새로운 분당 심박수
+
+            //새로운 산소포화도
+            
+            //새로운 분당 호흡수
+
+
             List<SleepSample> sleepSamples = new List<SleepSample>();
             //중복데이터 제거
             sleepSamples = sleepsData.Distinct().ToList();

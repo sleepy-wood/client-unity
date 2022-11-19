@@ -3,13 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.XR;
-using static Autodesk.Fbx.FbxTime;
 
 public class UI_Chatting : MonoBehaviourPun
 {
@@ -17,6 +13,7 @@ public class UI_Chatting : MonoBehaviourPun
     [SerializeField] private float chatMoveDistance = 836f;
     public Transform windowContent;
     public GameObject menuBar;
+    public RectTransform emoji_content;
 
     //InputChat
     private InputField chatting;
@@ -25,7 +22,6 @@ public class UI_Chatting : MonoBehaviourPun
     //ScrollView의 Content
     private RectTransform content;
     //EmojiChatting의 Content
-    private RectTransform chat_content;
     //이전 Content의 H (멘토님 설명 중 H2역할)
     private float prevContentH;
     //ScrollView의 H (멘토님 설명 중 H1역할)
@@ -62,9 +58,14 @@ public class UI_Chatting : MonoBehaviourPun
         {
             //GameObject resource = fileName.Split("/TextureImg/")[1].Split('.')[0];
             GameObject resource = Resources.Load<GameObject>("Emoji_");
-            GameObject prefab = Instantiate(resource);
+            GameObject prefab = Instantiate(resource, emoji_content);
+#if UNITY_STANDALONE
+            prefab.name = "Custom_" + fileName.Split("/TextureImg\\")[1].Split('.')[0];
+            byte[] byteTexture = File.ReadAllBytes(path + "/" + fileName.Split("/TextureImg\\")[1].Split('.')[0] + ".png");
+#elif UNITY_IOS || UNITY_ANDROID
             prefab.name = "Custom_" + fileName.Split("/TextureImg/")[1].Split('.')[0];
             byte[] byteTexture = File.ReadAllBytes(path + fileName.Split("/TextureImg/")[1].Split('.')[0] + ".png");
+#endif
             if (byteTexture.Length > 0)
             {
                 Texture2D texture = new Texture2D(0, 0);
@@ -74,11 +75,9 @@ public class UI_Chatting : MonoBehaviourPun
             }
             int temp = i;
             prefab.GetComponent<Button>().onClick.AddListener(
-                () => OnClickEmojiButton(temp, DataTemporary.image_Url[i - 15]));
+                () => OnClickEmojiButton(temp));
             i++;
         }
-
-
     }
     private void Update()
     {
@@ -115,9 +114,14 @@ public class UI_Chatting : MonoBehaviourPun
             }
         //}
     }
-    public void OnClickEmojiButton(int i, string img_url = null)
+    /// <summary>
+    /// Emoji Button을 눌렀을 경우
+    /// </summary>
+    /// <param name="i"></param>
+    public void OnClickEmojiButton(int i)
     {
-        photonView.RPC("RPC_EmojiButton", RpcTarget.All, i, DataTemporary.MyUserData.nickname, img_url);
+        Debug.Log("누름");
+        photonView.RPC("RPC_EmojiButtonAsync", RpcTarget.All, i, DataTemporary.MyUserData.nickname);
     }
     public void OnSubmit()
     {
@@ -234,7 +238,7 @@ public class UI_Chatting : MonoBehaviourPun
     }
 
     [PunRPC]
-    public async Task RPC_EmojiButtonAsync(int i, string nickname, string url = null)
+    public async Task RPC_EmojiButtonAsync(int i, string nickname)
     {
         GameObject emojiResource = Resources.Load<GameObject>("Emoji");
         GameObject emojiPrefab = Instantiate(emojiResource);
@@ -243,7 +247,7 @@ public class UI_Chatting : MonoBehaviourPun
 
         if (i >= 15)
         {
-            Texture2D texture = await DataModule.WebrequestTexture(url, DataModule.NetworkType.GET);
+            Texture2D texture = await DataModule.WebrequestTexture(DataTemporary.image_Url[i - 15], DataModule.NetworkType.GET);
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             emojiPrefab.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
         }

@@ -24,6 +24,8 @@ public class DataTemporary
     public static AssetBundle stopwordsAsset;
     //SleepDatas
     public static SleepSample[] samples = new SleepSample[100];
+    //Activity Datas
+    public static ActivitySample[] activitySamples = new ActivitySample[100];
     // Tree Data
     public static AssetBundle assetBundleTreePipeline;
     public static ArrayPutTreeData PutTreeData = new ArrayPutTreeData();
