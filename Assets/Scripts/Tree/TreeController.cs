@@ -23,7 +23,7 @@ public class TreeController : MonoBehaviour
     public string barkMaterial;
     // Sprout Group Id
     public int sproutGroupId;
-    
+
 
     #region 방문 타입
     public enum VisitType
@@ -136,15 +136,15 @@ public class TreeController : MonoBehaviour
     HealthReport report;
     // 로드해야하는 나무의 데이터
     public GetTreeData currentTreeData;
-    // 마이 컬렉션 - 나무 이름
-    public Text txtTreeName;
     // SkyLand Main Text
     public Text txtMain;
     public Text txtSub;
     // Bark Texture AssetBundle
     AssetBundle barkAssetBundle;
-    
-
+    // My Collection Text
+    public Text txtTreeName;
+    public Text txtTreeBirth;
+    public Text txtTreeScore;
     #endregion
 
 
@@ -177,12 +177,11 @@ public class TreeController : MonoBehaviour
                 selectedSeed = pipeNameDict[pipeName];
                 print("2");
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
-                
-                
+
 
                 // Sprout Texture 확률적 랜덤 선택
                 // 1. Leaf Shape Group(A, B, C, D) 4개 중 랜덤 선택해서 해당 Group을 Sprout Generator - Sprout Seeds에 추가
-                sproutGroupId =  UnityEngine.Random.Range(1, 5);
+                sproutGroupId = UnityEngine.Random.Range(1, 5);
                 SproutSeed sproutSeed = new SproutSeed();
                 treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
                 treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = sproutGroupId;
@@ -191,13 +190,13 @@ public class TreeController : MonoBehaviour
                 // 2. 해당 Group 안의 Textures Area Enabled 개수 확률적으로 enabled=true 시켜주기 (50%-1개, 20%-2개, 15%-3개, 10%-4개, 5%-5개)
                 int n = UnityEngine.Random.Range(0, 100);
                 if (n < 50)
-                { 
+                {
                     int random = UnityEngine.Random.Range(1, 6);
                     treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                 }
                 else if (n >= 50 && n < 70)
                 {
-                    for (int j=0; j<2; j++)
+                    for (int j = 0; j < 2; j++)
                     {
                         int random = UnityEngine.Random.Range(1, 6);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
@@ -279,6 +278,13 @@ public class TreeController : MonoBehaviour
             // firstPlantDate와 dayCount에 따라 그에 맞는 HealthData 반영
             if (dayCount > 1)
             {
+                if (dayCount == 5)
+                {
+                    // My Collection Text 활성화
+                    txtTreeName.GetComponent<Text>().enabled = true;
+                    txtTreeBirth.GetComponent<Text>().enabled = true;
+                    txtTreeScore.GetComponent<Text>().enabled = true;
+                }
                 soil.SetActive(false);
                 // ReVisit했는데 해당 DayCount와 저장한 나무 데이터 수가 동일하지 않을 경우 (= 24H 지나고 처음 들어온 경우)
                 if (dayCount != currentTreeData.treeGrowths.Count)
@@ -315,7 +321,7 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// 나무 처음 심은 날을 기반으로 해당 dayCount에 맞는 헬스 데이터 가져오기
     /// </summary>
-    public void ApplyHealthData() 
+    public void ApplyHealthData()
     {
         DateTime date = GameManager.Instance.timeManager.firstPlantDate;
 
@@ -353,10 +359,10 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// 로드한 데이터로 나무 세팅
     /// </summary>
-    public void LoadDataSetting()        
+    public void LoadDataSetting()
     {
         print("===========LoadDataSetting=================");
-        
+
         // Tree Id
         treeId = currentTreeData.id;
         print("1");
@@ -402,7 +408,7 @@ public class TreeController : MonoBehaviour
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[4].enabled = currentTreeData.sproutColor5 == 1 ? true : false;
         print("10");
 
-#region TreeGrowth
+        #region TreeGrowth
         // 1. Scale
         float p = pipeData.scale;
         previewTree.localScale = new Vector3(p, p, p);
@@ -422,8 +428,8 @@ public class TreeController : MonoBehaviour
         treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = pipeData.sproutNum;
         print("13");
         // 5. Ratio of Rotten Sprout : 0, 25, 50, 75, 100
-        List<int> groupNum = new List<int>() { 5, 6, 7, 8};
-        for (int i=0; i<pipeData.rottenRate/25; i++)
+        List<int> groupNum = new List<int>() { 5, 6, 7, 8 };
+        for (int i = 0; i < pipeData.rottenRate / 25; i++)
         {
             SproutSeed sproutGroup = new SproutSeed();
             treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutGroup);
@@ -453,7 +459,7 @@ public class TreeController : MonoBehaviour
     public float camMoveSpeed = 1f;
     void Update()
     {
-#region 썩은잎 만들기 Test
+        #region 썩은잎 만들기 Test
         //if (count == 1 && !isOnce)
         //{
         //    // sprout areas enabled true;
@@ -478,9 +484,9 @@ public class TreeController : MonoBehaviour
         //    Resources.UnloadAsset(loadedPipeline);
         //    isOnce2 = true;
         //}
-#endregion
+        #endregion
 
-#region Camera Moving
+        #region Camera Moving
         //// 2. 작은 묘목
         //if (dayCount == 2)
         //{
@@ -515,9 +521,9 @@ public class TreeController : MonoBehaviour
         //        Camera.main.gameObject.transform.localPosition = Vector3.Lerp(Camera.main.gameObject.transform.localPosition, new Vector3(-0.2f, -54.7f, 9.1f), 2 * Time.deltaTime);
         //    }
         //}
-#endregion
+        #endregion
 
-#region 가지 추가  Test Code
+        #region 가지 추가  Test Code
         // TreePipeline - 가지 추가
         //if (Input.GetKeyDown(KeyCode.Alpha2))
         //{
@@ -538,9 +544,9 @@ public class TreeController : MonoBehaviour
         //    //treeFactory.gameObject.transform.Rotate(new Vector3(0, 0, 0));
         //    treeFactory.gameObject.transform.parent = growPos;
         //}
-#endregion
+        #endregion
 
-#region 자연스러운 나무 성장 Test
+        #region 자연스러운 나무 성장 Test
         //if (Input.GetKeyDown(KeyCode.Alpha5) && !isOnce3)
         //{
         //    isOnce3 = true;
@@ -558,9 +564,9 @@ public class TreeController : MonoBehaviour
         //        }
         //    }
         //}
-#endregion
+        #endregion
 
-#region Sprout Group Test
+        #region Sprout Group Test
         //if (Input.GetMouseButtonDown(0) && !once2)
         //{
         //    once2 = true;
@@ -569,30 +575,30 @@ public class TreeController : MonoBehaviour
         //    treePipeline = assetBundle.LoadAsset<Pipeline>("BasicTree");
         //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
         //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 2;
-            //treePipeline._serializedPipeline.sproutMappers[0].sproutMaps.Count
-            //treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[0].enabled
+        //treePipeline._serializedPipeline.sproutMappers[0].sproutMaps.Count
+        //treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[0].enabled
 
 
-            //for (int i = 0; i < treeStores.Count; i++)
-            //{
-            //    if (treeStores[i].seedType == SeedType.Basic)
-            //    {
-            //        selectedTreeSetting = treeStores[i].treeSettings;
-            //        print($"나무 기본 세팅 : {treeStores[i].seedType}");
-            //    }
-            //}
-            //PipelineSetting(2);
-            //PipelineReload();
+        //for (int i = 0; i < treeStores.Count; i++)
+        //{
+        //    if (treeStores[i].seedType == SeedType.Basic)
+        //    {
+        //        selectedTreeSetting = treeStores[i].treeSettings;
+        //        print($"나무 기본 세팅 : {treeStores[i].seedType}");
+        //    }
+        //}
+        //PipelineSetting(2);
+        //PipelineReload();
 
-            //print("sproutSeeds Count : " + treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Count);
-#endregion
+        //print("sproutSeeds Count : " + treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Count);
+        #endregion
 
     }
 
-#region 씨앗 심기 코루틴
+    #region 씨앗 심기 코루틴
     IEnumerator PlantSeed(float targetScale)
     {
-#region 카메라 줌인
+        #region 카메라 줌인
         float t = 0;
         //while (t < 1)
         //{
@@ -601,7 +607,7 @@ public class TreeController : MonoBehaviour
         //        yield return null;
         //}
         //Camera.main.fieldOfView = targetFOV;
-#endregion
+        #endregion
 
         // 씨앗 심기
         //seed.transform.localPosition = new Vector3(0, 2.5f, 0);
@@ -635,7 +641,7 @@ public class TreeController : MonoBehaviour
         sproutParticle.Stop();
         yield return new WaitForSeconds(1);
 
-#region 카메라 줌 아웃
+        #region 카메라 줌 아웃
         //t = 0;
         //while (t < 1)
         //{
@@ -644,12 +650,12 @@ public class TreeController : MonoBehaviour
         //        yield return null;
         //}
         //Camera.main.fieldOfView = defaultFOV;
-#endregion
+        #endregion
 
         // 식물 이름 UI 띄우기
         if (!playMode) treeNameUI.gameObject.SetActive(true);
     }
-#endregion
+    #endregion
 
     /// <summary>
     /// 나무 Pipeline 업데이트
@@ -666,7 +672,7 @@ public class TreeController : MonoBehaviour
 
         if (playMode)
         {
-#region 1. Branch Element MinMax Frequency
+            #region 1. Branch Element MinMax Frequency
             for (int i = 0; i < 4; i++)
             {
                 // pipeline
@@ -685,9 +691,9 @@ public class TreeController : MonoBehaviour
                     pipe1.maxFrequency = store1.max;
                 }
             }
-#endregion
+            #endregion
 
-#region 2. Min/Max Girth At Base
+            #region 2. Min/Max Girth At Base
             GirthTransformElement pipe4 = treePipeline._serializedPipeline.girthTransforms[0];
             float store4 = element.girthBase;
 
@@ -706,9 +712,9 @@ public class TreeController : MonoBehaviour
                 pipe4.maxGirthAtBase = store4;
             }
 
-#endregion
+            #endregion
 
-#region 3. Object scale
+            #region 3. Object scale
             if (badMode && dayCount > 3)
             {
                 scaleTo += 0.1f;
@@ -718,11 +724,11 @@ public class TreeController : MonoBehaviour
                 scaleTo = element.scale;
             }
 
-#endregion
+            #endregion
         }
         else
         {
-#region 1. Branch Element MinMax Frequency
+            #region 1. Branch Element MinMax Frequency
             //int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
             // pipeline element 개수만큼 설정
             for (int i = 0; i < 4; i++)
@@ -735,9 +741,9 @@ public class TreeController : MonoBehaviour
                 pipe1.minFrequency = store1.min;
                 pipe1.maxFrequency = store1.max;
             }
-#endregion
+            #endregion
 
-#region 2. Root Min/Max Freqency
+            #region 2. Root Min/Max Freqency
             StructureGenerator.StructureLevel pipe2 = treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel;
             int store2 = element.rootFreq;
 
@@ -745,9 +751,9 @@ public class TreeController : MonoBehaviour
             pipe2.minFrequency = store2;
             // Root Max Freqency
             pipe2.maxFrequency = store2;
-#endregion
+            #endregion
 
-#region 3. Min/Max Length At Base
+            #region 3. Min/Max Length At Base
             StructureGenerator.StructureLevel pipe3 = treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel;
             int store3 = element.rootBaseLength;
 
@@ -755,9 +761,9 @@ public class TreeController : MonoBehaviour
             pipe3.minLengthAtBase = store3;
             // Root Max Length At Base
             pipe3.maxLengthAtBase = store3;
-#endregion
+            #endregion
 
-#region 4. Min/Max Girth At Base
+            #region 4. Min/Max Girth At Base
             GirthTransformElement pipe4 = treePipeline._serializedPipeline.girthTransforms[0];
             float store4 = element.girthBase;
 
@@ -765,11 +771,11 @@ public class TreeController : MonoBehaviour
             pipe4.minGirthAtBase = store4;
             // Max Girth At Base
             pipe4.maxGirthAtBase = store4;
-#endregion
+            #endregion
 
-#region 5. Object scale
+            #region 5. Object scale
             scaleTo = element.scale;
-#endregion
+            #endregion
         }
 
     }
@@ -781,7 +787,7 @@ public class TreeController : MonoBehaviour
     /// </summary>
     public void PipelineReload()
     {
-        Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>("BasicTree");//(pipeName);
+        Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
         treeFactory.UnloadAndClearPipeline();
         if (!playMode)
@@ -885,7 +891,7 @@ public class TreeController : MonoBehaviour
             //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             PipelineReload();
-            
+
         }
         // 2일차
         else if (day == 2)
@@ -996,7 +1002,7 @@ public class TreeController : MonoBehaviour
         yield return new WaitForSeconds(second);
     }
 
-#region Tree Data
+    #region Tree Data
     /// <summary>
     /// Tree Data 저장
     /// </summary>
@@ -1030,11 +1036,11 @@ public class TreeController : MonoBehaviour
             treeData.sproutColor3 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
             treeData.sproutColor4 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
             treeData.sproutColor5 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
-            
+
 
             // Tree Pipeline Data //
             // 1. Scale
-                treeData.scale = previewTree.localScale.x;
+            treeData.scale = previewTree.localScale.x;
             // 2. Branch Numbers
             List<StructureGenerator.StructureLevel> level = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels;
             treeData.branch1 = level[0].minFrequency;
@@ -1154,15 +1160,9 @@ public class TreeController : MonoBehaviour
             FileManager.SaveDataFile("TreeData2", arrayTreeData);
         }
     }
+    #endregion
 
-    public void OnClickSave()
-    {
-        SaveTreeData();
-    }
-
-#endregion
-
-#region User Data to Tree
+    #region User Data to Tree
 
     /// <summary>
     /// 수면양 enum 타입에 따른 나무 데이터 변경
@@ -1291,7 +1291,7 @@ public class TreeController : MonoBehaviour
         // 나쁜 영향을 줄 경우
         if (yesBad)
         {
-#region 1. 상한 잎
+            #region 1. 상한 잎
             // 1. 상한 잎 => 상한 잎 Particle 색 변경 필요
             List<int> groupId = new List<int>();
             SproutSeed sproutSeed = new SproutSeed();
@@ -1320,9 +1320,9 @@ public class TreeController : MonoBehaviour
                 treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
                 treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 8;
             }
-#endregion
+            #endregion
 
-#region 2. 가지 중력
+            #region 2. 가지 중력
             // 2. 가지 중력 (상태 안 좋을수록 마이너스)
             for (int i = 0; i < 4; i++)
             {
@@ -1330,21 +1330,21 @@ public class TreeController : MonoBehaviour
                 gravityPipe.minGravityAlignAtTop -= 0.2f;
                 gravityPipe.maxGravityAlignAtTop -= 0.2f;
             }
-#endregion
+            #endregion
 
-#region 3. 나뭇잎 너비
+            #region 3. 나뭇잎 너비
             treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width -= 0.5f;
-#endregion
+            #endregion
 
-#region 4. 나무 가지 두께
+            #region 4. 나무 가지 두께
             treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase -= 0.2f;
             treePipeline._serializedPipeline.girthTransforms[0].maxGirthAtBase -= 0.2f;
-#endregion
+            #endregion
         }
         // 나쁜 영향을 완화시킬 경우
         else
         {
-#region 1. 상한 잎
+            #region 1. 상한 잎
             int sproutTextures = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas.Count;
             for (int i = 5; i < sproutTextures; i++)
             {
@@ -1354,32 +1354,32 @@ public class TreeController : MonoBehaviour
                     break;
                 }
             }
-#endregion
+            #endregion
 
-#region 2. 가지 중력 (상태 좋을수록 플러스)
+            #region 2. 가지 중력 (상태 좋을수록 플러스)
             for (int i = 0; i < 4; i++)
             {
                 StructureGenerator.StructureLevel gravityPipe = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
                 gravityPipe.minGravityAlignAtTop += 0.2f;
                 gravityPipe.maxGravityAlignAtTop += 0.2f;
             }
-#endregion
+            #endregion
 
-#region 3. 나뭇잎 너비
+            #region 3. 나뭇잎 너비
             if (treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width < 3.2f)
             {
                 treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width += 0.5f;
             }
-#endregion
+            #endregion
 
-#region 4. 나무 가지 두께
+            #region 4. 나무 가지 두께
             treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase += 0.2f;
             treePipeline._serializedPipeline.girthTransforms[0].maxGirthAtBase += 0.2f;
-#endregion
+            #endregion
         }
 
     }
-#endregion
+    #endregion
 
 }
 #endregion
