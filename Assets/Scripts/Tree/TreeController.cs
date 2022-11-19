@@ -16,11 +16,14 @@ using UnityEngine.Networking;
 public class TreeController : MonoBehaviour
 {
     #region Variable
-
+    [Header("Tree Base Data")]
     // Load할 Pipeline 이름
-    string pipeName;
-
-    // treeList
+    public string pipeName;
+    // Tree Bark Material Name
+    public string barkMaterial;
+    // Sprout Group Id
+    public int sproutGroupId;
+    
 
     #region 방문 타입
     public enum VisitType
@@ -111,8 +114,6 @@ public class TreeController : MonoBehaviour
     // FOV
     //public float defaultFOV = 10.29f;
     //public float targetFOV = 3.11f;
-    // TreeData
-    public PutTreeData data;
     // user
     public GameObject user;
     // previewTree Scale Value
@@ -140,13 +141,15 @@ public class TreeController : MonoBehaviour
     // SkyLand Main Text
     public Text txtMain;
     public Text txtSub;
+    
 
     #endregion
 
 
     private void Start()
     {
-        assetBundle = DataTemporary.assetBundleTreePipeline;
+        treeFactory.gameObject.SetActive(false);
+        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");//DataTemporary.assetBundleTreePipeline;
 
         if (visitType == VisitType.First)
         {
@@ -170,24 +173,63 @@ public class TreeController : MonoBehaviour
                 selectedSeed = pipeNameDict[pipeName];
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 
-                // Sprout Texture 랜덤 선택
-                treeFactory.gameObject.SetActive(false);
-                int s = UnityEngine.Random.Range(0, 4);
-                treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[s].enabled = true;
-                print("Sprout texture index : " + s);
+                // Sprout Texture 확률적 랜덤 선택
+                // 1. Leaf Shape Group(A, B, C, D) 4개 중 랜덤 선택해서 해당 Group을 Sprout Generator - Sprout Seeds에 추가
+                int groupNum =  UnityEngine.Random.Range(1, 5);
+                SproutSeed sproutSeed = new SproutSeed();
+                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = groupNum;
+                // 2. 해당 Group 안의 Textures Area Enabled 개수 확률적으로 enabled=true 시켜주기 (50%-1개, 20%-2개, 15%-3개, 10%-4개, 5%-5개)
+                int n = UnityEngine.Random.Range(0, 100);
+                if (n < 50)
+                { 
+                    int random = UnityEngine.Random.Range(1, 6);
+                    treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[groupNum - 1].sproutAreas[random].enabled = true;
+                }
+                else if (n >= 50 && n < 70)
+                {
+                    for (int j=0; j<2; j++)
+                    {
+                        int random = UnityEngine.Random.Range(1, 6);
+                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[groupNum - 1].sproutAreas[random].enabled = true;
+                    }
+                }
+                else if (n >= 70 && n < 85)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        int random = UnityEngine.Random.Range(1, 6);
+                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[groupNum - 1].sproutAreas[random].enabled = true;
+                    }
+                }
+                else if (n >= 85 && n < 95)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        int random = UnityEngine.Random.Range(1, 6);
+                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[groupNum - 1].sproutAreas[random].enabled = true;
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[groupNum - 1].sproutAreas[j].enabled = true;
+                    }
+                }
 
-                // Bark Material 랜덤 선택
+                // Bark Material 확률적 랜덤 선택
                 string path = Application.dataPath + "/Resources/Tree/Materials";
                 string[] dirs = Directory.GetFiles(path, "*.mat", SearchOption.AllDirectories);
-                print("Number of Bark Materials : " + dirs.Length);
                 int b = UnityEngine.Random.Range(0, dirs.Length);
                 string[] fileName = dirs[b].Split("/Resources/");
-                Material mat = Resources.Load(fileName[1]) as Material;
-                print("Selected : " + fileName[1]);
+                string matPath = fileName[1].Replace("\\", "/");
+                string matPath2 = matPath.Replace(".mat", "");
+                Material mat = Resources.Load(matPath2) as Material;
+                print("Selected Bark Material: " + matPath2);
                 treePipeline._serializedPipeline.barkMappers[0].customMaterial = mat;
             }
             print(pipeName + " Selected");
-
 
             // Tree Grow 기본 세팅
             if (!demoMode)
@@ -208,17 +250,14 @@ public class TreeController : MonoBehaviour
         }
         else if (visitType == VisitType.ReVisit)
         {
-            // 로드한 데이터 세팅
-            treeId = currentTreeData.id;
-            txtTreeName.text = currentTreeData.treeName;
-            selectedSeed = pipeNameDict[currentTreeData.seedType];
-            pipeName = currentTreeData.seedType;
+            // 로드한 이전 나무 데이터 세팅
+            LoadDataSetting();
 
             // firstPlantDate와 dayCount에 따라 그에 맞는 HealthData 반영
             if (dayCount > 1)
             {
                 soil.SetActive(false);
-                // ReVisit했는데 해당 DayCount와 저장한 나무 데이터 수가 동일하지 않을 경우
+                // ReVisit했는데 해당 DayCount와 저장한 나무 데이터 수가 동일하지 않을 경우 (= 24H 지나고 처음 들어온 경우)
                 if (dayCount != currentTreeData.treeGrowths.Count)
                 {
                     // 이전 날의 HealthData 반영 + 데이터 저장 + 나무 변경 Text
@@ -231,7 +270,7 @@ public class TreeController : MonoBehaviour
                     changeParticle.Play();
                     treeFactory.gameObject.SetActive(true);
                 }
-                // ReVisit했는데 해당 DayCount와 저장한 나무 데이터 수가 동일할 경우 
+                // ReVisit했는데 해당 DayCount와 저장한 나무 데이터 수가 동일할 경우
                 else
                 {
                     // 해당 데이터 나무에 반영
@@ -291,18 +330,38 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// 로드한 데이터로 나무 세팅
     /// </summary>
-    public void LoadDataSetting(GetTreeData treeData)        
-    {
+    public void LoadDataSetting()        
+    { 
+        // Tree Id
+        treeId = currentTreeData.id;
+        
+        pipeName = currentTreeData.treePipeName;
         // Tree Name
-        txtTreeName.text = treeData.treeName;
+        txtTreeName.text = currentTreeData.treeName;
         // Seed Number
-        treePipeline.seed = treeData.seedNumber;
+        treePipeline.seed = currentTreeData.seedNumber;
         // Seed Type
-        selectedSeed = (SeedType)System.Enum.Parse(typeof(SeedType), treeData.seedType);
+        selectedSeed = pipeNameDict[currentTreeData.treePipeName];
         // First Plant Date
-        GameManager.Instance.timeManager.firstPlantDate = DateTime.Parse(treeData.treeGrowths[0].createdAt);
+        GameManager.Instance.timeManager.firstPlantDate = DateTime.Parse(currentTreeData.treeGrowths[0].createdAt);
         // 현재 랜드 나무의 dayCount에 맞는 Tree Pipeline Data
-        TreePipeline pipeData = treeData.treeGrowths[dayCount - 1].treePipeline[0];
+        TreePipeline pipeData = currentTreeData.treeGrowths[dayCount - 1].treePipeline[0];
+        // bark Material
+        string name = currentTreeData.barkMaterial;
+        Material mat = Resources.Load("Tree/Materials/" + name) as Material;
+        treePipeline._serializedPipeline.barkMappers[0].customMaterial = mat;
+        // sproutGroup
+        SproutSeed sproutSeed = new SproutSeed();
+        treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+        treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = currentTreeData.sproutGroupId;
+        // sproutColor
+        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled = currentTreeData.sproutColor1 == 1 ? true : false;
+        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[1].enabled = currentTreeData.sproutColor2 == 1 ? true : false;
+        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[2].enabled = currentTreeData.sproutColor3 == 1 ? true : false;
+        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[3].enabled = currentTreeData.sproutColor4 == 1 ? true : false;
+        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[4].enabled = currentTreeData.sproutColor5 == 1 ? true : false;
+
+
         #region TreeGrowth
         // 1. Scale
         float p = pipeData.scale;
@@ -316,16 +375,23 @@ public class TreeController : MonoBehaviour
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].maxFrequency = pipeData.branch3;
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].minFrequency = pipeData.branch4;
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].maxFrequency = pipeData.branch4;
-        // 3. Trunk Length
-        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxLengthAtBase = pipeData.trunkLength;
-        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase = pipeData.trunkLength;
         // 4. Sprout Number
         treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = pipeData.sproutNum;
         treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = pipeData.sproutNum;
-        // 5. Ratio of Rotten Sprout
-
-
-        // 6. Gravity
+        // 5. Ratio of Rotten Sprout : 0, 25, 50, 75, 100
+        List<int> groupNum = new List<int>() { 5, 6, 7, 8};
+        for (int i=0; i<pipeData.rottenRate/25; i++)
+        {
+            SproutSeed sproutGroup = new SproutSeed();
+            treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutGroup);
+            treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = groupNum[i];
+        }
+        // 6. Sprout Width
+        foreach(SproutMesh s in treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes)
+        {
+            s.width = pipeData.sproutWidth;
+        }
+        // 7. Gravity
         for (int i = 0; i < 4; i++)
         {
             if (!treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].isRoot)
@@ -334,26 +400,6 @@ public class TreeController : MonoBehaviour
                 treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxGravityAlignAtBase = pipeData.gravity;
             }
         }
-        // 7. Root Number
-        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = pipeData.rootNum;
-        treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = pipeData.rootNum;
-        // 8. Bark Texture
-        string name = pipeData.barkTexture;
-        Texture2D texture = Resources.Load("Tree/Sprites/" + name) as Texture2D;
-        treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
-        // 9. Sprout Texture
-        for (int i = 0; i < 5; i++)
-        {
-            if (i == pipeData.sproutIndex)
-            {
-                treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = true;
-            }
-            else
-            {
-                treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = false;
-            }
-        }
-
     }
 
     bool once = false;
@@ -467,6 +513,34 @@ public class TreeController : MonoBehaviour
         //    }
         //}
         #endregion
+
+        #region Sprout Group Test
+        //if (Input.GetMouseButtonDown(0) && !once2)
+        //{
+        //    once2 = true;
+        //    print("Mouse Click");
+        //    SproutSeed sproutSeed = new SproutSeed();
+        //    treePipeline = assetBundle.LoadAsset<Pipeline>("BasicTree");
+        //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+        //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 2;
+            //treePipeline._serializedPipeline.sproutMappers[0].sproutMaps.Count
+            //treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[0].enabled
+
+
+            //for (int i = 0; i < treeStores.Count; i++)
+            //{
+            //    if (treeStores[i].seedType == SeedType.Basic)
+            //    {
+            //        selectedTreeSetting = treeStores[i].treeSettings;
+            //        print($"나무 기본 세팅 : {treeStores[i].seedType}");
+            //    }
+            //}
+            //PipelineSetting(2);
+            //PipelineReload();
+
+            //print("sproutSeeds Count : " + treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Count);
+            #endregion
+
     }
 
     #region 씨앗 심기 코루틴
@@ -661,7 +735,7 @@ public class TreeController : MonoBehaviour
     /// </summary>
     public void PipelineReload()
     {
-        Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+        Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>("BasicTree");//(pipeName);
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
         treeFactory.UnloadAndClearPipeline();
         if (!playMode)
@@ -818,7 +892,7 @@ public class TreeController : MonoBehaviour
                 SproutNumChange(false, 10);
                 // Tree Pipeline - Branch MinMax, Girth, Scale
                 PipelineSetting(2);
-                BadChange(true, 0.4f);
+                BadChange(true);
                 rottenLeafParticle.Play();
             }
             else
@@ -851,7 +925,7 @@ public class TreeController : MonoBehaviour
                 SproutNumChange(false, 10);
                 // Tree Pipeline - Branch MinMax, Girth, Scale
                 PipelineSetting(3);
-                BadChange(true, 0.2f);
+                BadChange(true);
                 rottenLeafParticle.gameObject.SetActive(true);
                 rottenLeafParticle.Play();
             }
@@ -884,49 +958,65 @@ public class TreeController : MonoBehaviour
     string saveUrl;
     public async void SaveTreeData()
     {
+        // Day1 - 2일차 기본 세팅 저장
         if (dayCount == 1)
         {
             saveUrl = "/api/v1/trees";
-            PutTreeData treeData = new PutTreeData();
-            List<PutTreeData> treeDatas = new List<PutTreeData>();
+            TreeData treeData = new TreeData();
+            List<TreeData> treeDatas = new List<TreeData>();
 
             // Tree Name
             treeData.treeName = txtTreeName.text;
             // seed Number
-            treeData.seedNumber = 0;
-            // Seed Type
-            treeData.seedType = pipeName; // selectedSeed.ToString();
+            treeData.seedNumber = treePipeline.seed;
+            Debug.Log("treeData.seedNumber = " + treeData.seedNumber);
+            // treePipeName
+            treeData.treePipeName = pipeName;
+            // Bark Material Name
+            treeData.barkMaterial = barkMaterial;
             // Land ID 
             treeData.landId = DataTemporary.MyUserData.currentLandId;
+            // Sprout Group Id
+            treeData.sproutGroupId = sproutGroupId;
+            // Sprout Texture Enabled
+            treeData.sproutColor1 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
+            treeData.sproutColor2 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
+            treeData.sproutColor3 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
+            treeData.sproutColor4 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
+            treeData.sproutColor5 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
+            
 
             // Tree Pipeline Data //
             // 1. Scale
-            treeData.scale = 0;
+                treeData.scale = previewTree.localScale.x;
             // 2. Branch Numbers
-            treeData.branch1 = 0;
-            treeData.branch2 = 0;
-            treeData.branch3 = 0;
-            treeData.branch4 = 0;
-            // 3. Trunk Length
-            treeData.trunkLength = 0;
-            // 4. Sprout Number
-            treeData.sproutNum = 0;
+            List<StructureGenerator.StructureLevel> level = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels;
+            treeData.branch1 = level[0].minFrequency;
+            treeData.branch2 = level[1].minFrequency;
+            treeData.branch3 = level[2].minFrequency;
+            treeData.branch4 = level[3].minFrequency;
+            // 3. Sprout Number
+            treeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].minFrequency;
             // 5. Rotten Rate
-            treeData.rottenRate = 0;
-            // 6. Gravity
-            treeData.gravity = 0;
-            // 7. Root Num                                                                              
-            treeData.rootNum = 0;
-            // 8. Bark Texture Name
-            treeData.barkTexture = "None";
-            // 9. Sprout Index
-            treeData.sproutIndex = 0;
+            int rate = 0;
+            foreach (SproutSeed s in treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds)
+            {
+                if (s.groupId == 5 | s.groupId == 6 | s.groupId == 7 | s.groupId == 8)
+                {
+                    rate += 25;
+                }
+            }
+            treeData.rottenRate = rate;
+            // 6. Sprout Width
+            //treeData.sproutWidth = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
+            // 7. Gravity
+            treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
 
             string treeJsonData = JsonUtility.ToJson(treeData);
             Debug.Log(JsonUtility.ToJson(treeData, true));
 
             // PUT Tree Data
-            ResultPost<PutTreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<PutTreeData>>(
+            ResultPost<TreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeData>>(
                 saveUrl,
                 DataModule.NetworkType.POST,
                 DataModule.DataType.BUFFER,
@@ -942,15 +1032,16 @@ public class TreeController : MonoBehaviour
             }
             treeDatas.Add(treeData);
 
-            ArrayPutTreeData arrayTreeData = new ArrayPutTreeData();
-            arrayTreeData.putTreeDataList = treeDatas;
+            ArrayTreeData arrayTreeData = new ArrayTreeData();
+            arrayTreeData.TreeDataList = treeDatas;
 
             // DataTemporary
-            DataTemporary.PutTreeData = arrayTreeData;
+            DataTemporary.TreeData = arrayTreeData;
 
             // File 형식으로 Update or Save
             FileManager.SaveDataFile("TreeData", arrayTreeData);
         }
+        // Day2~5 - 헬스데이터 적용한 나무 데이터 저장
         else if (dayCount > 1 && dayCount < 6)
         {
             saveUrl = "/api/v1/tree-growths";
@@ -959,6 +1050,8 @@ public class TreeController : MonoBehaviour
 
             // Tree Id
             treeData.treeId = treeId;
+            // Sleep Ids
+            //treeData.sleeIds = 
 
             // Tree Pipeline Data //
             // 1. Scale
@@ -970,60 +1063,50 @@ public class TreeController : MonoBehaviour
             treeData.branch2 = level[1].minFrequency;
             treeData.branch3 = level[2].minFrequency;
             treeData.branch4 = level[3].minFrequency;
-            // 3. Trunk Length
-            treeData.trunkLength = treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase;
-            // 4. Sprout Number
+            // 3. Sprout Number
             treeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].minFrequency;
-            // 5. Rotten Rate
-            treeData.rottenRate = 20;
-            // 6. Gravity
-            treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
-            // 7. Root Num                                                                                                                                                                                                                                          -000000000000000000
-            int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
-            treeData.rootNum = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[idx - 1].minFrequency;
-            // 8. Bark Texture Name
-            treeData.barkTexture = treePipeline._serializedPipeline.barkMappers[0].mainTexture.name;
-            // 9. Sprout Index
-            int id = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas.Count;
-            for (int i = 0; i < id; i++)
+            // 4. Rotten Rate
+            int rate = 0;
+            foreach (SproutSeed s in treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds)
             {
-                if (treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled)
+                if (s.groupId == 5 | s.groupId == 6 | s.groupId == 7 | s.groupId == 8)
                 {
-                    treeData.sproutIndex = i;
+                    rate += 25;
                 }
             }
+            treeData.rottenRate = rate;
+            // 5. Gravity
+            treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
 
             string treeJsonData = JsonUtility.ToJson(treeData);
             Debug.Log(JsonUtility.ToJson(treeData, true));
 
             // PUT Tree Data
-            //ResultPost<PutTreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<PutTreeData>>(
-            //    saveUrl,
-            //    DataModule.NetworkType.POST,
-            //    DataModule.DataType.BUFFER,
-            //    treeJsonData);
+            ResultPost<TreeData> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeData>>(
+                saveUrl,
+                DataModule.NetworkType.POST,
+                DataModule.DataType.BUFFER,
+                treeJsonData);
 
-            //if (!resultPost.result)
-            //{
-            //    Debug.LogError("WebRequestError : NetworkType[Post]");
-            //}
-            //else
-            //{
-            //    Debug.Log($"{dayCount}일차 Tree Data Save 성공");
-            //}
-            //treeDatas.Add(treeData);
+            if (!resultPost.result)
+            {
+                Debug.LogError("WebRequestError : NetworkType[Post]");
+            }
+            else
+            {
+                Debug.Log($"{dayCount}일차 Tree Data Save 성공");
+            }
+            treeDatas.Add(treeData);
 
-            //ArrayPutTreeData arrayTreeData = new ArrayPutTreeData();
-            //arrayTreeData.putTreeDataList = treeDatas;
+            ArrayTreeData2 arrayTreeData = new ArrayTreeData2();
+            arrayTreeData.TreeDataList2 = treeDatas;
 
-            //// DataTemporary
-            //DataTemporary.PutTreeData = arrayTreeData;
+            // DataTemporary
+            DataTemporary.TreeData2 = arrayTreeData;
 
-            //// File 형식으로 Update or Save
-            //FileManager.SaveDataFile("TreeData", arrayTreeData);
+            // File 형식으로 Update or Save
+            FileManager.SaveDataFile("TreeData2", arrayTreeData);
         }
-
-        
     }
 
     public void OnClickSave()
@@ -1235,31 +1318,61 @@ public class TreeController : MonoBehaviour
         }
     }
     /// <summary>
-    /// 나무의 상한잎, 중력 조절하는 함수
+    /// 나무의 상한잎, 중력, 나뭇잎 너비, 나무 가지 두께
     /// </summary>
     /// <param name="yesBad"> 나쁜 영향을 줄 것인지, 나쁜 영향을 완화시킬 것인지 </param>
-    public void BadChange(bool yesBad, float gravity = 0.2f)
+    public void BadChange(bool yesBad)
     {
         // 나쁜 영향을 줄 경우
         if (yesBad)
         {
-            // 상한 잎
-            int sproutTextures = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas.Count;
-            for (int i = 5; i < sproutTextures; i++)
+            #region 1. 상한 잎
+            // 1. 상한 잎 => 상한 잎 Particle 색 변경 필요
+            List<int> groupId = new List<int>();
+            SproutSeed sproutSeed = new SproutSeed();
+            // Sprout Generator에 상한 잎 Group 5~8 있는지 확인 후 만약에 없으면 순서대로 하나 추가
+            foreach (SproutSeed s in treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds)
             {
-                if (!treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled)
-                {
-                    treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = true;
-                    break;
-                }
+                groupId.Add(s.groupId);
             }
-            // 가지 중력 (상태 안 좋을수록 마이너스)
+            if (!groupId.Contains(5) && !groupId.Contains(6) && !groupId.Contains(7) && !groupId.Contains(8))
+            {
+                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 5;
+            }
+            if (groupId.Contains(5))
+            {
+                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 6;
+            }
+            if (groupId.Contains(5) && groupId.Contains(6))
+            {
+                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 7;
+            }
+            if (groupId.Contains(5) && groupId.Contains(6) && groupId.Contains(7))
+            {
+                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 8;
+            }
+            #endregion
+
+            #region 2. 가지 중력
+            // 2. 가지 중력 (상태 안 좋을수록 마이너스)
             for (int i = 0; i < 4; i++)
             {
                 StructureGenerator.StructureLevel gravityPipe = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-                gravityPipe.minGravityAlignAtTop -= gravity;
-                gravityPipe.maxGravityAlignAtTop -= gravity;
+                gravityPipe.minGravityAlignAtTop -= 0.2f;
+                gravityPipe.maxGravityAlignAtTop -= 0.2f;
             }
+            #endregion
+
+            #region 3. 나뭇잎 너비
+            // 
+            #endregion
+
+            #region 4. 나무 가지 두께
+            #endregion
         }
         // 나쁜 영향을 완화시킬 경우
         else
@@ -1278,8 +1391,8 @@ public class TreeController : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 StructureGenerator.StructureLevel gravityPipe = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-                gravityPipe.minGravityAlignAtTop += gravity;
-                gravityPipe.maxGravityAlignAtTop += gravity;
+                gravityPipe.minGravityAlignAtTop += 0.2f;
+                gravityPipe.maxGravityAlignAtTop += 0.2f;
             }
         }
 
