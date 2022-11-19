@@ -149,7 +149,7 @@ public class TreeController : MonoBehaviour
     private void Start()
     {
         treeFactory.gameObject.SetActive(false);
-        assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");//DataTemporary.assetBundleTreePipeline;
+        assetBundle = DataTemporary.assetBundleTreePipeline;
 
         if (visitType == VisitType.First)
         {
