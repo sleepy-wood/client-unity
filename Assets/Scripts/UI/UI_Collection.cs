@@ -9,7 +9,7 @@ public class UI_Collection : MonoBehaviour
     private GameObject user;
     private UserInput userInput;
     private int maxNum;
-    public List<float> posXList = new List<float>();
+    private List<float> posXList = new List<float>();
     private void Awake()
     {
         content = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<RectTransform>();
@@ -23,6 +23,10 @@ public class UI_Collection : MonoBehaviour
             else
                 posXList.Add(-812.5f + -856.9f * (i - 1));
         }
+    }
+    private void Start()
+    {
+        
     }
     private void OnEnable()
     {
