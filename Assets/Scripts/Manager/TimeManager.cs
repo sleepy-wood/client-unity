@@ -17,6 +17,7 @@ public class TimeManager : MonoBehaviour
     // 나무를 처음 심은 날
     public UDateTime firstPlantDate;
     public Text txtAge;
+    public TreeController treeControll;
 
     private void Awake()
     {
@@ -38,11 +39,11 @@ public class TimeManager : MonoBehaviour
                     // 처음 심은 날 저장
                     firstPlantDate.dateTime = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
                     print("4");
-                    print(firstPlantDate.dateTime);
                     // 현재 랜드의 나무 데이터
-                    print(DataTemporary.GetTreeData.getTreeDataList[i]);
+                    print(GameManager.Instance.treeController.currentTreeData);
+                    print(GameManager.Instance.treeController);
                     // 현재 랜드의 나무 데이터
-                    GameManager.Instance.treeController.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
+                    treeControll.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
                     print($"{i}번째 트리 데이터");  // 심은 순서대로 저장 
                     print("나무 처음 심은 시간 : " + firstPlantDate.dateTime);
                 }
