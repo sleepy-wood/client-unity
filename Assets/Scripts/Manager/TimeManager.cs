@@ -38,6 +38,9 @@ public class TimeManager : MonoBehaviour
                     // 처음 심은 날 저장
                     firstPlantDate.dateTime = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
                     print("4");
+                    print(firstPlantDate.dateTime);
+                    // 현재 랜드의 나무 데이터
+                    print(DataTemporary.GetTreeData.getTreeDataList[i]);
                     // 현재 랜드의 나무 데이터
                     GameManager.Instance.treeController.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
                     print($"{i}번째 트리 데이터");  // 심은 순서대로 저장 
