@@ -173,8 +173,12 @@ public class TreeController : MonoBehaviour
                 // Shape 랜덤 선택
                 int i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo Tree 빼고 랜덤 선택
                 pipeName = pipeNameList[i];
+                print("1");
                 selectedSeed = pipeNameDict[pipeName];
+                print("2");
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+                
+                
 
                 // Sprout Texture 확률적 랜덤 선택
                 // 1. Leaf Shape Group(A, B, C, D) 4개 중 랜덤 선택해서 해당 Group을 Sprout Generator - Sprout Seeds에 추가
@@ -182,6 +186,8 @@ public class TreeController : MonoBehaviour
                 SproutSeed sproutSeed = new SproutSeed();
                 treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
                 treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = sproutGroupId;
+                print("3");
+
                 // 2. 해당 Group 안의 Textures Area Enabled 개수 확률적으로 enabled=true 시켜주기 (50%-1개, 20%-2개, 15%-3개, 10%-4개, 5%-5개)
                 int n = UnityEngine.Random.Range(0, 100);
                 if (n < 50)
@@ -220,7 +226,7 @@ public class TreeController : MonoBehaviour
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[j].enabled = true;
                     }
                 }
-                Debug.Log("HiHi");
+                Debug.Log("4");
                 // Bark Material 확률적 랜덤 선택
 #if UNITY_STANDALONE
                 string path = Application.dataPath + "/Resources/Tree/Materials";
