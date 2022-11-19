@@ -5,6 +5,12 @@ using System;
 using JetBrains.Annotations;
 
 [Serializable]
+public class AllArrayMarketData
+{
+    public List<ArrayMarketData> allMarketData;
+}
+
+[Serializable]
 public class ArrayMarketData
 {
     public List<MarketData> marketData;

@@ -12,6 +12,17 @@ using System.Linq;
 using System.IO;
 //using TreeEditor;
 
+public enum Category
+{
+    collection = 0,
+    emoticon = 1,
+    flower = 2,
+    plants = 3,
+    mushroom = 4,
+    rock = 5,
+    wooden = 6,
+    light = 7
+}
 public class LoadingData : MonoBehaviourPunCallbacks
 {
     NativeLoadData nativeLoad = new NativeLoadData();
@@ -24,17 +35,6 @@ public class LoadingData : MonoBehaviourPunCallbacks
     private Scrollbar right;
     private Scrollbar left;
 
-    public enum Category
-    {
-        collection = 0,
-        emoticon = 1,
-        flower = 2,
-        plants = 3,
-        mushroom = 4,
-        rock = 5,
-        wooden = 6,
-        light = 7
-    }        
 
     private void Awake()
     {
@@ -196,16 +196,65 @@ public class LoadingData : MonoBehaviourPunCallbacks
                     {
                         for (int j = 0; j < marketsData[h].data[i].orderDetails.Count; j++)
                         {
+                            List<string> emoji_urls = new List<string>();
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
                             for (int k = 0; k < productImages.Count - 1; k++)
                             {
-                                DataTemporary.image_Url.Add(productImages[k].path);
+                                emoji_urls.Add(productImages[k].path);
+                                //DataTemporary.emoji_Url.Add(productImages[k].path);
                                 Texture2D texture = await DataModule.WebrequestTexture(productImages[k].path, DataModule.NetworkType.GET);
                                 byte[] bytes = texture.EncodeToPNG();
                                 File.WriteAllBytes(path + "/Market_Emoji_" + l + ".png", bytes);
                                 l++;
                             }
+                            DataTemporary.market_url.Add(emoji_urls);
+                        }
+                    }
+                }
+                else
+                {
+
+#if UNITY_STANDALONE
+                    string path = Application.dataPath + "/" + (Category)h;
+#elif UNITY_IOS || UNITY_ANDROID
+            string path = Application.persistentDataPath + "/" + (Category)h;
+#endif
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    List<AssetBundle> assetBundles = new List<AssetBundle>();
+                    if (marketsData[h].data.Count == 0)
+                    {
+                        DataTemporary.market_Asset.Add(assetBundles);
+                        continue;
+                    }
+
+                    for (int i = 0; i < marketsData[h].data.Count; i++)
+                    {
+                        for (int j = 0; j < marketsData[h].data[i].orderDetails.Count; j++)
+                        {
+                            List<ProductImages> productImages = new List<ProductImages>();
+                            productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
+                            for (int k = 0; k < productImages.Count - 1; k++)
+                            {
+                                if (productImages[k].mimeType.Split('/')[0] == "image")
+                                {
+                                    Texture2D texture = await DataModule.WebrequestTexture(productImages[k].path, DataModule.NetworkType.GET);
+                                    byte[] bytes = texture.EncodeToPNG();
+                                    File.WriteAllBytes(path + "/Market_" + productImages[k].originalName + ".png", bytes);
+                                }
+                                else
+                                {
+                                    if (productImages[k].path.Split('.').Length > 0)
+                                        continue;
+                                    AssetBundle assetBundle = await DataModule.WebRequestAssetBundle(productImages[k].path, DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE);
+                                    assetBundles.Add(assetBundle);
+                                }
+                            }
+                            DataTemporary.market_Asset.Add(assetBundles);
                         }
                     }
                 }
