@@ -340,6 +340,8 @@ public class TreeController : MonoBehaviour
         print("2");
         // Tree Name
         txtTreeName.text = currentTreeData.treeName;
+        print("treePipeline.seed = " + treePipeline.seed);
+        print("currentTreeData.seedNumber = " + currentTreeData.seedNumber);
         print("3");
         // Seed Number
         treePipeline.seed = currentTreeData.seedNumber;

@@ -20,20 +20,24 @@ public class TimeManager : MonoBehaviour
 
     private void Awake()
     {
-        print("=========================================================");
+        print("=============================TimeManager============================");
         print("Land Id : " + DataTemporary.MyUserData.currentLandId);
         int treeDataCount = DataTemporary.GetTreeData.getTreeDataList.Count;
         print($"Tree Data Count : {treeDataCount}개");
         // 해당 랜드의 firstPlantDate 알아내기
         if (treeDataCount > 0)
         {
+            print("1");
             for (int i = 0; i < treeDataCount; i++)
             {
+                print("2");
                 // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
                 if (DataTemporary.GetTreeData.getTreeDataList[i].landId == DataTemporary.MyUserData.currentLandId)
                 {
+                    print("3");
                     // 처음 심은 날 저장
                     firstPlantDate.dateTime = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
+                    print("4");
                     // 현재 랜드의 나무 데이터
                     GameManager.Instance.treeController.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
                     print($"{i}번째 트리 데이터");  // 심은 순서대로 저장 
