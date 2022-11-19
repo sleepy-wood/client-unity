@@ -175,23 +175,23 @@ public class TreeController : MonoBehaviour
 
                 // Sprout Texture 확률적 랜덤 선택
                 // 1. Leaf Shape Group(A, B, C, D) 4개 중 랜덤 선택해서 해당 Group을 Sprout Generator - Sprout Seeds에 추가
-                int groupNum =  UnityEngine.Random.Range(1, 5);
+                sproutGroupId =  UnityEngine.Random.Range(1, 5);
                 SproutSeed sproutSeed = new SproutSeed();
                 treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
-                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = groupNum;
+                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = sproutGroupId;
                 // 2. 해당 Group 안의 Textures Area Enabled 개수 확률적으로 enabled=true 시켜주기 (50%-1개, 20%-2개, 15%-3개, 10%-4개, 5%-5개)
                 int n = UnityEngine.Random.Range(0, 100);
                 if (n < 50)
                 { 
                     int random = UnityEngine.Random.Range(1, 6);
-                    treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[groupNum - 1].sproutAreas[random].enabled = true;
+                    treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                 }
                 else if (n >= 50 && n < 70)
                 {
                     for (int j=0; j<2; j++)
                     {
                         int random = UnityEngine.Random.Range(1, 6);
-                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[groupNum - 1].sproutAreas[random].enabled = true;
+                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
                 else if (n >= 70 && n < 85)
@@ -199,7 +199,7 @@ public class TreeController : MonoBehaviour
                     for (int j = 0; j < 3; j++)
                     {
                         int random = UnityEngine.Random.Range(1, 6);
-                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[groupNum - 1].sproutAreas[random].enabled = true;
+                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
                 else if (n >= 85 && n < 95)
@@ -207,14 +207,14 @@ public class TreeController : MonoBehaviour
                     for (int j = 0; j < 4; j++)
                     {
                         int random = UnityEngine.Random.Range(1, 6);
-                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[groupNum - 1].sproutAreas[random].enabled = true;
+                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
                 else
                 {
                     for (int j = 0; j < 5; j++)
                     {
-                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[groupNum - 1].sproutAreas[j].enabled = true;
+                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[j].enabled = true;
                     }
                 }
 
@@ -1008,7 +1008,7 @@ public class TreeController : MonoBehaviour
             }
             treeData.rottenRate = rate;
             // 6. Sprout Width
-            //treeData.sproutWidth = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
+            treeData.sproutWidth = treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width;
             // 7. Gravity
             treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
 
@@ -1050,8 +1050,6 @@ public class TreeController : MonoBehaviour
 
             // Tree Id
             treeData.treeId = treeId;
-            // Sleep Ids
-            //treeData.sleeIds = 
 
             // Tree Pipeline Data //
             // 1. Scale
@@ -1075,7 +1073,9 @@ public class TreeController : MonoBehaviour
                 }
             }
             treeData.rottenRate = rate;
-            // 5. Gravity
+            // 5. Sprout Width
+            treeData.sproutWidth = treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width;
+            // 6. Gravity
             treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
 
             string treeJsonData = JsonUtility.ToJson(treeData);
@@ -1114,87 +1114,6 @@ public class TreeController : MonoBehaviour
         SaveTreeData();
     }
 
-    /// <summary>
-    /// 내 나무 목록 가져오기
-    /// </summary>
-    public int rotten;
-    //public async void SetTreeData()
-    //{
-    //    ArrayTreeData arrayTreeData = DataTemporary.MyTreeData;
-    //    assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/newtreebundle");
-
-    //    // 기본 세팅값 찾기
-    //    FindTreeSetting();
-
-    //    // Tree Pipeline 로드
-    //    TreeData treeData = arrayTreeData.treeDataList[0];
-    //    pipeName = treeData.seedType;
-    //    treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
-    //    // Pipeline 기본 세팅
-    //    //PipelineSetting();
-
-    //    // seed Number
-    //    treePipeline.seed = treeData.seedNumber;
-    //    // Tree Name
-    //    txtTreeName.text = treeData.treeName;
-    //    // seedType
-    //    selectedSeed = (SeedType)System.Enum.Parse(typeof(SeedType), treeData.seedType);
-    //    // First Plant Date
-    //    //GameManager.Instance.timeManager.firstPlantDate = treeData.createdAt;
-    //    // Tree Pipeline Data
-    //    //TreePipelineData pipeData = treeData.treePipelineData;
-    //    //#region Pipeline Data
-    //    //// 1. Scale
-    //    //float p = pipeData.scale;
-    //    //previewTree.localScale = new Vector3(p, p, p);
-    //    //// 2. Branch Number
-    //    //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minFrequency = pipeData.branch1;
-    //    //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxFrequency = pipeData.branch1;
-    //    //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].minFrequency = pipeData.branch2;
-    //    //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].maxFrequency = pipeData.branch2;
-    //    //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].minFrequency = pipeData.branch3;
-    //    //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].maxFrequency = pipeData.branch3;
-    //    //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].minFrequency = pipeData.branch4;
-    //    //treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].maxFrequency = pipeData.branch4;
-    //    //// 3. Trunk Length
-    //    //treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxLengthAtBase = pipeData.trunkLength;
-    //    //treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minLengthAtBase = pipeData.trunkLength;
-    //    //// 4. Sprout Number
-    //    //treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = pipeData.sproutNum;
-    //    //treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = pipeData.sproutNum;
-    //    //// 5. Ratio of Rotten Sprout
-
-    //    //// 6. Gravity
-    //    //for (int i = 0; i < 4; i++)
-    //    //{
-    //    //    if(!treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].isRoot)
-    //    //    {
-    //    //        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].minGravityAlignAtBase = pipeData.gravity;
-    //    //        treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxGravityAlignAtBase = pipeData.gravity;
-    //    //    }
-    //    //}
-    //    //// 7. Root Number
-    //    //treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = pipeData.rootNum;
-    //    //treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = pipeData.rootNum;
-    //    //// 8. Bark Texture
-    //    //string name = pipeData.barkTexture;
-    //    //Texture2D texture = Resources.Load("Tree/Sprites/" + name) as Texture2D;
-    //    //treePipeline._serializedPipeline.barkMappers[0].mainTexture = texture;
-    //    //// 9. Sprout Texture
-    //    //for (int i=0; i < 5; i++)
-    //    //{
-    //    //    if (i == pipeData.sproutIndex)
-    //    //    {
-    //    //        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = true;
-    //    //    }
-    //    //    else
-    //    //    {
-    //    //        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[i].enabled = false;
-    //    //    }
-    //    //}
-    //    //#endregion
-
-    //}
     #endregion
 
     #region User Data to Tree
@@ -1368,16 +1287,18 @@ public class TreeController : MonoBehaviour
             #endregion
 
             #region 3. 나뭇잎 너비
-            // 
+            treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width -= 0.5f;
             #endregion
 
             #region 4. 나무 가지 두께
+            treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase -= 0.2f;
+            treePipeline._serializedPipeline.girthTransforms[0].maxGirthAtBase -= 0.2f;
             #endregion
         }
         // 나쁜 영향을 완화시킬 경우
         else
         {
-            // 상한 잎
+            #region 1. 상한 잎
             int sproutTextures = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas.Count;
             for (int i = 5; i < sproutTextures; i++)
             {
@@ -1387,13 +1308,28 @@ public class TreeController : MonoBehaviour
                     break;
                 }
             }
-            // 가지 중력 (상태 좋을수록 플러스)
+            #endregion
+
+            #region 2. 가지 중력 (상태 좋을수록 플러스)
             for (int i = 0; i < 4; i++)
             {
                 StructureGenerator.StructureLevel gravityPipe = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
                 gravityPipe.minGravityAlignAtTop += 0.2f;
                 gravityPipe.maxGravityAlignAtTop += 0.2f;
             }
+            #endregion
+
+            #region 3. 나뭇잎 너비
+            if (treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width < 3.2f)
+            {
+                treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width += 0.5f;
+            }
+            #endregion
+
+            #region 4. 나무 가지 두께
+            treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase += 0.2f;
+            treePipeline._serializedPipeline.girthTransforms[0].maxGirthAtBase += 0.2f;
+            #endregion
         }
 
     }
