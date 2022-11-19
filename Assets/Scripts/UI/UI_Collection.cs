@@ -38,6 +38,12 @@ public class UI_Collection : MonoBehaviour
     bool isOnce = false;
     private void Update()
     {
+        if (!user)
+        {
+            user = GameManager.Instance.User;
+            user.GetComponent<UserInteract>().moveControl = true;
+            userInput = user.GetComponent<UserInput>();
+        }
 #if UNITY_STANDALONE
         if (Input.GetMouseButtonUp(1))
         {
