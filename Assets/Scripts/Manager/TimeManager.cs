@@ -21,7 +21,6 @@ public class TimeManager : MonoBehaviour
 
     private void Awake()
     {
-        print("=============================TimeManager============================");
         print("Land Id : " + DataTemporary.MyUserData.currentLandId);
         int treeDataCount = DataTemporary.GetTreeData.getTreeDataList.Count;
         print($"Tree Data Count : {treeDataCount}개");
