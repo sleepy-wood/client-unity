@@ -331,41 +331,51 @@ public class TreeController : MonoBehaviour
     /// 로드한 데이터로 나무 세팅
     /// </summary>
     public void LoadDataSetting()        
-    { 
+    {
+        print("===========LoadDataSetting=================");
         // Tree Id
         treeId = currentTreeData.id;
-        
+        print("1");
         pipeName = currentTreeData.treePipeName;
+        print("2");
         // Tree Name
         txtTreeName.text = currentTreeData.treeName;
+        print("3");
         // Seed Number
         treePipeline.seed = currentTreeData.seedNumber;
+        print("4");
         // Seed Type
         selectedSeed = pipeNameDict[currentTreeData.treePipeName];
+        print("5");
         // First Plant Date
         GameManager.Instance.timeManager.firstPlantDate = DateTime.Parse(currentTreeData.treeGrowths[0].createdAt);
+        print("6");
         // 현재 랜드 나무의 dayCount에 맞는 Tree Pipeline Data
         TreePipeline pipeData = currentTreeData.treeGrowths[dayCount - 1].treePipeline[0];
+        print("7");
         // bark Material
         string name = currentTreeData.barkMaterial;
         Material mat = Resources.Load("Tree/Materials/" + name) as Material;
         treePipeline._serializedPipeline.barkMappers[0].customMaterial = mat;
+        print("8");
         // sproutGroup
         SproutSeed sproutSeed = new SproutSeed();
         treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
         treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = currentTreeData.sproutGroupId;
+        print("9");
         // sproutColor
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled = currentTreeData.sproutColor1 == 1 ? true : false;
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[1].enabled = currentTreeData.sproutColor2 == 1 ? true : false;
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[2].enabled = currentTreeData.sproutColor3 == 1 ? true : false;
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[3].enabled = currentTreeData.sproutColor4 == 1 ? true : false;
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[4].enabled = currentTreeData.sproutColor5 == 1 ? true : false;
-
+        print("10");
 
         #region TreeGrowth
         // 1. Scale
         float p = pipeData.scale;
         previewTree.localScale = new Vector3(p, p, p);
+        print("11");
         // 2. Branch Number
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minFrequency = pipeData.branch1;
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxFrequency = pipeData.branch1;
@@ -375,9 +385,11 @@ public class TreeController : MonoBehaviour
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].maxFrequency = pipeData.branch3;
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].minFrequency = pipeData.branch4;
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].maxFrequency = pipeData.branch4;
+        print("12");
         // 4. Sprout Number
         treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = pipeData.sproutNum;
         treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = pipeData.sproutNum;
+        print("13");
         // 5. Ratio of Rotten Sprout : 0, 25, 50, 75, 100
         List<int> groupNum = new List<int>() { 5, 6, 7, 8};
         for (int i=0; i<pipeData.rottenRate/25; i++)
@@ -386,11 +398,13 @@ public class TreeController : MonoBehaviour
             treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutGroup);
             treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = groupNum[i];
         }
+        print("14");
         // 6. Sprout Width
-        foreach(SproutMesh s in treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes)
+        foreach (SproutMesh s in treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes)
         {
             s.width = pipeData.sproutWidth;
         }
+        print("15");
         // 7. Gravity
         for (int i = 0; i < 4; i++)
         {
@@ -400,6 +414,7 @@ public class TreeController : MonoBehaviour
                 treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i].maxGravityAlignAtBase = pipeData.gravity;
             }
         }
+        print("16");
     }
 
     bool once = false;

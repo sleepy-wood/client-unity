@@ -20,6 +20,7 @@ public class TimeManager : MonoBehaviour
 
     private void Awake()
     {
+        print("=========================================================");
         print("Land Id : " + DataTemporary.MyUserData.currentLandId);
         int treeDataCount = DataTemporary.GetTreeData.getTreeDataList.Count;
         print($"Tree Data Count : {treeDataCount}개");
@@ -32,7 +33,7 @@ public class TimeManager : MonoBehaviour
                 if (DataTemporary.GetTreeData.getTreeDataList[i].landId == DataTemporary.MyUserData.currentLandId)
                 {
                     // 처음 심은 날 저장
-                    firstPlantDate = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
+                    firstPlantDate.dateTime = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
                     // 현재 랜드의 나무 데이터
                     GameManager.Instance.treeController.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
                     print($"{i}번째 트리 데이터");  // 심은 순서대로 저장 
