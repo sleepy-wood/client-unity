@@ -107,7 +107,7 @@ public class UI_LandCustom : MonoBehaviourPun
 
         for(int i = 0; i < fileMarket.Length; i++)
         {
-            Debug.Log(fileMarket[i]);
+            //Debug.Log(fileMarket[i]);
 
 #if UNITY_STANDALONE
             byte[] byteTexture = File.ReadAllBytes(path + "/" + fileMarket[i].Split($"{(Category)h}\\")[1]);
@@ -209,17 +209,28 @@ public class UI_LandCustom : MonoBehaviourPun
 #elif UNITY_IOS
         string assetBundleDirectory = Application.persistentDataPath + "/MarketBundle/" + (Category)selectCat;
 #endif
-        string[] bundles = Directory.GetFiles(customPath);
+        string[] bundles = Directory.GetFiles(assetBundleDirectory);
 
         //썸네일 넣기
         foreach (string fileName in bundles)
         {
+            Debug.Log("FileName = " + fileName);
+#if UNITY_STANDALONE
+            Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
+#elif UNITY_IOS
             Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
+#endif
             if (cnt == i)
             {
                 //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
+#if UNITY_STANDALONE
+                var myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
+                GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
+                Debug.Log(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
+#elif UNITY_IOS
                 var myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
                 GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]);
+#endif
 
                 //GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
@@ -245,7 +256,7 @@ public class UI_LandCustom : MonoBehaviourPun
 
             cnt++;
         }
-        #region Legacy
+#region Legacy
         //foreach (FileInfo fi in di.GetFiles())
         //{
         //    if (fi.Name.Split('.').Length > 2)
@@ -276,7 +287,7 @@ public class UI_LandCustom : MonoBehaviourPun
 
         //    cnt++;
         //}
-        #endregion
+#endregion
     }
 
     private bool isActiveCanvase = false;

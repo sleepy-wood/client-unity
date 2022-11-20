@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -212,11 +213,12 @@ public class DataModule
         cts.CancelAfterSlim(TimeSpan.FromSeconds(timeout));
 
         //웹 요청 생성(Get,Post,Delete,Update)
-        UnityWebRequest request = new UnityWebRequest(requestURL, networkType.ToString());
+        //UnityWebRequest request = new UnityWebRequest(requestURL, networkType.ToString());
+        UnityWebRequest request = UnityWebRequest.Get(requestURL);
 
 
         //Body 정보 입력
-        request.downloadHandler = DownHandlerFactory(dataType, filePath, requestURL);
+        //request.downloadHandler = DownHandlerFactory(dataType, filePath, requestURL);
 
         //Header 정보 입력
         if (REPLACE_BEARER_TOKEN == "" && PlayerPrefs.GetString("Bearer") != "")
@@ -230,23 +232,26 @@ public class DataModule
         try
         {
             var res = await request.SendWebRequest().WithCancellation(cts.Token);
-            AssetBundle result = DownloadHandlerAssetBundle.GetContent(request);
+            //AssetBundle result = DownloadHandlerAssetBundle.GetContent(request);
 
 #if UNITY_STANDALONE
-            //번들을 로컬에 저장한다.
+            //번들을 자동적으로 로컬에 저장한다.
             string assetBundleDirectory = Application.dataPath + "/MarketBundle";
 #elif UNITY_IOS
             string assetBundleDirectory = Application.persistentDataPath + "/MarketBundle";
 #endif
-            if (!Directory.Exists(assetBundleDirectory))
+            if (!Directory.Exists(assetBundleDirectory + "/" +bundleName.Split("/")[0]))
             {
-                Directory.CreateDirectory(assetBundleDirectory);
+                Directory.CreateDirectory(assetBundleDirectory + "/" + bundleName.Split("/")[0]);
             }
+
             FileStream fs = new FileStream(assetBundleDirectory + "/" + bundleName, FileMode.Create);
             fs.Write(request.downloadHandler.data, 0, (int)request.downloadedBytes);
             fs.Close();
             request.Dispose();
-            return result;
+
+            //리턴은 하지 않는다. 
+            return default;
         }
         catch (OperationCanceledException ex)
         {
