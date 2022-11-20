@@ -110,9 +110,10 @@ public class UI_LandCustom : MonoBehaviourPun
             Debug.Log(fileMarket[i]);
 
 #if UNITY_STANDALONE
-            byte[] byteTexture = File.ReadAllBytes(path + "/" + fileMarket[i].Split("\\Market_")[1]);
+            byte[] byteTexture = File.ReadAllBytes(path + "/" + fileMarket[i].Split($"{(Category)h}\\")[1]);
+            //Debug.Log("path = " + path + "/" + fileMarket[i].Split($"{(Category)h}\\")[1]);
 #elif UNITY_IOS
-            byte[] byteTexture = File.ReadAllBytes(path + "/" + fileMarket[i].Split("/Market_")[1]);
+            byte[] byteTexture = File.ReadAllBytes(path + "/" + fileMarket[i].Split("(Category)h/")[1]);
 #endif
             if (byteTexture.Length > 0)
             {
@@ -213,13 +214,17 @@ public class UI_LandCustom : MonoBehaviourPun
         //썸네일 넣기
         foreach (string fileName in bundles)
         {
+            Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
             if (cnt == i)
             {
+                //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
                 var myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
                 GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]);
 
                 //GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
+
+                prefab.AddComponent<Outline>();
                 prefab.name = prefab.name.Split('(')[0];
                 prefab.transform.position = new Vector3(0, 0.5f, 0);
                 //landDecorations라는 가방에 담기 => 존재하지 않으면 만들자
