@@ -252,7 +252,7 @@ public class UI_Initial : MonoBehaviour
         txtTreeBirth.text = date;
         print(txtTreeBirth.text);
         // TreeData 저장
-        treecon.SaveTreeData();
+        GameManager.Instance.treeController.SaveTreeData();
         plantNameUI.SetActive(false);
     }
 
