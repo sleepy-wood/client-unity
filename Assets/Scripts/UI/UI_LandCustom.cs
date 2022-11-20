@@ -128,7 +128,7 @@ public class UI_LandCustom : MonoBehaviourPun
             cnt++;
         }
         //나머지 버튼들은 비활성화
-        for (int i = cnt; i < 15; i++)
+        for (int i = cnt; i < 8; i++)
         {
             itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().sprite = Instantiate(DataTemporary.assetBundleImg.LoadAsset<Sprite>("ButtonBg"));
             Color color = itemWindow.transform.GetChild(i / 4).GetChild(i % 4).GetComponent<Image>().color;
