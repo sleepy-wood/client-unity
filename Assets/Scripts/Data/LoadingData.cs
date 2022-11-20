@@ -212,13 +212,16 @@ public class LoadingData : MonoBehaviourPunCallbacks
                         }
                     }
                 }
-                else
-                {
+            }
+            else
+            {
 
+                if (marketsData[h].result)
+                {
 #if UNITY_STANDALONE
-                    string path = Application.dataPath + "/" + (Category)h;
+                    string path = Application.dataPath + "/MarketImg/" + (Category)h;
 #elif UNITY_IOS || UNITY_ANDROID
-            string path = Application.persistentDataPath + "/" + (Category)h;
+            string path = Application.persistentDataPath + "/MarketImg/" + (Category)h;
 #endif
                     if (!Directory.Exists(path))
                     {
@@ -248,7 +251,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
                                 {
                                     if (productImages[k].path.Split('.').Length > 0)
                                         continue;
-                                    AssetBundle assetBundle = await DataModule.WebRequestAssetBundle(productImages[k].path, DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE, (Category)h + "/" +productImages[k].originalName);
+                                    AssetBundle assetBundle = await DataModule.WebRequestAssetBundle(productImages[k].path, DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE, (Category)h + "/" + productImages[k].originalName);
                                 }
                             }
                         }

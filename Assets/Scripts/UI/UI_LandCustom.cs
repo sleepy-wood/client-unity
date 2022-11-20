@@ -70,7 +70,11 @@ public class UI_LandCustom : MonoBehaviourPun
         for (int i = 0; i < fileEntries.Length; i++)
         {
             Debug.Log(fileEntries[i]);
+#if UNITY_STANDALONE
+            Sprite resource = DataTemporary.assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "\\")[1].Split('.')[0]);
+#elif UNITY_IOS
             Sprite resource = DataTemporary.assetBundleImg.LoadAsset<Sprite>(fileEntries[i].Split("/LandCustom/" + Cat + "/")[1].Split('.')[0]);
+#endif
             itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().sprite =
                 Instantiate(resource);
             Color color = itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().color;
@@ -94,9 +98,9 @@ public class UI_LandCustom : MonoBehaviourPun
             }
         }
 #if UNITY_STANDALONE
-        string path = Application.dataPath + "/" + (Category)h;
+        string path = Application.dataPath + "/MarketImg/" + (Category)h;
 #elif UNITY_IOS || UNITY_ANDROID
-        string path = Application.persistentDataPath + "/" + (Category)h;
+        string path = Application.persistentDataPath + "/MarketImg/" + (Category)h;
 #endif
 
         string[] fileMarket = Directory.GetFiles(path, "*.png");
@@ -105,7 +109,11 @@ public class UI_LandCustom : MonoBehaviourPun
         {
             Debug.Log(fileMarket[i]);
 
+#if UNITY_STANDALONE
+            byte[] byteTexture = File.ReadAllBytes(path + "/" + fileMarket[i].Split("\\Market_")[1]);
+#elif UNITY_IOS
             byte[] byteTexture = File.ReadAllBytes(path + "/" + fileMarket[i].Split("/Market_")[1]);
+#endif
             if (byteTexture.Length > 0)
             {
                 Texture2D texture = new Texture2D(0, 0);
