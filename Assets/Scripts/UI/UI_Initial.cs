@@ -38,8 +38,9 @@ public class UI_Initial : MonoBehaviour
     public Transform previewTreePos;
 
     public Text txtAge;
-    public Text treeName;
+    public Text txtTreeName;
     public Text txtTreeBirth;
+    public Text txtTreeScore;
 
     public Button btnPlantName;
 
@@ -51,6 +52,8 @@ public class UI_Initial : MonoBehaviour
     public InputField inputSeed;
 
     public TimeManager timeManager;
+
+    public RawImage treeScreenShot;
 
     #endregion
 
@@ -188,10 +191,25 @@ public class UI_Initial : MonoBehaviour
 
 
     /// <summary>
-    /// TreeList UI 활성화
+    /// Collection UI 활성화
     /// </summary>
     public void OnMyCollection()
     {
+        // 트리가 완성되었을 때만 나무 정보 보여주기
+        if (GameManager.Instance.timeManager.totalPlantDay == 5)
+        {
+            txtTreeName.enabled = true;
+            txtTreeBirth.enabled = true;
+            txtTreeScore.enabled = true;
+            treeScreenShot.enabled = true;
+        }
+        else
+        {
+            txtTreeName.enabled = false;
+            txtTreeBirth.enabled = false;
+            txtTreeScore.enabled = false;
+            treeScreenShot.enabled = false;
+        }
         myCollectionUI.gameObject.SetActive(true);
     }
     /// <summary>
@@ -244,7 +262,7 @@ public class UI_Initial : MonoBehaviour
     public void onConfirmPlantName()
     {
         // 나무 이름
-        treeName.text = inputPlantName.text;
+        txtTreeName.text = inputPlantName.text;
         GameManager.Instance.treeController.treeName = inputPlantName.text;
         // 나무 탄생일
         DateTime birth = GameManager.Instance.timeManager.firstPlantDate.dateTime;
