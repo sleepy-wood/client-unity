@@ -59,7 +59,7 @@ public class ScreenShot : MonoBehaviour
     //    }
     #endregion
 
-    bool once = false;
+ 
     private void Update()
     {
         if (previewTree == null)
@@ -104,7 +104,7 @@ public class ScreenShot : MonoBehaviour
         try
         {
 #if UNITY_STANDALONE
-            path = $"{Application.dataPath}/ScreenShot/TreeCapture_{GameManager.Instance.treeController.treeId}.png";
+            path = $"{Application.dataPath}/ScreenShot/Image/TreeCapture_{GameManager.Instance.treeController.treeId}.png";
             if (Directory.Exists($"{Application.dataPath}/ScreenShot") == false)
             {
                 Directory.CreateDirectory($"{Application.dataPath}/ScreenShot");
@@ -114,7 +114,7 @@ public class ScreenShot : MonoBehaviour
                 File.Delete(path);
             }
 #elif UNITY_IOS || UNITY_ANDROID
-                path = $"{Application.persistentDataPath}/ScreenShot/TreeCapture_{GameManager.Instance.treeController.treeId}.png";
+                path = $"{Application.persistentDataPath}/ScreenShot/Image/TreeCapture_{GameManager.Instance.treeController.treeId}.png";
                 if (Directory.Exists($"{Application.persistentDataPath}/ScreenShot") == false)
                 {
                     Directory.CreateDirectory($"{Application.persistentDataPath}/ScreenShot");
