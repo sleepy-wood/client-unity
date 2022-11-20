@@ -242,10 +242,9 @@ public class DataModule
             {
                 Directory.CreateDirectory(assetBundleDirectory);
             }
-            FileStream fs = new FileStream(assetBundleDirectory + "/" + bundleName, System.IO.FileMode.Create);
+            FileStream fs = new FileStream(assetBundleDirectory + "/" + bundleName, FileMode.Create);
             fs.Write(request.downloadHandler.data, 0, (int)request.downloadedBytes);
             fs.Close();
-
             request.Dispose();
             return result;
         }

@@ -239,7 +239,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
                         {
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
-                            for (int k = 0; k < productImages.Count - 1; k++)
+                            for (int k = 0; k < productImages.Count; k++)
                             {
                                 if (productImages[k].mimeType.Split('/')[0] == "image")
                                 {
@@ -249,9 +249,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
                                 }
                                 else
                                 {
-                                    if (productImages[k].path.Split('.').Length > 0)
-                                        continue;
-                                    AssetBundle assetBundle = await DataModule.WebRequestAssetBundle(productImages[k].path, DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE, (Category)h + "/" + productImages[k].originalName);
+                                    await DataModule.WebRequestAssetBundle(productImages[k].path, DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE, (Category)h + "/" + productImages[k].originalName);
                                 }
                             }
                         }
