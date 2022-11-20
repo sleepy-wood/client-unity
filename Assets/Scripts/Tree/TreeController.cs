@@ -173,9 +173,9 @@ public class TreeController : MonoBehaviour
                 // Shape 랜덤 선택
                 int i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo Tree 빼고 랜덤 선택
                 pipeName = pipeNameList[i];
-                print("1");
+                print("1" + pipeName);
                 selectedSeed = pipeNameDict[pipeName];
-                print("2");
+                print("2" + selectedSeed);
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 
 
@@ -185,20 +185,20 @@ public class TreeController : MonoBehaviour
                 SproutSeed sproutSeed = new SproutSeed();
                 treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
                 treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = sproutGroupId;
-                print("3");
+                print("3" + sproutGroupId);
 
                 // 2. 해당 Group 안의 Textures Area Enabled 개수 확률적으로 enabled=true 시켜주기 (50%-1개, 20%-2개, 15%-3개, 10%-4개, 5%-5개)
                 int n = UnityEngine.Random.Range(0, 100);
                 if (n < 50)
-                {
-                    int random = UnityEngine.Random.Range(1, 6);
+                { 
+                    int random = UnityEngine.Random.Range(0, 5);
                     treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                 }
                 else if (n >= 50 && n < 70)
                 {
                     for (int j = 0; j < 2; j++)
                     {
-                        int random = UnityEngine.Random.Range(1, 6);
+                        int random = UnityEngine.Random.Range(0, 5);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
@@ -206,7 +206,7 @@ public class TreeController : MonoBehaviour
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        int random = UnityEngine.Random.Range(1, 6);
+                        int random = UnityEngine.Random.Range(0, 5);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
@@ -214,7 +214,7 @@ public class TreeController : MonoBehaviour
                 {
                     for (int j = 0; j < 4; j++)
                     {
-                        int random = UnityEngine.Random.Range(1, 6);
+                        int random = UnityEngine.Random.Range(0, 5);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
@@ -239,7 +239,7 @@ public class TreeController : MonoBehaviour
                 {
                     int r1 = UnityEngine.Random.Range(0, 5);
                     Material selectedMat = Instantiate(mat[r1]);
-                    print("Selected Bark Material: " + mat[r1].name);
+                    print("Selected General Bark Material: " + mat[r1].name);
                     treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
                 }
                 // Special Material (30%)
@@ -247,7 +247,7 @@ public class TreeController : MonoBehaviour
                 {
                     int r2 = UnityEngine.Random.Range(5, 9);
                     Material selectedMat = Instantiate(mat[r2]);
-                    print("Selected Bark Material: " + mat[r2].name);
+                    print("Selected Special Bark Material: " + mat[r2].name);
                     treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
                 }
             }
