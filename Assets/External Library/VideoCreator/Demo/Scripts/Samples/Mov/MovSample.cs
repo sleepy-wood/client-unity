@@ -24,7 +24,7 @@ public class MovSample : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 30;
-        SceneManager.LoadScene("Common", LoadSceneMode.Additive);
+        //SceneManager.LoadScene("Common", LoadSceneMode.Additive);
 
         audioSource.Stop();
 
