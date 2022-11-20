@@ -6,45 +6,6 @@ using System;
 
 #nullable enable
 
-[Serializable]
-public class TreeGrowth
-{
-    public int id;
-    public int treeDay;
-    public int treeId;
-    public string? createdAt;
-    public string? updatedAt;
-    public List<TreePipeline>? treePipeline;
-}
-
-[Serializable]
-public class TreePipeline
-{
-    public int treeId;
-    public List<string>? sleepIds;
-     
-    // Tree Growth Data //
-    // 나무 scale
-    public float scale;
-    // 나무 가지 개수
-    public int branch1;
-    public int branch2;
-    public int branch3;
-    public int branch4;
-    // 나뭇잎 개수
-    public int sproutNum;
-    // 나뭇잎 썩은 비율
-    public float rottenRate;
-    // 나뭇잎 너비
-    public float sproutWidth;
-    // 중력
-    public float gravity;
-    public string? createdAt;
-    public string? updateAt;
-}
-
-
-
 // String만 nullable 가능
 [Serializable]
 public class TreeData
@@ -85,6 +46,44 @@ public class TreeData
     // 중력
     public float gravity;
 }
+
+[Serializable]
+public class TreeGrowth
+{
+    public int id;
+    public int treeDay;
+    public int treeId;
+    public string? createdAt;
+    public string? updatedAt;
+    public List<TreePipeline>? treePipeline;
+}
+
+[Serializable]
+public class TreePipeline
+{
+    public int treeId;
+    public List<string>? sleepIds;
+     
+    // Tree Growth Data //
+    // 나무 scale
+    public float scale;
+    // 나무 가지 개수
+    public int branch1;
+    public int branch2;
+    public int branch3;
+    public int branch4;
+    // 나뭇잎 개수
+    public int sproutNum;
+    // 나뭇잎 썩은 비율
+    public float rottenRate;
+    // 나뭇잎 너비
+    public float sproutWidth;
+    // 중력
+    public float gravity;
+    public string? createdAt;
+    public string? updateAt;
+}
+
 [Serializable]
 public class GetTreeData
 {
