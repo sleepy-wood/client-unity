@@ -118,9 +118,9 @@ public class GetTreeData
 public class TreeFile
 {
     // 나무 아이디
-    int treeId;
+    public int treeId;
     // 첨부파일 아이디
-    string? attachFileIds;
+    public string? attachFileIds;
 }
 
 

@@ -143,8 +143,13 @@ public class ScreenShot : MonoBehaviour
     public async void SaveTreeImg()
     {
         saveUrl = "/api/v1/trees/upload";
-        TreeFile treeFile = new List<TreeFile>();
-        List<TreeFile> treefile = new List<TreeFile>();
+        TreeFile treeFile = new TreeFile();
+        List<TreeFile> treeFiles = new List<TreeFile>();
+
+        treeFile.treeId = GameManager.Instance.treeController.treeId;
+
+        // Tree Image or Video
+        //ResultPut<treeFile> = await DataModule.WebRequestBuffer<sproutGroup,
 
     }
 }
