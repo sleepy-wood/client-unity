@@ -12,7 +12,6 @@ public class UI_Chatting : MonoBehaviourPun
 
     [SerializeField] private float chatMoveDistance = 836f;
     public Transform windowContent;
-    public GameObject menuBar;
     public RectTransform emoji_content;
 
     //InputChat
