@@ -1024,12 +1024,16 @@ public class TreeController : MonoBehaviour
             Debug.Log("treeData.seedNumber = " + treeData.seedNumber);
             // treePipeName
             treeData.treePipeName = pipeName;
+            print("pipeName" + pipeName);
             // Bark Material Name
             treeData.barkMaterial = barkMaterial;
+            print("barkMaterial" + barkMaterial);
             // Land ID 
             treeData.landId = DataTemporary.MyUserData.currentLandId;
+            print("landId" + DataTemporary.MyUserData.currentLandId);
             // Sprout Group Id
             treeData.sproutGroupId = sproutGroupId;
+            print("sproutGroupId" + sproutGroupId);
             // Sprout Texture Enabled
             treeData.sproutColor1 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
             treeData.sproutColor2 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;

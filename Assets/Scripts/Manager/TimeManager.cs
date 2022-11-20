@@ -169,6 +169,7 @@ public class TimeManager : MonoBehaviour
         TimeSpan timeDif = to - from;
         totalPlantDay = (int)timeDif.Days + 1;
         treeControll.dayCount = totalPlantDay;
+        print("dayCount = " + totalPlantDay);
         return totalPlantDay;
     }
 
