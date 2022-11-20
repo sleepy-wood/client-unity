@@ -248,7 +248,10 @@ public class UI_Initial : MonoBehaviour
         GameManager.Instance.treeController.treeName = inputPlantName.text;
         // 나무 탄생일
         string birth = GameManager.Instance.timeManager.firstPlantDate.dateTime.ToString();
+        print("birth : " + birth);
         txtTreeBirth.text = DateTime.ParseExact(birth, "yyyy/MM/dd", null).ToString();
+        print("txtTreeBirth : " + DateTime.ParseExact(birth, "yyyy/MM/dd", null).ToString());
+        print(txtTreeBirth.text);
         // TreeData 저장
         GameManager.Instance.treeController.SaveTreeData();
         plantNameUI.SetActive(false);
