@@ -20,36 +20,22 @@ public class ScreenShot2 : MonoBehaviour
     /// </summary>
     public void ScreenShotUpdate()
     {
-        //StartCoroutine(TakeScreenshot());
-        //RenderTexture renderTexture = GetComponent<Camera>().targetTexture;
-        //RenderTexture.active = renderTexture;
-        //Texture2D texture;
-        //texture = ScreenCapture.CaptureScreenshotAsTexture();
-        //texture.width = renderTexture.width;
-        //texture.height = renderTexture.height;
-        //texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
-        //texture.Apply();
-        //string path = $"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png";
-        //File.WriteAllBytes(path, texture.EncodeToPNG());
-        ////Texture2D texture2 = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Resources/ScreenShot/TreeCapture.png", typeof(Texture2D));
-        //Texture2D texture2 = Resources.Load<Texture2D>("ScreenShot/TreeCapture");
-        //SetTexture(texture2, true);
-        //Sprite s = Sprite.Create(texture, new Rect(0, 0, renderTexture.width, renderTexture.height), new Vector2(0.5f, 0.5f));
-        //treeCaptureImg.sprite = s;
+        // 타겟 렌더 텍스쳐
         RenderTexture renderTexture = GetComponent<Camera>().targetTexture;
-        Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, true, true);
+        // 화면 크기의 텍스쳐 생성
+        Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, false);
         RenderTexture.active = renderTexture;
-        //texture.alphaIsTransparency = true;
+        // 캡쳐 영역 지정 뒤, 현재 화면 픽셀들을 텍스쳐 픽셀에 저장
         texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         texture.Apply();
 
-        string path = $"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png";
         // Save Image File
 #if UNITY_STANDALONE
+        string path = $"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png";
 #elif UNITY_IOS || UNITY_ANDROID
-        path = $"{Application.persistentDataPath}/TreeCapture.png";
+        string path = $"{Application.persistentDataPath}/TreeCapture.png";
 #endif
-print("111111111 /= + " + path);
+        // 텍스쳐를 PNG 포맷의 byte[]로 변환한 뒤 파일 경로에 작성
         File.WriteAllBytes(path, texture.EncodeToPNG());
         byte[] data = File.ReadAllBytes(path);
 
@@ -71,39 +57,37 @@ print("111111111 /= + " + path);
 
     //public IEnumerator TakeScreenshot()
     //{
-    //    //yield return new WaitForEndOfFrame();
+    //    yield return new WaitForEndOfFrame();
 
-    //    //string path = Application.persistentDataPath + "Screenshots/"
-    //    //        + "_" + 1 + "_" + Screen.width + "X" + Screen.height + "" + ".png";
+    //    string path = Application.persistentDataPath + "Screenshots/"
+    //            + "_" + 1 + "_" + Screen.width + "X" + Screen.height + "" + ".png";
     //    string path = $"{Application.dataPath}/Resources/ScreenShot/TreeCapture.png";
 
     //    Texture2D screenImage = new Texture2D(Screen.width, Screen.height);
-    //    //Get Image from screen
+    //    Get Image from screen
     //    screenImage.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
     //    screenImage.Apply();
-    //    //Convert to png
+    //    Convert to png
     //    byte[] imageBytes = screenImage.EncodeToPNG();
 
-    //    //Save image to file
+    //    Save image to file
     //    File.WriteAllBytes(path, imageBytes);
 
     //    yield return new WaitForEndOfFrame();
 
     //    byte[] data = File.ReadAllBytes(path);
 
-    //    // Create the texture
-    //    Texture2D screenshotTexture = new Texture2D(Screen.width, Screen.height);
+    //    Create the texture
+    //   Texture2D screenshotTexture = new Texture2D(Screen.width, Screen.height);
 
-    //    // Load the image
+    //    Load the image
     //    screenshotTexture.LoadImage(data);
 
-    //    // Create a sprite
-    //    Sprite screenshotSprite = Sprite.Create(screenshotTexture, new Rect(0, 0, Screen.width, Screen.height), new Vector2(0.5f, 0.5f));
+    //    Create a sprite
+    //   Sprite screenshotSprite = Sprite.Create(screenshotTexture, new Rect(0, 0, Screen.width, Screen.height), new Vector2(0.5f, 0.5f));
 
-    //    // Set the sprite to the screenshotPreview
+    //    Set the sprite to the screenshotPreview
     //    treeCaptureImg.GetComponent<Image>().sprite = screenshotSprite;
-
-
     //}
     //public void SetTexture(Texture2D texture, bool isReadable)
     //{

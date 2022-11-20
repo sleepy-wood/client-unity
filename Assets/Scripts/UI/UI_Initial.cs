@@ -63,7 +63,7 @@ public class UI_Initial : MonoBehaviour
         //{
         //    gameObject.SetActive(false);
         //}
-        developerUI.anchoredPosition = new Vector2(-570, -211);
+        //developerUI.anchoredPosition = new Vector2(-570, -211);
 
     }
 
