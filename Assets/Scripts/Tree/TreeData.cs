@@ -149,6 +149,6 @@ public class ArrayGetTreeData
 [Serializable]
 public class ArrayTreeFile
 {
-    public List<TreeImgVideo>? treeFileList;
+    public List<TreeFile>? treeFileList;
 }
 

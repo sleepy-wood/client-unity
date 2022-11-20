@@ -20,6 +20,7 @@ public class VideoCapture : MonoBehaviour
     void Start()
     {
         texture = GetComponent<Camera>().targetTexture;
+
         // with no audio
         // Application.temporaryCachePath (IOS) = %ProvisioningProfile%/Library/Caches
         cachePath = "file://" + Application.temporaryCachePath + "/tmp.mov";
@@ -29,8 +30,6 @@ public class VideoCapture : MonoBehaviour
     }
 
 
-    bool once = false;
-    bool once2 = false;
     void Update()
     {
         if (!isRecording || !MediaCreator.IsRecording()) return;
@@ -57,6 +56,8 @@ public class VideoCapture : MonoBehaviour
         print("Start Recording");
     }
 
+    // stop 버튼 누르면 화면 정지
+    // Media Creator.cs 
     public void StopRec()
     {
         if (!isRecording) return;
