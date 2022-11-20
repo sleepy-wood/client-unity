@@ -454,8 +454,8 @@ public class TreeController : MonoBehaviour
         print("16");
     }
 
-    bool once = false;
-    bool once2 = false;
+    //bool once = false;
+    //bool once2 = false;
     public float camMoveSpeed = 1f;
     void Update()
     {
