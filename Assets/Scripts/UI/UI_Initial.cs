@@ -57,8 +57,6 @@ public class UI_Initial : MonoBehaviour
 
     #endregion
 
-    
-
     private void Start()
     {
         inputPlantName.onValueChanged.AddListener(onValueChanged);
@@ -202,6 +200,11 @@ public class UI_Initial : MonoBehaviour
             txtTreeBirth.enabled = true;
             txtTreeScore.enabled = true;
             treeScreenShot.enabled = true;
+
+            // 현재 나무 이미지 업데이트 및 웹 저장
+            // 스크린샷 + 이미지 저장
+            screenShotCam.GetComponent<ScreenShot2>().SaveCameraView();
+            // 
         }
         else
         {
@@ -210,6 +213,7 @@ public class UI_Initial : MonoBehaviour
             txtTreeScore.enabled = false;
             treeScreenShot.enabled = false;
         }
+
         myCollectionUI.gameObject.SetActive(true);
     }
     /// <summary>
@@ -257,7 +261,7 @@ public class UI_Initial : MonoBehaviour
     }
 
     /// <summary>
-    /// 나무 이름 결정 버튼 누르면 나무 이름 저장 & UI 비활성화
+    /// 나무 이름 결정 버튼 누르면 나무 이름 저장 & UI 비활성화 & 
     /// </summary>
     public void onConfirmPlantName()
     {
@@ -271,7 +275,10 @@ public class UI_Initial : MonoBehaviour
         print(txtTreeBirth.text);
         // TreeData 저장
         GameManager.Instance.treeController.SaveTreeData();
+        // 나무 이름 결정 UI 비활성화
         plantNameUI.SetActive(false);
+        // UI 버튼들 활성화
+
     }
 
     #region 개발자 모드

@@ -82,7 +82,7 @@ public class ScreenShot2 : MonoBehaviour
     //private void OnPostRender()
     #endregion
 
-    void SaveCameraView()
+    public void SaveCameraView()
     {
         // Screen Capture Code
 
