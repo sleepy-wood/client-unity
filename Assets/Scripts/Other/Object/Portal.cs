@@ -14,7 +14,8 @@ public class Portal : MonoBehaviour
     private UserInteract user;
     private void Start()
     {
-        user = GameManager.Instance.User.GetComponent<UserInteract>();
+        if(GameManager.Instance.User)
+            user = GameManager.Instance.User.GetComponent<UserInteract>();
     }
     private void OnTriggerStay(Collider other)
     {
