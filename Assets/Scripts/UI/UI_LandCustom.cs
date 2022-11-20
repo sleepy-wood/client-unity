@@ -17,6 +17,7 @@ public class UI_LandCustom : MonoBehaviourPun
     private GameObject itemWindow;
     private int selectCat = 0;
     private string selectCatName = "";
+    AssetBundle myLoadedAssetBundle;
     private void Start()
     {
         if(PhotonNetwork.PlayerList.Length != 1)
@@ -214,24 +215,26 @@ public class UI_LandCustom : MonoBehaviourPun
         //썸네일 넣기
         foreach (string fileName in bundles)
         {
-            Debug.Log("FileName = " + fileName);
+            //Debug.Log("FileName = " + fileName);
 #if UNITY_STANDALONE
-            Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
+            //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
 #elif UNITY_IOS
-            Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
+            //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
 #endif
+            if (fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Contains("meta"))
+                continue;
+
             if (cnt == i)
             {
                 //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
 #if UNITY_STANDALONE
-                var myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
+                myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
                 GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
-                Debug.Log(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
+                //Debug.Log(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
 #elif UNITY_IOS
                 var myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
                 GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]);
 #endif
-
                 //GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
 
@@ -251,6 +254,7 @@ public class UI_LandCustom : MonoBehaviourPun
                 landDecorations.transform.parent = land;
                 landDecorations.transform.position = Vector3.zero;
                 prefab.transform.parent = landDecorations.transform;
+                myLoadedAssetBundle.Unload(true);
                 return;
             }
 
