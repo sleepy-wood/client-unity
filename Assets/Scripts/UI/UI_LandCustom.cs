@@ -246,12 +246,12 @@ public class UI_LandCustom : MonoBehaviourPun
                 //Debug.Log(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
 #elif UNITY_IOS
                 var myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
-                GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]);
+                GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1]);
 #endif
                 //GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
+                Debug.Log(prefab);
 
-                prefab.AddComponent<Outline>();
                 prefab.name = prefab.name.Split('(')[0];
                 prefab.transform.position = new Vector3(0, 0.5f, 0);
                 //landDecorations라는 가방에 담기 => 존재하지 않으면 만들자
