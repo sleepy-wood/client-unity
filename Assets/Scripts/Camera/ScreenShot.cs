@@ -17,7 +17,7 @@ public class ScreenShot : MonoBehaviour
     public Image treeCaptureImg;
 
     /// <summary>
-    /// 사용자가 프로필 버튼 누르면 그 즉시 스크린샷해서 트리 리스트 이미지 업데이트
+    /// 5일차에 사용자가 프로필 버튼 누르면 그 즉시 스크린샷해서 마이컬렉션 이미지 업데이트
     /// </summary>
 
     #region ScreenShot
@@ -78,7 +78,6 @@ public class ScreenShot : MonoBehaviour
     /// <summary>
     /// 카메라와 함께있는 컴포넌트에 작성했을 때 동작
     /// 프레임마다 해당 카메라의 렌더링이 끝냔 후에 호출됨 (카메라가 렌더링을 마친 모습만 저장)
-    /// </summary>
     //private void OnPostRender()
     #endregion
 
@@ -138,5 +137,19 @@ public class ScreenShot : MonoBehaviour
         {
             Debug.Log($"Screenshot Save Succeded :  {path}");
         }
+    }
+
+    string saveUrl;
+    public async void SaveTreeImg()
+    {
+        saveUrl = "/api/v1/trees/upload";
+        TreeFile treeFile = new TreeFile();
+        List<TreeFile> treeFiles = new List<TreeFile>();
+
+        treeFile.treeId = GameManager.Instance.treeController.treeId;
+
+        // Tree Image or Video
+        //ResultPut<treeFile> = await DataModule.WebRequestBuffer<sproutGroup,
+
     }
 }
