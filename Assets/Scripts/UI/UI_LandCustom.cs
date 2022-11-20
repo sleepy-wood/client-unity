@@ -105,17 +105,24 @@ public class UI_LandCustom : MonoBehaviourPun
 #endif
 
         string[] fileMarket = Directory.GetFiles(path, "*.png");
-
+        Debug.Log("1");
         for(int i = 0; i < fileMarket.Length; i++)
         {
-            //Debug.Log(fileMarket[i]);
+            Debug.Log("cnt = " + cnt);
+
+            if (cnt >= 8)
+                break;
+            Debug.Log(fileMarket[i]);
 
 #if UNITY_STANDALONE
             byte[] byteTexture = File.ReadAllBytes(path + "/" + fileMarket[i].Split($"{(Category)h}\\")[1]);
             //Debug.Log("path = " + path + "/" + fileMarket[i].Split($"{(Category)h}\\")[1]);
 #elif UNITY_IOS
-            byte[] byteTexture = File.ReadAllBytes(path + "/" + fileMarket[i].Split("(Category)h/")[1]);
+            Debug.Log("path = " + path + "/" + fileMarket[i].Split($"{(Category)h}/")[1]);
+
+            byte[] byteTexture = File.ReadAllBytes(fileMarket[i]);
 #endif
+            Debug.Log("gdfaf");
             if (byteTexture.Length > 0)
             {
                 Texture2D texture = new Texture2D(0, 0);
@@ -123,15 +130,19 @@ public class UI_LandCustom : MonoBehaviourPun
                 Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
                 itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().sprite = sprite;
             }
+            Debug.Log("ffff");
             Color color = itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().color;
             color.a = 1;
             itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().color = color;
 
             cnt++;
+
         }
+        Debug.Log("2");
         //나머지 버튼들은 비활성화
         for (int i = cnt; i < 8; i++)
         {
+            Debug.Log("333");
             itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().sprite = Instantiate(DataTemporary.assetBundleImg.LoadAsset<Sprite>("ButtonBg"));
             Color color = itemWindow.transform.GetChild(i / 4).GetChild(i % 4).GetComponent<Image>().color;
             color.a = 0.3f;
@@ -217,12 +228,14 @@ public class UI_LandCustom : MonoBehaviourPun
         {
             //Debug.Log("FileName = " + fileName);
 #if UNITY_STANDALONE
-            //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
-#elif UNITY_IOS
-            //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
-#endif
             if (fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Contains("meta"))
                 continue;
+            //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
+#elif UNITY_IOS
+            if (fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Contains("meta"))
+                continue;
+            //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
+#endif
 
             if (cnt == i)
             {
