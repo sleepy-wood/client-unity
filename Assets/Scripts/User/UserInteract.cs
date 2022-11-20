@@ -211,7 +211,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public async void RPC_SettingProfile(string imgURL, string nickName)
     {
-        Texture2D texture = await DataModule.WebrequestTexture(imgURL, DataModule.NetworkType.GET);
+        Texture2D texture = await DataModule.WebrequestTextureGet(imgURL, DataModule.NetworkType.GET);
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 10);
         profileImage.sprite = sprite;
         transform.GetChild(4).GetChild(1).GetComponent<Image>().sprite = sprite;

@@ -69,7 +69,7 @@ public class DataModule
     /// <param name="networkType">어떻게 Request 할 것인가</param>
     /// <param name="data">보낼 데이터</param>
     /// <returns></returns>
-    public static async UniTask<T> WebRequestBuffer<T>(string _url, NetworkType networkType, DataType dataType ,  string data = null, string filePath = null)
+    public static async UniTask<T> WebRequestBuffer<T>(string _url, NetworkType networkType, DataType dataType ,  string data = null, List<IMultipartFormSection> form = null, string filePath = null)
     {
         //네트워크 체킹
         await CheckNetwork();
@@ -93,6 +93,10 @@ public class DataModule
         {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(data);
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
+        }
+        if (form != null)
+        {
+            request = UnityWebRequest.Post(requestURL, form);
         }
 
         //Header 정보 입력
@@ -137,7 +141,7 @@ public class DataModule
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
-    public static async UniTask<Texture2D> WebrequestTexture(string url, NetworkType networkType, List<IMultipartFormSection> form = null)
+    public static async UniTask<Texture2D> WebrequestTextureGet(string url, NetworkType networkType)
     {
 
         //네트워크 체킹
@@ -150,11 +154,7 @@ public class DataModule
 
         UnityWebRequest request;
         //Texture인가 Buffer인가?
-        if (networkType == NetworkType.GET)
-            request = UnityWebRequestTexture.GetTexture(requestURL);
-        else
-            request = UnityWebRequest.Post(requestURL, form);
-
+        request = UnityWebRequestTexture.GetTexture(requestURL);
         //Body 정보 입력
         DownloadHandlerTexture handlerTexture =  request.downloadHandler as DownloadHandlerTexture;
 
@@ -170,15 +170,8 @@ public class DataModule
         try
         {
             var res = await request.SendWebRequest().WithCancellation(cts.Token);
-            if (networkType == NetworkType.POST)
-            {
-                return default;
-            }
-            else
-            {
                 Texture2D result = handlerTexture.texture;
                 return result;
-            }
         }
         catch (OperationCanceledException ex)
         {
@@ -188,7 +181,7 @@ public class DataModule
                 //TODO: 네트워크 재시도 팝업 호출.
 
                 //재시도
-                return await WebrequestTexture(url,networkType);
+                return await WebrequestTextureGet(url,networkType);
             }
         }
         catch (Exception e)

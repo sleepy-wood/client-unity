@@ -203,7 +203,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
                             {
                                 emoji_urls.Add(productImages[k].path);
                                 DataTemporary.emoji_Url.Add(productImages[k].path);
-                                Texture2D texture = await DataModule.WebrequestTexture(productImages[k].path, DataModule.NetworkType.GET);
+                                Texture2D texture = await DataModule.WebrequestTextureGet(productImages[k].path, DataModule.NetworkType.GET);
                                 byte[] bytes = texture.EncodeToPNG();
                                 File.WriteAllBytes(path + "/Market_Emoji_" + l + ".png", bytes);
                                 l++;
