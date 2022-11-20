@@ -113,6 +113,18 @@ public class GetTreeData
     public List<TreeGrowth>? treeGrowths;  
 }
 
+// 5일차 나무 이미지 & 영상 업로드
+[Serializable]
+public class TreeFile
+{
+    // 나무 아이디
+    int treeId;
+    // 첨부파일 아이디
+    string? attachFileIds;
+}
+
+
+
 
 
 // Day1 데이터 저장소
@@ -133,5 +145,10 @@ public class ArrayGetTreeData
 {
     public List<GetTreeData>? getTreeDataList;
 }
-
+// My Collection 나무 이미지 & 영상 저장소
+[Serializable]
+public class ArrayTreeFile
+{
+    public List<TreeImgVideo>? treeFileList;
+}
 

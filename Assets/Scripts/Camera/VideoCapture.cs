@@ -40,20 +40,6 @@ public class VideoCapture : MonoBehaviour
         Debug.Log($"write texture: {time}");
 
         MediaCreator.WriteVideo(texture, time);
-
-        if(Input.GetKeyDown(KeyCode.Alpha1)&&!once)
-        {
-            once = true;
-            StartRecMovWithNoAudio();
-            print("Start");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !once2)
-        {
-            once2 = true;
-            StopRec();
-            print("Stop");
-        }
-
     }
 
     public void StartRecMovWithNoAudio()
