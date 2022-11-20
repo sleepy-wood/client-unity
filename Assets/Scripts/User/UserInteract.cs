@@ -37,9 +37,9 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     {
         //혼자 있을 시 프로필 비활성화
         if (PhotonNetwork.CountOfPlayers < 2)
-            transform.GetChild(3).gameObject.SetActive(false);
-        else  
-            transform.GetChild(3).gameObject.SetActive(true);
+            photonView.RPC("RPC_SetActive_Profile", RpcTarget.All, false);
+        else
+            photonView.RPC("RPC_SetActive_Profile", RpcTarget.All, true);
 
 
         if (!moveControl)
@@ -207,6 +207,15 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     //        animator = transform.GetChild(2).GetComponent<Animator>();
     //    }
     //}
+
+    [PunRPC]
+    public void RPC_SetActive_Profile(bool isActive)
+    {
+        if(isActive)
+            transform.GetChild(3).gameObject.SetActive(true);
+        else
+            transform.GetChild(3).gameObject.SetActive(false);
+    }
 
     [PunRPC]
     public async void RPC_SettingProfile(string imgURL, string nickName)

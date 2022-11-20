@@ -123,7 +123,10 @@ public class UI_Chatting : MonoBehaviourPun
     /// <param name="i"></param>
     public void OnClickEmojiButton(int i)
     {
-        photonView.RPC("RPC_EmojiButtonAsync", RpcTarget.All, i, DataTemporary.MyUserData.nickname);
+        Debug.Log("Cnt = " + DataTemporary.emoji_Url.Count);
+        string url = i - 15 < 0 ? null : DataTemporary.emoji_Url[i - 15];
+        Debug.Log("i = " + i);
+        photonView.RPC("RPC_EmojiButtonAsync", RpcTarget.All, i, DataTemporary.MyUserData.nickname, url);
     }
     public void OnSubmit()
     {
@@ -240,14 +243,15 @@ public class UI_Chatting : MonoBehaviourPun
     }
 
     [PunRPC]
-    public async Task RPC_EmojiButtonAsync(int i, string nickname)
+    public async Task RPC_EmojiButtonAsync(int i, string nickname, string emoji_url)
     {
         GameObject emojiResource = Resources.Load<GameObject>("Chat_Emoji");
         GameObject emojiPrefab = Instantiate(emojiResource, windowContent);
+        Debug.Log("i = " + i);
 
         if (i >= 15)
         {
-            Texture2D texture = await DataModule.WebrequestTextureGet(DataTemporary.emoji_Url[i - 15], DataModule.NetworkType.GET);
+            Texture2D texture = await DataModule.WebrequestTextureGet(emoji_url, DataModule.NetworkType.GET);
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             emojiPrefab.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
         }
