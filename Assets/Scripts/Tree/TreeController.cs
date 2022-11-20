@@ -150,7 +150,7 @@ public class TreeController : MonoBehaviour
 
     private void Start()
     {
-        treeFactory.gameObject.SetActive(false);
+        //treeFactory.gameObject.SetActive(false);
         assetBundle = DataTemporary.assetBundleTreePipeline;
         barkAssetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/barktexturebundle");
 
