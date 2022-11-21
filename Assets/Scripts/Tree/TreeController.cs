@@ -23,7 +23,10 @@ public class TreeController : MonoBehaviour
     public string barkMaterial;
     // Sprout Group Id
     public int sproutGroupId;
-
+    // 희귀성 점수
+    public int rarityScore;
+    // 생명력 점수
+    public int vitalityScore;
 
     #region 방문 타입
     public enum VisitType
@@ -144,7 +147,8 @@ public class TreeController : MonoBehaviour
     // My Collection Text
     public Text txtTreeName;
     public Text txtTreeBirth;
-    public Text txtTreeScore;
+    public Text txtTreeRarity;
+    public Text txtTreeVitality;
     #endregion
 
 
@@ -193,6 +197,7 @@ public class TreeController : MonoBehaviour
                 { 
                     int random = UnityEngine.Random.Range(0, 5);
                     treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
+                    rarityScore += 10;
                 }
                 else if (n >= 50 && n < 70)
                 {
@@ -200,6 +205,7 @@ public class TreeController : MonoBehaviour
                     {
                         int random = UnityEngine.Random.Range(0, 5);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
+                        rarityScore += 20;
                     }
                 }
                 else if (n >= 70 && n < 85)
@@ -208,6 +214,7 @@ public class TreeController : MonoBehaviour
                     {
                         int random = UnityEngine.Random.Range(0, 5);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
+                        rarityScore += 30;
                     }
                 }
                 else if (n >= 85 && n < 95)
@@ -216,6 +223,7 @@ public class TreeController : MonoBehaviour
                     {
                         int random = UnityEngine.Random.Range(0, 5);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
+                        rarityScore += 40;
                     }
                 }
                 else
@@ -223,6 +231,7 @@ public class TreeController : MonoBehaviour
                     for (int j = 0; j < 5; j++)
                     {
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[j].enabled = true;
+                        rarityScore += 50;
                     }
                 }
                 Debug.Log("4");
@@ -241,6 +250,7 @@ public class TreeController : MonoBehaviour
                     Material selectedMat = Instantiate(mat[r1]);
                     print("Selected General Bark Material: " + mat[r1].name);
                     treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
+                    rarityScore += 30;
                 }
                 // Special Material (30%)
                 else
@@ -249,6 +259,7 @@ public class TreeController : MonoBehaviour
                     Material selectedMat = Instantiate(mat[r2]);
                     print("Selected Special Bark Material: " + mat[r2].name);
                     treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
+                    rarityScore += 50;
                 }
             }
             print("Selected pipe = " + pipeName);
@@ -283,7 +294,8 @@ public class TreeController : MonoBehaviour
                     // My Collection Text 활성화
                     txtTreeName.GetComponent<Text>().enabled = true;
                     txtTreeBirth.GetComponent<Text>().enabled = true;
-                    txtTreeScore.GetComponent<Text>().enabled = true;
+                    txtTreeRarity.GetComponent<Text>().enabled = true;
+                    txtTreeVitality.GetComponent<Text>().enabled = true;
                 }
                 soil.SetActive(false);
                 // ReVisit했는데 해당 DayCount와 저장한 나무 데이터 수가 동일하지 않을 경우 (= 24H 지나고 처음 들어온 경우)
@@ -1067,7 +1079,7 @@ public class TreeController : MonoBehaviour
             treeData.sproutWidth = treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width;
             // 7. Gravity
             treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
-
+            
             string treeJsonData = JsonUtility.ToJson(treeData);
             Debug.Log(JsonUtility.ToJson(treeData, true));
 
@@ -1133,6 +1145,10 @@ public class TreeController : MonoBehaviour
             treeData.sproutWidth = treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width;
             // 6. Gravity
             treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
+            // 7. Rarity
+            treeData.rarity = rarityScore;
+            // 8. vitality
+            treeData.vitality = vitalityScore;
 
             string treeJsonData = JsonUtility.ToJson(treeData);
             Debug.Log(JsonUtility.ToJson(treeData, true));
