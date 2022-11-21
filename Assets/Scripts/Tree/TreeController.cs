@@ -127,6 +127,7 @@ public class TreeController : MonoBehaviour
     [Space]
 
     [Header("Land Objects")]
+    public Transform previewTree;
     // 나무 자라는 위치
     public Transform growPos;
     // sprout
@@ -267,6 +268,7 @@ public class TreeController : MonoBehaviour
                     Material selectedMat = Instantiate(mat[r1]);
                     print("Selected General Bark Material: " + mat[r1].name);
                     treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
+                    barkMaterial = selectedMat.name;
                     rarityScore += 30;
                 }
                 // Special Material (30%)
@@ -276,6 +278,7 @@ public class TreeController : MonoBehaviour
                     Material selectedMat = Instantiate(mat[r2]);
                     print("Selected Special Bark Material: " + mat[r2].name);
                     treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
+                    barkMaterial = selectedMat.name;
                     rarityScore += 50;
                 }
             }
@@ -349,7 +352,7 @@ public class TreeController : MonoBehaviour
     }
 
     /// <summary>
-    /// 나무 처음 심은 날을 기반으로 해당 dayCount에 맞는 헬스 데이터 가져오기
+    /// 나무 처음 심은 날을 기반으로 해당 dayCount에 맞는 헬스 데이터 가져온 뒤 나무에 적용
     /// </summary>
     public void ApplyHealthData()
     {
@@ -620,7 +623,9 @@ public class TreeController : MonoBehaviour
         seed.SetActive(true);
         yield return new WaitForSeconds(2);
         sproutParticle.Play();
+        sproutLeaf.transform.localScale = new Vector3(0, 0, 0);
         sprout.SetActive(true);
+        
 
         // 새싹 자라기
         t = 0;
@@ -812,7 +817,12 @@ public class TreeController : MonoBehaviour
     /// </summary>
 
     Transform campos;
-    public void SetTree(int day)
+    /// <summary>
+    /// 입력한 day로 tree 세팅 (HealthSetting, Pipline 기본 세팅 중 선택 가능)
+    /// </summary>
+    /// <param name="day"> 일차 수 </param>
+    /// <param name="healthSetting"> 1이면 HealthSetting 진행</param>
+    public void SetTree(int day, int healthSetting=0)
     {
         // 씨앗 심기
         if (day == 1)
@@ -833,7 +843,8 @@ public class TreeController : MonoBehaviour
         // 3일차
         else if (day == 3)
         {
-            PipelineSetting(1);
+            if (healthSetting == 0) PipelineSetting(1);
+            else if (healthSetting == 1) ApplyHealthData();
             PipelineReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             campos = Camera.main.gameObject.transform;
@@ -842,7 +853,8 @@ public class TreeController : MonoBehaviour
         // 4일차
         else if (day == 4)
         {
-            PipelineSetting(2);
+            if (healthSetting == 0) PipelineSetting(2);
+            else if (healthSetting == 1) ApplyHealthData();
             PipelineReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             //SaveTreeData();
@@ -850,12 +862,14 @@ public class TreeController : MonoBehaviour
         // 5일차
         else if (day == 5)
         {
-            PipelineSetting(3);
+            if (healthSetting == 0) PipelineSetting(3);
+            else if (healthSetting == 1) ApplyHealthData();
             PipelineReload();
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             assetBundle.Unload(false);
             //SaveTreeData();
         }
+
     }
 
     /// <summary>
@@ -1001,7 +1015,6 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// Tree Data 저장
     /// </summary>
-    public Transform previewTree;
     string saveUrl;
     public async void SaveTreeData()
     {
@@ -1019,16 +1032,16 @@ public class TreeController : MonoBehaviour
             Debug.Log("treeData.seedNumber = " + treeData.seedNumber);
             // treePipeName
             treeData.treePipeName = pipeName;
-            print("pipeName" + pipeName);
+            print("pipeName : " + pipeName);
             // Bark Material Name
             treeData.barkMaterial = barkMaterial;
-            print("barkMaterial" + barkMaterial);
+            print("barkMaterial : " + barkMaterial);
             // Land ID 
             treeData.landId = DataTemporary.MyUserData.currentLandId;
-            print("landId" + DataTemporary.MyUserData.currentLandId);
+            print("landId : " + DataTemporary.MyUserData.currentLandId);
             // Sprout Group Id
             treeData.sproutGroupId = sproutGroupId;
-            print("sproutGroupId" + sproutGroupId);
+            print("sproutGroupId : " + sproutGroupId);
             // Sprout Texture Enabled
             treeData.sproutColor1 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
             treeData.sproutColor2 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
@@ -1343,6 +1356,11 @@ public class TreeController : MonoBehaviour
             treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase -= 0.2f;
             treePipeline._serializedPipeline.girthTransforms[0].maxGirthAtBase -= 0.2f;
             #endregion
+
+            #region 5. 나뭇잎 처짐
+            treePipeline._serializedPipeline.sproutGenerators[0].minGravityAlignAtTop -= 0.3f;
+            treePipeline._serializedPipeline.sproutGenerators[0].maxGravityAlignAtTop -= 0.3f;
+            #endregion
         }
         // 나쁜 영향을 완화시킬 경우
         else
@@ -1367,7 +1385,7 @@ public class TreeController : MonoBehaviour
                 gravityPipe.maxGravityAlignAtTop += 0.2f;
             }
             #endregion
-
+             
             #region 3. 나뭇잎 너비
             if (treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width < 3.2f)
             {
@@ -1378,6 +1396,15 @@ public class TreeController : MonoBehaviour
             #region 4. 나무 가지 두께
             treePipeline._serializedPipeline.girthTransforms[0].minGirthAtBase += 0.2f;
             treePipeline._serializedPipeline.girthTransforms[0].maxGirthAtBase += 0.2f;
+            #endregion
+
+            #region 5. 나뭇잎 처짐
+            if (treePipeline._serializedPipeline.sproutGenerators[0].maxGravityAlignAtTop < 0.6f)
+            {
+                treePipeline._serializedPipeline.sproutGenerators[0].minGravityAlignAtTop += 0.3f;
+                treePipeline._serializedPipeline.sproutGenerators[0].maxGravityAlignAtTop += 0.3f;
+            }
+            
             #endregion
         }
 
