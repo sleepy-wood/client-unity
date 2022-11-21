@@ -31,15 +31,30 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
             photonView.RPC("RPC_SettingProfile", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
         }
         
+        transform.GetChild(3).gameObject.SetActive(false);
 
     }
+    int prePlayers = 0;
     private void Update()
     {
-        //혼자 있을 시 프로필 비활성화
-        if (PhotonNetwork.CountOfPlayers < 2)
-            photonView.RPC("RPC_SetActive_Profile", RpcTarget.All, false);
-        else
-            photonView.RPC("RPC_SetActive_Profile", RpcTarget.All, true);
+        Debug.Log("Count Player = " + PhotonNetwork.CurrentRoom.PlayerCount);
+        if (PhotonNetwork.CurrentRoom.PlayerCount != prePlayers)
+        {
+            prePlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+            //혼자 있을 시 프로필 비활성화
+            if (prePlayers < 2)
+            {
+                photonView.RPC("RPC_SetActive_Profile", RpcTarget.All, false);
+                Debug.Log("혼자야 ");
+                //transform.GetChild(3).gameObject.SetActive(false);
+            }
+            else
+            {
+                photonView.RPC("RPC_SetActive_Profile", RpcTarget.All, true);
+                Debug.Log("둘이야 ");
+                //transform.GetChild(3).gameObject.SetActive(true);
+            }
+        }
 
 
         if (!moveControl)

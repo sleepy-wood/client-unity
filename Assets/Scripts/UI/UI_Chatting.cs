@@ -149,7 +149,8 @@ public class UI_Chatting : MonoBehaviourPun
             }
         }
         string chat = ": " + s;
-        photonView.RPC("RpcAddChat", RpcTarget.All, chat, DataTemporary.MyUserData.nickname);
+        if(s != "")
+            photonView.RPC("RpcAddChat", RpcTarget.All, chat, DataTemporary.MyUserData.nickname);
 
         chatting.text = "";
 

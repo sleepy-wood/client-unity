@@ -10,8 +10,6 @@ using NativePlugin.HealthData;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using UnityEditor.PackageManager.UI;
-using Unity.VisualScripting;
 //using TreeEditor;
 
 public enum Category
