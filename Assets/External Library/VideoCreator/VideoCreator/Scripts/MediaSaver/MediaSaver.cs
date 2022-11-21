@@ -16,7 +16,6 @@ namespace VideoCreator
         [DllImport("__Internal")]
         private static extern void UnityMediaSaver_saveImage(IntPtr texturePtr, string type);
 #endif
-
         /// <summary>
         /// Save video to album from url
         /// </summary>

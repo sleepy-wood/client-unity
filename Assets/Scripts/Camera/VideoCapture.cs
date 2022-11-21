@@ -62,10 +62,9 @@ public class VideoCapture : MonoBehaviour
     {
         if (!isRecording) return;
 
-        MediaCreator.FinishSync();
-        MediaSaver.SaveVideo(cachePath);
+        //MediaCreator.FinishSync();
+        //MediaSaver.SaveVideo(cachePath);
         MediaSaver.SaveVideo(cachePath2);
-
         isRecording = false;
 
         print("Stop Recording");
