@@ -54,22 +54,8 @@ public class DeveloperMode : MonoBehaviour
     }
 
     // +Day 버튼 누를 때마다 헬스 데이터로 나무 업데이트 (2일차 ~ 5일차)
-    public void OnPlusDay()
+    public void OnDeveloperPlusDay()
     {
-        // 1일차 -> 2일차
-        if (treeController.dayCount == 1)
-        {
-            //timeManager.now = timeManager.now.dateTime.AddDays(1);
-            //CalculatePlantDays(firstPlantDate, now);
-            //treeControll.SetTree(totalPlantDay);
-
-            treeController.SetTree(2);
-        }
-        // 2일차 이후 : 헬스데이터 적용
-        if (treeController.dayCount > 1)
-        {
-            treeController.SetTree(treeController.dayCount);
-        }
-
+        timeManager.OnPlusDay();
     }
 }
