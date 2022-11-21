@@ -33,10 +33,12 @@ public class DeveloperMode : MonoBehaviour
     //[Space]
 
     TreeController treeController;
+    TimeManager timeManager;
 
     void Start()
     {
         treeController = GetComponent<TreeController>();
+        timeManager = GetComponent<TimeManager>();
 
         // 입력된 Tree First Date로 5일치 헬스 데이터 불러오기
         if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
@@ -54,10 +56,19 @@ public class DeveloperMode : MonoBehaviour
     // +Day 버튼 누를 때마다 헬스 데이터로 나무 업데이트 (2일차 ~ 5일차)
     public void OnPlusDay()
     {
-        // 2일차 이후 : 헬스데이터 적용
-        if (treeController.dayCount > 2)
+        // 1일차 -> 2일차
+        if (treeController.dayCount == 1)
         {
-            treeController.SetTree();
+            //timeManager.now = timeManager.now.dateTime.AddDays(1);
+            //CalculatePlantDays(firstPlantDate, now);
+            //treeControll.SetTree(totalPlantDay);
+
+            treeController.SetTree(2);
+        }
+        // 2일차 이후 : 헬스데이터 적용
+        if (treeController.dayCount > 1)
+        {
+            treeController.SetTree(treeController.dayCount);
         }
 
     }
