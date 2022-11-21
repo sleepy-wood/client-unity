@@ -213,7 +213,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
                     }
                 }
             }
-            else
+            else if(h != (int)Category.collection)
             {
 
                 if (marketsData[h].result)
