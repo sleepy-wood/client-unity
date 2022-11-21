@@ -296,7 +296,7 @@ public class TreeController : MonoBehaviour
                 // 1일차 기본 세팅
                 PipelineSetting(0);
                 // 씨앗심기
-                SetTree();
+                SetTree(1);
             }
         }
         else if (visitType == VisitType.ReVisit)
@@ -812,34 +812,26 @@ public class TreeController : MonoBehaviour
     /// </summary>
 
     Transform campos;
-    public void SetTree()
+    public void SetTree(int day)
     {
         // 씨앗 심기
-        if (dayCount == 1)
+        if (day == 1)
         {
             StartCoroutine(PlantSeed(1.02f));
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             PipelineReload();
         }
         // 2일차
-        else if (dayCount == 2)
+        else if (day == 2)
         {
             sprout.SetActive(false);
             soil.SetActive(false);
-            // 사용자 데이터로 나무 변화
-            //SleepAmountToTree(sleepAmount);
-            //SleepRiseToTree(sleepRiseTimeVariance);
-            //NapToTree(sleepyDayTimeNap);
-
-            //불러오기
             PipelineReload();
             treeFactory.gameObject.SetActive(true);
-            //ScaleChange(activityPercent);
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
-            //SaveTreeData();
         }
         // 3일차
-        else if (dayCount == 3)
+        else if (day == 3)
         {
             PipelineSetting(1);
             PipelineReload();
@@ -848,7 +840,7 @@ public class TreeController : MonoBehaviour
             //SaveTreeData();
         }
         // 4일차
-        else if (dayCount == 4)
+        else if (day == 4)
         {
             PipelineSetting(2);
             PipelineReload();
@@ -856,7 +848,7 @@ public class TreeController : MonoBehaviour
             //SaveTreeData();
         }
         // 5일차
-        else if (dayCount == 5)
+        else if (day == 5)
         {
             PipelineSetting(3);
             PipelineReload();
