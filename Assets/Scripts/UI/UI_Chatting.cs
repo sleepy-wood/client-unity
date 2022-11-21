@@ -22,9 +22,7 @@ public class UI_Chatting : MonoBehaviourPun
     //ScrollView의 Content
     private RectTransform content;
     //EmojiChatting의 Content
-    //이전 Content의 H (멘토님 설명 중 H2역할)
     private float prevContentH;
-    //ScrollView의 H (멘토님 설명 중 H1역할)
     private RectTransform trScrollView;
     //내 아이디 색
     private GameObject user;
@@ -211,7 +209,7 @@ public class UI_Chatting : MonoBehaviourPun
             yield return null;
         }
     }
-    IEnumerator AutoScrollBotton()
+    IEnumerator AutoScrollBottom()
     {
         yield return null;
         //trScrollView H보다 Content H값이 커지면(스크롤 상태)
@@ -229,6 +227,8 @@ public class UI_Chatting : MonoBehaviourPun
     [PunRPC]
     public void RpcAddChat(string rpcChat, string nickname)
     {
+        StopAllCoroutines();
+
         //0.바뀌기 전의 Content H값을 넣자
         prevContentH = content.sizeDelta.y;
 
@@ -239,7 +239,7 @@ public class UI_Chatting : MonoBehaviourPun
         //3. 가져온 컴포넌트에 s를 셋팅
         chat.transform.GetChild(0).GetComponent<ChatItem>().SetText(rpcChat);
         chat.transform.GetChild(1).GetComponent<Image>().sprite = profileDic[nickname];
-        StartCoroutine(AutoScrollBotton());
+        StartCoroutine(AutoScrollBottom());
         if (!isActiveChat)
         {
             transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
@@ -249,6 +249,10 @@ public class UI_Chatting : MonoBehaviourPun
     [PunRPC]
     public async Task RPC_EmojiButtonAsync(int i, string nickname, string emoji_url)
     {
+        StopAllCoroutines();
+        //0.바뀌기 전의 Content H값을 넣자
+        prevContentH = content.sizeDelta.y;
+
         GameObject emojiPre = Instantiate(emojiPrefab, content);
         Debug.Log("i = " + i);
 
@@ -266,6 +270,12 @@ public class UI_Chatting : MonoBehaviourPun
             emojiPre.transform.GetChild(0).GetComponent<Image>().sprite = emoji;
         }
         emojiPre.transform.GetChild(1).GetComponent<Image>().sprite = profileDic[nickname];
+        if (!isActiveChat)
+        {
+            transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
+        }
+
+        StartCoroutine(AutoScrollBottom());
     }
     [PunRPC]
     public async void RPC_ProfileList(string url, string nickname)
