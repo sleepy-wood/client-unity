@@ -129,7 +129,6 @@ public class TimeManager : MonoBehaviour
                 //txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
             }
         }
-        
         #endregion
 
         #region SkyBox 변경

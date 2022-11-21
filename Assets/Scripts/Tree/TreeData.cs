@@ -62,7 +62,6 @@ public class TreeGrowth
 public class TreePipeline
 {
     public int treeId;
-    public List<string>? sleepIds;
      
     // Tree Growth Data //
     // 나무 scale
@@ -80,6 +79,11 @@ public class TreePipeline
     public float sproutWidth;
     // 중력
     public float gravity;
+    // 희귀성
+    public float rarity;
+    // 생명력
+    public float vitality;
+    // 생성 및 업데이트 시간
     public string? createdAt;
     public string? updateAt;
 }
