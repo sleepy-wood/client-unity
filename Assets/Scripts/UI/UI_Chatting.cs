@@ -12,7 +12,6 @@ public class UI_Chatting : MonoBehaviourPun
 {
 
     [SerializeField] private float chatMoveDistance = 836f;
-    public Transform windowContent;
     public RectTransform emoji_content;
 
     //InputChat
@@ -250,7 +249,7 @@ public class UI_Chatting : MonoBehaviourPun
     [PunRPC]
     public async Task RPC_EmojiButtonAsync(int i, string nickname, string emoji_url)
     {
-        GameObject emojiPre = Instantiate(emojiPrefab, windowContent);
+        GameObject emojiPre = Instantiate(emojiPrefab, content);
         Debug.Log("i = " + i);
 
         if (i >= 15)

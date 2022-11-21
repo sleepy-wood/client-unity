@@ -37,7 +37,6 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
     int prePlayers = 0;
     private void Update()
     {
-        Debug.Log("Count Player = " + PhotonNetwork.CurrentRoom.PlayerCount);
         if (PhotonNetwork.CurrentRoom.PlayerCount != prePlayers)
         {
             prePlayers = PhotonNetwork.CurrentRoom.PlayerCount;
@@ -45,13 +44,11 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
             if (prePlayers < 2)
             {
                 photonView.RPC("RPC_SetActive_Profile", RpcTarget.All, false);
-                Debug.Log("혼자야 ");
                 //transform.GetChild(3).gameObject.SetActive(false);
             }
             else
             {
                 photonView.RPC("RPC_SetActive_Profile", RpcTarget.All, true);
-                Debug.Log("둘이야 ");
                 //transform.GetChild(3).gameObject.SetActive(true);
             }
         }
