@@ -37,14 +37,14 @@ public class TimeManager : MonoBehaviour
 
                     // 현재 랜드의 나무 데이터
                     treeControll.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
-                    print($"{i}번째 트리 데이터");  // 심은 순서대로 저장 
+                    print($"{treeDataCount}개의 트리 데이터 중 {i}번째 트리 데이터");  // 심은 순서대로 저장 
                     print("나무 처음 심은 시간 : " + firstPlantDate.dateTime);
                 }
             }
         }
 
         // firstPlantDate로 방문타입 결정 => 5일차 후 새로운 Seed 심기 전 null값 처리필요
-        if (firstPlantDate.dateTime == DateTime.MinValue) // DateTime.Parse("08/18/2018 07:22:16"))  //DateTime.MinValue)
+        if (firstPlantDate.dateTime == DateTime.MinValue) 
         {
             print("First Visit");
             treeControll.visitType = TreeController.VisitType.First;
