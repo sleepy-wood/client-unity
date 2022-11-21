@@ -10,6 +10,8 @@ using NativePlugin.HealthData;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using UnityEditor.PackageManager.UI;
+using Unity.VisualScripting;
 //using TreeEditor;
 
 public enum Category
@@ -370,6 +372,58 @@ public class LoadingData : MonoBehaviourPunCallbacks
             {
                 PhotonNetwork.LoadLevel(1);
                 isCreateComplete = false;
+            }
+        }
+    }
+    /// <summary>
+    /// Sleep Data 하루에 몇시간인지 계산 
+    /// </summary>
+    public void Calc_SleepData()
+    {
+        int startDay = 0;
+        int preDay = 0;
+        bool isOnce = false;
+        SleepSample[] samples = DataTemporary.samples;
+        TimeSpan totalTimeSpan = new TimeSpan();
+        DateTime preDateTime = DateTime.Now;
+        for (int i = samples.Length - 1; i >= 0; i--)
+        {
+            if (samples[i].Type.ToString().Contains("Asleep"))
+            {
+                //Debug.Log("endDay = " + endDay);
+                //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
+                TimeSpan diff = samples[i].EndDate - samples[i].StartDate;
+                diff /= 2;
+                var NewDate = new DateTime(
+                    samples[i].StartDate.Year,
+                    samples[i].StartDate.Month,
+                    samples[i].StartDate.Day,
+                    samples[i].StartDate.Hour,
+                    samples[i].StartDate.Minute,
+                    samples[i].StartDate.Second
+                    );
+                NewDate.AddDays(diff.Days);
+                NewDate.AddHours(diff.Hours);
+                NewDate.AddMinutes(diff.Minutes);
+                NewDate.AddSeconds(diff.Seconds);
+                //Debug.Log(NewDate);
+                //Debug.Log(NewDate.DayOfWeek);
+                //중앙값의 날의 요일
+                startDay = (int)NewDate.DayOfWeek;
+                if (!isOnce)
+                {
+                    isOnce = true;
+                    preDay = startDay;
+                }
+
+                if (preDay != startDay)
+                {
+                    DataTemporary.DateTimeTotalTimeSpan[preDateTime] = totalTimeSpan;
+                    totalTimeSpan = new TimeSpan();
+                }
+                totalTimeSpan += diff;
+                preDay = startDay;
+                preDateTime = NewDate;
             }
         }
     }

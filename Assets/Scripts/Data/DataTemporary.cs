@@ -1,4 +1,5 @@
 using NativePlugin.HealthData;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,5 +36,6 @@ public class DataTemporary
     public static ArrayMarketData arrayMarketData = new ArrayMarketData();
     public static List<string> emoji_Url = new List<string>();
     //public static List<List<string>> market_url = new List<List<string>>();
+    public static Dictionary<DateTime, TimeSpan> DateTimeTotalTimeSpan = new Dictionary<DateTime, TimeSpan>();
 
 }
