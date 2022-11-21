@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,7 @@ public class UI_Chatting : MonoBehaviourPun
     private InputField chatting;
     //ChatItem 공장
     private GameObject chatPrefab;
+    private GameObject emojiPrefab;
     //ScrollView의 Content
     private RectTransform content;
     //EmojiChatting의 Content
@@ -46,6 +48,8 @@ public class UI_Chatting : MonoBehaviourPun
         trScrollView = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetComponent<RectTransform>();
         chatting = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetComponent<InputField>();
         chatPrefab = Resources.Load<GameObject>("Chatting_Text");
+        emojiPrefab = Resources.Load<GameObject>("Chatting_Emoji");
+
         content = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetComponent<RectTransform>();
 
         DirectoryInfo di = new DirectoryInfo(path);
@@ -246,24 +250,23 @@ public class UI_Chatting : MonoBehaviourPun
     [PunRPC]
     public async Task RPC_EmojiButtonAsync(int i, string nickname, string emoji_url)
     {
-        GameObject emojiResource = Resources.Load<GameObject>("Chat_Emoji");
-        GameObject emojiPrefab = Instantiate(emojiResource, windowContent);
+        GameObject emojiPre = Instantiate(emojiPrefab, windowContent);
         Debug.Log("i = " + i);
 
         if (i >= 15)
         {
             Texture2D texture = await DataModule.WebrequestTextureGet(emoji_url, DataModule.NetworkType.GET);
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            emojiPrefab.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
+            emojiPre.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
         }
         else
         {
             Sprite emojiImgResource = Resources.Load<Sprite>("Emoji_image/Emoji_" + i);
             Sprite emoji = Instantiate(emojiImgResource);
 
-            emojiPrefab.transform.GetChild(0).GetComponent<Image>().sprite = emoji;
+            emojiPre.transform.GetChild(0).GetComponent<Image>().sprite = emoji;
         }
-        emojiPrefab.GetComponent<Image>().sprite = profileDic[nickname];
+        emojiPre.transform.GetChild(1).GetComponent<Image>().sprite = profileDic[nickname];
     }
     [PunRPC]
     public async void RPC_ProfileList(string url, string nickname)
