@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4379527867874105656
+--- !u!114 &-8273824608225970296
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,58 +9,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac74e6fb3f1f04991839eaf6b28d74aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 22c2d98b7a4cb4a1d91cfe32c3c35964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isSeedFixed: 0
   fixedSeed: 0
-  seed: 1
+  seed: 0
   isActive: 1
-  id: 3
+  id: 9
   useKeyName: 0
   keyName: 
-  srcElementId: 2
-  sinkElementId: 1
+  srcElementId: 10
+  sinkElementId: 8
   index: 0
   srcElementIndex: 0
   sinkElementIndex: 0
-  srcElementClassType: 2
-  sinkElementClassType: 3
-  nodePosition: {x: -121, y: -241.5}
-  applyJointSmoothing: 1
-  applyDirectionalBending: 1
-  applyNoise: 1
-  smoothJointStrength: 0.75
-  forceAtTips: 0.3
-  forceAtTrunk: 0
-  direction: {x: 0, y: -1, z: 0}
-  hierarchyDistributionCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  horizontalAlignAtBase: 0.5
-  horizontalAlignStrength: 0.5
-  horizontalAlignHierarchyDistributionCurve:
+  srcElementClassType: 12
+  sinkElementClassType: 4
+  nodePosition: {x: -145, y: 364.5}
+  windSpread: 0.46
+  windAmplitude: 0.55
+  sproutTurbulence: 0.21
+  sproutSway: 1
+  branchSway: 1
+  windQuality: 3
+  useMultiPhaseOnTrunk: 1
+  previewWindAlways: 1
+  windFactorCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -84,47 +59,52 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  verticalAlignAtTop: 0.5
-  verticalAlignStrength: 0.5
-  verticalAlignHierarchyDistributionCurve:
+  applyToRoots: 0
+--- !u!114 &-5713049144371098166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4769aef02bd642eeb50b021b91d49ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSeedFixed: 0
+  fixedSeed: 0
+  seed: 0
+  isActive: 1
+  id: 0
+  useKeyName: 0
+  keyName: 
+  srcElementId: 1
+  sinkElementId: 7
+  index: 0
+  srcElementIndex: 0
+  sinkElementIndex: 0
+  srcElementClassType: 3
+  sinkElementClassType: 11
+  nodePosition: {x: -151.5, y: -25.5}
+  rootMode: 1
+  minSpread: 0.24472731
+  maxSpread: 0.44472724
+  minDisplacementPoints: 5
+  maxDisplacementPoints: 6
+  minDisplacementAngleVariance: 0.1
+  maxDisplacementAngleVariance: 0.2638761
+  minDisplacementTwirl: 0.07768875
+  maxDisplacementTwirl: 0.21364406
+  minDisplacementScaleAtBase: 1.0997856
+  maxDisplacementScaleAtBase: 1.2827355
+  scaleCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
       inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  noiseAtTop: 0.38
-  noiseAtBase: 0.3
-  noiseScaleAtTop: 0.7
-  noiseScaleAtBase: 0.4
-  smoothRootJointStrength: 0.75
-  forceAtRootTips: 0.5
-  forceAtRootTrunk: 0
-  rootDirection: {x: 0, y: -1, z: 0}
-  rootHierarchyDistributionCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
@@ -133,8 +113,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -142,11 +122,45 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  noiseAtRootBase: 0.2
-  noiseAtRootBottom: 0.5
-  noiseScaleAtRootBase: 0.2
-  noiseScaleAtRootBottom: 0.5
---- !u!114 &-3531044733483002212
+  strength: 0.3
+  radialResolutionFactor: 1
+  lengthResolutionFactor: 1
+--- !u!114 &-5334481792452055175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5807526cb0a4654bfa53c2f6cfa1fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSeedFixed: 0
+  fixedSeed: 0
+  seed: 0
+  isActive: 1
+  id: 8
+  useKeyName: 0
+  keyName: 
+  srcElementId: 9
+  sinkElementId: 4
+  index: 0
+  srcElementIndex: 0
+  sinkElementIndex: 0
+  srcElementClassType: 7
+  sinkElementClassType: 16
+  nodePosition: {x: -45, y: 454.5}
+  useCustomPositions: 1
+  positions:
+  - rootPosition: {x: 0, y: 0.1, z: 0}
+    overrideRootDirection: 0
+    rootDirection: {x: 0, y: 1, z: 0}
+    enabled: 1
+  selectedPositionIndex: 0
+  addCollisionObjectAtTrunk: 0
+--- !u!114 &-4828959929643980991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,7 +244,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-2288441846719692962
+--- !u!114 &-4684982453186106425
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,33 +253,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec5807526cb0a4654bfa53c2f6cfa1fc, type: 3}
+  m_Script: {fileID: 11500000, guid: 63a09d95354abd364ad824fa1c792b70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isSeedFixed: 0
   fixedSeed: 0
   seed: 0
   isActive: 1
-  id: 8
+  id: 4
   useKeyName: 0
   keyName: 
-  srcElementId: 9
-  sinkElementId: 4
+  srcElementId: 8
+  sinkElementId: -1
   index: 0
   srcElementIndex: 0
-  sinkElementIndex: 0
-  srcElementClassType: 7
-  sinkElementClassType: 16
-  nodePosition: {x: -45, y: 454.5}
-  useCustomPositions: 1
-  positions:
-  - rootPosition: {x: 0, y: 0.1, z: 0}
-    overrideRootDirection: 0
-    rootDirection: {x: 0, y: 1, z: 0}
-    enabled: 1
-  selectedPositionIndex: 0
+  sinkElementIndex: -1
+  srcElementClassType: 4
+  sinkElementClassType: 0
+  nodePosition: {x: 51.5, y: 572}
+  enableAO: 0
+  enableAOInPreview: 0
+  enableAOAtRuntime: 0
+  samplesAO: 4
+  strengthAO: 0.5
+  useCustomPositions: 0
+  positions: []
+  selectedPositionIndex: -1
   addCollisionObjectAtTrunk: 0
---- !u!114 &-1736246670219470391
+  lodFade: 1
+  lodFadeAnimate: 0
+  lodTransitionWidth: 0.4
+--- !u!114 &-189364585442280327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -274,219 +292,1236 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22c2d98b7a4cb4a1d91cfe32c3c35964, type: 3}
+  m_Script: {fileID: 11500000, guid: 55d61721113ae4bdd9477f4f20384c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isSeedFixed: 0
   fixedSeed: 0
-  seed: 0
+  seed: 1
   isActive: 1
-  id: 9
+  id: 7
   useKeyName: 0
   keyName: 
-  srcElementId: 10
-  sinkElementId: 8
+  srcElementId: 0
+  sinkElementId: 5
   index: 0
   srcElementIndex: 0
   sinkElementIndex: 0
-  srcElementClassType: 12
-  sinkElementClassType: 4
-  nodePosition: {x: -145, y: 364.5}
-  windSpread: 0.46
-  windAmplitude: 0.55
-  sproutTurbulence: 0.21
-  sproutSway: 1
-  branchSway: 1
-  windQuality: 3
-  useMultiPhaseOnTrunk: 1
-  previewWindAlways: 1
-  windFactorCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  applyToRoots: 0
---- !u!114 &-43354237756162330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e71b3b56710c5470795bb8565a348b1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
-  seed: 0
-  isActive: 1
-  id: 1
-  useKeyName: 0
-  keyName: 
-  srcElementId: 3
-  sinkElementId: 0
-  index: 0
-  srcElementIndex: 0
-  sinkElementIndex: 0
-  srcElementClassType: 8
-  sinkElementClassType: 14
-  nodePosition: {x: -24, y: -138.5}
-  useAverageNormals: 1
-  useBranchWelding: 0
-  useBranchWeldingMeshCap: 0
-  minBranchWeldingHierarchyRange: 0.3
-  maxBranchWeldingHierarchyRange: 0.4
-  branchWeldingHierarchyRangeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: -1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  branchWeldingCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: -1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  minBranchWeldingDistance: 1.3
-  maxBranchWeldingDistance: 1.3
-  minAdditionalBranchWeldingSegments: 2
-  maxAdditionalBranchWeldingSegments: 3
-  minBranchWeldingUpperSpread: 1
-  maxBranchWeldingUpperSpread: 1
-  minBranchWeldingLowerSpread: 1.3
-  maxBranchWeldingLowerSpread: 1.3
-  useRootWelding: 0
-  useRootWeldingMeshCap: 0
-  minRootWeldingHierarchyRange: 0.3
-  maxRootWeldingHierarchyRange: 0.4
-  rootWeldingHierarchyRangeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: -1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  rootWeldingCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: -1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  minRootWeldingDistance: 1.3
-  maxRootWeldingDistance: 1.3
-  minAdditionalRootWeldingSegments: 2
-  maxAdditionalRootWeldingSegments: 3
-  minRootWeldingUpperSpread: 1.3
-  maxRootWeldingUpperSpread: 1.3
-  minRootWeldingLowerSpread: 1
-  maxRootWeldingLowerSpread: 1
-  shapeCollection: {fileID: 0}
-  meshMode: 0
-  meshContext: 0
-  meshRange: 0
-  nodesMode: 0
-  minNodes: 2
-  maxNodes: 3
-  minNodeLength: 0.2
-  maxNodeLength: 0.5
-  nodeLengthVariance: 0
-  nodesDistribution: 0
-  shapeScale: 1
-  branchHierarchyScaleAdherence: 1
-  selectedShapeId: 
+  srcElementClassType: 14
+  sinkElementClassType: 9
+  nodePosition: {x: -22.5, y: 77.5}
+  sproutMeshes:
+  - groupId: 1
+    meshingMode: 0
+    shapeMode: 1
+    horizontalAlignAtBase: 0
+    horizontalAlignAtTop: 0
+    horizontalAlignCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    scaleAtBase: 1
+    scaleAtTop: 1
+    scaleCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    isTwoSided: 1
+    branchCollection: {fileID: 0}
+    width: 3.7
+    height: 2
+    pivotX: 0.5
+    pivotY: 0
+    overrideHeightWithTexture: 1
+    includeScaleFromAtlas: 0
+    meshGameObject: {fileID: 1700287767245516, guid: da0474804a8aa41c8af23ddf72f3e092, type: 2}
+    meshScale: {x: 1, y: 1, z: 1}
+    meshRotation: {x: 0, y: 0, z: 0}
+    meshOffset: {x: 0, y: 0, z: 0}
+    billboardAtOrigin: 0
+    billboardRotationAtTop: 0
+    billboardRotationAtBase: 0
+    billboardRotationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    depth: -0.4
+    innerPlaneSize: 1
+    resolutionWidth: 1
+    resolutionHeight: 1
+    gravityBendingAtBase: 0
+    gravityBendingAtTop: 0
+    gravityBendingCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    gravityBendingMultiplierAtMiddle: 0
+    sideGravityBendingAtBase: 0
+    sideGravityBendingAtTop: 0
+    sideGravityBendingShape:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - groupId: 2
+    meshingMode: 0
+    shapeMode: 1
+    horizontalAlignAtBase: 0
+    horizontalAlignAtTop: 0
+    horizontalAlignCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    scaleAtBase: 1
+    scaleAtTop: 1
+    scaleCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    isTwoSided: 1
+    branchCollection: {fileID: 0}
+    width: 3.7
+    height: 1
+    pivotX: 0.5
+    pivotY: 0
+    overrideHeightWithTexture: 1
+    includeScaleFromAtlas: 0
+    meshGameObject: {fileID: 0}
+    meshScale: {x: 1, y: 1, z: 1}
+    meshRotation: {x: 0, y: 0, z: 0}
+    meshOffset: {x: 0, y: 0, z: 0}
+    billboardAtOrigin: 0
+    billboardRotationAtTop: 0
+    billboardRotationAtBase: 0
+    billboardRotationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    depth: 0
+    innerPlaneSize: 1
+    resolutionWidth: 1
+    resolutionHeight: 1
+    gravityBendingAtBase: 0
+    gravityBendingAtTop: 0
+    gravityBendingCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    gravityBendingMultiplierAtMiddle: 0
+    sideGravityBendingAtBase: 0
+    sideGravityBendingAtTop: 0
+    sideGravityBendingShape:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - groupId: 3
+    meshingMode: 0
+    shapeMode: 1
+    horizontalAlignAtBase: 0
+    horizontalAlignAtTop: 0
+    horizontalAlignCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    scaleAtBase: 1
+    scaleAtTop: 1
+    scaleCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    isTwoSided: 1
+    branchCollection: {fileID: 0}
+    width: 3.7
+    height: 1
+    pivotX: 0.5
+    pivotY: 0
+    overrideHeightWithTexture: 1
+    includeScaleFromAtlas: 0
+    meshGameObject: {fileID: 0}
+    meshScale: {x: 1, y: 1, z: 1}
+    meshRotation: {x: 0, y: 0, z: 0}
+    meshOffset: {x: 0, y: 0, z: 0}
+    billboardAtOrigin: 0
+    billboardRotationAtTop: 0
+    billboardRotationAtBase: 0
+    billboardRotationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    depth: 0
+    innerPlaneSize: 1
+    resolutionWidth: 1
+    resolutionHeight: 1
+    gravityBendingAtBase: 0
+    gravityBendingAtTop: 0
+    gravityBendingCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    gravityBendingMultiplierAtMiddle: 0
+    sideGravityBendingAtBase: 0
+    sideGravityBendingAtTop: 0
+    sideGravityBendingShape:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - groupId: 4
+    meshingMode: 0
+    shapeMode: 1
+    horizontalAlignAtBase: 0
+    horizontalAlignAtTop: 0
+    horizontalAlignCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    scaleAtBase: 1
+    scaleAtTop: 1
+    scaleCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    isTwoSided: 1
+    branchCollection: {fileID: 0}
+    width: 3.7
+    height: 1
+    pivotX: 0.5
+    pivotY: 0
+    overrideHeightWithTexture: 1
+    includeScaleFromAtlas: 0
+    meshGameObject: {fileID: 0}
+    meshScale: {x: 1, y: 1, z: 1}
+    meshRotation: {x: 0, y: 0, z: 0}
+    meshOffset: {x: 0, y: 0, z: 0}
+    billboardAtOrigin: 0
+    billboardRotationAtTop: 0
+    billboardRotationAtBase: 0
+    billboardRotationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    depth: 0
+    innerPlaneSize: 1
+    resolutionWidth: 1
+    resolutionHeight: 1
+    gravityBendingAtBase: 0
+    gravityBendingAtTop: 0
+    gravityBendingCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    gravityBendingMultiplierAtMiddle: 0
+    sideGravityBendingAtBase: 0
+    sideGravityBendingAtTop: 0
+    sideGravityBendingShape:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - groupId: 5
+    meshingMode: 0
+    shapeMode: 0
+    horizontalAlignAtBase: 0
+    horizontalAlignAtTop: 0
+    horizontalAlignCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    scaleAtBase: 1
+    scaleAtTop: 1
+    scaleCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    isTwoSided: 1
+    branchCollection: {fileID: 0}
+    width: 1.24
+    height: 1
+    pivotX: 0.5
+    pivotY: 0
+    overrideHeightWithTexture: 1
+    includeScaleFromAtlas: 0
+    meshGameObject: {fileID: 0}
+    meshScale: {x: 1, y: 1, z: 1}
+    meshRotation: {x: 0, y: 0, z: 0}
+    meshOffset: {x: 0, y: 0, z: 0}
+    billboardAtOrigin: 0
+    billboardRotationAtTop: 0
+    billboardRotationAtBase: 0
+    billboardRotationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    depth: 0
+    innerPlaneSize: 1
+    resolutionWidth: 1
+    resolutionHeight: 1
+    gravityBendingAtBase: 0
+    gravityBendingAtTop: 0
+    gravityBendingCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    gravityBendingMultiplierAtMiddle: 0
+    sideGravityBendingAtBase: 0
+    sideGravityBendingAtTop: 0
+    sideGravityBendingShape:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - groupId: 6
+    meshingMode: 0
+    shapeMode: 0
+    horizontalAlignAtBase: 0
+    horizontalAlignAtTop: 0
+    horizontalAlignCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    scaleAtBase: 1
+    scaleAtTop: 1
+    scaleCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    isTwoSided: 1
+    branchCollection: {fileID: 0}
+    width: 1.24
+    height: 1
+    pivotX: 0.5
+    pivotY: 0
+    overrideHeightWithTexture: 1
+    includeScaleFromAtlas: 0
+    meshGameObject: {fileID: 0}
+    meshScale: {x: 1, y: 1, z: 1}
+    meshRotation: {x: 0, y: 0, z: 0}
+    meshOffset: {x: 0, y: 0, z: 0}
+    billboardAtOrigin: 0
+    billboardRotationAtTop: 0
+    billboardRotationAtBase: 0
+    billboardRotationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    depth: 0
+    innerPlaneSize: 1
+    resolutionWidth: 1
+    resolutionHeight: 1
+    gravityBendingAtBase: 0
+    gravityBendingAtTop: 0
+    gravityBendingCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    gravityBendingMultiplierAtMiddle: 0
+    sideGravityBendingAtBase: 0
+    sideGravityBendingAtTop: 0
+    sideGravityBendingShape:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - groupId: 7
+    meshingMode: 0
+    shapeMode: 0
+    horizontalAlignAtBase: 0
+    horizontalAlignAtTop: 0
+    horizontalAlignCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    scaleAtBase: 1
+    scaleAtTop: 1
+    scaleCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    isTwoSided: 1
+    branchCollection: {fileID: 0}
+    width: 1.24
+    height: 1
+    pivotX: 0.5
+    pivotY: 0
+    overrideHeightWithTexture: 1
+    includeScaleFromAtlas: 0
+    meshGameObject: {fileID: 0}
+    meshScale: {x: 1, y: 1, z: 1}
+    meshRotation: {x: 0, y: 0, z: 0}
+    meshOffset: {x: 0, y: 0, z: 0}
+    billboardAtOrigin: 0
+    billboardRotationAtTop: 0
+    billboardRotationAtBase: 0
+    billboardRotationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    depth: 0
+    innerPlaneSize: 1
+    resolutionWidth: 1
+    resolutionHeight: 1
+    gravityBendingAtBase: 0
+    gravityBendingAtTop: 0
+    gravityBendingCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    gravityBendingMultiplierAtMiddle: 0
+    sideGravityBendingAtBase: 0
+    sideGravityBendingAtTop: 0
+    sideGravityBendingShape:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - groupId: 8
+    meshingMode: 0
+    shapeMode: 0
+    horizontalAlignAtBase: 0
+    horizontalAlignAtTop: 0
+    horizontalAlignCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    scaleAtBase: 1
+    scaleAtTop: 1
+    scaleCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    isTwoSided: 1
+    branchCollection: {fileID: 0}
+    width: 1.24
+    height: 1
+    pivotX: 0.5
+    pivotY: 0
+    overrideHeightWithTexture: 1
+    includeScaleFromAtlas: 0
+    meshGameObject: {fileID: 0}
+    meshScale: {x: 1, y: 1, z: 1}
+    meshRotation: {x: 0, y: 0, z: 0}
+    meshOffset: {x: 0, y: 0, z: 0}
+    billboardAtOrigin: 0
+    billboardRotationAtTop: 0
+    billboardRotationAtBase: 0
+    billboardRotationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    depth: 0
+    innerPlaneSize: 1
+    resolutionWidth: 1
+    resolutionHeight: 1
+    gravityBendingAtBase: 0
+    gravityBendingAtTop: 0
+    gravityBendingCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    gravityBendingMultiplierAtMiddle: 0
+    sideGravityBendingAtBase: 0
+    sideGravityBendingAtTop: 0
+    sideGravityBendingShape:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  normalMode: 3
+  normalModeStrength: 0.5
+  selectedMeshIndex: 7
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,33 +1536,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _serializedPipeline:
     structureGenerators:
-    - {fileID: 5438197719351968970}
+    - {fileID: 6676948184273340580}
     lSystemElements: []
     lengthTransforms: []
     branchBenders:
-    - {fileID: -4379527867874105656}
+    - {fileID: 8956531467632166507}
     girthTransforms:
-    - {fileID: -3531044733483002212}
+    - {fileID: -4828959929643980991}
     sparsingTransforms: []
     branchMeshGenerators:
-    - {fileID: -43354237756162330}
+    - {fileID: 7324410009966291496}
     trunkMeshGenerators:
-    - {fileID: 7794343656059675809}
+    - {fileID: -5713049144371098166}
     barkMappers:
-    - {fileID: 184183080906349381}
+    - {fileID: 2814680439329840663}
     proceduralBarkMappers: []
     sproutMappers:
-    - {fileID: 3330990805882062256}
+    - {fileID: 4449512804369482488}
     sproutGenerators:
-    - {fileID: 3895428885482751494}
+    - {fileID: 6965493618364161625}
     sproutMeshGenerators:
-    - {fileID: 5879347039230575001}
+    - {fileID: -189364585442280327}
     windEffects:
-    - {fileID: -1736246670219470391}
+    - {fileID: -8273824608225970296}
     positioners:
-    - {fileID: -2288441846719692962}
+    - {fileID: -5334481792452055175}
     bakers:
-    - {fileID: 6187527605677198860}
+    - {fileID: -4684982453186106425}
   _sproutGroups:
     _sproutGroups:
     - id: 1
@@ -590,7 +1625,7 @@ MonoBehaviour:
     s1: 0
     s2: 0
     s3: 0
---- !u!114 &184183080906349381
+--- !u!114 &2814680439329840663
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -630,7 +1665,7 @@ MonoBehaviour:
   glossiness: 0
   metallic: 0
   diffusionProfileSettings: {fileID: 0}
---- !u!114 &3330990805882062256
+--- !u!114 &4449512804369482488
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -656,7 +1691,7 @@ MonoBehaviour:
   sinkElementIndex: 0
   srcElementClassType: 9
   sinkElementClassType: 7
-  nodePosition: {x: -11, y: 263.5}
+  nodePosition: {x: -11, y: 268.5}
   sproutMaps:
   - groupId: 1
     mode: 0
@@ -1022,13 +2057,13 @@ MonoBehaviour:
     subsurfaceMap: {fileID: 0}
     sproutAreas:
     - enabled: 1
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-      pivotX: 0.5
+      x: 0.213
+      y: 0.071
+      width: 0.589
+      height: 0.894
+      pivotX: 0.436
       pivotY: 0
-      texture: {fileID: 2800000, guid: 4bf242f9b4e30644085cd3e8c4cbe738, type: 3}
+      texture: {fileID: 2800000, guid: 0226f597c36cb844e9cbae9371cc2b1c, type: 3}
       normalMap: {fileID: 0}
       extraMap: {fileID: 0}
       subsurfaceMap: {fileID: 0}
@@ -1062,13 +2097,13 @@ MonoBehaviour:
     subsurfaceMap: {fileID: 0}
     sproutAreas:
     - enabled: 1
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-      pivotX: 0.5
+      x: 0.213
+      y: 0.071
+      width: 0.589
+      height: 0.894
+      pivotX: 0.436
       pivotY: 0
-      texture: {fileID: 2800000, guid: 4bf242f9b4e30644085cd3e8c4cbe738, type: 3}
+      texture: {fileID: 2800000, guid: 0226f597c36cb844e9cbae9371cc2b1c, type: 3}
       normalMap: {fileID: 0}
       extraMap: {fileID: 0}
       subsurfaceMap: {fileID: 0}
@@ -1102,13 +2137,13 @@ MonoBehaviour:
     subsurfaceMap: {fileID: 0}
     sproutAreas:
     - enabled: 1
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-      pivotX: 0.5
+      x: 0.213
+      y: 0.071
+      width: 0.589
+      height: 0.894
+      pivotX: 0.436
       pivotY: 0
-      texture: {fileID: 2800000, guid: 4bf242f9b4e30644085cd3e8c4cbe738, type: 3}
+      texture: {fileID: 2800000, guid: 0226f597c36cb844e9cbae9371cc2b1c, type: 3}
       normalMap: {fileID: 0}
       extraMap: {fileID: 0}
       subsurfaceMap: {fileID: 0}
@@ -1142,140 +2177,20 @@ MonoBehaviour:
     subsurfaceMap: {fileID: 0}
     sproutAreas:
     - enabled: 1
-      x: 0
-      y: 0
-      width: 1
-      height: 1
-      pivotX: 0.5
+      x: 0.213
+      y: 0.071
+      width: 0.589
+      height: 0.894
+      pivotX: 0.436
       pivotY: 0
-      texture: {fileID: 2800000, guid: 4bf242f9b4e30644085cd3e8c4cbe738, type: 3}
+      texture: {fileID: 2800000, guid: 0226f597c36cb844e9cbae9371cc2b1c, type: 3}
       normalMap: {fileID: 0}
       extraMap: {fileID: 0}
       subsurfaceMap: {fileID: 0}
     vector4UV0Enabled: 0
     selectedAreaIndex: 0
   selectedMapIndex: 7
---- !u!114 &3895428885482751494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 634c9aac0d20b4bcdbf2528edff22f8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
-  seed: 111974678
-  isActive: 1
-  id: 6
-  useKeyName: 0
-  keyName: 
-  srcElementId: 12
-  sinkElementId: 2
-  index: 0
-  srcElementIndex: -1
-  sinkElementIndex: 0
-  srcElementClassType: 13
-  sinkElementClassType: 2
-  nodePosition: {x: -124, y: -442.5}
-  maxFrequency: 20
-  minFrequency: 16
-  distribution: 0
-  distributionSpacingVariance: 0
-  distributionAngleVariance: 0
-  whorledStep: 3
-  distributionCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  minTwirl: 0.751
-  maxTwirl: 0.751
-  minParallelAlignAtTop: 0.3787256
-  maxParallelAlignAtTop: 0.603
-  minParallelAlignAtBase: -0.063
-  maxParallelAlignAtBase: 0.18765962
-  parallelAlignCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  minGravityAlignAtTop: 0.18311083
-  maxGravityAlignAtTop: 0.61846703
-  minGravityAlignAtBase: 0
-  maxGravityAlignAtBase: 0.31662267
-  gravityAlignCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  fromBranchCenter: 0
-  distributionOrigin: 0
-  spreadEnabled: 0
-  spreadRange: 0.75
-  sproutSeeds: []
---- !u!114 &5438197719351968970
+--- !u!114 &6676948184273340580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2305,7 +3220,7 @@ MonoBehaviour:
     noise: 0.5
     noiseScale: 0.5
   flatStructures:
-  - id: 33611
+  - id: 33859
     generatorId: 0
     mainGeneratorId: 0
     parentStructureId: -1
@@ -2319,7 +3234,7 @@ MonoBehaviour:
       s3: -84212375
     positionOffset: {x: 0, y: 0.2857143, z: 0}
     branch:
-      id: 33611
+      id: 33859
       direction: {x: 0, y: 1.0000001, z: -0.000000112625834}
       forward: {x: 0, y: 0, z: 1}
       _position: 1
@@ -2354,7 +3269,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: 8a2b135d-81e2-4166-ab33-eec4f9e81632
+          _guid: 3376dc3e-054a-4433-8620-70afe1c3803c
         - handleStyle: 1
           _position: {x: 0, y: 13, z: -0.0000014641356}
           _handle1: {x: 1.0893334, y: -4.7489524, z: -0.16257407}
@@ -2364,7 +3279,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: 73c5d2f6-c690-4ea0-947a-06e505ee870c
+          _guid: 82272254-514c-408e-a831-6e149ccf7f58
         resolutionAngle: 5
         alwaysIncludeNodeAsPoint: 0
         noiseFactorAtFirstNode: 0.3
@@ -2378,7 +3293,7 @@ MonoBehaviour:
         referenceNormal: {x: 0, y: 0, z: 1}
         referencePoint: {x: 0, y: 0, z: 0}
         fixedNormal: {x: 0, y: 0, z: 1}
-        _guid: 0976906a-a86f-483f-96d9-44870261d536
+        _guid: 24081c85-41e8-4d77-a6d8-23a1d128c353
         simplifyBias: 0
         distanceStep: 0.05
       _levelLengthGrowthFactor: 0.9
@@ -2388,10 +3303,10 @@ MonoBehaviour:
       rollAngle: 0
       helperStructureLevelId: 0
     structureId: -1
-  - id: 33612
+  - id: 33860
     generatorId: 1
     mainGeneratorId: 1
-    parentStructureId: 33611
+    parentStructureId: 33859
     isSharedGenerator: 0
     sproutChildIndex: -1
     isTuned: 0
@@ -2402,7 +3317,7 @@ MonoBehaviour:
       s3: 1075482595
     positionOffset: {x: 0, y: 0, z: 0}
     branch:
-      id: 33612
+      id: 33860
       direction: {x: -0.37760076, y: 0.90573514, z: 0.056353908}
       forward: {x: -0.9890461, y: 0, z: 0.14760745}
       _position: 1
@@ -2437,7 +3352,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: 807bb288-8823-4905-876c-dd66c2dff0e6
+          _guid: cabe6b48-684d-4fa3-88eb-273f82bb2904
         - handleStyle: 1
           _position: {x: -6.26552, y: 15.028841, z: 0.93507904}
           _handle1: {x: 0.8565234, y: -6.0270576, z: -0.66302985}
@@ -2447,7 +3362,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: e7fdc362-891b-4295-b76d-ae46b6f8404b
+          _guid: 5029d0dc-f02d-4783-8dde-77f3c4aca287
         resolutionAngle: 5
         alwaysIncludeNodeAsPoint: 0
         noiseFactorAtFirstNode: 0.32666668
@@ -2461,20 +3376,20 @@ MonoBehaviour:
         referenceNormal: {x: 0, y: 0, z: 1}
         referencePoint: {x: 0, y: 0, z: 0}
         fixedNormal: {x: 0, y: 0, z: 1}
-        _guid: e6be831f-a3b7-4b76-a2fe-aaad09929440
+        _guid: d9ec8f1d-6f22-4590-a8d7-f515fa629505
         simplifyBias: 0
         distanceStep: 0.05
       _levelLengthGrowthFactor: 0.9
-      parentBranchId: 33611
+      parentBranchId: 33859
       isTuned: 0
       isTrunk: 1
       rollAngle: -1.4226475
       helperStructureLevelId: 1
     structureId: -1
-  - id: 33613
+  - id: 33861
     generatorId: 2
     mainGeneratorId: 2
-    parentStructureId: 33612
+    parentStructureId: 33860
     isSharedGenerator: 0
     sproutChildIndex: -1
     isTuned: 0
@@ -2485,7 +3400,7 @@ MonoBehaviour:
       s3: 828616555
     positionOffset: {x: 0, y: 0, z: 0}
     branch:
-      id: 33613
+      id: 33861
       direction: {x: 0.26091623, y: 0.80903685, z: 0.41537827}
       forward: {x: 0.66700834, y: 0.29377213, z: 0.6846883}
       _position: 1
@@ -2520,7 +3435,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: 8ee6ffd9-1f79-4d22-969e-3bf62565f282
+          _guid: bb2902ea-9a20-4594-a295-b1d5c4b225a6
         - handleStyle: 2
           _position: {x: 1.6546372, y: 5.130622, z: 2.63418}
           _handle1: {x: 0, y: -4.875001, z: 0.00000018301698}
@@ -2530,7 +3445,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: a0228b92-fddb-4fe7-9257-4e692f6ec907
+          _guid: 9183ba3a-acc2-480b-ad15-56a50c4ca086
         resolutionAngle: 5
         alwaysIncludeNodeAsPoint: 0
         noiseFactorAtFirstNode: 0.35333332
@@ -2544,20 +3459,20 @@ MonoBehaviour:
         referenceNormal: {x: 0, y: 0, z: 1}
         referencePoint: {x: 0, y: 0, z: 0}
         fixedNormal: {x: 0, y: 0, z: 1}
-        _guid: a5536bfe-9a57-478a-a7e5-85d0dcf98bee
+        _guid: fd9cbaa0-1715-4e23-a1a2-65557ea0c21c
         simplifyBias: 0
         distanceStep: 0.05
       _levelLengthGrowthFactor: 0.9
-      parentBranchId: 33612
+      parentBranchId: 33860
       isTuned: 0
       isTrunk: 1
       rollAngle: 21.103415
       helperStructureLevelId: 2
     structureId: -1
-  - id: 33614
+  - id: 33862
     generatorId: 2
     mainGeneratorId: 2
-    parentStructureId: 33612
+    parentStructureId: 33860
     isSharedGenerator: 0
     sproutChildIndex: -1
     isTuned: 0
@@ -2568,7 +3483,7 @@ MonoBehaviour:
       s3: 828616555
     positionOffset: {x: 0, y: 0, z: 0}
     branch:
-      id: 33614
+      id: 33862
       direction: {x: -0.27479923, y: 0.65575767, z: -0.5443102}
       forward: {x: -0.2759153, y: -0.06909039, z: -0.95869553}
       _position: 0.8333334
@@ -2603,7 +3518,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: 9c9165f4-04d4-45a7-bde6-49a60825fda3
+          _guid: 7878fe48-ae5b-461c-8576-d23a783dbe53
         - handleStyle: 2
           _position: {x: -1.8924797, y: 4.5160537, z: -3.7485404}
           _handle1: {x: 0.19417237, y: -1.3900697, z: 0.3846081}
@@ -2613,7 +3528,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: e26a14f7-19ef-41fd-8c05-dd117e6c233d
+          _guid: a69086a5-c3bf-47c4-a3ec-59e3155a765d
         resolutionAngle: 5
         alwaysIncludeNodeAsPoint: 0
         noiseFactorAtFirstNode: 0.3488889
@@ -2627,20 +3542,20 @@ MonoBehaviour:
         referenceNormal: {x: 0, y: 0, z: 1}
         referencePoint: {x: 0, y: 0, z: 0}
         fixedNormal: {x: 0, y: 0, z: 1}
-        _guid: 33aca12d-caaa-4bcb-a187-3166d7f70952
+        _guid: 97539931-6da2-4298-bd5c-462a5c9a44e8
         simplifyBias: 0
         distanceStep: 0.05
       _levelLengthGrowthFactor: 0.9
-      parentBranchId: 33612
+      parentBranchId: 33860
       isTuned: 0
       isTrunk: 0
       rollAngle: 17.427752
       helperStructureLevelId: 2
     structureId: -1
-  - id: 33615
+  - id: 33863
     generatorId: 2
     mainGeneratorId: 2
-    parentStructureId: 33612
+    parentStructureId: 33860
     isSharedGenerator: 0
     sproutChildIndex: -1
     isTuned: 0
@@ -2651,7 +3566,7 @@ MonoBehaviour:
       s3: 828616555
     positionOffset: {x: 0, y: 0, z: 0}
     branch:
-      id: 33615
+      id: 33863
       direction: {x: -0.2231521, y: 0.58738697, z: 0.6089828}
       forward: {x: -0.1920252, y: -0.1748344, z: 0.9656911}
       _position: 0.6666667
@@ -2686,7 +3601,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: 2e03bea4-fd98-45f6-ba7d-34478cfe2ee1
+          _guid: 6a23d30a-e0d8-4290-b259-0fe6c229f65a
         - handleStyle: 2
           _position: {x: -1.6151378, y: 4.251409, z: 4.4077163}
           _handle1: {x: 0.1472184, y: -1.1625369, z: -0.4017595}
@@ -2696,7 +3611,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: fe6bf8d3-e785-4386-b70c-d170e273d3f5
+          _guid: b4c0f5e0-a60d-4a4c-9df3-97bedf6263a8
         resolutionAngle: 5
         alwaysIncludeNodeAsPoint: 0
         noiseFactorAtFirstNode: 0.34444445
@@ -2710,20 +3625,20 @@ MonoBehaviour:
         referenceNormal: {x: 0, y: 0, z: 1}
         referencePoint: {x: 0, y: 0, z: 0}
         fixedNormal: {x: 0, y: 0, z: 1}
-        _guid: 0d135669-fe50-4de7-9993-252d32447761
+        _guid: 2cdf35e1-c879-4f9a-8fed-f2c4ecb85a76
         simplifyBias: 0
         distanceStep: 0.05
       _levelLengthGrowthFactor: 0.9
-      parentBranchId: 33612
+      parentBranchId: 33860
       isTuned: 0
       isTrunk: 0
       rollAngle: 13.752087
       helperStructureLevelId: 2
     structureId: -1
-  - id: 33616
+  - id: 33864
     generatorId: 2
     mainGeneratorId: 2
-    parentStructureId: 33612
+    parentStructureId: 33860
     isSharedGenerator: 0
     sproutChildIndex: -1
     isTuned: 0
@@ -2734,7 +3649,7 @@ MonoBehaviour:
       s3: 828616555
     positionOffset: {x: 0, y: 0, z: 0}
     branch:
-      id: 33616
+      id: 33864
       direction: {x: 0.29419395, y: 0.7681319, z: -0.4387412}
       forward: {x: 0.60648274, y: 0.37006468, z: -0.70372623}
       _position: 0.5
@@ -2769,7 +3684,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: adbbbb65-a0d1-4bfc-b07d-4b3f304c09c4
+          _guid: 54b9084c-d701-4a93-af2b-16a650143c9b
         - handleStyle: 2
           _position: {x: 2.0512547, y: 5.355767, z: -3.0591042}
           _handle1: {x: -0.17927444, y: -1.4042412, z: 0.26735792}
@@ -2779,7 +3694,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: f86e16e1-21b9-453d-9f82-5a45b1abbfdc
+          _guid: 8d587c0c-48c0-4a16-9127-964040d3c4b8
         resolutionAngle: 5
         alwaysIncludeNodeAsPoint: 0
         noiseFactorAtFirstNode: 0.34
@@ -2793,20 +3708,20 @@ MonoBehaviour:
         referenceNormal: {x: 0, y: 0, z: 1}
         referencePoint: {x: 0, y: 0, z: 0}
         fixedNormal: {x: 0, y: 0, z: 1}
-        _guid: 29a10ed0-65bd-4dba-9eb9-25b47b0a60ab
+        _guid: 7cbb2725-dacd-4a35-bc1f-39473d543e2d
         simplifyBias: 0
         distanceStep: 0.05
       _levelLengthGrowthFactor: 0.9
-      parentBranchId: 33612
+      parentBranchId: 33860
       isTuned: 0
       isTrunk: 0
       rollAngle: 10.076424
       helperStructureLevelId: 2
     structureId: -1
-  - id: 33617
+  - id: 33865
     generatorId: 2
     mainGeneratorId: 2
-    parentStructureId: 33612
+    parentStructureId: 33860
     isSharedGenerator: 0
     sproutChildIndex: -1
     isTuned: 0
@@ -2817,7 +3732,7 @@ MonoBehaviour:
       s3: 828616555
     positionOffset: {x: 0, y: 0, z: 0}
     branch:
-      id: 33617
+      id: 33865
       direction: {x: -0.68842626, y: 0.4095351, z: 0.18601127}
       forward: {x: -0.8520258, y: -0.46222615, z: 0.24576186}
       _position: 0.33333334
@@ -2852,7 +3767,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: b04c1dd6-079c-4730-ace4-5eeed0c213ec
+          _guid: c26ef044-af90-4ac8-b3f0-b4adbc14152d
         - handleStyle: 2
           _position: {x: -5.5810065, y: 3.3200624, z: 1.5079757}
           _handle1: {x: 0.382459, y: -0.6825585, z: -0.10333958}
@@ -2862,7 +3777,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: 4d973335-6e27-43c9-b5d8-ccc4dd30a4a3
+          _guid: c7f95994-7be8-43b1-b2de-b26e69ddbf28
         resolutionAngle: 5
         alwaysIncludeNodeAsPoint: 0
         noiseFactorAtFirstNode: 0.33555555
@@ -2876,20 +3791,20 @@ MonoBehaviour:
         referenceNormal: {x: 0, y: 0, z: 1}
         referencePoint: {x: 0, y: 0, z: 0}
         fixedNormal: {x: 0, y: 0, z: 1}
-        _guid: 7b795c10-7244-4ed8-a1fa-991186f1c0c8
+        _guid: 4ef3e244-c7b3-4636-8707-15b3885ab9fe
         simplifyBias: 0
         distanceStep: 0.05
       _levelLengthGrowthFactor: 0.9
-      parentBranchId: 33612
+      parentBranchId: 33860
       isTuned: 0
       isTrunk: 0
       rollAngle: 6.40076
       helperStructureLevelId: 2
     structureId: -1
-  - id: 33618
+  - id: 33866
     generatorId: 2
     mainGeneratorId: 2
-    parentStructureId: 33612
+    parentStructureId: 33860
     isSharedGenerator: 0
     sproutChildIndex: -1
     isTuned: 0
@@ -2900,7 +3815,7 @@ MonoBehaviour:
       s3: 828616555
     positionOffset: {x: 0, y: 0, z: 0}
     branch:
-      id: 33618
+      id: 33866
       direction: {x: 0.52199763, y: 0.73539555, z: 0.20591818}
       forward: {x: 0.8602656, y: 0.42565018, z: 0.28065148}
       _position: 0.16666667
@@ -2935,7 +3850,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: 0e21643a-b362-41cb-b621-ce97a37f4249
+          _guid: 5088ff0f-07f4-4c09-afdc-6bee1ce04b51
         - handleStyle: 2
           _position: {x: 3.8560512, y: 5.4324446, z: 1.5211393}
           _handle1: {x: -0.26009256, y: -1.0992632, z: -0.102601595}
@@ -2945,7 +3860,7 @@ MonoBehaviour:
           roll: 0
           scale: {x: 0, y: 1}
           direction: {x: 0, y: 0, z: 1}
-          _guid: 6435e425-dd21-4385-8fad-315bd3752cc2
+          _guid: c2a2380a-ece1-41a3-bb1d-2c975a7fc612
         resolutionAngle: 5
         alwaysIncludeNodeAsPoint: 0
         noiseFactorAtFirstNode: 0.3311111
@@ -2959,11 +3874,11 @@ MonoBehaviour:
         referenceNormal: {x: 0, y: 0, z: 1}
         referencePoint: {x: 0, y: 0, z: 0}
         fixedNormal: {x: 0, y: 0, z: 1}
-        _guid: 041a4c04-1339-4d61-8b19-fc0dbbf4eefb
+        _guid: 0f99b597-fbfe-4f42-8c1b-4efdb27435f7
         simplifyBias: 0
         distanceStep: 0.05
       _levelLengthGrowthFactor: 0.9
-      parentBranchId: 33612
+      parentBranchId: 33860
       isTuned: 0
       isTrunk: 0
       rollAngle: 2.7250965
@@ -3170,7 +4085,7 @@ MonoBehaviour:
     overrideNoise: 0
     noise: 0.5
     noiseScale: 0.5
---- !u!114 &5879347039230575001
+--- !u!114 &6965493618364161625
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3179,1319 +4094,319 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55d61721113ae4bdd9477f4f20384c27, type: 3}
+  m_Script: {fileID: 11500000, guid: 634c9aac0d20b4bcdbf2528edff22f8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSeedFixed: 0
+  fixedSeed: 0
+  seed: 111974678
+  isActive: 1
+  id: 6
+  useKeyName: 0
+  keyName: 
+  srcElementId: 12
+  sinkElementId: 2
+  index: 0
+  srcElementIndex: -1
+  sinkElementIndex: 0
+  srcElementClassType: 13
+  sinkElementClassType: 2
+  nodePosition: {x: -124, y: -442.5}
+  maxFrequency: 20
+  minFrequency: 16
+  distribution: 0
+  distributionSpacingVariance: 0
+  distributionAngleVariance: 0
+  whorledStep: 3
+  distributionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minTwirl: 0.751
+  maxTwirl: 0.751
+  minParallelAlignAtTop: 0.3787256
+  maxParallelAlignAtTop: 0.603
+  minParallelAlignAtBase: -0.063
+  maxParallelAlignAtBase: 0.18765962
+  parallelAlignCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minGravityAlignAtTop: 0.18311083
+  maxGravityAlignAtTop: 0.61846703
+  minGravityAlignAtBase: 0
+  maxGravityAlignAtBase: 0.31662267
+  gravityAlignCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fromBranchCenter: 0
+  distributionOrigin: 0
+  spreadEnabled: 0
+  spreadRange: 0.75
+  sproutSeeds: []
+--- !u!114 &7324410009966291496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71b3b56710c5470795bb8565a348b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSeedFixed: 0
+  fixedSeed: 0
+  seed: 0
+  isActive: 1
+  id: 1
+  useKeyName: 0
+  keyName: 
+  srcElementId: 3
+  sinkElementId: 0
+  index: 0
+  srcElementIndex: 0
+  sinkElementIndex: 0
+  srcElementClassType: 8
+  sinkElementClassType: 14
+  nodePosition: {x: -24, y: -138.5}
+  useAverageNormals: 1
+  useBranchWelding: 0
+  useBranchWeldingMeshCap: 0
+  minBranchWeldingHierarchyRange: 0.3
+  maxBranchWeldingHierarchyRange: 0.4
+  branchWeldingHierarchyRangeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: -1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  branchWeldingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: -1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minBranchWeldingDistance: 1.3
+  maxBranchWeldingDistance: 1.3
+  minAdditionalBranchWeldingSegments: 2
+  maxAdditionalBranchWeldingSegments: 3
+  minBranchWeldingUpperSpread: 1
+  maxBranchWeldingUpperSpread: 1
+  minBranchWeldingLowerSpread: 1.3
+  maxBranchWeldingLowerSpread: 1.3
+  useRootWelding: 0
+  useRootWeldingMeshCap: 0
+  minRootWeldingHierarchyRange: 0.3
+  maxRootWeldingHierarchyRange: 0.4
+  rootWeldingHierarchyRangeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: -1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  rootWeldingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: -1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minRootWeldingDistance: 1.3
+  maxRootWeldingDistance: 1.3
+  minAdditionalRootWeldingSegments: 2
+  maxAdditionalRootWeldingSegments: 3
+  minRootWeldingUpperSpread: 1.3
+  maxRootWeldingUpperSpread: 1.3
+  minRootWeldingLowerSpread: 1
+  maxRootWeldingLowerSpread: 1
+  shapeCollection: {fileID: 0}
+  meshMode: 0
+  meshContext: 0
+  meshRange: 0
+  nodesMode: 0
+  minNodes: 2
+  maxNodes: 3
+  minNodeLength: 0.2
+  maxNodeLength: 0.5
+  nodeLengthVariance: 0
+  nodesDistribution: 0
+  shapeScale: 1
+  branchHierarchyScaleAdherence: 1
+  selectedShapeId: 
+--- !u!114 &8956531467632166507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac74e6fb3f1f04991839eaf6b28d74aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isSeedFixed: 0
   fixedSeed: 0
   seed: 1
   isActive: 1
-  id: 7
+  id: 3
   useKeyName: 0
   keyName: 
-  srcElementId: 0
-  sinkElementId: 5
+  srcElementId: 2
+  sinkElementId: 1
   index: 0
   srcElementIndex: 0
   sinkElementIndex: 0
-  srcElementClassType: 14
-  sinkElementClassType: 9
-  nodePosition: {x: -22.5, y: 77.5}
-  sproutMeshes:
-  - groupId: 1
-    meshingMode: 0
-    shapeMode: 1
-    horizontalAlignAtBase: 0
-    horizontalAlignAtTop: 0
-    horizontalAlignCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    scaleAtBase: 1
-    scaleAtTop: 1
-    scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    isTwoSided: 1
-    branchCollection: {fileID: 0}
-    width: 3.7
-    height: 2
-    pivotX: 0.5
-    pivotY: 0
-    overrideHeightWithTexture: 1
-    includeScaleFromAtlas: 0
-    meshGameObject: {fileID: 1700287767245516, guid: da0474804a8aa41c8af23ddf72f3e092, type: 2}
-    meshScale: {x: 1, y: 1, z: 1}
-    meshRotation: {x: 0, y: 0, z: 0}
-    meshOffset: {x: 0, y: 0, z: 0}
-    billboardAtOrigin: 0
-    billboardRotationAtTop: 0
-    billboardRotationAtBase: 0
-    billboardRotationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    depth: -0.4
-    innerPlaneSize: 1
-    resolutionWidth: 1
-    resolutionHeight: 1
-    gravityBendingAtBase: 0
-    gravityBendingAtTop: 0
-    gravityBendingCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    gravityBendingMultiplierAtMiddle: 0
-    sideGravityBendingAtBase: 0
-    sideGravityBendingAtTop: 0
-    sideGravityBendingShape:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  - groupId: 2
-    meshingMode: 0
-    shapeMode: 1
-    horizontalAlignAtBase: 0
-    horizontalAlignAtTop: 0
-    horizontalAlignCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    scaleAtBase: 1
-    scaleAtTop: 1
-    scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    isTwoSided: 1
-    branchCollection: {fileID: 0}
-    width: 3.7
-    height: 1
-    pivotX: 0.5
-    pivotY: 0
-    overrideHeightWithTexture: 1
-    includeScaleFromAtlas: 0
-    meshGameObject: {fileID: 0}
-    meshScale: {x: 1, y: 1, z: 1}
-    meshRotation: {x: 0, y: 0, z: 0}
-    meshOffset: {x: 0, y: 0, z: 0}
-    billboardAtOrigin: 0
-    billboardRotationAtTop: 0
-    billboardRotationAtBase: 0
-    billboardRotationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    depth: 0
-    innerPlaneSize: 1
-    resolutionWidth: 1
-    resolutionHeight: 1
-    gravityBendingAtBase: 0
-    gravityBendingAtTop: 0
-    gravityBendingCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    gravityBendingMultiplierAtMiddle: 0
-    sideGravityBendingAtBase: 0
-    sideGravityBendingAtTop: 0
-    sideGravityBendingShape:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  - groupId: 3
-    meshingMode: 0
-    shapeMode: 1
-    horizontalAlignAtBase: 0
-    horizontalAlignAtTop: 0
-    horizontalAlignCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    scaleAtBase: 1
-    scaleAtTop: 1
-    scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    isTwoSided: 1
-    branchCollection: {fileID: 0}
-    width: 3.7
-    height: 1
-    pivotX: 0.5
-    pivotY: 0
-    overrideHeightWithTexture: 1
-    includeScaleFromAtlas: 0
-    meshGameObject: {fileID: 0}
-    meshScale: {x: 1, y: 1, z: 1}
-    meshRotation: {x: 0, y: 0, z: 0}
-    meshOffset: {x: 0, y: 0, z: 0}
-    billboardAtOrigin: 0
-    billboardRotationAtTop: 0
-    billboardRotationAtBase: 0
-    billboardRotationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    depth: 0
-    innerPlaneSize: 1
-    resolutionWidth: 1
-    resolutionHeight: 1
-    gravityBendingAtBase: 0
-    gravityBendingAtTop: 0
-    gravityBendingCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    gravityBendingMultiplierAtMiddle: 0
-    sideGravityBendingAtBase: 0
-    sideGravityBendingAtTop: 0
-    sideGravityBendingShape:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  - groupId: 4
-    meshingMode: 0
-    shapeMode: 1
-    horizontalAlignAtBase: 0
-    horizontalAlignAtTop: 0
-    horizontalAlignCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    scaleAtBase: 1
-    scaleAtTop: 1
-    scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    isTwoSided: 1
-    branchCollection: {fileID: 0}
-    width: 3.7
-    height: 1
-    pivotX: 0.5
-    pivotY: 0
-    overrideHeightWithTexture: 1
-    includeScaleFromAtlas: 0
-    meshGameObject: {fileID: 0}
-    meshScale: {x: 1, y: 1, z: 1}
-    meshRotation: {x: 0, y: 0, z: 0}
-    meshOffset: {x: 0, y: 0, z: 0}
-    billboardAtOrigin: 0
-    billboardRotationAtTop: 0
-    billboardRotationAtBase: 0
-    billboardRotationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    depth: 0
-    innerPlaneSize: 1
-    resolutionWidth: 1
-    resolutionHeight: 1
-    gravityBendingAtBase: 0
-    gravityBendingAtTop: 0
-    gravityBendingCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    gravityBendingMultiplierAtMiddle: 0
-    sideGravityBendingAtBase: 0
-    sideGravityBendingAtTop: 0
-    sideGravityBendingShape:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  - groupId: 5
-    meshingMode: 0
-    shapeMode: 1
-    horizontalAlignAtBase: 0
-    horizontalAlignAtTop: 0
-    horizontalAlignCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    scaleAtBase: 1
-    scaleAtTop: 1
-    scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    isTwoSided: 1
-    branchCollection: {fileID: 0}
-    width: 3.7
-    height: 1
-    pivotX: 0.5
-    pivotY: 0
-    overrideHeightWithTexture: 1
-    includeScaleFromAtlas: 0
-    meshGameObject: {fileID: 0}
-    meshScale: {x: 1, y: 1, z: 1}
-    meshRotation: {x: 0, y: 0, z: 0}
-    meshOffset: {x: 0, y: 0, z: 0}
-    billboardAtOrigin: 0
-    billboardRotationAtTop: 0
-    billboardRotationAtBase: 0
-    billboardRotationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    depth: 0
-    innerPlaneSize: 1
-    resolutionWidth: 1
-    resolutionHeight: 1
-    gravityBendingAtBase: 0
-    gravityBendingAtTop: 0
-    gravityBendingCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    gravityBendingMultiplierAtMiddle: 0
-    sideGravityBendingAtBase: 0
-    sideGravityBendingAtTop: 0
-    sideGravityBendingShape:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  - groupId: 6
-    meshingMode: 0
-    shapeMode: 1
-    horizontalAlignAtBase: 0
-    horizontalAlignAtTop: 0
-    horizontalAlignCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    scaleAtBase: 1
-    scaleAtTop: 1
-    scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    isTwoSided: 1
-    branchCollection: {fileID: 0}
-    width: 3.7
-    height: 1
-    pivotX: 0.5
-    pivotY: 0
-    overrideHeightWithTexture: 1
-    includeScaleFromAtlas: 0
-    meshGameObject: {fileID: 0}
-    meshScale: {x: 1, y: 1, z: 1}
-    meshRotation: {x: 0, y: 0, z: 0}
-    meshOffset: {x: 0, y: 0, z: 0}
-    billboardAtOrigin: 0
-    billboardRotationAtTop: 0
-    billboardRotationAtBase: 0
-    billboardRotationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    depth: 0
-    innerPlaneSize: 1
-    resolutionWidth: 1
-    resolutionHeight: 1
-    gravityBendingAtBase: 0
-    gravityBendingAtTop: 0
-    gravityBendingCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    gravityBendingMultiplierAtMiddle: 0
-    sideGravityBendingAtBase: 0
-    sideGravityBendingAtTop: 0
-    sideGravityBendingShape:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  - groupId: 7
-    meshingMode: 0
-    shapeMode: 1
-    horizontalAlignAtBase: 0
-    horizontalAlignAtTop: 0
-    horizontalAlignCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    scaleAtBase: 1
-    scaleAtTop: 1
-    scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    isTwoSided: 1
-    branchCollection: {fileID: 0}
-    width: 3.7
-    height: 1
-    pivotX: 0.5
-    pivotY: 0
-    overrideHeightWithTexture: 1
-    includeScaleFromAtlas: 0
-    meshGameObject: {fileID: 0}
-    meshScale: {x: 1, y: 1, z: 1}
-    meshRotation: {x: 0, y: 0, z: 0}
-    meshOffset: {x: 0, y: 0, z: 0}
-    billboardAtOrigin: 0
-    billboardRotationAtTop: 0
-    billboardRotationAtBase: 0
-    billboardRotationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    depth: 0
-    innerPlaneSize: 1
-    resolutionWidth: 1
-    resolutionHeight: 1
-    gravityBendingAtBase: 0
-    gravityBendingAtTop: 0
-    gravityBendingCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    gravityBendingMultiplierAtMiddle: 0
-    sideGravityBendingAtBase: 0
-    sideGravityBendingAtTop: 0
-    sideGravityBendingShape:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  - groupId: 8
-    meshingMode: 0
-    shapeMode: 1
-    horizontalAlignAtBase: 0
-    horizontalAlignAtTop: 0
-    horizontalAlignCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    scaleAtBase: 1
-    scaleAtTop: 1
-    scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    isTwoSided: 1
-    branchCollection: {fileID: 0}
-    width: 3.7
-    height: 1
-    pivotX: 0.5
-    pivotY: 0
-    overrideHeightWithTexture: 1
-    includeScaleFromAtlas: 0
-    meshGameObject: {fileID: 0}
-    meshScale: {x: 1, y: 1, z: 1}
-    meshRotation: {x: 0, y: 0, z: 0}
-    meshOffset: {x: 0, y: 0, z: 0}
-    billboardAtOrigin: 0
-    billboardRotationAtTop: 0
-    billboardRotationAtBase: 0
-    billboardRotationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    depth: 0
-    innerPlaneSize: 1
-    resolutionWidth: 1
-    resolutionHeight: 1
-    gravityBendingAtBase: 0
-    gravityBendingAtTop: 0
-    gravityBendingCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    gravityBendingMultiplierAtMiddle: 0
-    sideGravityBendingAtBase: 0
-    sideGravityBendingAtTop: 0
-    sideGravityBendingShape:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  normalMode: 3
-  normalModeStrength: 0.5
-  selectedMeshIndex: 1
---- !u!114 &6187527605677198860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63a09d95354abd364ad824fa1c792b70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
-  seed: 0
-  isActive: 1
-  id: 4
-  useKeyName: 0
-  keyName: 
-  srcElementId: 8
-  sinkElementId: -1
-  index: 0
-  srcElementIndex: 0
-  sinkElementIndex: -1
-  srcElementClassType: 4
-  sinkElementClassType: 0
-  nodePosition: {x: 51.5, y: 572}
-  enableAO: 0
-  enableAOInPreview: 0
-  enableAOAtRuntime: 0
-  samplesAO: 4
-  strengthAO: 0.5
-  useCustomPositions: 0
-  positions: []
-  selectedPositionIndex: -1
-  addCollisionObjectAtTrunk: 0
-  lodFade: 1
-  lodFadeAnimate: 0
-  lodTransitionWidth: 0.4
---- !u!114 &7794343656059675809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4769aef02bd642eeb50b021b91d49ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSeedFixed: 0
-  fixedSeed: 0
-  seed: 0
-  isActive: 1
-  id: 0
-  useKeyName: 0
-  keyName: 
-  srcElementId: 1
-  sinkElementId: 7
-  index: 0
-  srcElementIndex: 0
-  sinkElementIndex: 0
-  srcElementClassType: 3
-  sinkElementClassType: 11
-  nodePosition: {x: -151.5, y: -25.5}
-  rootMode: 1
-  minSpread: 0.24472731
-  maxSpread: 0.44472724
-  minDisplacementPoints: 5
-  maxDisplacementPoints: 6
-  minDisplacementAngleVariance: 0.1
-  maxDisplacementAngleVariance: 0.2638761
-  minDisplacementTwirl: 0.07768875
-  maxDisplacementTwirl: 0.21364406
-  minDisplacementScaleAtBase: 1.0997856
-  maxDisplacementScaleAtBase: 1.2827355
-  scaleCurve:
+  srcElementClassType: 2
+  sinkElementClassType: 3
+  nodePosition: {x: -121, y: -241.5}
+  applyJointSmoothing: 1
+  applyDirectionalBending: 1
+  applyNoise: 1
+  smoothJointStrength: 0.75
+  forceAtTips: 0.3
+  forceAtTrunk: 0
+  direction: {x: 0, y: -1, z: 0}
+  hierarchyDistributionCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4501,8 +4416,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -4510,6 +4425,91 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  strength: 0.3
-  radialResolutionFactor: 1
-  lengthResolutionFactor: 1
+  horizontalAlignAtBase: 0.5
+  horizontalAlignStrength: 0.5
+  horizontalAlignHierarchyDistributionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  verticalAlignAtTop: 0.5
+  verticalAlignStrength: 0.5
+  verticalAlignHierarchyDistributionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  noiseAtTop: 0.38
+  noiseAtBase: 0.3
+  noiseScaleAtTop: 0.7
+  noiseScaleAtBase: 0.4
+  smoothRootJointStrength: 0.75
+  forceAtRootTips: 0.5
+  forceAtRootTrunk: 0
+  rootDirection: {x: 0, y: -1, z: 0}
+  rootHierarchyDistributionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  noiseAtRootBase: 0.2
+  noiseAtRootBottom: 0.5
+  noiseScaleAtRootBase: 0.2
+  noiseScaleAtRootBottom: 0.5
