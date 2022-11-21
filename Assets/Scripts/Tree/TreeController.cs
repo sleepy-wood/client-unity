@@ -13,12 +13,31 @@ using UnityEngine.EventSystems;
 using System;
 using UnityEngine.Networking;
 
+
+
 public class TreeController : MonoBehaviour
 {
     #region Variable
-    [Header("Tree Base Data")]
+
+    [Header("Mode")]
+    // Play Mode - Good Grow
+    public bool playMode;
+    // Play Mode - Bad Grow
+    public bool badMode;
+    // Demo Mode
+    public bool demoMode;
+
+    [Space]
+
+    [Header("Tree")]
+    // 나무 이름
+    public string treeName;
+    // 현재 나무의 id
+    public int treeId;
     // Load할 Pipeline 이름
     public string pipeName;
+    // 랜덤으로 선택된 SeedType
+    public SeedType selectedSeed = SeedType.None;
     // Tree Bark Material Name
     public string barkMaterial;
     // Sprout Group Id
@@ -27,19 +46,14 @@ public class TreeController : MonoBehaviour
     public int rarityScore;
     // 생명력 점수
     public int vitalityScore;
+    
+    [Space]
 
-    #region 방문 타입
-    public enum VisitType
-    {
-        None,
-        First,
-        ReVisit
-    }
-    public VisitType visitType;
-    #endregion
-
-    // 랜덤으로 선택된 SeedType
-    public SeedType selectedSeed = SeedType.None;
+    [Header("Tree Grow")]
+    // tree Factory
+    public TreeFactory treeFactory = null;
+    // The pipeline
+    public Pipeline treePipeline;
     // pipeNameList
     List<string> pipeNameList = new List<string>() { "BasicTree", "OakTree", "SakuraTree", "DRTree", "DemoTree_Red" };
     // pipeName별 SeedType
@@ -92,58 +106,61 @@ public class TreeController : MonoBehaviour
     public List<TreeStore> treeStores = new List<TreeStore>();
     #endregion
 
-    // tree Factory
-    public TreeFactory treeFactory = null;
-    // The pipeline
-    public Pipeline treePipeline;
-    // 나무 자라는 위치
-    public Transform growPos;
+    [Space]
+
+    [Header("User")]
+    public GameObject user;
+    public VisitType visitType;
+    public enum VisitType
+    {
+        None,
+        First,
+        ReVisit
+    }
+
+    [Space]
+
+    [Header("Time")]
     // DayCount
     public int dayCount;
-    // 씨앗 하강 속도
-    public float downSpeed = 0.5f;
-    // Daycount Text
-    public Text txtDayCount;
+
+    [Space]
+
+    [Header("Land Objects")]
+    // 나무 자라는 위치
+    public Transform growPos;
     // sprout
     public GameObject sprout;
     // sprout Leaf
     public GameObject sproutLeaf;
-    //public GameObject sproutFactory;
     // seed
     public GameObject seed;
-    //public GameObject seedFactory;
     // soil
     public GameObject soil;
-    // FOV
-    //public float defaultFOV = 10.29f;
-    //public float targetFOV = 3.11f;
-    // user
-    public GameObject user;
     // previewTree Scale Value
     public float scaleTo = 1;
-    // AssetBundle
-    AssetBundle assetBundle;
-    // 나무 이름 입력 UI
-    public GameObject treeNameUI;
-    // 나무 이름
-    public string treeName;
-    // 현재 나무의 id
-    public int treeId;
-    // Play Mode - Good Grow
-    public bool playMode;
-    // Play Mode - Bad Grow
-    public bool badMode;
-    // Demo Mode
-    public bool demoMode;
-    // User의 HealthData
-    HealthReport report;
+
+    [Space]
+
+    [Header("Data")]
     // 로드해야하는 나무의 데이터
     public GetTreeData currentTreeData;
+    // AssetBundle
+    AssetBundle assetBundle;
+    // User의 HealthData
+    HealthReport report;
+    // Bark Texture AssetBundle
+    AssetBundle barkAssetBundle;
+
+
+    [Space]
+
+    [Header("UI")]
+    // 나무 이름 입력 UI
+    public GameObject treeNameUI;
     // SkyLand Main Text
     public Text txtMain;
     public Text txtSub;
-    // Bark Texture AssetBundle
-    AssetBundle barkAssetBundle;
     // My Collection Text
     public Text txtTreeName;
     public Text txtTreeBirth;
@@ -154,10 +171,12 @@ public class TreeController : MonoBehaviour
 
     private void Start()
     {
-        //treeFactory.gameObject.SetActive(false);
+        treeFactory.gameObject.SetActive(false);
         assetBundle = DataTemporary.assetBundleTreePipeline;
         barkAssetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/barktexturebundle");
 
+
+        // 방문 타입에 따라 다른 시나리오 구현
         if (visitType == VisitType.First)
         {
             // Mode에 따른 Pipeline 선택
@@ -174,12 +193,10 @@ public class TreeController : MonoBehaviour
             }
             else
             {
-                // Shape 랜덤 선택
+                // Pipeline 랜덤 선택 ( Tree Shape )
                 int i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo Tree 빼고 랜덤 선택
                 pipeName = pipeNameList[i];
-                print("1" + pipeName);
                 selectedSeed = pipeNameDict[pipeName];
-                print("2" + selectedSeed);
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 
 
@@ -189,7 +206,6 @@ public class TreeController : MonoBehaviour
                 SproutSeed sproutSeed = new SproutSeed();
                 treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
                 treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = sproutGroupId;
-                print("3" + sproutGroupId);
 
                 // 2. 해당 Group 안의 Textures Area Enabled 개수 확률적으로 enabled=true 시켜주기 (50%-1개, 20%-2개, 15%-3개, 10%-4개, 5%-5개)
                 int n = UnityEngine.Random.Range(0, 100);
@@ -201,40 +217,41 @@ public class TreeController : MonoBehaviour
                 }
                 else if (n >= 50 && n < 70)
                 {
+                    rarityScore += 20;
                     for (int j = 0; j < 2; j++)
                     {
                         int random = UnityEngine.Random.Range(0, 5);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
-                        rarityScore += 20;
                     }
                 }
                 else if (n >= 70 && n < 85)
                 {
+                    rarityScore += 30;
                     for (int j = 0; j < 3; j++)
                     {
                         int random = UnityEngine.Random.Range(0, 5);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
-                        rarityScore += 30;
                     }
                 }
                 else if (n >= 85 && n < 95)
                 {
+                    rarityScore += 40;
                     for (int j = 0; j < 4; j++)
                     {
                         int random = UnityEngine.Random.Range(0, 5);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
-                        rarityScore += 40;
                     }
                 }
                 else
                 {
+                    rarityScore += 50;
                     for (int j = 0; j < 5; j++)
                     {
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[j].enabled = true;
-                        rarityScore += 50;
                     }
                 }
-                Debug.Log("4");
+
+
                 // Bark Material 확률적 랜덤 선택
 #if UNITY_STANDALONE
                 string path = Application.dataPath + "/Resources/Tree/Materials";
@@ -262,9 +279,9 @@ public class TreeController : MonoBehaviour
                     rarityScore += 50;
                 }
             }
-            print("Selected pipe = " + pipeName);
+            print("Selected pipeline = " + pipeName);
 
-            // Tree Grow 기본 세팅
+            // Tree Grow 1일차 기본 세팅
             if (!demoMode)
             {
                 // 랜덤 선택된 Seed로 기본 세팅값 찾기
@@ -278,7 +295,8 @@ public class TreeController : MonoBehaviour
                 }
                 // 1일차 기본 세팅
                 PipelineSetting(0);
-                SetTree(1);
+                // 씨앗심기
+                SetTree();
             }
         }
         else if (visitType == VisitType.ReVisit)
@@ -365,7 +383,6 @@ public class TreeController : MonoBehaviour
         ScaleChange(activeEnergyBurnedGoalAchieved);
         float exerciseTimeGoalAchieved = (float)report.ActivityReport.ExerciseTimeGoalAchieved;
         float standHoursGoalAchieved = (float)report.ActivityReport.StandHoursGoalAchieved;
-
     }
 
     /// <summary>
@@ -534,29 +551,7 @@ public class TreeController : MonoBehaviour
         //    }
         //}
         #endregion
-
-        #region 가지 추가  Test Code
-        // TreePipeline - 가지 추가
-        //if (Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-        //    print("가지 추가");
-        //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.minFrequency = 20;
-        //    treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.maxFrequency = 20;
-        //    // Tree 다시 Load
-        //    Debug.Log("LoadPipelineAsset");
-        //    string pathToAsset = Application.streamingAssetsPath + "/TreePipeline.asset";
-        //    Broccoli.Pipe.Pipeline loadedPipeline = treePipeline;
-        //    treeFactory.UnloadAndClearPipeline();  // pipeline 초기화
-        //    treeFactory.LoadPipeline(loadedPipeline.Clone(), pathToAsset, true, true);
-        //    Resources.UnloadAsset(loadedPipeline);
-        //    // 이전 Tree 삭제
-        //    Destroy(growPos.GetChild(0).gameObject);
-        //    // 새로 Load한 Tree 위치시키기
-        //    //treeFactory.gameObject.transform.localPosition = new Vector3(0, 0, 0);
-        //    //treeFactory.gameObject.transform.Rotate(new Vector3(0, 0, 0));
-        //    treeFactory.gameObject.transform.parent = growPos;
-        //}
-        #endregion
+        
 
         #region 자연스러운 나무 성장 Test
         //if (Input.GetKeyDown(KeyCode.Alpha5) && !isOnce3)
@@ -622,7 +617,6 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 씨앗 심기
-        //seed.transform.localPosition = new Vector3(0, 2.5f, 0);
         seed.SetActive(true);
         yield return new WaitForSeconds(2);
         sproutParticle.Play();
@@ -637,8 +631,6 @@ public class TreeController : MonoBehaviour
             yield return null;
         }
         sprout.transform.localScale = new Vector3(1, 1, 1);
-
-
 
         // 새싹잎 자라기
         t = 0;
@@ -676,7 +668,7 @@ public class TreeController : MonoBehaviour
     /// "rootBaseLength" > Min/Max Length At Base
     /// "girthBase" > Min/Max Girth At Base
     /// "scale" > Object scale
-    /// </summary>
+    /// </sumary>
     public void PipelineSetting(int index)
     {
         // 기본 세팅 성장 데이터 정보 지닌 요소
@@ -820,19 +812,17 @@ public class TreeController : MonoBehaviour
     /// </summary>
 
     Transform campos;
-    public void SetTree(int day)
+    public void SetTree()
     {
         // 씨앗 심기
-        if (day == 1)
+        if (dayCount == 1)
         {
             StartCoroutine(PlantSeed(1.02f));
-            // 나무 심은 시간 저장
-            //GameManager.Instance.timeManager.firstPlantDate = DateTime.Now;
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
             PipelineReload();
         }
         // 2일차
-        else if (day == 2)
+        else if (dayCount == 2)
         {
             sprout.SetActive(false);
             soil.SetActive(false);
@@ -849,7 +839,7 @@ public class TreeController : MonoBehaviour
             //SaveTreeData();
         }
         // 3일차
-        else if (day == 3)
+        else if (dayCount == 3)
         {
             PipelineSetting(1);
             PipelineReload();
@@ -858,7 +848,7 @@ public class TreeController : MonoBehaviour
             //SaveTreeData();
         }
         // 4일차
-        else if (day == 4)
+        else if (dayCount == 4)
         {
             PipelineSetting(2);
             PipelineReload();
@@ -866,7 +856,7 @@ public class TreeController : MonoBehaviour
             //SaveTreeData();
         }
         // 5일차
-        else if (day == 5)
+        else if (dayCount == 5)
         {
             PipelineSetting(3);
             PipelineReload();
@@ -881,7 +871,8 @@ public class TreeController : MonoBehaviour
     /// </summary>
     /// <param name="day"></param>
     /// <param name="demo"></param>
-
+    [Space]
+    [Header("Demo Variable")]
     public SkyController sky;
     public Transform fire;
     public ParticleSystem sproutParticle;

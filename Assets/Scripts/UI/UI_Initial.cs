@@ -265,20 +265,27 @@ public class UI_Initial : MonoBehaviour
     /// 나무 이름 결정 버튼 누르면 나무 이름 저장 & UI 비활성화 & 
     /// </summary>
     public void onConfirmPlantName()
-    {
+    { 
+        // My Collection
         // 나무 이름
-        txtTreeName.text = inputPlantName.text;
         GameManager.Instance.treeController.treeName = inputPlantName.text;
-        // 나무 탄생일
-        DateTime birth = GameManager.Instance.timeManager.firstPlantDate.dateTime;
-        string date = birth.ToString("yyyy/MM/dd");
-        txtTreeBirth.text = date;
         // TreeData 저장
         GameManager.Instance.treeController.SaveTreeData();
         // 나무 이름 결정 UI 비활성화
         plantNameUI.SetActive(false);
         // UI 버튼들 활성화
 
+    }
+
+    /// <summary>
+    /// 5일차 나무 완성 시 마이 컬렉션 추가 
+    /// </summary>
+    public void MakeMyCollection()
+    {
+        // 나무 탄생일
+        //DateTime birth = GameManager.Instance.timeManager.firstPlantDate.dateTime;
+        //string date = birth.ToString("yyyy.MM.dd / hh:mm");
+        //GameManager.Instance.treeController.txtTreeBirth.text = date;
     }
 
     #region 개발자 모드
