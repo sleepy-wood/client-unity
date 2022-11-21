@@ -173,12 +173,12 @@ public class TimeManager : MonoBehaviour
     }
 
     /// <summary>
-    ///  일차 수 변경 버튼
+    /// 일 수 하루 더한 뒤 트리 헬스 데이터로 세팅
     /// </summary>
     public void OnPlusDay()
     {
         now = now.dateTime.AddDays(1);
         CalculatePlantDays(firstPlantDate, now);
-        treeControll.SetTree(totalPlantDay);
+        treeControll.SetTree(totalPlantDay, 1);
     }
 }
