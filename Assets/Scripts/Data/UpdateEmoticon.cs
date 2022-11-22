@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class UpdateEmoticon : MonoBehaviour
 {
+    [SerializeField] private GameObject Update_Canvas;
     ResultGet<MarketData> marketData = new ResultGet<MarketData>();
+
     private void Update()
     {
         
@@ -38,10 +40,14 @@ public class UpdateEmoticon : MonoBehaviour
             if (l > DataTemporary.emoji_Url.Count)
             {
                 //업데이트 내용이 있음
+                Update_Canvas.transform.GetChild(0).gameObject.SetActive(true);
+                Update_Canvas.transform.GetChild(1).gameObject.SetActive(false);
             }
             else
             {
                 //업데이트 내용이 없음
+                Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
+                Update_Canvas.transform.GetChild(1).gameObject.SetActive(true);
             }
         }
     }
@@ -77,5 +83,12 @@ public class UpdateEmoticon : MonoBehaviour
             }
         }
         DataTemporary.emoji_Url = emoji_urls;
+        Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
+        Update_Canvas.transform.GetChild(1).gameObject.SetActive(true);
+    }
+    public void OnClickCancel()
+    {
+        Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
+        Update_Canvas.transform.GetChild(1).gameObject.SetActive(false);
     }
 }

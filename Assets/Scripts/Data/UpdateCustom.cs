@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class UpdateCustom : MonoBehaviour
 {
+    [SerializeField] private GameObject Update_Canvas;
     List<ResultGet<MarketData>> marketsData = new List<ResultGet<MarketData>>();
     public async void OnClickUpdate()
     {
@@ -52,11 +53,15 @@ public class UpdateCustom : MonoBehaviour
                     if(l > fileEntries.Length)
                     {
                         //업데이트 내용이 있음
+                        Update_Canvas.transform.GetChild(0).gameObject.SetActive(true);
+                        Update_Canvas.transform.GetChild(1).gameObject.SetActive(false);
                         break;
                     }
                     else
                     {
                         //업데이트 내용이 없음
+                        Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
+                        Update_Canvas.transform.GetChild(1).gameObject.SetActive(true);
                     }
                 }
             }
@@ -110,5 +115,12 @@ public class UpdateCustom : MonoBehaviour
                 }
             }
         }
+        Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
+        Update_Canvas.transform.GetChild(1).gameObject.SetActive(true);
+    }
+    public void OnClickCancel()
+    {
+        Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
+        Update_Canvas.transform.GetChild(1).gameObject.SetActive(false);
     }
 }
