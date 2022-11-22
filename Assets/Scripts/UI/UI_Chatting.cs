@@ -37,7 +37,6 @@ public class UI_Chatting : MonoBehaviourPun
 #elif UNITY_IOS
         string path = Application.persistentDataPath + "/TextureImg";
 #endif
-        content = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetComponent<RectTransform>();
 
         DirectoryInfo di = new DirectoryInfo(path);
         string[] fileEntries = Directory.GetFiles(path, "*.png");

@@ -18,32 +18,6 @@ public class UI_LandCustom : MonoBehaviourPun
     private int selectCat = 0;
     private string selectCatName = "";
     AssetBundle myLoadedAssetBundle;
-    private void OnEnable()
-    {
-       
-        itemWindow = transform.GetChild(2).gameObject;
-
-        //버튼 이벤트 등록
-        for(int i = 0; i < transform.GetChild(1).childCount; i++)
-        {
-            int temp = i;
-            transform.GetChild(1).GetChild(temp).GetComponent<Button>().onClick.AddListener(
-                () => OnClickCategoryActive(transform.GetChild(1).GetChild(temp).GetChild(0).gameObject.name, temp));
-        }
-
-        //초기값 0번째 버튼 활성화
-        //OnClickCategoryActive(transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text, 0);
-
-        //비활성화
-        for (int i = 0; i < objects.Count; i++)
-        {
-            objects[i].SetActive(false);
-        }
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            transform.GetChild(i).gameObject.SetActive(false);
-        }
-    }
     private void Start()
     {
         if (PhotonNetwork.PlayerList.Length != 1)
