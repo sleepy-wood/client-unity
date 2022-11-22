@@ -435,7 +435,7 @@ public class TreeController : MonoBehaviour
         selectedSeed = pipeNameDict[currentTreeData.treePipeName];
         print("5");
         // First Plant Date
-        GameManager.Instance.timeManager.firstPlantDate = DateTime.Parse(currentTreeData.treeGrowths[0].createdAt);
+        GameManager.Instance.timeManager.firstPlantDate = currentTreeData.treeGrowths[0].createdAt;
         print("6");
         // 현재 랜드 나무의 dayCount에 맞는 Tree Pipeline Data
         TreePipeline pipeData = currentTreeData.treeGrowths[dayCount - 1].treePipeline[0];

@@ -33,7 +33,7 @@ public class TreeGraph_UI : MonoBehaviour
     }
     private void DrawTreeGraph()
     {
-        DateTime treeDateTime = DateTime.Parse(treeData.createdAt);
+        DateTime treeDateTime = treeData.createdAt;
         //시작점을 구하자
         int temp = 0;
         bool isStartDay = false;
