@@ -359,7 +359,7 @@ public class TreeController : MonoBehaviour
                     uiInitial.MakeMyCollection();
                 }
             }
-            // 1일차의 경우
+            // 1일차의 경우kk
             else if (dayCount == 1)
             {
                 sprout.SetActive(true);
@@ -447,8 +447,7 @@ public class TreeController : MonoBehaviour
 
         #region TreeGrowth
         // 1. Scale
-        float p = pipeData.scale;
-        previewTree.localScale = new Vector3(p, p, p);
+        scaleTo = pipeData.scale;
         // 2. Branch Number
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minFrequency = pipeData.branch1;
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxFrequency = pipeData.branch1;
@@ -835,8 +834,7 @@ public class TreeController : MonoBehaviour
         {
             sprout.SetActive(false);
             soil.SetActive(false);
-            if (healthSetting == 1) 
-            PipelineReload();
+            if (healthSetting == 1) PipelineReload();
             treeFactory.gameObject.SetActive(true);
             treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
