@@ -33,6 +33,7 @@ public class LandCustom : MonoBehaviour
     {
         userInput = GetComponent<UserInput>();
         cam = GetComponent<Camera>();
+        cam.transform.position = Camera.main.transform.position;
         initialOrthographicSize = cam.fieldOfView;
     }
     private LayerMask preLayer;
