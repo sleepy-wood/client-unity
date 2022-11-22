@@ -56,8 +56,8 @@ public class TreeGrowth
     public int id;
     public int treeDay;
     public int treeId;
-    public string? createdAt;
-    public string? updatedAt;
+    public DateTime createdAt;
+    public DateTime updatedAt;
     public List<TreePipeline> treePipeline;
 }
 
@@ -85,8 +85,8 @@ public class TreePipeline
     // treeGrowthId
     public int treeGrowthId;
     // 생성 및 업데이트 시간
-    public string? createdAt;
-    public string? updateAt;
+    public DateTime createdAt;
+    public DateTime updatedAt;
 }
 
 [Serializable]
@@ -118,8 +118,8 @@ public class GetTreeData
     // 유저 ID
     public string userId;
     // 생성 및 업데이트
-    public string? createdAt;
-    public string? updatedAt;
+    public DateTime createdAt;
+    public DateTime updatedAt;
     // 일차별 treeGrowth Data
     public List<TreeGrowth> treeGrowths;  
 }
