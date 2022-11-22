@@ -141,10 +141,10 @@ public class UI_LandCustom : MonoBehaviourPun
         }
         Debug.Log("2");
         //나머지 버튼들은 비활성화
-        for (int i = cnt; i <= 8; i++)
+        for (int i = cnt; i < 8; i++)
         {
             Debug.Log("333");
-            itemWindow.transform.GetChild(cnt / 4).GetChild(cnt % 4).GetComponent<Image>().sprite = Instantiate(DataTemporary.assetBundleImg.LoadAsset<Sprite>("ButtonBg"));
+            itemWindow.transform.GetChild(i / 4).GetChild(i % 4).GetComponent<Image>().sprite = Instantiate(DataTemporary.assetBundleImg.LoadAsset<Sprite>("ButtonBg"));
             Color color = itemWindow.transform.GetChild(i / 4).GetChild(i % 4).GetComponent<Image>().color;
             color.a = 0.3f;
             itemWindow.transform.GetChild(i / 4).GetChild(i % 4).GetComponent<Image>().color = color;
