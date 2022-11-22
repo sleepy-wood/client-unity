@@ -34,6 +34,7 @@ public class LandCustom : MonoBehaviour
         userInput = GetComponent<UserInput>();
         cam = GetComponent<Camera>();
         cam.transform.position = Camera.main.transform.position;
+        cam.transform.eulerAngles = new Vector3(-180, 180, 180);
         initialOrthographicSize = cam.fieldOfView;
     }
     private LayerMask preLayer;
@@ -96,7 +97,10 @@ public class LandCustom : MonoBehaviour
         }
         else
         {
-           
+            if (userInput.Interact)
+            {
+                isActiveMove = false;
+            }
             switch (editType)
             {
                 case EditType.Editor:
