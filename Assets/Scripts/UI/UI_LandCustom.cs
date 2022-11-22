@@ -18,17 +18,17 @@ public class UI_LandCustom : MonoBehaviourPun
     private int selectCat = 0;
     private string selectCatName = "";
     AssetBundle myLoadedAssetBundle;
-    private void OnEnable()
+    private void Start()
     {
-        if(PhotonNetwork.PlayerList.Length != 1)
+        if (PhotonNetwork.PlayerList.Length != 1)
         {
             button.SetActive(false);
         }
-        
+
         itemWindow = transform.GetChild(2).gameObject;
 
         //버튼 이벤트 등록
-        for(int i = 0; i < transform.GetChild(1).childCount; i++)
+        for (int i = 0; i < transform.GetChild(1).childCount; i++)
         {
             int temp = i;
             transform.GetChild(1).GetChild(temp).GetComponent<Button>().onClick.AddListener(

@@ -50,6 +50,7 @@ public class Product
     public int hit;
     public int sell;
     public string category;
+    public int tokenId;
     public int userId;
     public string createdAt;
     public string updatedAt;
