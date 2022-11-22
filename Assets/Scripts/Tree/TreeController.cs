@@ -142,6 +142,8 @@ public class TreeController : MonoBehaviour
     public GameObject soil;
     // previewTree Scale Value
     public float scaleTo = 1;
+    // Tree Trunk plant
+    public GameObject plant;
 
     [Space]
 
@@ -192,13 +194,13 @@ public class TreeController : MonoBehaviour
         if (visitType == VisitType.First)
         {
             // Mode에 따른 Pipeline 선택
-            if (playMode)
-            {
-                pipeName = "DemoTree_Red1";
-                selectedSeed = SeedType.Demo;
-                treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
-            }
-            else if (demoMode)
+            //if (playMode)
+            //{
+            //    pipeName = "DemoTree_Red1";
+            //    selectedSeed = SeedType.Demo;
+            //    treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+            //}
+            if (demoMode)
             {
                 pipeName = "DemoTree_Cherry";
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
@@ -293,6 +295,13 @@ public class TreeController : MonoBehaviour
                     barkMaterial = selectedMat.name.Replace("(Clone)", "");
                     rarityScore += 50;
                 }
+
+                // 치트키
+                Material selectedMat2 = Instantiate(mat[8]);
+                print("Selected General Bark Material: " + mat[8].name);
+                treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat2;
+                barkMaterial = selectedMat2.name.Replace("(Clone)", "");
+                rarityScore += 50;
             }
             print("Selected pipeline = " + pipeName);
 
@@ -670,7 +679,7 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 식물 이름 UI 띄우기
-        if (!playMode) treeNameUI.gameObject.SetActive(true);
+        treeNameUI.gameObject.SetActive(true);
     }
     #endregion
 
@@ -687,64 +696,64 @@ public class TreeController : MonoBehaviour
         // 기본 세팅 성장 데이터 정보 지닌 요소
         TreeSetting element = selectedTreeSetting[index];
 
-        if (playMode)
-        {
-            #region 1. Branch Element MinMax Frequency
-            for (int i = 0; i < 4; i++)
-            {
-                // pipeline
-                StructureGenerator.StructureLevel pipe1 = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-                // 저장값
-                MinMax store1 = element.minMaxList[i];
+        //if (playMode)
+        //{
+        //    #region 1. Branch Element MinMax Frequency
+        //    for (int i = 0; i < 4; i++)
+        //    {
+        //        pipeline
+        //        StructureGenerator.StructureLevel pipe1 = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
+        //        저장값
+        //       MinMax store1 = element.minMaxList[i];
 
-                if (badMode && dayCount > 3)
-                {
-                    pipe1.minFrequency = store1.min - 2;
-                    pipe1.maxFrequency = store1.max - 2;
-                }
-                else
-                {
-                    pipe1.minFrequency = store1.min;
-                    pipe1.maxFrequency = store1.max;
-                }
-            }
-            #endregion
+        //        if (badMode && dayCount > 3)
+        //        {
+        //            pipe1.minFrequency = store1.min - 2;
+        //            pipe1.maxFrequency = store1.max - 2;
+        //        }
+        //        else
+        //        {
+        //            pipe1.minFrequency = store1.min;
+        //            pipe1.maxFrequency = store1.max;
+        //        }
+        //    }
+        //    #endregion
 
-            #region 2. Min/Max Girth At Base
-            GirthTransformElement pipe4 = treePipeline._serializedPipeline.girthTransforms[0];
-            float store4 = element.girthBase;
+        //    #region 2. Min/Max Girth At Base
+        //    GirthTransformElement pipe4 = treePipeline._serializedPipeline.girthTransforms[0];
+        //    float store4 = element.girthBase;
 
-            if (badMode && dayCount > 3)
-            {
-                // Min Girth At Base
-                pipe4.minGirthAtBase = store4 - 1f;
-                // Max Girth At Base
-                pipe4.maxGirthAtBase = store4 - 1f;
-            }
-            else
-            {
-                // Min Girth At Base
-                pipe4.minGirthAtBase = store4;
-                // Max Girth At Base
-                pipe4.maxGirthAtBase = store4;
-            }
+        //    if (badMode && dayCount > 3)
+        //    {
+        //        Min Girth At Base
+        //        pipe4.minGirthAtBase = store4 - 1f;
+        //        Max Girth At Base
+        //        pipe4.maxGirthAtBase = store4 - 1f;
+        //    }
+        //    else
+        //    {
+        //        Min Girth At Base
+        //        pipe4.minGirthAtBase = store4;
+        //        Max Girth At Base
+        //        pipe4.maxGirthAtBase = store4;
+        //    }
 
-            #endregion
+        //    #endregion
 
-            #region 3. Object scale
-            if (badMode && dayCount > 3)
-            {
-                scaleTo += 0.1f;
-            }
-            else
-            {
-                scaleTo = element.scale;
-            }
+        //    #region 3. Object scale
+        //    if (badMode && dayCount > 3)
+        //    {
+        //        scaleTo += 0.1f;
+        //    }
+        //    else
+        //    {
+        //        scaleTo = element.scale;
+        //    }
 
-            #endregion
-        }
-        else
-        {
+        //    #endregion
+        //}
+        //else
+        //{
             #region 1. Branch Element MinMax Frequency
             //int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
             // pipeline element 개수만큼 설정
@@ -793,7 +802,7 @@ public class TreeController : MonoBehaviour
             #region 5. Object scale
             scaleTo = element.scale;
             #endregion
-        }
+        //}
 
     }
 
@@ -848,6 +857,7 @@ public class TreeController : MonoBehaviour
             print("2일차");
             sprout.SetActive(false);
             soil.SetActive(false);
+            plant.SetActive(true);
             if (healthSetting == 1) PipelineReload();
             treeFactory.gameObject.SetActive(true);
         }
@@ -876,9 +886,10 @@ public class TreeController : MonoBehaviour
             else if (healthSetting == 1) ApplyHealthData();
             PipelineReload();
             assetBundle.Unload(false);
-            // 리셋
+            // Tree & Land 이미지 캡처
+            screenShot.SaveCameraView();
         }
-        SaveTreeData();
+        if (day>1) SaveTreeData();
     }
 
     /// <summary>
@@ -1113,7 +1124,7 @@ public class TreeController : MonoBehaviour
             FileManager.SaveDataFile("TreeData", arrayTreeData);
         }
         // Day2~5 - 헬스데이터 적용한 나무 데이터 저장
-        else if (dayCount > 1 && dayCount < 6 && DataTemporary.GetTreeData.getTreeDataList[treeDataIdx].treeGrowths.Count < dayCount)
+        else if (dayCount > 1 && dayCount < 6) //&& DataTemporary.GetTreeData.getTreeDataList[treeDataIdx].treeGrowths.Count < dayCount)
         {
             saveUrl = "/api/v1/tree-growths";
             TreePipeline treeData = new TreePipeline();

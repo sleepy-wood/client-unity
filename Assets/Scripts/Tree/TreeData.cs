@@ -144,24 +144,24 @@ public class TreeFile
 [Serializable]
 public class ArrayTreeData
 {
-    public List<TreeData> TreeDataList;
+    public List<TreeData>? TreeDataList;
 }
 // Day2~5 데이터 저장소
 [Serializable]
 public class ArrayTreeData2
 {
-    public List<TreePipeline> TreeDataList2;
+    public List<TreePipeline>? TreeDataList2;
 }
 // 데이터 로드할 때 저장소
 [Serializable]
 public class ArrayGetTreeData
 {
-    public List<GetTreeData> getTreeDataList;
+    public List<GetTreeData>? getTreeDataList;
 }
 // My Collection 나무 이미지 & 영상 저장소
 [Serializable]
 public class ArrayTreeFile
 {
-    public List<TreeFile> treeFileList;
+    public List<TreeFile>? treeFileList;
 }
 
