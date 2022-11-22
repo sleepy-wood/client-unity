@@ -191,8 +191,12 @@ public class UI_LandCustom : MonoBehaviourPun
         {
             if (cnt == i)
             {
+
+#if UNITY_STANDALONE
+                GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
+#elif UNITY_IOS
                 GameObject resource = DataTemporary.assetBundleCustom.LoadAsset<GameObject>(fileName.Split("/LandCustom/" + selectCatName + "/")[1].Split('.')[0]);
-                //GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
+#endif
                 GameObject prefab = Instantiate(resource);
                 prefab.name = prefab.name.Split('(')[0];
                 prefab.transform.position = new Vector3(0, 0.5f, 0);
