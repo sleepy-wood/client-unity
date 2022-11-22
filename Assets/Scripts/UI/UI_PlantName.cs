@@ -50,6 +50,7 @@ public class UI_PlantName : MonoBehaviour
         // My Collection
         // 나무 이름
         GameManager.Instance.treeController.treeName = inputPlantName.text;
+        print("나무이름 : " + inputPlantName.text);
         // TreeData 저장
         GameManager.Instance.treeController.SaveTreeData();
         print("나무 이름 결정 완료");
