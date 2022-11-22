@@ -1266,7 +1266,7 @@ public class TreeController : MonoBehaviour
             Vector3 newScale = new Vector3(previewTree.localScale.x + 0.18f, previewTree.localScale.y + 0.18f, previewTree.localScale.z + 0.18f);
             previewTree.localScale = Vector3.Lerp(previewTree.localScale, newScale, lerpSpeed * Time.deltaTime);
         }
-    }
+    } 
 
 
     /// <summary>
