@@ -158,6 +158,8 @@ public class TreeController : MonoBehaviour
 
     [Header("UI")]
     public UI_Initial uiInitial;
+    public GameObject landCanvas;
+    public GameObject chatCanvas;
     // 나무 이름 입력 UI
     public GameObject treeNameUI;
     // SkyLand Main Text
@@ -359,9 +361,11 @@ public class TreeController : MonoBehaviour
                     uiInitial.MakeMyCollection();
                 }
             }
-            // 1일차의 경우kk
+            // 1일차의 경우
             else if (dayCount == 1)
             {
+                landCanvas.SetActive(true);
+                chatCanvas.SetActive(true);
                 sprout.SetActive(true);
                 sproutLeaf.transform.localScale = new Vector3(1, 1, 1);
             }
