@@ -202,7 +202,7 @@ public class UI_LandCustom : MonoBehaviourPun
                 GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('/')[1].Split('.')[0]);
                 if (!resource)
                 {
-                    GameObject resource = DataTemporary.assetBundleCustom.LoadAsset<GameObject>(fileName.Split("/LandCustom/" + selectCatName + "/")[1].Split('.')[0]);
+                    resource = DataTemporary.assetBundleCustom.LoadAsset<GameObject>(fileName.Split("/LandCustom/" + selectCatName + "/")[1].Split('.')[0]);
                 }
 #endif
                 GameObject prefab = Instantiate(resource);
