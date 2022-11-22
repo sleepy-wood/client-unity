@@ -34,7 +34,8 @@ public class TimeManager : MonoBehaviour
                 if (DataTemporary.GetTreeData.getTreeDataList[i].landId == DataTemporary.MyUserData.currentLandId)
                 {
                     // 처음 심은 날 저장
-                    firstPlantDate.dateTime = DataTemporary.GetTreeData.getTreeDataList[i].createdAt;
+                    firstPlantDate = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
+                    print("firstPlantDate : " + firstPlantDate);
 
                     // 현재 랜드의 나무 데이터
                     treeControll.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];

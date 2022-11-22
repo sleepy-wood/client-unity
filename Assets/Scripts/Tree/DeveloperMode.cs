@@ -41,22 +41,21 @@ public class DeveloperMode : MonoBehaviour
         timeManager = GameManager.Instance.timeManager;
 
         // 입력된 Tree First Date로 5일치 헬스 데이터 불러오기
-        if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
-        {
-            firstDate = new DateTime(year, month, day, hour, minute, 0, 0);
-            for (int i = 1; i < 6; i++) 
-            {
-                HealthReport report = HealthDataAnalyzer.GetDailyReport(firstDate, i);
-                healthReports.Add(report);
-            }
-            print($"{firstDate}의 HealthData Count = {healthReports.Count}");
-        }
+        //if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
+        //{
+        //    firstDate = new DateTime(year, month, day, hour, minute, 0, 0);
+        //    for (int i = 1; i < 6; i++) 
+        //    {
+        //        HealthReport report = HealthDataAnalyzer.GetDailyReport(firstDate, i);
+        //        healthReports.Add(report);
+        //    }
+        //    print($"{firstDate}의 HealthData Count = {healthReports.Count}");
+        //}
     }
 
     // +Day 버튼 누를 때마다 헬스 데이터로 나무 업데이트 (2일차 ~ 5일차)
     public void OnDeveloperPlusDay()
     {
         timeManager.OnPlusDay();
-        print("OnDeveloperPlusDay");
     }
 }
