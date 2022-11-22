@@ -18,6 +18,7 @@ public class TimeManager : MonoBehaviour
     public UDateTime firstPlantDate;
     public Text txtAge;
     public TreeController treeControll;
+    public GameObject landCanvas;
 
     private void Awake()
     {
@@ -57,6 +58,7 @@ public class TimeManager : MonoBehaviour
             treeControll.visitType = TreeController.VisitType.ReVisit;
             // totalPlantDay, dayCount 계산
             CalculatePlantDays(firstPlantDate, DateTime.Now);
+            landCanvas.SetActive(true);
         }
     }
 
