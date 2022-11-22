@@ -33,13 +33,13 @@ public class UpdateEmoticon : MonoBehaviour
             DataTemporary.arrayMarketData = arrayMarket;
             //이모지 다운로드
             int l = 0;
-            for (int i = 0; i < marketData.data.Count; i++)
+            for (int i = marketData.data.Count - 1; i >= 0; i--)
             {
-                for (int j = marketData.data[i].orderDetails.Count - 1; j >= 0 ; j--)
+                for (int j = 0; j < marketData.data[i].orderDetails.Count; j++)
                 {
                     List<ProductImages> productImages = new List<ProductImages>();
                     productImages = marketData.data[i].orderDetails[j].product.productImages;
-                    for (int k = 0; k < productImages.Count; k++)
+                    for (int k = 0; k < productImages.Count -1 ; k++)
                     {
                         l++;
                     }
@@ -81,9 +81,9 @@ public class UpdateEmoticon : MonoBehaviour
 
         List<string> emoji_urls = new List<string>();
         int l = 0;
-        for (int i = 0; i < marketData.data.Count; i++)
+        for (int i = marketData.data.Count - 1; i >= 0; i--)
         {
-            for (int j = marketData.data[i].orderDetails.Count -1; j>=0; j--)
+            for (int j = 0; j < marketData.data[i].orderDetails.Count; j++)
             {
                 List<ProductImages> productImages = new List<ProductImages>();
                 productImages = marketData.data[i].orderDetails[j].product.productImages;

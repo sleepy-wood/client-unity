@@ -41,9 +41,9 @@ public class UpdateCustom : MonoBehaviour
                     }
                     
                     int l = 0;
-                    for (int i = 0; i < marketsData[h].data.Count; i++)
+                    for (int i = marketsData[h].data.Count - 1; i >=0; i--)
                     {
-                        for (int j = marketsData[h].data[i].orderDetails.Count - 1; j >= 0 ; j--)
+                        for (int j = 0; j < marketsData[h].data[i].orderDetails.Count; j++)
                         {
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
@@ -107,9 +107,9 @@ public class UpdateCustom : MonoBehaviour
                         continue;
                     }
 
-                    for (int i = 0; i < marketsData[h].data.Count; i++)
+                    for (int i = marketsData[h].data.Count - 1; i >= 0 ; i--)
                     {
-                        for (int j = marketsData[h].data[i].orderDetails.Count - 1; j >= 0; j--)
+                        for (int j = 0; j < marketsData[h].data[i].orderDetails.Count; j++)
                         {
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;

@@ -193,13 +193,13 @@ public class LoadingData : MonoBehaviourPunCallbacks
                     //이모지 다운로드
                     int l = 0;
                     List<string> emoji_urls = new List<string>();
-                    for (int i = 0; i < marketsData[h].data.Count; i++)
+                    for (int i = marketsData[h].data.Count - 1; i >= 0 ; i--)
                     {
-                        for (int j = marketsData[h].data[i].orderDetails.Count-1; j >=0; j--)
+                        for (int j = 0; j < marketsData[h].data[i].orderDetails.Count; j++)
                         {
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
-                            for (int k = 0; k <= productImages.Count - 1; k++)
+                            for (int k = 0; k < productImages.Count - 1; k++)
                             {
                                 emoji_urls.Add(productImages[k].path);
                                 DataTemporary.emoji_Url.Add(productImages[k].path);
@@ -233,9 +233,9 @@ public class LoadingData : MonoBehaviourPunCallbacks
                         continue;
                     }
 
-                    for (int i = 0; i < marketsData[h].data.Count; i++)
+                    for (int i = marketsData[h].data.Count - 1; i >= 0; i--)
                     {
-                        for (int j = marketsData[h].data[i].orderDetails.Count - 1; j >= 0 ; j--)
+                        for (int j = 0; j < marketsData[h].data[i].orderDetails.Count; j++)
                         {
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
