@@ -56,15 +56,15 @@ public class TreeGrowth
     public int id;
     public int treeDay;
     public int treeId;
-    public string createdAt;
-    public string updatedAt;
-    public TreePipeline treePipeline;
+    public string? createdAt;
+    public string? updatedAt;
+    public TreePipeline? treePipeline;
 }
 
 [Serializable]
 public class TreePipeline
 {
-    public int id;
+    public int treeId;
      
     // Tree Growth Data //
     // 나무 scale
@@ -82,11 +82,13 @@ public class TreePipeline
     public float sproutWidth;
     // 중력
     public float gravity;
-    // treeGrowthId
-    public int treeGrowthId;
+    // 희귀성
+    public int rarity;
+    // 생명력
+    public int vitality;
     // 생성 및 업데이트 시간
-    public string createdAt;
-    public string updatedAt;
+    public string? createdAt;
+    public string? updatedAt;
 }
 
 [Serializable]
@@ -118,10 +120,10 @@ public class GetTreeData
     // 유저 ID
     public string userId;
     // 생성 및 업데이트
-    public string createdAt;
-    public string updatedAt;
+    public string? createdAt;
+    public string? updatedAt;
     // 일차별 treeGrowth Data
-    public List<TreeGrowth> treeGrowths;  
+    public List<TreeGrowth>? treeGrowths;  
 }
 
 // 5일차 나무 이미지 & 영상 업로드

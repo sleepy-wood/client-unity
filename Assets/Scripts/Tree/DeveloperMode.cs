@@ -39,6 +39,7 @@ public class DeveloperMode : MonoBehaviour
     {
         treeController = GetComponent<TreeController>();
         timeManager = GameManager.Instance.timeManager;
+        firstDate = new DateTime(year, month, day, hour, minute, 0, 0);
 
         // 입력된 Tree First Date로 5일치 헬스 데이터 불러오기
         //if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded)
@@ -56,7 +57,6 @@ public class DeveloperMode : MonoBehaviour
     // +Day 버튼 누를 때마다 헬스 데이터로 나무 업데이트 (2일차 ~ 5일차)
     public void OnDeveloperPlusDay()
     {
-        firstDate = new DateTime(year, month, day, hour, minute, 0, 0);
         timeManager.OnPlusDay(firstDate);
     }
 }

@@ -33,6 +33,9 @@ public class TimeManager : MonoBehaviour
                 // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
                 if (DataTemporary.GetTreeData.getTreeDataList[i].landId == DataTemporary.MyUserData.currentLandId)
                 {
+                    // 현재 랜드의 트리 데이터 인덱스 저장
+                    treeControll.treeDataIdx = i;
+
                     // 처음 심은 날 저장
                     firstPlantDate = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
                     print("firstPlantDate : " + firstPlantDate);
@@ -170,9 +173,13 @@ public class TimeManager : MonoBehaviour
     /// <summary>
     /// 일 수 하루 더한 뒤 트리 헬스 데이터로 세팅
     /// </summary>
+    int day = 0;
     public void OnPlusDay(DateTime firstDate)
     {
-        now = firstDate.AddDays(1);
+        day += 1;
+        now = firstDate.AddDays(day);
+        if (day == 5) day = 1;  
+        print("now : " + now.dateTime);
         CalculatePlantDays(firstDate, now);
         treeControll.SetTree(totalPlantDay, 1);
     }
