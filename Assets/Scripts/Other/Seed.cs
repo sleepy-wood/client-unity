@@ -7,5 +7,7 @@ public class Seed : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         GetComponent<CapsuleCollider>().enabled = false;
+        gameObject.SetActive(false);
     }
+
 }

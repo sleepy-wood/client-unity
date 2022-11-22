@@ -359,7 +359,7 @@ public class TreeController : MonoBehaviour
                 }
             }
             // 1일차의 경우
-            else
+            else if (dayCount == 1)
             {
                 sprout.SetActive(true);
                 sproutLeaf.transform.localScale = new Vector3(1, 1, 1);
@@ -399,9 +399,10 @@ public class TreeController : MonoBehaviour
 
         // Activity Data
         float activeEnergyBurnedGoalAchieved = (float)report.ActivityReport.ActiveEnergyBurnedGoalAchieved;
-        ScaleChange(activeEnergyBurnedGoalAchieved);
         float exerciseTimeGoalAchieved = (float)report.ActivityReport.ExerciseTimeGoalAchieved;
         float standHoursGoalAchieved = (float)report.ActivityReport.StandHoursGoalAchieved;
+        float average = (activeEnergyBurnedGoalAchieved + exerciseTimeGoalAchieved + standHoursGoalAchieved) / 3;
+        ScaleChange(average);
     }
 
     /// <summary>
@@ -1253,8 +1254,8 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// Activity 달성 퍼센트에 따라 나무 Scale 조절하는 함수
     /// </summary>
-    /// <param name="activityRate"> Activity 달성 퍼센트 </param>
-    public void ScaleChange(float activityRate, float lerpSpeed = 2f)
+    /// <param name="activityAverage"> Activity 달성 퍼센트 평균 </param>
+    public void ScaleChange(float activityAverage, float lerpSpeed = 2f)
     {
         if (selectedSeed == SeedType.Oak)
         {
