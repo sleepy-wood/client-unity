@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpdateCustom : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class UpdateCustom : MonoBehaviour
     [SerializeField] private RectTransform refresh_BTN;
     [SerializeField] private GameObject uI_LandCustom;
     List<ResultGet<MarketData>> marketsData = new List<ResultGet<MarketData>>();
+    bool isUpdating = false;
     public async void OnClickUpdate()
     {
+        isUpdating = false;
+        Debug.Log("Custom Update");
         StartCoroutine(Move_RefreshBTN());
 
         for (int i = 0; i < 8; i++)
@@ -59,6 +63,7 @@ public class UpdateCustom : MonoBehaviour
                         //업데이트 내용이 있음
                         Update_Canvas.transform.GetChild(0).gameObject.SetActive(true);
                         Update_Canvas.transform.GetChild(1).gameObject.SetActive(false);
+                        Update_Canvas.transform.GetChild(2).gameObject.SetActive(false);
                         break;
                     }
                     else
@@ -66,6 +71,7 @@ public class UpdateCustom : MonoBehaviour
                         //업데이트 내용이 없음
                         Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
                         Update_Canvas.transform.GetChild(1).gameObject.SetActive(true);
+                        Update_Canvas.transform.GetChild(2).gameObject.SetActive(false);
                     }
                 }
             }
@@ -73,6 +79,12 @@ public class UpdateCustom : MonoBehaviour
     }
     public async void OnClickUpdateStart()
     {
+        Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
+        Update_Canvas.transform.GetChild(1).gameObject.SetActive(false);
+        Update_Canvas.transform.GetChild(2).gameObject.SetActive(true);
+
+        StartCoroutine(UpdateLoading());
+
         for (int h = 0; h < marketsData.Count; h++)
         {
             if (h != (int)Category.emoticon && h != (int)Category.collection)
@@ -121,8 +133,32 @@ public class UpdateCustom : MonoBehaviour
         }
         Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
         Update_Canvas.transform.GetChild(1).gameObject.SetActive(true);
-        
+        Update_Canvas.transform.GetChild(2).gameObject.SetActive(false);
+
         StartCoroutine(Custom_Update());
+        isUpdating = true;
+    }
+    private IEnumerator UpdateLoading()
+    {
+        while (true)
+        {
+            if (isUpdating)
+            {
+                yield break;
+            }
+            string text = Update_Canvas.transform.GetChild(2).GetChild(3).GetComponent<Text>().text;
+            if(text.Split(".").Length >=3)
+            {
+                text = "업데이트 진행중";
+            }
+            else
+            {
+                text += ".";
+            }
+            Update_Canvas.transform.GetChild(2).GetChild(3).GetComponent<Text>().text = text;
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
     private IEnumerator Custom_Update()
     {
@@ -139,11 +175,12 @@ public class UpdateCustom : MonoBehaviour
             refresh_BTN.eulerAngles = Vector3.Lerp(refresh_BTN.eulerAngles, new Vector3(0, 0, 360), t);
             yield return null;
         }
-        refresh_BTN.eulerAngles = Vector3.zero;
+        //refresh_BTN.eulerAngles = Vector3.zero;
     }
     public void OnClickCancel()
     {
         Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
         Update_Canvas.transform.GetChild(1).gameObject.SetActive(false);
+        Update_Canvas.transform.GetChild(2).gameObject.SetActive(false);
     }
 }
