@@ -29,7 +29,7 @@ public class UI_Chatting : MonoBehaviourPun
     private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
     private string[] stopwords;
     
-    private void Start()
+    private void OnEnable()
     {
         photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
         TextAsset textFile = DataTemporary.stopwordsAsset.LoadAsset<TextAsset>("stopwords");

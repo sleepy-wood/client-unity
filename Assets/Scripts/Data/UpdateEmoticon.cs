@@ -7,6 +7,8 @@ using UnityEngine;
 public class UpdateEmoticon : MonoBehaviour
 {
     [SerializeField] private GameObject Update_Canvas;
+    [SerializeField] private RectTransform refresh_BTN;
+    [SerializeField] private GameObject UI_Chatting;
     ResultGet<MarketData> marketData = new ResultGet<MarketData>();
 
     private void Update()
@@ -15,6 +17,8 @@ public class UpdateEmoticon : MonoBehaviour
     }
     public async void onClickUpdate()
     {
+        StartCoroutine(Move_RefreshBTN());
+
         //마켓에서 산 것이 있으면 다운로드
         marketData = await DataModule.WebRequestBuffer<ResultGet<MarketData>>("/api/v1/orders?category=" + Category.emoticon, DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         if (marketData.result)
@@ -85,6 +89,25 @@ public class UpdateEmoticon : MonoBehaviour
         DataTemporary.emoji_Url = emoji_urls;
         Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
         Update_Canvas.transform.GetChild(1).gameObject.SetActive(true);
+
+        StartCoroutine(Emoji_Update());
+    }
+    private IEnumerator Emoji_Update()
+    {
+        UI_Chatting.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        UI_Chatting.SetActive(true);
+    }
+    private IEnumerator Move_RefreshBTN()
+    {
+        float t = 0;
+        while (t < 1)
+        {
+            t += Time.deltaTime;
+            refresh_BTN.eulerAngles = Vector3.Lerp(refresh_BTN.eulerAngles, new Vector3(0, 0, 360), t);
+            yield return null;
+        }
+        refresh_BTN.eulerAngles = Vector3.zero;
     }
     public void OnClickCancel()
     {

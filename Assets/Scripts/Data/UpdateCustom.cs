@@ -6,9 +6,13 @@ using UnityEngine;
 public class UpdateCustom : MonoBehaviour
 {
     [SerializeField] private GameObject Update_Canvas;
+    [SerializeField] private RectTransform refresh_BTN;
+    [SerializeField] private GameObject uI_LandCustom;
     List<ResultGet<MarketData>> marketsData = new List<ResultGet<MarketData>>();
     public async void OnClickUpdate()
     {
+        StartCoroutine(Move_RefreshBTN());
+
         for (int i = 0; i < 8; i++)
         {
             ResultGet<MarketData> marketData = await DataModule.WebRequestBuffer<ResultGet<MarketData>>("/api/v1/orders?category=" + (Category)i, DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
@@ -117,6 +121,25 @@ public class UpdateCustom : MonoBehaviour
         }
         Update_Canvas.transform.GetChild(0).gameObject.SetActive(false);
         Update_Canvas.transform.GetChild(1).gameObject.SetActive(true);
+        
+        StartCoroutine(Custom_Update());
+    }
+    private IEnumerator Custom_Update()
+    {
+        uI_LandCustom.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        uI_LandCustom.SetActive(true);
+    }
+    private IEnumerator Move_RefreshBTN()
+    {
+        float t = 0;
+        while (t < 1)
+        {
+            t += Time.deltaTime;
+            refresh_BTN.eulerAngles = Vector3.Lerp(refresh_BTN.eulerAngles, new Vector3(0, 0, 360), t);
+            yield return null;
+        }
+        refresh_BTN.eulerAngles = Vector3.zero;
     }
     public void OnClickCancel()
     {
