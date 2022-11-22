@@ -18,7 +18,7 @@ using UnityEngine.Networking;
 /// </summary>
 public class DeveloperMode : MonoBehaviour
 {
-    // 나무 첫 Date 입력 
+    // 나무 첫 Date 조작
     [Header("Tree First Date")]
     public int year;
     public int month;
@@ -56,6 +56,7 @@ public class DeveloperMode : MonoBehaviour
     // +Day 버튼 누를 때마다 헬스 데이터로 나무 업데이트 (2일차 ~ 5일차)
     public void OnDeveloperPlusDay()
     {
-        timeManager.OnPlusDay();
+        firstDate = new DateTime(year, month, day, hour, minute, 0, 0);
+        timeManager.OnPlusDay(firstDate);
     }
 }
