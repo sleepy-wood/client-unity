@@ -28,12 +28,11 @@ public class UI_Initial : MonoBehaviour
     public GameObject myCollectionUI;
     public GameObject screenShotCam;
     public GameObject sleepDataUI;
-    public GameObject plantNameUI;
     public GameObject bottomUI;
     public GameObject landCanvas;
     public GameObject customCanvas;
     public GameObject chatUI;
-
+    public GameObject plantNameCanvas;
     public RectTransform developerUI;
     public RectTransform dayCountFlag;
     public Transform previewTreePos;
@@ -43,9 +42,6 @@ public class UI_Initial : MonoBehaviour
     public Text txtTreeBirth;
     public Text txtTreeScore;
 
-    public Button btnPlantName;
-
-    public InputField inputPlantName;
     public InputField inputYear;
     public InputField inputMonth;
     public InputField inputDay;
@@ -58,17 +54,10 @@ public class UI_Initial : MonoBehaviour
 
     #endregion
 
-    private void Awake()
-    {
-        // Land 입장 시 UI 비활성화
-        landCanvas.SetActive(false);
-        chatUI.SetActive(false);
-        
-    }
 
     private void Start()
     {
-        inputPlantName.onValueChanged.AddListener(onValueChanged);
+        
         //if (!PhotonNetwork.IsMasterClient)
         //{
         //    gameObject.SetActive(false);
@@ -78,6 +67,8 @@ public class UI_Initial : MonoBehaviour
 
 
     }
+
+    
 
     /// <summary>
     /// 건강기록 창 켜기
@@ -263,31 +254,7 @@ public class UI_Initial : MonoBehaviour
         sleepDataUI.SetActive(false);
     }
 
-    /// <summary>
-    /// 나무 이름 입력하면 다음 버튼 활성화
-    /// </summary>
-    /// <param name="s">식물 이름</param>
-    void onValueChanged(string s)
-    {
-        btnPlantName.interactable = true;
-    }
-
-    /// <summary>
-    /// 나무 이름 결정 버튼 누르면 나무 이름 저장 & UI 비활성화 & 
-    /// </summary>
-    public void onConfirmPlantName()
-    { 
-        // My Collection
-        // 나무 이름
-        GameManager.Instance.treeController.treeName = inputPlantName.text;
-        // TreeData 저장
-        GameManager.Instance.treeController.SaveTreeData();
-        // 나무 이름 결정 UI 비활성화
-        plantNameUI.SetActive(false);
-        // UI 버튼들 활성화
-        landCanvas.SetActive(true);
-        chatUI.SetActive(true);
-    }
+    
 
     /// <summary>
     /// 5일차 나무 완성 시 마이 컬렉션 추가 

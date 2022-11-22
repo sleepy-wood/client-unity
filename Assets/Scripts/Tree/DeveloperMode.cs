@@ -28,7 +28,7 @@ public class DeveloperMode : MonoBehaviour
     DateTime firstDate;
 
     // 헬스 데이터 5일치 담을 리스트
-    List<HealthReport> healthReports = new List<HealthReport>();
+    public List<HealthReport> healthReports = new List<HealthReport>();
 
     //[Space]
 
