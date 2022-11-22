@@ -10,27 +10,30 @@ using UnityEngine.UI;
 public class TreeGraph_UI : MonoBehaviour
 {
     [SerializeField] private Transform m_scrollBarParent;
+    Text m_text;
     GetTreeData treeData;
     SleepSample[] samples;
     List<float> treeSleepTimes = new List<float>();
     bool isOnce = false;
     private void Awake()
     {
-        //for(int i = 0; i <  DataTemporary.GetTreeData.getTreeDataList.Count; i++)
-        //{
-        //     if(DataTemporary.MyUserData.currentLandId == DataTemporary.GetTreeData.getTreeDataList[i].landId)
-        //     {
-        //         treeData = DataTemporary.GetTreeData.getTreeDataList[i];
-        //         break;
-        //     }
-        //}
+        m_text = transform.GetChild(0).GetComponent<Text>();
         treeData = DataTemporary.GetTreeData.getTreeDataList[0];
+        
+        //m_Text에 정보 기입
+
+
         samples = DataTemporary.samples;
     }
     private void OnEnable()
     {
-        DrawTreeGraph();
+        StartCoroutine(DrawGraph());
     }
+    private IEnumerator DrawGraph()
+    {
+        yield return new WaitForSeconds(0.3f);
+        DrawTreeGraph();
+    }    
     private void DrawTreeGraph()
     {
         DateTime treeDateTime = DateTime.Parse(treeData.createdAt);
