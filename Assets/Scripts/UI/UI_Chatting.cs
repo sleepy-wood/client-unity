@@ -29,50 +29,50 @@ public class UI_Chatting : MonoBehaviourPun
     private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
     private string[] stopwords;
 
-    private void OnEnable()
-    {
+//    private void OnEnable()
+//    {
 
-#if UNITY_STANDALONE
-        string path = Application.dataPath + "/TextureImg";
-#elif UNITY_IOS
-        string path = Application.persistentDataPath + "/TextureImg";
-#endif
+//#if UNITY_STANDALONE
+//        string path = Application.dataPath + "/TextureImg";
+//#elif UNITY_IOS
+//        string path = Application.persistentDataPath + "/TextureImg";
+//#endif
 
-        DirectoryInfo di = new DirectoryInfo(path);
-        string[] fileEntries = Directory.GetFiles(path, "*.png");
+//        DirectoryInfo di = new DirectoryInfo(path);
+//        string[] fileEntries = Directory.GetFiles(path, "*.png");
 
-        List<string> filenames = new List<string>();
-        //썸네일 넣기
-        foreach (string fileName in fileEntries)
-        {
-#if UNITY_STANDALONE
-            filenames.Add(fileName.Split("/TextureImg\\")[1].Split('.')[0]);
-#elif UNITY_IOS || UNITY_ANDROID
-            filenames.Add(fileName.Split("/TextureImg/")[1].Split('.')[0]);
-#endif
-        }
-        filenames.Sort((x, y) => int.Parse(x.Split("Market_Emoji_")[1]).CompareTo(int.Parse(y.Split("Market_Emoji_")[1])));
-        for (int k = 0; k < filenames.Count; k++)
-        {
-            int temp = k;
-            //GameObject resource = fileName.Split("/TextureImg/")[1].Split('.')[0];
-            GameObject resource = Resources.Load<GameObject>("Emoji_");
-            GameObject prefab = Instantiate(resource, emoji_content);
+//        List<string> filenames = new List<string>();
+//        //썸네일 넣기
+//        foreach (string fileName in fileEntries)
+//        {
+//#if UNITY_STANDALONE
+//            filenames.Add(fileName.Split("/TextureImg\\")[1].Split('.')[0]);
+//#elif UNITY_IOS || UNITY_ANDROID
+//            filenames.Add(fileName.Split("/TextureImg/")[1].Split('.')[0]);
+//#endif
+//        }
+//        filenames.Sort((x, y) => int.Parse(x.Split("Market_Emoji_")[1]).CompareTo(int.Parse(y.Split("Market_Emoji_")[1])));
+//        for (int k = 0; k < filenames.Count; k++)
+//        {
+//            int temp = k;
+//            //GameObject resource = fileName.Split("/TextureImg/")[1].Split('.')[0];
+//            GameObject resource = Resources.Load<GameObject>("Emoji_");
+//            GameObject prefab = Instantiate(resource, emoji_content);
 
-            prefab.name = "Custom_" + filenames[k];
-            byte[] byteTexture = File.ReadAllBytes(path + "/" + filenames[k] + ".png");
-            if (byteTexture.Length > 0)
-            {
-                Texture2D texture = new Texture2D(0, 0);
-                texture.LoadImage(byteTexture);
-                Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-                prefab.GetComponent<Image>().sprite = sprite;
-            }
-            prefab.GetComponent<Button>().onClick.AddListener(
-                () => OnClickEmojiButton(temp + 15));
-        }
-        emoji_content.offsetMax = new Vector2(110 * (15 + filenames.Count), emoji_content.offsetMax.y);
-    }
+//            prefab.name = "Custom_" + filenames[k];
+//            byte[] byteTexture = File.ReadAllBytes(path + "/" + filenames[k] + ".png");
+//            if (byteTexture.Length > 0)
+//            {
+//                Texture2D texture = new Texture2D(0, 0);
+//                texture.LoadImage(byteTexture);
+//                Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+//                prefab.GetComponent<Image>().sprite = sprite;
+//            }
+//            prefab.GetComponent<Button>().onClick.AddListener(
+//                () => OnClickEmojiButton(temp + 15));
+//        }
+//        emoji_content.offsetMax = new Vector2(110 * (15 + filenames.Count), emoji_content.offsetMax.y);
+//    }
     private void Start()
     {
         photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
