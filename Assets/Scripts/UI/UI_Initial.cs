@@ -32,6 +32,7 @@ public class UI_Initial : MonoBehaviour
     public GameObject bottomUI;
     public GameObject landCanvas;
     public GameObject customCanvas;
+    public GameObject chatUI;
 
     public RectTransform developerUI;
     public RectTransform dayCountFlag;
@@ -57,6 +58,14 @@ public class UI_Initial : MonoBehaviour
 
     #endregion
 
+    private void Awake()
+    {
+        // Land 입장 시 UI 비활성화
+        landCanvas.SetActive(false);
+        chatUI.SetActive(false);
+        
+    }
+
     private void Start()
     {
         inputPlantName.onValueChanged.AddListener(onValueChanged);
@@ -65,6 +74,8 @@ public class UI_Initial : MonoBehaviour
         //    gameObject.SetActive(false);
         //}
         //developerUI.anchoredPosition = new Vector2(-570, -211);
+
+
 
     }
 
@@ -274,7 +285,8 @@ public class UI_Initial : MonoBehaviour
         // 나무 이름 결정 UI 비활성화
         plantNameUI.SetActive(false);
         // UI 버튼들 활성화
-
+        landCanvas.SetActive(true);
+        chatUI.SetActive(true);
     }
 
     /// <summary>

@@ -64,16 +64,8 @@ public class TimeManager : MonoBehaviour
     {
         // 현재 날짜
         now = DateTime.Now;
-        //txtCurrentDate.text = now.dateTime.ToString("yyyy-MM-dd") + " (" + totalPlantDay + "일차)";
-
-        // 현재시간
-        // txtCurrentTime.text = now.dateTime.ToString("tt h : mm");
-
-        
     }
 
-    bool isOnce;
-    bool skyChangeDone;
     private void Update()
     {
 
