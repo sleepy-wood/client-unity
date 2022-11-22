@@ -168,9 +168,9 @@ public class UI_Chatting : MonoBehaviourPun
     /// <param name="i"></param>
     public void OnClickEmojiButton(int i)
     {
-        Debug.Log("Cnt = " + DataTemporary.emoji_Url.Count);
+        //Debug.Log("Cnt = " + DataTemporary.emoji_Url.Count);
         string url = i - 15 < 0 ? null : DataTemporary.emoji_Url[i - 15];
-        Debug.Log("i = " + i);
+        //Debug.Log("i = " + i);
         photonView.RPC("RPC_EmojiButtonAsync", RpcTarget.All, i, DataTemporary.MyUserData.nickname, url);
     }
     public void OnSubmit()

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UpdateEmoticon : MonoBehaviour
 {
     [SerializeField] private GameObject Update_Canvas;
+    [SerializeField] private GameObject chat_UI;
     [SerializeField] private RectTransform refresh_BTN;
     [SerializeField] private GameObject UI_Chatting;
     ResultGet<MarketData> marketData = new ResultGet<MarketData>();
@@ -38,7 +39,7 @@ public class UpdateEmoticon : MonoBehaviour
                 {
                     List<ProductImages> productImages = new List<ProductImages>();
                     productImages = marketData.data[i].orderDetails[j].product.productImages;
-                    for (int k = 0; k < productImages.Count - 1; k++)
+                    for (int k = productImages.Count - 2; k >= 0; k--)
                     {
                         l++;
                     }
@@ -67,6 +68,7 @@ public class UpdateEmoticon : MonoBehaviour
         Update_Canvas.transform.GetChild(2).gameObject.SetActive(true);
 
         StartCoroutine(UpdateLoading());
+
 #if UNITY_STANDALONE
         string path = Application.dataPath + "/TextureImg";
 #elif UNITY_IOS || UNITY_ANDROID
@@ -85,12 +87,16 @@ public class UpdateEmoticon : MonoBehaviour
             {
                 List<ProductImages> productImages = new List<ProductImages>();
                 productImages = marketData.data[i].orderDetails[j].product.productImages;
-                for (int k = 0; k < productImages.Count - 1; k++)
+                for (int k = productImages.Count - 2; k >= 0; k--)
                 {
-                    emoji_urls.Add(productImages[k].path);
-                    Texture2D texture = await DataModule.WebrequestTextureGet(productImages[k].path, DataModule.NetworkType.GET);
-                    byte[] bytes = texture.EncodeToPNG();
-                    File.WriteAllBytes(path + "/Market_Emoji_" + l + ".png", bytes);
+                    FileInfo fileInfo = new FileInfo(path + "/Market_Emoji_" + l + ".png");
+                    if (!fileInfo.Exists)
+                    {
+                        emoji_urls.Add(productImages[k].path);
+                        Texture2D texture = await DataModule.WebrequestTextureGet(productImages[k].path, DataModule.NetworkType.GET);
+                        byte[] bytes = texture.EncodeToPNG();
+                        File.WriteAllBytes(path + "/Market_Emoji_" + l + ".png", bytes);
+                    }
                     l++;
                 }
             }
@@ -101,7 +107,7 @@ public class UpdateEmoticon : MonoBehaviour
         Update_Canvas.transform.GetChild(2).gameObject.SetActive(false);
 
         isUpdating = true;
-        Update_Canvas.GetComponent<UI_Chatting>().Updating();
+        chat_UI.GetComponent<UI_Chatting>().Updating();
     }
 
     private IEnumerator UpdateLoading()
@@ -113,7 +119,7 @@ public class UpdateEmoticon : MonoBehaviour
                 yield break;
             }
             string text = Update_Canvas.transform.GetChild(2).GetChild(3).GetComponent<Text>().text;
-            if (text.Split(".").Length >= 3)
+            if (text.Split(".").Length >= 4)
             {
                 text = "업데이트 진행중";
             }
@@ -123,7 +129,7 @@ public class UpdateEmoticon : MonoBehaviour
             }
             Update_Canvas.transform.GetChild(2).GetChild(3).GetComponent<Text>().text = text;
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
     //private IEnumerator Emoji_Update()

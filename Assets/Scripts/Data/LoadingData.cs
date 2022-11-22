@@ -192,15 +192,16 @@ public class LoadingData : MonoBehaviourPunCallbacks
                     DataTemporary.arrayMarketData = arrayMarket;
                     //이모지 다운로드
                     int l = 0;
+                    List<string> emoji_urls = new List<string>();
                     for (int i = 0; i < marketsData[h].data.Count; i++)
                     {
                         for (int j = 0; j < marketsData[h].data[i].orderDetails.Count; j++)
                         {
-                            List<string> emoji_urls = new List<string>();
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
-                            for (int k = 0; k < productImages.Count - 1; k++)
+                            for (int k = productImages.Count - 2; k >= 0 ; k--)
                             {
+                                Debug.Log(productImages[k].originalName);
                                 emoji_urls.Add(productImages[k].path);
                                 DataTemporary.emoji_Url.Add(productImages[k].path);
                                 Texture2D texture = await DataModule.WebrequestTextureGet(productImages[k].path, DataModule.NetworkType.GET);
@@ -208,9 +209,9 @@ public class LoadingData : MonoBehaviourPunCallbacks
                                 File.WriteAllBytes(path + "/Market_Emoji_" + l + ".png", bytes);
                                 l++;
                             }
-                            //DataTemporary.market_url.Add(emoji_urls);
                         }
                     }
+                    DataTemporary.emoji_Url = emoji_urls;
                 }
             }
             else if(h != (int)Category.collection)
@@ -239,7 +240,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
                         {
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
-                            for (int k = 0; k < productImages.Count; k++)
+                            for (int k = productImages.Count - 1; k >= 0; k--)
                             {
                                 if (productImages[k].mimeType.Split('/')[0] == "image")
                                 {

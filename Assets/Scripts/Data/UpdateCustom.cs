@@ -47,7 +47,7 @@ public class UpdateCustom : MonoBehaviour
                         {
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
-                            for (int k = 0; k < productImages.Count; k++)
+                            for (int k = productImages.Count - 1; k >= 0; k--)
                             {
                                 if (productImages[k].mimeType.Split('/')[0] == "image")
                                 {
@@ -95,7 +95,7 @@ public class UpdateCustom : MonoBehaviour
 #if UNITY_STANDALONE
                     string path = Application.dataPath + "/MarketImg/" + (Category)h;
 #elif UNITY_IOS || UNITY_ANDROID
-            string path = Application.persistentDataPath + "/MarketImg/" + (Category)h;
+                    string path = Application.persistentDataPath + "/MarketImg/" + (Category)h;
 #endif
                     if (!Directory.Exists(path))
                     {
@@ -113,17 +113,31 @@ public class UpdateCustom : MonoBehaviour
                         {
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
-                            for (int k = 0; k < productImages.Count; k++)
+                            for (int k = productImages.Count - 1; k >= 0; k--)
                             {
                                 if (productImages[k].mimeType.Split('/')[0] == "image")
                                 {
-                                    Texture2D texture = await DataModule.WebrequestTextureGet(productImages[k].path, DataModule.NetworkType.GET);
-                                    byte[] bytes = texture.EncodeToPNG();
-                                    File.WriteAllBytes(path + "/Market_" + productImages[k].originalName, bytes);
+                                    FileInfo fileInfo = new FileInfo(path + "/Market_" + productImages[k].originalName);
+                                    if (!fileInfo.Exists)
+                                    {
+                                        Texture2D texture = await DataModule.WebrequestTextureGet(productImages[k].path, DataModule.NetworkType.GET);
+                                        byte[] bytes = texture.EncodeToPNG();
+                                        File.WriteAllBytes(path + "/Market_" + productImages[k].originalName, bytes);
+                                    }
                                 }
                                 else
                                 {
-                                    await DataModule.WebRequestAssetBundle(productImages[k].path, DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE, (Category)h + "/" + productImages[k].originalName);
+                                #if UNITY_STANDALONE
+                                    //번들을 자동적으로 로컬에 저장한다.
+                                    string assetBundleDirectory = Application.dataPath + "/MarketBundle";
+                                #elif UNITY_IOS
+                                    string assetBundleDirectory = Application.persistentDataPath + "/MarketBundle";
+                                #endif
+                                    FileInfo fileInfo = new FileInfo(assetBundleDirectory + "/" + (Category)h + "/" + productImages[k].originalName);
+                                    if (!fileInfo.Exists)
+                                    {
+                                        await DataModule.WebRequestAssetBundle(productImages[k].path, DataModule.NetworkType.GET, DataModule.DataType.ASSETBUNDLE, (Category)h + "/" + productImages[k].originalName);
+                                    }
                                 }
                             }
                         }
@@ -147,7 +161,7 @@ public class UpdateCustom : MonoBehaviour
                 yield break;
             }
             string text = Update_Canvas.transform.GetChild(2).GetChild(3).GetComponent<Text>().text;
-            if(text.Split(".").Length >=3)
+            if(text.Split(".").Length >=4)
             {
                 text = "업데이트 진행중";
             }
@@ -157,7 +171,7 @@ public class UpdateCustom : MonoBehaviour
             }
             Update_Canvas.transform.GetChild(2).GetChild(3).GetComponent<Text>().text = text;
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
     private IEnumerator Custom_Update()
