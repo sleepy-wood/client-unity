@@ -157,6 +157,7 @@ public class TreeController : MonoBehaviour
     [Space]
 
     [Header("UI")]
+    public UI_Initial uiInitial;
     // 나무 이름 입력 UI
     public GameObject treeNameUI;
     // SkyLand Main Text
@@ -167,6 +168,12 @@ public class TreeController : MonoBehaviour
     public Text txtTreeBirth;
     public Text txtTreeRarity;
     public Text txtTreeVitality;
+
+    [Space]
+
+    [Header("Camera")]
+    public ScreenShot screenShot;
+    public VideoCapture videoCapture;
     #endregion
 
 
@@ -268,7 +275,7 @@ public class TreeController : MonoBehaviour
                     Material selectedMat = Instantiate(mat[r1]);
                     print("Selected General Bark Material: " + mat[r1].name);
                     treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
-                    barkMaterial = selectedMat.name;
+                    barkMaterial = selectedMat.name.Replace("(Clone)", "");
                     rarityScore += 30;
                 }
                 // Special Material (30%)
@@ -278,7 +285,7 @@ public class TreeController : MonoBehaviour
                     Material selectedMat = Instantiate(mat[r2]);
                     print("Selected Special Bark Material: " + mat[r2].name);
                     treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
-                    barkMaterial = selectedMat.name;
+                    barkMaterial = selectedMat.name.Replace("(Clone)", "");
                     rarityScore += 50;
                 }
             }
@@ -310,14 +317,6 @@ public class TreeController : MonoBehaviour
             // firstPlantDate와 dayCount에 따라 그에 맞는 HealthData 반영
             if (dayCount > 1)
             {
-                if (dayCount == 5)
-                {
-                    // My Collection Text 활성화
-                    txtTreeName.GetComponent<Text>().enabled = true;
-                    txtTreeBirth.GetComponent<Text>().enabled = true;
-                    txtTreeRarity.GetComponent<Text>().enabled = true;
-                    txtTreeVitality.GetComponent<Text>().enabled = true;
-                }
                 soil.SetActive(false);
                 // ReVisit했는데 해당 DayCount와 저장한 나무 데이터 수가 동일하지 않을 경우 (= 24H 지나고 처음 들어온 경우)
                 if (dayCount != currentTreeData.treeGrowths.Count)
@@ -340,6 +339,23 @@ public class TreeController : MonoBehaviour
                     // Tree 로드
                     PipelineReload();
                     treeFactory.gameObject.SetActive(true);
+                }
+
+                if (dayCount == 5)
+                {
+                    // My Collection Text 활성화
+                    txtTreeName.GetComponent<Text>().enabled = true;
+                    txtTreeBirth.GetComponent<Text>().enabled = true;
+                    txtTreeRarity.GetComponent<Text>().enabled = true;
+                    txtTreeVitality.GetComponent<Text>().enabled = true;
+
+                    // 이미지, 동영상 캡처 후 웹 저장
+                    screenShot.SaveCameraView();
+                    screenShot.SaveTreeImg();
+                    //videoCapture
+
+                    // My Collection 항목 추가
+                    uiInitial.MakeMyCollection();
                 }
             }
             // 1일차의 경우
