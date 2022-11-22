@@ -87,9 +87,13 @@ public static class HealthDataStore
         if (samples is not null)
         {
             SleepSamples = samples;
-            SleepLoading = false;
-            SleepLoadedTime = DateTime.Now;
         }
+        else
+        {
+            SleepSamples = new SleepSample[0];
+        }
+        SleepLoading = false;
+        SleepLoadedTime = DateTime.Now;
     }
 
     static void OnQueryActivitySamplesCompleted(ActivitySample[] samples)
@@ -98,9 +102,13 @@ public static class HealthDataStore
         if (samples is not null)
         {
             ActivitySamples = samples;
-            ActivityLoading = false;
-            ActivityLoadedTime = DateTime.Now;
         }
+        else
+        {
+            ActivitySamples = new ActivitySample[0];
+        }
+        ActivityLoading = false;
+        ActivityLoadedTime = DateTime.Now;
     }
 
     public static SleepSample[] GetSleepSamples(DateTime startDate, DateTime endDate)
