@@ -29,7 +29,7 @@ public class UI_Chatting : MonoBehaviourPun
     private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
     private string[] stopwords;
     
-    private void Start()
+    private void OnEnable()
     {
         photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
         TextAsset textFile = DataTemporary.stopwordsAsset.LoadAsset<TextAsset>("stopwords");
@@ -82,7 +82,7 @@ public class UI_Chatting : MonoBehaviourPun
             prefab.GetComponent<Button>().onClick.AddListener(
                 () => OnClickEmojiButton(temp + 15));
         }
-        emoji_content.offsetMax = new Vector2(110 * (14 + filenames.Count), emoji_content.offsetMax.y);
+        emoji_content.offsetMax = new Vector2(110 * (15 + filenames.Count), emoji_content.offsetMax.y);
     }
     private void Update()
     {

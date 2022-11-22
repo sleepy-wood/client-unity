@@ -18,7 +18,7 @@ public class UI_LandCustom : MonoBehaviourPun
     private int selectCat = 0;
     private string selectCatName = "";
     AssetBundle myLoadedAssetBundle;
-    private void Start()
+    private void OnEnable()
     {
         if(PhotonNetwork.PlayerList.Length != 1)
         {
