@@ -97,10 +97,10 @@ public class LandCustom : MonoBehaviour
         }
         else
         {
-            if (userInput.Interact)
-            {
-                isActiveMove = false;
-            }
+            //if (userInput.Interact)
+            //{
+            //    isActiveMove = false;
+            //}
             switch (editType)
             {
                 case EditType.Editor:

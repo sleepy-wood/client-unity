@@ -193,21 +193,14 @@ public class UI_LandCustom : MonoBehaviourPun
             {
 
 #if UNITY_STANDALONE
-                GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
-                if (!resource)
-                {
-                    resource = DataTemporary.assetBundleCustom.LoadAsset<GameObject>(fileName.Split("LandCustom/" + selectCatName + "/" + fileName.Split('\\'))[1].Split('.')[0]);
-                }
+                GameObject resource = DataTemporary.assetBundleCustom.LoadAsset<GameObject>(fileName.Split("LandCustom/" + selectCatName + "/" + fileName.Split('\\'))[1].Split('.')[0]);
 #elif UNITY_IOS
-                GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('/')[1].Split('.')[0]);
-                if (!resource)
-                {
-                    resource = DataTemporary.assetBundleCustom.LoadAsset<GameObject>(fileName.Split("/LandCustom/" + selectCatName + "/")[1].Split('.')[0]);
-                }
+                GameObject resource = DataTemporary.assetBundleCustom.LoadAsset<GameObject>(fileName.Split("/LandCustom/" + selectCatName + "/")[1].Split('.')[0]);
 #endif
+                Debug.Log(fileName.Split("/LandCustom/" + selectCatName + "/")[1].Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
                 prefab.name = prefab.name.Split('(')[0];
-                prefab.transform.position = new Vector3(0, 0.5f, 0);
+                prefab.transform.position = new Vector3(0, 1f, 0);
 
                 //landDecorations라는 가방에 담기 => 존재하지 않으면 만들자
                 for (int j = 0; j < land.childCount; j++)
@@ -266,6 +259,9 @@ public class UI_LandCustom : MonoBehaviourPun
                 GameObject prefab = Instantiate(resource);
                 Debug.Log(prefab);
 
+                myLoadedAssetBundle.Unload(true);
+                myLoadedAssetBundle = null;
+
                 prefab.name = prefab.name.Split('(')[0];
                 prefab.transform.position = new Vector3(0, 0.5f, 0);
                 //landDecorations라는 가방에 담기 => 존재하지 않으면 만들자
@@ -274,6 +270,7 @@ public class UI_LandCustom : MonoBehaviourPun
                     if (land.GetChild(j).gameObject.name == "landDecorations")
                     {
                         prefab.transform.parent = land.GetChild(j);
+                        Debug.Log(prefab.transform.position);
                         return;
                     }
                 }
@@ -281,8 +278,7 @@ public class UI_LandCustom : MonoBehaviourPun
                 landDecorations.transform.parent = land;
                 landDecorations.transform.position = Vector3.zero;
                 prefab.transform.parent = landDecorations.transform;
-                myLoadedAssetBundle.Unload(true);
-                myLoadedAssetBundle = null;
+                Debug.Log(prefab.transform.position);
                 return;
             }
 

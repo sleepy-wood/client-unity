@@ -191,8 +191,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
                             File.Delete(name);
                         }
                     }
-                    else
+
+                    if (!Directory.Exists(path))
+                    {
                         Directory.CreateDirectory(path);
+                    }
+
 
                     //Debug.Log(marketData.result);
                     ArrayMarketData arrayMarket = new ArrayMarketData();
@@ -239,8 +243,11 @@ public class LoadingData : MonoBehaviourPunCallbacks
                             File.Delete(name);
                         }
                     }
-                    else
+
+                    if (!Directory.Exists(path))
+                    {
                         Directory.CreateDirectory(path);
+                    }
 
                     if (marketsData[h].data.Count == 0)
                     {
