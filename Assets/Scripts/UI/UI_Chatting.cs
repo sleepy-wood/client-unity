@@ -28,7 +28,7 @@ public class UI_Chatting : MonoBehaviourPun
     private GameObject user;
     private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
     private string[] stopwords;
-
+    private int maxNum = 0;
     public void Updating()
     {
 
@@ -52,7 +52,7 @@ public class UI_Chatting : MonoBehaviourPun
 #endif
         }
         filenames.Sort((x, y) => int.Parse(x.Split("Market_Emoji_")[1]).CompareTo(int.Parse(y.Split("Market_Emoji_")[1])));
-        for (int k = 0; k < filenames.Count; k++)
+        for (int k = maxNum - 1; k < filenames.Count; k++)
         {
             int temp = k;
             //GameObject resource = fileName.Split("/TextureImg/")[1].Split('.')[0];
@@ -126,6 +126,7 @@ public class UI_Chatting : MonoBehaviourPun
             prefab.GetComponent<Button>().onClick.AddListener(
                 () => OnClickEmojiButton(temp + 15));
         }
+        maxNum = filenames.Count;
         emoji_content.offsetMax = new Vector2(140 * (15 + filenames.Count), emoji_content.offsetMax.y);
     }
     private void Update()

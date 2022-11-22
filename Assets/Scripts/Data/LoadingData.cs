@@ -169,6 +169,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
             arrayTreeData.getTreeDataList = treeData.data;
             DataTemporary.GetTreeData = arrayTreeData;
         }
+
         for (int h = 0; h < marketsData.Count; h++)
         {
             if (h == (int)Category.emoticon)
@@ -179,12 +180,19 @@ public class LoadingData : MonoBehaviourPunCallbacks
 #if UNITY_STANDALONE
                     string path = Application.dataPath + "/TextureImg";
 #elif UNITY_IOS || UNITY_ANDROID
-            string path = Application.persistentDataPath + "/TextureImg";
+                    string path = Application.persistentDataPath + "/TextureImg";
 #endif
-                    if (!Directory.Exists(path))
+
+                    if (Directory.Exists(path))
                     {
-                        Directory.CreateDirectory(path);
+                        string[] fileEntries = Directory.GetFiles(path, "*.png");
+                        foreach (string name in fileEntries)
+                        {
+                            File.Delete(name);
+                        }
                     }
+                    else
+                        Directory.CreateDirectory(path);
 
                     //Debug.Log(marketData.result);
                     ArrayMarketData arrayMarket = new ArrayMarketData();
@@ -221,12 +229,18 @@ public class LoadingData : MonoBehaviourPunCallbacks
 #if UNITY_STANDALONE
                     string path = Application.dataPath + "/MarketImg/" + (Category)h;
 #elif UNITY_IOS || UNITY_ANDROID
-            string path = Application.persistentDataPath + "/MarketImg/" + (Category)h;
+                    string path = Application.persistentDataPath + "/MarketImg/" + (Category)h;
 #endif
-                    if (!Directory.Exists(path))
+                    if (Directory.Exists(path))
                     {
-                        Directory.CreateDirectory(path);
+                        string[] fileEntries = Directory.GetFiles(path, "*.png");
+                        foreach (string name in fileEntries)
+                        {
+                            File.Delete(name);
+                        }
                     }
+                    else
+                        Directory.CreateDirectory(path);
 
                     if (marketsData[h].data.Count == 0)
                     {

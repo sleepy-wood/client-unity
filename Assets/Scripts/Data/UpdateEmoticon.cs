@@ -90,9 +90,9 @@ public class UpdateEmoticon : MonoBehaviour
                 for (int k = 0; k < productImages.Count - 1; k++)
                 {
                     FileInfo fileInfo = new FileInfo(path + "/Market_Emoji_" + l + ".png");
+                    emoji_urls.Add(productImages[k].path);
                     if (!fileInfo.Exists)
                     {
-                        emoji_urls.Add(productImages[k].path);
                         Texture2D texture = await DataModule.WebrequestTextureGet(productImages[k].path, DataModule.NetworkType.GET);
                         byte[] bytes = texture.EncodeToPNG();
                         File.WriteAllBytes(path + "/Market_Emoji_" + l + ".png", bytes);
