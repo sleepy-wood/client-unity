@@ -195,13 +195,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
                     List<string> emoji_urls = new List<string>();
                     for (int i = 0; i < marketsData[h].data.Count; i++)
                     {
-                        for (int j = 0; j < marketsData[h].data[i].orderDetails.Count; j++)
+                        for (int j = marketsData[h].data[i].orderDetails.Count; j >=0; j--)
                         {
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
-                            for (int k = productImages.Count - 2; k >= 0 ; k--)
+                            for (int k = 0; k <= productImages.Count - 1; k++)
                             {
-                                Debug.Log(productImages[k].originalName);
                                 emoji_urls.Add(productImages[k].path);
                                 DataTemporary.emoji_Url.Add(productImages[k].path);
                                 Texture2D texture = await DataModule.WebrequestTextureGet(productImages[k].path, DataModule.NetworkType.GET);
@@ -236,11 +235,11 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
                     for (int i = 0; i < marketsData[h].data.Count; i++)
                     {
-                        for (int j = 0; j < marketsData[h].data[i].orderDetails.Count; j++)
+                        for (int j = marketsData[h].data[i].orderDetails.Count - 1; j >= 0 ; j--)
                         {
                             List<ProductImages> productImages = new List<ProductImages>();
                             productImages = marketsData[h].data[i].orderDetails[j].product.productImages;
-                            for (int k = productImages.Count - 1; k >= 0; k--)
+                            for (int k = 0; k < productImages.Count; k++)
                             {
                                 if (productImages[k].mimeType.Split('/')[0] == "image")
                                 {

@@ -35,11 +35,11 @@ public class UpdateEmoticon : MonoBehaviour
             int l = 0;
             for (int i = 0; i < marketData.data.Count; i++)
             {
-                for (int j = 0; j < marketData.data[i].orderDetails.Count; j++)
+                for (int j = marketData.data[i].orderDetails.Count - 1; j >= 0 ; j--)
                 {
                     List<ProductImages> productImages = new List<ProductImages>();
                     productImages = marketData.data[i].orderDetails[j].product.productImages;
-                    for (int k = productImages.Count - 2; k >= 0; k--)
+                    for (int k = 0; k < productImages.Count; k++)
                     {
                         l++;
                     }
