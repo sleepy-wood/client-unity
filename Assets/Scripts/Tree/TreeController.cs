@@ -258,6 +258,7 @@ public class TreeController : MonoBehaviour
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[j].enabled = true;
                     }
                 }
+                print("sprout 선택 완료");
 
 
                 // Bark Material 확률적 랜덤 선택
@@ -1060,12 +1061,15 @@ public class TreeController : MonoBehaviour
             treeData.sproutGroupId = sproutGroupId;
             print("sproutGroupId : " + sproutGroupId);
             // Sprout Texture Enabled
-            treeData.sproutColor1 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
-            treeData.sproutColor2 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
-            treeData.sproutColor3 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
-            treeData.sproutColor4 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
-            treeData.sproutColor5 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId].sproutAreas[0].enabled ? 1 : 0;
-
+            treeData.sproutColor1 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[0].enabled ? 1 : 0;
+            treeData.sproutColor2 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[1].enabled ? 1 : 0;
+            treeData.sproutColor3 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[2].enabled ? 1 : 0;
+            treeData.sproutColor4 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[3].enabled ? 1 : 0;
+            treeData.sproutColor5 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[4].enabled ? 1 : 0;
+            // 희귀성
+            treeData.rarity = rarityScore;
+            // 생명력
+            treeData.vitality = vitalityScore;
 
             // Tree Pipeline Data //
             // 1. Scale
@@ -1130,7 +1134,7 @@ public class TreeController : MonoBehaviour
             List<TreePipeline> treeDatas = new List<TreePipeline>();
 
             // Tree Id
-            treeData.treeId = treeId;
+            treeData.id = treeId;
 
             // Tree Pipeline Data //
             // 1. Scale
@@ -1158,10 +1162,7 @@ public class TreeController : MonoBehaviour
             treeData.sproutWidth = treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width;
             // 6. Gravity
             treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
-            // 7. Rarity
-            treeData.rarity = rarityScore;
-            // 8. vitality
-            treeData.vitality = vitalityScore;
+            
 
             string treeJsonData = JsonUtility.ToJson(treeData);
             Debug.Log(JsonUtility.ToJson(treeData, true));
