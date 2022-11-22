@@ -282,6 +282,7 @@ public class UI_LandCustom : MonoBehaviourPun
                 landDecorations.transform.position = Vector3.zero;
                 prefab.transform.parent = landDecorations.transform;
                 myLoadedAssetBundle.Unload(true);
+                myLoadedAssetBundle = null;
                 return;
             }
 
