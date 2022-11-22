@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System;
+using UnityEngine.Networking;
 
 
 #if UNITY_EDITOR
@@ -140,16 +141,30 @@ public class ScreenShot : MonoBehaviour
     }
 
     string saveUrl;
-    public async void SaveTreeImg()
+    public async void SaveTreeImg()//byte[] byteArray)
     {
         saveUrl = "/api/v1/trees/upload";
+
         TreeFile treeFile = new TreeFile();
         List<TreeFile> treeFiles = new List<TreeFile>();
 
-        treeFile.treeId = GameManager.Instance.treeController.treeId;
+        treeFile.treeId = 65;//GameManager.Instance.treeController.treeId;
 
         // Tree Image or Video
-        //ResultPut<treeFile> = await DataModule.WebRequestBuffer<sproutGroup,
+        List<IMultipartFormSection> treeCaptures = new List<IMultipartFormSection>();
+#if UNITY_STANDALONE
+        string path = $"{Application.dataPath}/ScreenShot/Image/TreeCapture_{GameManager.Instance.treeController.treeId}.png";
+#elif UNITY_IOS || UNITY_ANDROID
+        string path = $"{Application.persistentDataPath}/ScreenShot/Image/TreeCapture_{GameManager.Instance.treeController.treeId}.png";
+#endif
+        treeCaptures.Add(new MultipartFormFileSection("TreeImage", File.ReadAllBytes(path)));
+
+        //ResultPost<TreeFile> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeFile>>(
+        //    saveUrl,
+        //    DataModule.NetworkType.POST,
+        //    DataModule.DataType.BUFFER,
+        //    treeCaptures
+        //    );
 
     }
 }
