@@ -172,7 +172,7 @@ public class TimeManager : MonoBehaviour
     /// </summary>
     public void OnPlusDay(DateTime firstDate)
     {
-        now = now.dateTime.AddDays(1);
+        now = firstDate.AddDays(1);
         CalculatePlantDays(firstDate, now);
         treeControll.SetTree(totalPlantDay, 1);
     }
