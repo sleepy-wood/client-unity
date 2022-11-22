@@ -25,8 +25,8 @@ public class VideoCapture : MonoBehaviour
         // Application.temporaryCachePath (IOS) = %ProvisioningProfile%/Library/Caches
         cachePath = "file://" + Application.temporaryCachePath + "/tmp.mov";
         cachePath2 = $"{Application.persistentDataPath}/ScreenShot/Video/Video_{GameManager.Instance.treeController.treeId}.mov";
-        print($"cachePath: {cachePath}");
-        print($"cachePath2 : {cachePath2}");
+        //print($"cachePath: {cachePath}");
+        //print($"cachePath2 : {cachePath2}");
     }
 
 

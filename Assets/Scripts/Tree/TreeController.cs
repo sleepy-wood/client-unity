@@ -34,6 +34,8 @@ public class TreeController : MonoBehaviour
     public string treeName;
     // 현재 나무의 id
     public int treeId;
+    // (여러 트리 데이터 중) 현재 트리 데이터의 인덱스
+    public int treeDataIdx;
     // Load할 Pipeline 이름
     public string pipeName;
     // 랜덤으로 선택된 SeedType
@@ -493,6 +495,10 @@ public class TreeController : MonoBehaviour
     public float camMoveSpeed = 1f;
     void Update()
     {
+        if (previewTree == null)
+        {
+            
+        }
         #region 썩은잎 만들기 Test
         //if (count == 1 && !isOnce)
         //{
@@ -801,6 +807,9 @@ public class TreeController : MonoBehaviour
         Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
         treeFactory.UnloadAndClearPipeline();
+        // previewTree
+        if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
+        treeFactory.transform.GetChild(1).gameObject.layer = 11;  
         if (!playMode)
         {
             treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
@@ -829,49 +838,47 @@ public class TreeController : MonoBehaviour
         // 씨앗 심기
         if (day == 1)
         {
+            print("1일차");
             StartCoroutine(PlantSeed(1.02f));
-            treeFactory.transform.GetChild(0).gameObject.layer = 11;
             PipelineReload();
         }
         // 2일차
         else if (day == 2)
         {
+            print("2일차");
             sprout.SetActive(false);
             soil.SetActive(false);
             if (healthSetting == 1) PipelineReload();
             treeFactory.gameObject.SetActive(true);
-            treeFactory.transform.GetChild(0).gameObject.layer = 11;
         }
         // 3일차
         else if (day == 3)
         {
+            print("3일차");
             if (healthSetting == 0) PipelineSetting(1);
             else if (healthSetting == 1) ApplyHealthData();
             PipelineReload();
-            treeFactory.transform.GetChild(0).gameObject.layer = 11;
             campos = Camera.main.gameObject.transform;
-            //SaveTreeData();
         }
         // 4일차
         else if (day == 4)
         {
+            print("4일차");
             if (healthSetting == 0) PipelineSetting(2);
             else if (healthSetting == 1) ApplyHealthData();
             PipelineReload();
-            treeFactory.transform.GetChild(0).gameObject.layer = 11;
-            //SaveTreeData();
         }
         // 5일차
         else if (day == 5)
         {
+            print("5일차");
             if (healthSetting == 0) PipelineSetting(3);
             else if (healthSetting == 1) ApplyHealthData();
             PipelineReload();
-            treeFactory.transform.GetChild(0).gameObject.layer = 11;
             assetBundle.Unload(false);
-            //SaveTreeData();
+            // 리셋
         }
-
+        SaveTreeData();
     }
 
     /// <summary>
@@ -1021,7 +1028,7 @@ public class TreeController : MonoBehaviour
     public async void SaveTreeData()
     {
         // Day1 - 2일차 기본 세팅 저장
-        if (dayCount == 1)
+        if (dayCount == 1 && visitType == VisitType.First)
         {
             saveUrl = "/api/v1/trees";
             TreeData treeData = new TreeData();
@@ -1031,19 +1038,14 @@ public class TreeController : MonoBehaviour
             treeData.treeName = treeName;
             // seed Number
             treeData.seedNumber = treePipeline.seed;
-            Debug.Log("treeData.seedNumber = " + treeData.seedNumber);
             // treePipeName
             treeData.treePipeName = pipeName;
-            print("pipeName : " + pipeName);
             // Bark Material Name
             treeData.barkMaterial = barkMaterial;
-            print("barkMaterial : " + barkMaterial);
             // Land ID 
             treeData.landId = DataTemporary.MyUserData.currentLandId;
-            print("landId : " + DataTemporary.MyUserData.currentLandId);
             // Sprout Group Id
             treeData.sproutGroupId = sproutGroupId;
-            print("sproutGroupId : " + sproutGroupId);
             // Sprout Texture Enabled
             treeData.sproutColor1 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[0].enabled ? 1 : 0;
             treeData.sproutColor2 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[1].enabled ? 1 : 0;
@@ -1111,18 +1113,17 @@ public class TreeController : MonoBehaviour
             FileManager.SaveDataFile("TreeData", arrayTreeData);
         }
         // Day2~5 - 헬스데이터 적용한 나무 데이터 저장
-        else if (dayCount > 1 && dayCount < 6)
+        else if (dayCount > 1 && dayCount < 6 && DataTemporary.GetTreeData.getTreeDataList[treeDataIdx].treeGrowths.Count < dayCount)
         {
             saveUrl = "/api/v1/tree-growths";
             TreePipeline treeData = new TreePipeline();
             List<TreePipeline> treeDatas = new List<TreePipeline>();
 
             // Tree Id
-            treeData.id = treeId;
+            treeData.treeId = treeId;
 
             // Tree Pipeline Data //
             // 1. Scale
-            if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
             treeData.scale = previewTree.localScale.x;
             // 2. Branch Numbers
             List<StructureGenerator.StructureLevel> level = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels;
@@ -1146,7 +1147,10 @@ public class TreeController : MonoBehaviour
             treeData.sproutWidth = treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width;
             // 6. Gravity
             treeData.gravity = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minGravityAlignAtTop;
-            
+            // 7. Rarity
+            treeData.rarity = rarityScore;
+            // 8. Vitality
+            treeData.vitality = vitalityScore;
 
             string treeJsonData = JsonUtility.ToJson(treeData);
             Debug.Log(JsonUtility.ToJson(treeData, true));
