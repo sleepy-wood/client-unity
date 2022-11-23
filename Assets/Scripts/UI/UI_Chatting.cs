@@ -24,7 +24,6 @@ public class UI_Chatting : MonoBehaviourPun
     //EmojiChatting의 Content
     private float prevContentH;
     private RectTransform trScrollView;
-    //내 아이디 색
     private GameObject user;
     private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
     private string[] stopwords;
