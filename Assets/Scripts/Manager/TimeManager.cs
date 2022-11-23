@@ -82,7 +82,10 @@ public class TimeManager : MonoBehaviour
 
     private void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.F1))
+        {
+            GetTreeData();
+        }
         #region skyBox 변화 시연
         // 특정 시간 지정
         //if (i == 0 && Input.GetKeyDown(KeyCode.Alpha2))
@@ -188,7 +191,7 @@ public class TimeManager : MonoBehaviour
         now = firstDate.AddDays(day);
         if (day == 5) day = 1;  
         CalculatePlantDays(firstDate, now);
-        if (day > 1)
+        if (day > 0)
         {
             // Tree Data 받아와서 Tree Id 세팅해서 2~5일 데이터 저장
             GetTreeData();

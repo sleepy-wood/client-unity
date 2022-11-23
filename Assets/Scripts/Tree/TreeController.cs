@@ -914,6 +914,8 @@ public class TreeController : MonoBehaviour
             assetBundle.Unload(false);
             // Tree & Land 이미지 캡처
             screenShot.SaveCameraView();
+            // Tree 캡처 이미지 업로드
+            screenShot.SaveTreeImg();
         }
         if (day>1) SaveTreeData();
     }
