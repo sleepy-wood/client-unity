@@ -72,7 +72,8 @@ namespace UTJ.FrameCapturer
 
             public bool Initialize(MovieEncoderConfigs c, DataPath p)
             {
-                string path = p.GetFullPath() + "/" + m_name;
+                //string path = p.GetFullPath() + "/" + m_name;
+                string path = Application.dataPath + $"/Screenshot/Video/Video_{DateTime.Now.ToString("yyMMdd")}";
                 c.Setup(m_rt.width, m_rt.height, m_channels, m_targetFramerate);
                 m_encoder = MovieEncoder.Create(c, path);
                 return m_encoder != null && m_encoder.IsValid();
