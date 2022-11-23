@@ -329,7 +329,7 @@ public class UI_LandCustom : MonoBehaviourPun
             menuBar.SetActive(false);
             menuBar2.SetActive(false);
             isActiveCanvase = true;
-            GameManager.Instance.User.GetComponent<UserInput>().InputControl = true;
+            GameManager.Instance.User.GetComponent<UserInteract>().moveControl = true;
             for (int i = 0; i < objects.Count; i++)
             {
                 objects[i].SetActive(true);
@@ -344,7 +344,7 @@ public class UI_LandCustom : MonoBehaviourPun
             menuBar.SetActive(true);
             menuBar2.SetActive(true);
             //SkyLandManager.Instance.SaveData();
-            GameManager.Instance.User.GetComponent<UserInput>().InputControl = false;
+            GameManager.Instance.User.GetComponent<UserInteract>().moveControl = false;
             isActiveCanvase = false;
             for (int i = 0; i < objects.Count; i++)
             {
