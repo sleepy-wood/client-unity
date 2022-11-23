@@ -198,12 +198,12 @@ public class TreeController : MonoBehaviour
         if (visitType == VisitType.First)
         {
             // Mode에 따른 Pipeline 선택
-            //if (playMode)
-            //{
-            //    pipeName = "OakTree";
-            //    selectedSeed = SeedType.Demo;
-            //    treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
-            //}
+            if (playMode)
+            {
+                pipeName = "BasicTree";
+                selectedSeed = SeedType.Demo;
+                treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+            }
             if (demoMode)
             {
                 pipeName = "DemoTree_Cherry";
@@ -251,8 +251,8 @@ public class TreeController : MonoBehaviour
                 }
                 
                 if (n < 50)
-                { 
-                    int random = UnityEngine.Random.Range(1, 4);
+                {
+                    int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count - 1);
                     treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     rarityScore += 10;
                 }
@@ -261,7 +261,7 @@ public class TreeController : MonoBehaviour
                     rarityScore += 20;
                     for (int j = 0; j < 2; j++)
                     {
-                        int random = UnityEngine.Random.Range(1, 4);
+                        int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count-1);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
@@ -270,7 +270,7 @@ public class TreeController : MonoBehaviour
                     rarityScore += 30;
                     for (int j = 0; j < 3; j++)
                     {
-                        int random = UnityEngine.Random.Range(1, 4);
+                        int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count - 1);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
@@ -279,7 +279,7 @@ public class TreeController : MonoBehaviour
                     rarityScore += 40;
                     for (int j = 0; j < 4; j++)
                     {
-                        int random = UnityEngine.Random.Range(1, 4);
+                        int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count - 1);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
