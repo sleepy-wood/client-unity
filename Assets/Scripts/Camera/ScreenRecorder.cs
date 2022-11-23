@@ -92,8 +92,11 @@ public class ScreenRecorder : MonoBehaviour
         Application.targetFrameRate = frameRate;
 
         // Prepare the data directory
+#if UNITY_STANDALONE
         persistentDataPath = Application.dataPath + "/ScreenRecorder";
-
+#elif UNITY_IOS || UNITY_ANDROID
+        persistentDataPath = Application.persistentDataPath + "/ScreenRecorder";
+#endif
         print("Capturing to: " + persistentDataPath + "/");
 
         if (!System.IO.Directory.Exists(persistentDataPath))
@@ -105,6 +108,7 @@ public class ScreenRecorder : MonoBehaviour
         screenWidth = GetComponent<Camera>().pixelWidth;
         screenHeight = GetComponent<Camera>().pixelHeight;
 
+        // Render Texture
         tempRenderTexture = new RenderTexture(screenWidth, screenHeight, 0);
         tempTexture2D = new Texture2D(screenWidth, screenHeight, TextureFormat.RGB24, false);
         frameQueue = new Queue<byte[]>();
@@ -128,6 +132,9 @@ public class ScreenRecorder : MonoBehaviour
         encoderThread.Start();
     }
 
+    /// <summary>
+    /// ???
+    /// </summary>
     void OnDisable()
     {
         // Reset target frame rate
