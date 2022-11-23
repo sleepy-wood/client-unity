@@ -321,7 +321,7 @@ public class UI_LandCustom : MonoBehaviourPun
                 myLoadedAssetBundle = null;
 
                 prefab.name = prefab.name.Split('(')[0];
-                prefab.transform.position = new Vector3(0, 0.5f, 0);
+                prefab.transform.position = new Vector3(0, 1, 0);
                 //landDecorations라는 가방에 담기 => 존재하지 않으면 만들자
                 for (int j = 0; j < land.childCount; j++)
                 {
