@@ -358,6 +358,10 @@ public class TreeController : MonoBehaviour
         }
         else if (visitType == VisitType.ReVisit)
         {
+            // 캔버스 활성화
+            landCanvas.SetActive(true);
+            chatCanvas.SetActive(true);
+
             // 로드한 이전 나무 데이터 세팅
             LoadDataSetting();
 
@@ -365,9 +369,11 @@ public class TreeController : MonoBehaviour
             if (dayCount > 1)
             {
                 soil.SetActive(false);
+                plant.SetActive(true);
                 // ReVisit했는데 해당 DayCount와 저장한 나무 데이터 수가 동일하지 않을 경우 (= 24H 지나고 처음 들어온 경우)
                 if (dayCount != currentTreeData.treeGrowths.Count)
                 {
+                    print("24H 지나고 첫방문으로 Daycount가 바뀌었음");
                     // 이전 날의 HealthData 반영 + 데이터 저장 + 나무 변경 Text
                     ApplyHealthData();
                     SaveTreeData();
@@ -396,20 +402,18 @@ public class TreeController : MonoBehaviour
                     txtTreeRarity.GetComponent<Text>().enabled = true;
                     txtTreeVitality.GetComponent<Text>().enabled = true;
 
-                    // 이미지, 동영상 캡처 후 웹 저장
+                    // Image Capture & Save
                     screenShot.SaveCameraView();
                     screenShot.SaveTreeImg();
-                    //videoCapture
+                    // Video Capture & Save
 
                     // My Collection 항목 추가
-                    uiInitial.MakeMyCollection();
+                    //uiInitial.MakeMyCollection();
                 }
             }
             // 1일차의 경우
             else if (dayCount == 1)
             {
-                landCanvas.SetActive(true);
-                chatCanvas.SetActive(true);
                 sprout.SetActive(true);
                 sproutLeaf.transform.localScale = new Vector3(1, 1, 1);
             }
@@ -510,7 +514,7 @@ public class TreeController : MonoBehaviour
         treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = pipeData.sproutNum;
         // 5. Ratio of Rotten Sprout : 0, 25, 50, 75, 100
         List<int> groupNum = new List<int>() { 5, 6, 7, 8 };
-        for (int i = 0; i < pipeData.rottenRate / 25; i++)
+        for (int i = 0; i < (pipeData.rottenRate/25); i++) // i < 0, 1, 2, 3, 4
         {
             SproutSeed sproutGroup = new SproutSeed();
             treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutGroup);

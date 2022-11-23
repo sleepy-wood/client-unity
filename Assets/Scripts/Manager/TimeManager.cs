@@ -44,12 +44,11 @@ public class TimeManager : MonoBehaviour
 
                         // 처음 심은 날 저장
                         firstPlantDate = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
-                        print("firstPlantDate : " + firstPlantDate);
+                        print("firstPlantDate : " + firstPlantDate.dateTime);
 
                         // 현재 랜드의 나무 데이터
                         treeControll.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
                         print($"{treeDataCount}개의 트리 데이터 중 {i}번째 트리 데이터");  // 심은 순서대로 저장 
-                        print("나무 처음 심은 시간 : " + firstPlantDate.dateTime);
                     }
                 }
             }
@@ -70,7 +69,6 @@ public class TimeManager : MonoBehaviour
             treeControll.visitType = TreeController.VisitType.ReVisit;
             // totalPlantDay, dayCount 계산
             CalculatePlantDays(firstPlantDate, DateTime.Now);
-            landCanvas.SetActive(true);
         }
     }
 
