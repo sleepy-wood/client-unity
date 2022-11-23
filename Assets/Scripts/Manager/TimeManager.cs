@@ -188,7 +188,7 @@ public class TimeManager : MonoBehaviour
         now = firstDate.AddDays(day);
         if (day == 5) day = 1;  
         CalculatePlantDays(firstDate, now);
-        if (day == 2)
+        if (day > 1)
         {
             // Tree Data 받아와서 Tree Id 세팅해서 2~5일 데이터 저장
             GetTreeData();
@@ -197,7 +197,7 @@ public class TimeManager : MonoBehaviour
             for (int i = 0; i < treeDataCount; i++)
             {
                 // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
-                if (DataTemporary.GetTreeData.getTreeDataList[i].landId == DataTemporary.MyUserData.currentLandId)
+                if (DataTemporary.GetTreeData.getTreeDataList[i].treeName == treeControll.treeName)
                 {
                     // 현재 랜드의 트리 데이터 인덱스 저장
                     //treeControll.treeDataIdx = i;
