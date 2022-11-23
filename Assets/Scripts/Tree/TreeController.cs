@@ -200,7 +200,7 @@ public class TreeController : MonoBehaviour
             // Mode에 따른 Pipeline 선택
             //if (playMode)
             //{
-            //    pipeName = "DemoTree_Red1";
+            //    pipeName = "OakTree";
             //    selectedSeed = SeedType.Demo;
             //    treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
             //}
@@ -213,7 +213,7 @@ public class TreeController : MonoBehaviour
             {
                 // Pipeline 랜덤 선택 ( Tree Shape )
                 int i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo Tree 빼고 랜덤 선택
-                pipeName = pipeNameList[i];
+                pipeName = pipeNameList[2];
                 selectedSeed = pipeNameDict[pipeName];
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 
@@ -252,7 +252,7 @@ public class TreeController : MonoBehaviour
                 
                 if (n < 50)
                 { 
-                    int random = UnityEngine.Random.Range(0, 4);
+                    int random = UnityEngine.Random.Range(1, 4);
                     treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     rarityScore += 10;
                 }
@@ -261,7 +261,7 @@ public class TreeController : MonoBehaviour
                     rarityScore += 20;
                     for (int j = 0; j < 2; j++)
                     {
-                        int random = UnityEngine.Random.Range(0, 4);
+                        int random = UnityEngine.Random.Range(1, 4);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
@@ -270,7 +270,7 @@ public class TreeController : MonoBehaviour
                     rarityScore += 30;
                     for (int j = 0; j < 3; j++)
                     {
-                        int random = UnityEngine.Random.Range(0, 4);
+                        int random = UnityEngine.Random.Range(1, 4);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
@@ -279,7 +279,7 @@ public class TreeController : MonoBehaviour
                     rarityScore += 40;
                     for (int j = 0; j < 4; j++)
                     {
-                        int random = UnityEngine.Random.Range(0, 4);
+                        int random = UnityEngine.Random.Range(1, 4);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
