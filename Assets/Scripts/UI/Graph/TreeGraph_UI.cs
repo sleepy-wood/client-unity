@@ -3,6 +3,7 @@ using NativePlugin.HealthData;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,22 +12,38 @@ public class TreeGraph_UI : MonoBehaviour
 {
     [SerializeField] private Transform m_scrollBarParent;
     Text m_text;
-    GetTreeData treeData;
+    Text m_Createtext;
+    CollectionData treeData;
     SleepSample[] samples;
-    List<float> treeSleepTimes = new List<float>();
     bool isOnce = false;
     private void Awake()
     {
         m_text = transform.GetChild(0).GetComponent<Text>();
-        treeData = DataTemporary.GetTreeData.getTreeDataList[0];
-        
+        m_Createtext = transform.GetChild(1).GetComponent<Text>();
+        treeData = DataTemporary.arrayCollectionDatas.collectionLists[int.Parse(transform.parent.gameObject.name.Split("_")[1])];
+
+        DateTime dateTime = DateTime.Parse(treeData.createdAt);
+
         //m_Text에 정보 기입
+        string t = "";
+        t += "나무 이름: " + treeData.treeName;
+        t += "\n생성 날짜: " + dateTime.Year + "." + dateTime.Month + "." + dateTime.Day + " / " + dateTime.Hour + ":" + dateTime.Minute;
+        t += "\n만든이: " + DataTemporary.MyUserData.nickname;
+        //t += "\n토큰 날짜: " + treeData.createdAt;
+        t += "\n희귀성: " + treeData.rarity + "/100";
+        t += "\n생명력: " + treeData.vitality + "/100";
+        t += " \n일별 수면량";
 
-
+        m_text.text = t;
+        m_Createtext.text = "created by\n" + DataTemporary.MyUserData.nickname;
         samples = DataTemporary.samples;
     }
     private void OnEnable()
     {
+        for (int j = 0; j < m_scrollBarParent.childCount; j++)
+        {
+            m_scrollBarParent.GetChild(j).GetChild(1).GetComponent<Image>().fillAmount = 0;
+        }
         StartCoroutine(DrawGraph());
     }
     private IEnumerator DrawGraph()
@@ -36,6 +53,7 @@ public class TreeGraph_UI : MonoBehaviour
     }    
     private void DrawTreeGraph()
     {
+        List<float> treeSleepTimes = new List<float>();
         DateTime treeDateTime = DateTime.Parse(treeData.createdAt);
         //시작점을 구하자
         int temp = 0;
@@ -129,7 +147,8 @@ public class TreeGraph_UI : MonoBehaviour
     #region Coroutine
     private IEnumerator GraphMove(int idx, float size)
     {
-        Debug.Log(size);
+        m_scrollBarParent.GetChild(idx).GetChild(2).GetComponent<Text>().text = (size * 100).ToString();
+
         float t = 0;
         while (t < 1f)
         {

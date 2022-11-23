@@ -32,10 +32,14 @@ public class DataTemporary
     public static ArrayTreeData TreeData = new ArrayTreeData(); // Day1
     public static ArrayTreeData2 TreeData2 = new ArrayTreeData2();  // Day2~Day5
     public static ArrayGetTreeData GetTreeData = new ArrayGetTreeData();
+    //Collection data;
+    public static ArrayCollectionData arrayCollectionDatas= new ArrayCollectionData();
+    public static List<Texture2D> collectionPictures = new List<Texture2D>();
     //Market Data
     public static ArrayMarketData arrayMarketData = new ArrayMarketData();
     public static List<string> emoji_Url = new List<string>();
     //public static List<List<string>> market_url = new List<List<string>>();
     public static Dictionary<DateTime, TimeSpan> DateTimeTotalTimeSpan = new Dictionary<DateTime, TimeSpan>();
+   
 
 }

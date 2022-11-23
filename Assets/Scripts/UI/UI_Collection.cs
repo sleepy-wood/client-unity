@@ -1,18 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Collection : MonoBehaviour
 {
+    public List<Sprite> grades = new List<Sprite>();
+    
     private RectTransform content;
     private int selectNum = 0;
     private GameObject user;
     private UserInput userInput;
     private int maxNum;
     private List<float> posXList = new List<float>();
-    private void Awake()
+    private async void Awake()
     {
         content = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<RectTransform>();
+        for (int i = 0; i < DataTemporary.arrayCollectionDatas.collectionLists.Count; i++)
+        {
+            GameObject profile_resource = Resources.Load<GameObject>("Profile");
+            GameObject profile_Prefab = Instantiate(profile_resource, content);
+            profile_Prefab.name = profile_Prefab.name.Split('(')[0] + "_" + i;
+            CollectionData collectionData = DataTemporary.arrayCollectionDatas.collectionLists[i];
+            if(collectionData.rarity>90 && collectionData.rarity <= 100)
+            {
+                profile_Prefab.GetComponent<Image>().sprite = grades[0];
+            }
+            else if(collectionData.rarity > 80 && collectionData.rarity <= 90)
+            {
+                profile_Prefab.GetComponent<Image>().sprite = grades[1];
+            }
+            else if(collectionData.rarity > 70 && collectionData.rarity <= 80)
+            {
+                profile_Prefab.GetComponent<Image>().sprite = grades[2];
+            }
+            else if(collectionData.rarity > 60 && collectionData.rarity <= 70)
+            {
+                profile_Prefab.GetComponent<Image>().sprite = grades[3];
+            }
+            else if(collectionData.rarity > 50 && collectionData.rarity <= 60)
+            {
+                profile_Prefab.GetComponent<Image>().sprite = grades[4];
+            }
+            for(int j = 0; j < collectionData.treeAttachments.Count; j++)
+            {
+                if (collectionData.treeAttachments[j].mimeType.Contains("image"))
+                {
+                    Texture2D texture = await DataModule.WebrequestTextureGet(collectionData.treeAttachments[j].path, DataModule.NetworkType.GET);
+                    Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                    profile_Prefab.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
+                    break;
+                }
+            }
+
+        }
+
         maxNum = content.childCount - 1;
         for(int i = 0; i < content.childCount; i++)
         {
@@ -23,10 +66,6 @@ public class UI_Collection : MonoBehaviour
             else
                 posXList.Add(-812.5f + -856.9f * (i - 1));
         }
-    }
-    private void Start()
-    {
-        
     }
     private void OnEnable()
     {

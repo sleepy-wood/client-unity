@@ -142,7 +142,9 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
         // TreeData Get
         ResultGet<GetTreeData> treeData = await DataModule.WebRequestBuffer<ResultGet<GetTreeData>>("/api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-
+        
+        //CollectionData Get
+        ResultGet<CollectionData> collectionData = await DataModule.WebRequestBuffer<ResultGet<CollectionData>>("/api/v1/trees/collections", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         if (landData.result)
         {
@@ -169,7 +171,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
             arrayTreeData.getTreeDataList = treeData.data;
             DataTemporary.GetTreeData = arrayTreeData;
         }
-
+        if (collectionData.result)
+        {
+            ArrayCollectionData arrayCollections = new ArrayCollectionData();
+            arrayCollections.collectionLists = collectionData.data;
+            DataTemporary.arrayCollectionDatas = arrayCollections;
+        }
         for (int h = 0; h < marketsData.Count; h++)
         {
             if (h == (int)Category.emoticon)
