@@ -140,7 +140,23 @@ public class TreeImgVideo
     // 나무 아이디
     public int treeId;
     // 첨부파일 아이디
-    public List<string>? attachFileIds;
+    public List<int>? attachFileIds;
+}
+
+[Serializable]
+public class GetTreeImgVideo
+{
+    string filename;
+    string originalName;
+    string path;
+    string mimeType;
+    int size;
+    int treeId;
+    bool isThumbnail;
+    string deletedAt;
+    int id;
+    string createdAt;
+    string updatedAt;
 }
 
 
