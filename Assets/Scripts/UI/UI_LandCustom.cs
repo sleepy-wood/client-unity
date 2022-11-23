@@ -193,11 +193,11 @@ public class UI_LandCustom : MonoBehaviourPun
             {
 
 #if UNITY_STANDALONE
-                GameObject resource = DataTemporary.assetBundleCustom.LoadAsset<GameObject>(fileName.Split("LandCustom/" + selectCatName + "/" + fileName.Split('\\'))[1].Split('.')[0]);
+                Debug.Log(fileName);
+                GameObject resource = DataTemporary.assetBundleCustom.LoadAsset<GameObject>(fileName.Split("LandCustom/" + selectCatName + "\\")[1].Split('.')[0]);
 #elif UNITY_IOS
                 GameObject resource = DataTemporary.assetBundleCustom.LoadAsset<GameObject>(fileName.Split("/LandCustom/" + selectCatName + "/")[1].Split('.')[0]);
 #endif
-                Debug.Log(fileName.Split("/LandCustom/" + selectCatName + "/")[1].Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
                 prefab.name = prefab.name.Split('(')[0];
                 prefab.transform.position = new Vector3(0, 1f, 0);
@@ -329,7 +329,7 @@ public class UI_LandCustom : MonoBehaviourPun
             menuBar.SetActive(false);
             menuBar2.SetActive(false);
             isActiveCanvase = true;
-            GameManager.Instance.User.GetComponent<UserInput>().InputControl = true;
+            GameManager.Instance.User.GetComponent<UserInteract>().moveControl = true;
             for (int i = 0; i < objects.Count; i++)
             {
                 objects[i].SetActive(true);
@@ -344,7 +344,7 @@ public class UI_LandCustom : MonoBehaviourPun
             menuBar.SetActive(true);
             menuBar2.SetActive(true);
             //SkyLandManager.Instance.SaveData();
-            GameManager.Instance.User.GetComponent<UserInput>().InputControl = false;
+            GameManager.Instance.User.GetComponent<UserInteract>().moveControl = false;
             isActiveCanvase = false;
             for (int i = 0; i < objects.Count; i++)
             {
