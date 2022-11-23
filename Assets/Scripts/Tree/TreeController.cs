@@ -537,10 +537,6 @@ public class TreeController : MonoBehaviour
     public float camMoveSpeed = 1f;
     void Update()
     {
-        if (previewTree == null)
-        {
-            
-        }
         #region 썩은잎 만들기 Test
         //if (count == 1 && !isOnce)
         //{
