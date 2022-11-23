@@ -85,7 +85,6 @@ public class ScreenShot : MonoBehaviour
     public void SaveCameraView()
     {
         // Screen Capture Code
-
         RenderTexture screenTexture = new RenderTexture(Screen.width, Screen.height, 16);
         Camera cam = GetComponent<Camera>();
         cam.targetTexture = screenTexture;
@@ -152,7 +151,7 @@ public class ScreenShot : MonoBehaviour
 #elif UNITY_IOS || UNITY_ANDROID
         string path = $"{Application.persistentDataPath}/ScreenShot/Image/TreeCapture_{GameManager.Instance.treeController.treeId}.png";
 #endif
-        treeCaptures.Add(new MultipartFormFileSection("TreeCapture", File.ReadAllBytes(path)));
+        treeCaptures.Add(new MultipartFormFileSection("files", File.ReadAllBytes(path), $"TreeCapture_{GameManager.Instance.treeController.treeId}.png", "image/png"));
 
         ResultPost<TreeFile> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeFile>>(
             saveUrl,
@@ -180,12 +179,13 @@ public class ScreenShot : MonoBehaviour
             saveUrl = "/api/v1/trees/upload";
             TreeImgVideo treeImgVideo = new TreeImgVideo();
             treeImgVideo.treeId = GameManager.Instance.treeController.treeId;
-            treeImgVideo.attachFileIds.Add(fileId.ToString());
+            treeImgVideo.attachFileIds = new List<int>();
+            treeImgVideo.attachFileIds.Add(fileId);
 
             string ImgVideoJsonData = JsonUtility.ToJson(treeImgVideo);
             Debug.Log(JsonUtility.ToJson(treeImgVideo, true));
 
-            ResultPost<TreeImgVideo> resultPost2 = await DataModule.WebRequestBuffer<ResultPost<TreeImgVideo>>(
+            ResultPost<GetTreeImgVideo> resultPost2 = await DataModule.WebRequestBuffer<ResultPost<GetTreeImgVideo>>(
                 saveUrl,
                 DataModule.NetworkType.POST,
                 DataModule.DataType.BUFFER,
@@ -193,6 +193,7 @@ public class ScreenShot : MonoBehaviour
 
             if (!resultPost2.result) Debug.LogError("WebRequestError : NetworkType[Post]");
             else Debug.Log($"Tree Img/Video 업로드 성공");
+            Debug.Log($"id = {resultPost2.data}");
         }
     }
 }

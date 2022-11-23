@@ -165,6 +165,32 @@ public class TimeManager : MonoBehaviour
         //    isOnce = true;
         //}
         #endregion
+
+        if (getResult)
+        {
+            getResult = false;
+            int treeDataCount = DataTemporary.GetTreeData.getTreeDataList.Count;
+            for (int i = 0; i < treeDataCount; i++)
+            {
+                // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
+                if (DataTemporary.GetTreeData.getTreeDataList[i].treeName == treeControll.treeName)
+                {
+                    // 현재 랜드의 트리 데이터 인덱스 저장
+                    //treeControll.treeDataIdx = i;
+
+                    //// 현재 랜드의 나무 데이터
+                    //treeControll.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
+                    //print($"{treeDataCount}개의 트리 데이터 중 {i}번째 트리 데이터");  // 심은 순서대로 저장 
+                    //print("나무 처음 심은 시간 : " + firstPlantDate.dateTime);
+
+                    // Tree Id 저장
+                    treeControll.treeId = DataTemporary.GetTreeData.getTreeDataList[i].id;
+                }
+            }
+            if (treeControll.playMode) treeControll.SetTree(totalPlantDay, 0);
+            else treeControll.SetTree(totalPlantDay, 1);
+        }
+    
     }
 
 
@@ -195,42 +221,21 @@ public class TimeManager : MonoBehaviour
         {
             // Tree Data 받아와서 Tree Id 세팅해서 2~5일 데이터 저장
             GetTreeData();
-
-            int treeDataCount = DataTemporary.GetTreeData.getTreeDataList.Count;
-            for (int i = 0; i < treeDataCount; i++)
-            {
-                // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
-                if (DataTemporary.GetTreeData.getTreeDataList[i].treeName == treeControll.treeName)
-                {
-                    // 현재 랜드의 트리 데이터 인덱스 저장
-                    //treeControll.treeDataIdx = i;
-
-                    //// 현재 랜드의 나무 데이터
-                    //treeControll.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
-                    //print($"{treeDataCount}개의 트리 데이터 중 {i}번째 트리 데이터");  // 심은 순서대로 저장 
-                    //print("나무 처음 심은 시간 : " + firstPlantDate.dateTime);
-
-                    // Tree Id 저장
-                    treeControll.treeId = DataTemporary.GetTreeData.getTreeDataList[i].id;
-                }
-            }
         }
-        if (treeControll.playMode) treeControll.SetTree(totalPlantDay, 0);
-        else treeControll.SetTree(totalPlantDay, 1);
     }
 
+    bool getResult;
     public async void GetTreeData()
     {
         ResultGet<GetTreeData> treeData = await DataModule.WebRequestBuffer<ResultGet<GetTreeData>>("/api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         if (treeData.result)
         {
+            getResult = true;
             Debug.Log(treeData.data);
             ArrayGetTreeData arrayTreeData = new ArrayGetTreeData();
             arrayTreeData.getTreeDataList = treeData.data;
             DataTemporary.GetTreeData = arrayTreeData;
         }
-
-
     }
 }
