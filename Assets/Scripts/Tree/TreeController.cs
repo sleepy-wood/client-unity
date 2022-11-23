@@ -22,6 +22,10 @@ public class TreeController : MonoBehaviour
     [Header("Mode")]
     // Play Mode - Good Grow
     public bool playMode;
+    public int playSproutGroupId;
+    int n;  // SproutEnabled에 쓰이는 랜덤 변수
+    public int playSproutEnabledNum;
+    public int playBarkIdx;
     // Play Mode - Bad Grow
     public bool badMode;
     // Demo Mode
@@ -216,16 +220,39 @@ public class TreeController : MonoBehaviour
 
                 // Sprout Texture 확률적 랜덤 선택
                 // 1. Leaf Shape Group(A, B, C, D) 4개 중 랜덤 선택해서 해당 Group을 Sprout Generator - Sprout Seeds에 추가
-                sproutGroupId = UnityEngine.Random.Range(1, 5);
-                SproutSeed sproutSeed = new SproutSeed();
-                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
-                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = sproutGroupId;
+                if (!playMode)
+                {
+                    sproutGroupId = UnityEngine.Random.Range(1, 5);
+                    SproutSeed sproutSeed = new SproutSeed();
+                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = sproutGroupId;
+                }
+                else if (playMode)
+                {
+                    sproutGroupId = playSproutGroupId;
+                    SproutSeed sproutSeed = new SproutSeed();
+                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = playSproutGroupId;
+                }
+
 
                 // 2. 해당 Group 안의 Textures Area Enabled 개수 확률적으로 enabled=true 시켜주기 (50%-1개, 20%-2개, 15%-3개, 10%-4개, 5%-5개)
-                int n = UnityEngine.Random.Range(0, 100);
+                if (!playMode)
+                {
+                    n = UnityEngine.Random.Range(0, 100);
+                }
+                else if (playMode)
+                {
+                    if (playSproutEnabledNum == 1) n = 40;
+                    else if (playSproutEnabledNum == 2) n = 60;
+                    else if (playSproutEnabledNum == 3) n = 80;
+                    else if (playSproutEnabledNum == 4) n = 90;
+                    else if (playSproutEnabledNum == 5) n = 98;
+                }
+                
                 if (n < 50)
                 { 
-                    int random = UnityEngine.Random.Range(0, 5);
+                    int random = UnityEngine.Random.Range(0, 4);
                     treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     rarityScore += 10;
                 }
@@ -234,7 +261,7 @@ public class TreeController : MonoBehaviour
                     rarityScore += 20;
                     for (int j = 0; j < 2; j++)
                     {
-                        int random = UnityEngine.Random.Range(0, 5);
+                        int random = UnityEngine.Random.Range(0, 4);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
@@ -243,7 +270,7 @@ public class TreeController : MonoBehaviour
                     rarityScore += 30;
                     for (int j = 0; j < 3; j++)
                     {
-                        int random = UnityEngine.Random.Range(0, 5);
+                        int random = UnityEngine.Random.Range(0, 4);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
@@ -252,7 +279,7 @@ public class TreeController : MonoBehaviour
                     rarityScore += 40;
                     for (int j = 0; j < 4; j++)
                     {
-                        int random = UnityEngine.Random.Range(0, 5);
+                        int random = UnityEngine.Random.Range(0, 4);
                         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
                     }
                 }
@@ -274,34 +301,40 @@ public class TreeController : MonoBehaviour
                 string path = Application.persistentDataPath + "/Resources/Tree/Materials";
 #endif
                 Material[] mat = barkAssetBundle.LoadAllAssets<Material>();
-                int randNum = UnityEngine.Random.Range(0, 10);
-                // General Material (70%)
-                if (randNum < 7)
+                if (!playMode)
                 {
-                    int r1 = UnityEngine.Random.Range(0, 5);
-                    Material selectedMat = Instantiate(mat[r1]);
-                    print("Selected General Bark Material: " + mat[r1].name);
-                    treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
-                    barkMaterial = selectedMat.name.Replace("(Clone)", "");
-                    rarityScore += 30;
+                    int randNum = UnityEngine.Random.Range(0, 10);
+                    // General Material (70%)
+                    if (randNum < 7)
+                    {
+                        int r1 = UnityEngine.Random.Range(0, 5);
+                        Material selectedMat = Instantiate(mat[r1]);
+                        print("Selected General Bark Material: " + mat[r1].name);
+                        treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
+                        barkMaterial = selectedMat.name.Replace("(Clone)", "");
+                        rarityScore += 30;
+                    }
+                    // Special Material (30%)
+                    else
+                    {
+                        int r2 = UnityEngine.Random.Range(5, 9);
+                        Material selectedMat = Instantiate(mat[r2]);
+                        print("Selected Special Bark Material: " + mat[r2].name);
+                        treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
+                        barkMaterial = selectedMat.name.Replace("(Clone)", "");
+                        rarityScore += 50;
+                    }
                 }
-                // Special Material (30%)
-                else
+                // PlayMode의 경우 텍스처 선택
+                else if (playMode)
                 {
-                    int r2 = UnityEngine.Random.Range(5, 9);
-                    Material selectedMat = Instantiate(mat[r2]);
-                    print("Selected Special Bark Material: " + mat[r2].name);
-                    treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
-                    barkMaterial = selectedMat.name.Replace("(Clone)", "");
+                    Material selectedMat2 = Instantiate(mat[playBarkIdx]);
+                    print("Selected General Bark Material: " + mat[playBarkIdx].name);
+                    treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat2;
+                    barkMaterial = selectedMat2.name.Replace("(Clone)", "");
                     rarityScore += 50;
                 }
-
-                // 치트키
-                Material selectedMat2 = Instantiate(mat[8]);
-                print("Selected General Bark Material: " + mat[8].name);
-                treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat2;
-                barkMaterial = selectedMat2.name.Replace("(Clone)", "");
-                rarityScore += 50;
+                
             }
             print("Selected pipeline = " + pipeName);
 
@@ -819,15 +852,7 @@ public class TreeController : MonoBehaviour
         // previewTree
         if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
         treeFactory.transform.GetChild(1).gameObject.layer = 11;  
-        if (!playMode)
-        {
-            treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
-        }
-        else
-        {
-            treeFactory.transform.GetChild(0).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
-        }
-
+        treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         Resources.UnloadAsset(loadedPipeline);
     }
 
@@ -858,8 +883,9 @@ public class TreeController : MonoBehaviour
             sprout.SetActive(false);
             soil.SetActive(false);
             plant.SetActive(true);
-            if (healthSetting == 1) PipelineReload();
+            if (healthSetting == 0) PipelineSetting(0);
             treeFactory.gameObject.SetActive(true);
+            PipelineReload();
         }
         // 3일차
         else if (day == 3)

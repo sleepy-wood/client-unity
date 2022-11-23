@@ -143,12 +143,8 @@ public class ScreenShot : MonoBehaviour
     string saveUrl;
     public async void SaveTreeImg()//byte[] byteArray)
     {
-        saveUrl = "/api/v1/trees/upload";
-
-        TreeFile treeFile = new TreeFile();
-        List<TreeFile> treeFiles = new List<TreeFile>();
-
-        treeFile.treeId = 65;//GameManager.Instance.treeController.treeId;
+        // 파일 업로드
+        saveUrl = "/api/v1/files/temp/upload";
 
         // Tree Image or Video
         List<IMultipartFormSection> treeCaptures = new List<IMultipartFormSection>();
@@ -157,14 +153,15 @@ public class ScreenShot : MonoBehaviour
 #elif UNITY_IOS || UNITY_ANDROID
         string path = $"{Application.persistentDataPath}/ScreenShot/Image/TreeCapture_{GameManager.Instance.treeController.treeId}.png";
 #endif
-        treeCaptures.Add(new MultipartFormFileSection("TreeImage", File.ReadAllBytes(path)));
+        treeCaptures.Add(new MultipartFormFileSection("TreeCapture", File.ReadAllBytes(path)));
 
-        //ResultPost<TreeFile> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeFile>>(
-        //    saveUrl,
-        //    DataModule.NetworkType.POST,
-        //    DataModule.DataType.BUFFER,
-        //    treeCaptures
-        //    );
-
+        ResultPost<TreeFile> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeFile>>(
+            saveUrl,
+            DataModule.NetworkType.POST,
+            DataModule.DataType.BUFFER,
+            null,
+            treeCaptures
+            );
+        
     }
 }
