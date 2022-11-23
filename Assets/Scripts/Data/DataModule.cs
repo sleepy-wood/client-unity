@@ -95,9 +95,18 @@ public class DataModule
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(data);
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
         }
+
         if (form != null)
         {
             request = UnityWebRequest.Post(requestURL, form);
+            SetHeaders(request, "Authorization", "Bearer " + REPLACE_BEARER_TOKEN);
+            //SetHeaders(request, "Content-Type", "multipart/form-data"); ;
+        }
+        else
+        {
+            SetHeaders(request, "Authorization", "Bearer " + REPLACE_BEARER_TOKEN);
+            SetHeaders(request, "Content-Type", "application/json");
+
         }
 
         //Header 정보 입력
@@ -106,8 +115,6 @@ public class DataModule
             REPLACE_BEARER_TOKEN = PlayerPrefs.GetString("Bearer");
         }
 
-        SetHeaders(request, "Authorization", "Bearer " + REPLACE_BEARER_TOKEN);
-        SetHeaders(request, "Content-Type", "application/json");
 
         try
         {
