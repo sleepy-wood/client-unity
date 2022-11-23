@@ -29,7 +29,10 @@ public class TreeGraph_UI : MonoBehaviour
         t += "나무 이름: " + treeData.treeName;
         t += "\n생성 날짜: " + dateTime.Year + "." + dateTime.Month + "." + dateTime.Day + " / " + dateTime.Hour + ":" + dateTime.Minute;
         t += "\n만든이: " + DataTemporary.MyUserData.nickname;
-        //t += "\n토큰 날짜: " + treeData.createdAt;
+        if (treeData.product == null)
+            t += "";
+        else
+            t += "\n토큰: " + treeData.product.tokenId;
         t += "\n희귀성: " + treeData.rarity + "/100";
         t += "\n생명력: " + treeData.vitality + "/100";
         t += " \n일별 수면량";
