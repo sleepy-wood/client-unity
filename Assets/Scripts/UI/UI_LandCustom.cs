@@ -235,11 +235,13 @@ public class UI_LandCustom : MonoBehaviourPun
         {
             //Debug.Log("FileName = " + fileName);
 #if UNITY_STANDALONE
-            if (fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Contains("meta"))
+            if (fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Contains("meta")
+                || fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Contains("menifest"))
                 continue;
             //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
 #elif UNITY_IOS
-            if (fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Contains("meta"))
+            if (fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Contains("meta")
+            ||fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Contains("menifest"))
                 continue;
             //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
 #endif
