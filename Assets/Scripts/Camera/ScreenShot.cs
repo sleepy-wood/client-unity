@@ -143,7 +143,7 @@ public class ScreenShot : MonoBehaviour
     int fileId;
     public async void SaveTreeImg()//byte[] byteArray)
     {
-        // Tree File
+        // Upload Tree File 
         saveUrl = "/api/v1/files/temp/upload";
         List<IMultipartFormSection> treeCaptures = new List<IMultipartFormSection>();
 #if UNITY_STANDALONE
@@ -151,23 +151,28 @@ public class ScreenShot : MonoBehaviour
 #elif UNITY_IOS || UNITY_ANDROID
         string path = $"{Application.persistentDataPath}/ScreenShot/Image/TreeCapture_{GameManager.Instance.treeController.treeId}.png";
 #endif
-        treeCaptures.Add(new MultipartFormFileSection("files", File.ReadAllBytes(path), $"TreeCapture_{GameManager.Instance.treeController.treeId}.png", "image/png"));
+        byte[] bytes = File.ReadAllBytes(path);
+        WWWForm form = new WWWForm();
+        // image
+        form.AddBinaryData("files", bytes, "TreeCapture_{GameManager.Instance.treeController.treeId}.png", "image/png");
+
+        //treeCaptures.Add(new MultipartFormFileSection("files", File.ReadAllBytes(path), $"TreeCapture_{GameManager.Instance.treeController.treeId}.png", "image/png"));
 
         ResultPost<TreeFile> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeFile>>(
             saveUrl,
             DataModule.NetworkType.POST,
             DataModule.DataType.BUFFER,
             null,
-            treeCaptures
+            form
             );
 
         if (!resultPost.result)
         {
-            Debug.LogError("WebRequestError : NetworkType[Post]");
+            Debug.LogError("Tree Screenshot Image 업로드 실패");
         }
         else
         {
-            Debug.Log($"Tree Image 업로드 성공");
+            Debug.Log($"Tree Screenshot Image 업로드 성공");
             Debug.Log($"id = {resultPost.data}");
             fileId = resultPost.data.id;
         }
