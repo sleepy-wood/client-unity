@@ -118,7 +118,7 @@ public class GetTreeData
     // 현재 land ID
     public int landId;
     // 유저 ID
-    public string userId;
+    public string? userId;
     // 생성 및 업데이트
     public string? createdAt;
     public string? updatedAt;
@@ -146,17 +146,17 @@ public class TreeImgVideo
 [Serializable]
 public class GetTreeImgVideo
 {
-    string filename;
-    string originalName;
-    string path;
-    string mimeType;
+    string? filename;
+    string? originalName;
+    string? path;
+    string? mimeType;
     int size;
     int treeId;
     bool isThumbnail;
-    string deletedAt;
+    string? deletedAt;
     int id;
-    string createdAt;
-    string updatedAt;
+    string? createdAt;
+    string? updatedAt;
 }
 
 
