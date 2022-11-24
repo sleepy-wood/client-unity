@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public static GameManager Instance;
     public bool test = false;
     public GameObject UI_Canvas;
+    public Transform respawnPos;
     private void Awake()
     {
         PhotonNetwork.SerializationRate = 30;
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (!test)
         {
             if (!User)
-                User = PhotonNetwork.Instantiate("User", new Vector3(0.2f + Random.Range(0, 2), 1.27f, 2.6f), Quaternion.identity);
+                User = PhotonNetwork.Instantiate("User", respawnPos.position, Quaternion.identity);
         }
         else
         {

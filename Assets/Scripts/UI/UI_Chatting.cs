@@ -12,6 +12,11 @@ public class UI_Chatting : MonoBehaviourPun
 {
 
     [SerializeField] private float chatMoveDistance = 836f;
+    [SerializeField] private float chatMoveDistanceMinus = 30f;
+    [SerializeField] private RectTransform emojis_content;
+    [SerializeField] private RectTransform emoji_Category_content;
+    [SerializeField] private GameObject emoji_Window;
+
     public RectTransform emoji_content;
 
     //InputChat
@@ -19,6 +24,7 @@ public class UI_Chatting : MonoBehaviourPun
     //ChatItem 공장
     private GameObject chatPrefab;
     private GameObject emojiPrefab;
+    private GameObject emojiCatPrefab;
     //ScrollView의 Content
     private RectTransform content;
     //EmojiChatting의 Content
@@ -27,17 +33,22 @@ public class UI_Chatting : MonoBehaviourPun
     private GameObject user;
     private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
     private string[] stopwords;
-    private int maxNum = 0;
+
+    /// <summary>
+    /// 업데이트 후 윈도우 재설정
+    /// </summary>
     public void Updating()
     {
-
+        for(int i = emoji_Category_content.childCount - 1;i > 0; i--)
+        {
+            Destroy(emoji_Category_content.GetChild(i).gameObject);
+        }
 #if UNITY_STANDALONE
         string path = Application.dataPath + "/TextureImg";
 #elif UNITY_IOS
         string path = Application.persistentDataPath + "/TextureImg";
 #endif
 
-        DirectoryInfo di = new DirectoryInfo(path);
         string[] fileEntries = Directory.GetFiles(path, "*.png");
 
         List<string> filenames = new List<string>();
@@ -47,19 +58,18 @@ public class UI_Chatting : MonoBehaviourPun
 #if UNITY_STANDALONE
             filenames.Add(fileName.Split("/TextureImg\\")[1].Split('.')[0]);
 #elif UNITY_IOS || UNITY_ANDROID
-            filenames.Add(fileName.Split("/TextureImg/")[1].Split('.')[0]);
+                    filenames.Add(fileName.Split("/TextureImg/")[1].Split('.')[0]);
 #endif
         }
         filenames.Sort((x, y) => int.Parse(x.Split("Market_Emoji_")[1]).CompareTo(int.Parse(y.Split("Market_Emoji_")[1])));
-        for (int k = maxNum - 1; k < filenames.Count; k++)
-        {
-            int temp = k;
-            //GameObject resource = fileName.Split("/TextureImg/")[1].Split('.')[0];
-            GameObject resource = Resources.Load<GameObject>("Emoji_");
-            GameObject prefab = Instantiate(resource, emoji_content);
 
-            prefab.name = "Custom_" + filenames[k];
-            byte[] byteTexture = File.ReadAllBytes(path + "/" + filenames[k] + ".png");
+        for (int i = 0; i < filenames.Count; i += 12)
+        {
+            int temp = i;
+            GameObject prefab = Instantiate(emojiCatPrefab, emoji_Category_content);
+
+            prefab.name = "EmojiCat_" + filenames[i];
+            byte[] byteTexture = File.ReadAllBytes(path + "/" + filenames[i] + ".png");
             if (byteTexture.Length > 0)
             {
                 Texture2D texture = new Texture2D(0, 0);
@@ -68,9 +78,9 @@ public class UI_Chatting : MonoBehaviourPun
                 prefab.GetComponent<Image>().sprite = sprite;
             }
             prefab.GetComponent<Button>().onClick.AddListener(
-                () => OnClickEmojiButton(temp + 15));
+                () => OnClickEmojiCategory(temp + 15));
         }
-        emoji_content.offsetMax = new Vector2(140 * (15 + filenames.Count), emoji_content.offsetMax.y);
+        emoji_Category_content.offsetMax = new Vector2(70 * ((15 + filenames.Count) / 12), emoji_content.offsetMax.y);
     }
     private void Start()
     {
@@ -89,10 +99,10 @@ public class UI_Chatting : MonoBehaviourPun
         chatting = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetComponent<InputField>();
         chatPrefab = Resources.Load<GameObject>("Chatting_Text");
         emojiPrefab = Resources.Load<GameObject>("Chatting_Emoji");
+        emojiCatPrefab = Resources.Load<GameObject>("Category_Btn");
 
         content = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetComponent<RectTransform>();
 
-        DirectoryInfo di = new DirectoryInfo(path);
         string[] fileEntries = Directory.GetFiles(path, "*.png");
 
         List<string> filenames = new List<string>();
@@ -106,15 +116,14 @@ public class UI_Chatting : MonoBehaviourPun
 #endif
         }
         filenames.Sort((x, y) => int.Parse(x.Split("Market_Emoji_")[1]).CompareTo(int.Parse(y.Split("Market_Emoji_")[1])));
-        for (int k = 0; k < filenames.Count; k++)
-        {
-            int temp = k;
-            //GameObject resource = fileName.Split("/TextureImg/")[1].Split('.')[0];
-            GameObject resource = Resources.Load<GameObject>("Emoji_");
-            GameObject prefab = Instantiate(resource, emoji_content);
 
-            prefab.name = "Custom_" + filenames[k];
-            byte[] byteTexture = File.ReadAllBytes(path + "/" + filenames[k] + ".png");
+        for (int i = 0; i < filenames.Count; i += 12)
+        {
+            int temp = i;
+            GameObject prefab = Instantiate(emojiCatPrefab, emoji_Category_content);
+
+            prefab.name = "EmojiCat_" + filenames[i];
+            byte[] byteTexture = File.ReadAllBytes(path + "/" + filenames[i] + ".png");
             if (byteTexture.Length > 0)
             {
                 Texture2D texture = new Texture2D(0, 0);
@@ -123,10 +132,46 @@ public class UI_Chatting : MonoBehaviourPun
                 prefab.GetComponent<Image>().sprite = sprite;
             }
             prefab.GetComponent<Button>().onClick.AddListener(
-                () => OnClickEmojiButton(temp + 15));
+                () => OnClickEmojiCategory(temp + 15));
         }
-        maxNum = filenames.Count;
-        emoji_content.offsetMax = new Vector2(140 * (15 + filenames.Count), emoji_content.offsetMax.y);
+        emoji_Category_content.offsetMax = new Vector2(70 * ((15 + filenames.Count) / 12), emoji_content.offsetMax.y);
+
+        #region Regacy
+        //        string[] fileEntries = Directory.GetFiles(path, "*.png");
+
+        //        List<string> filenames = new List<string>();
+        //        //썸네일 넣기
+        //        foreach (string fileName in fileEntries)
+        //        {
+        //#if UNITY_STANDALONE
+        //            filenames.Add(fileName.Split("/TextureImg\\")[1].Split('.')[0]);
+        //#elif UNITY_IOS || UNITY_ANDROID
+        //            filenames.Add(fileName.Split("/TextureImg/")[1].Split('.')[0]);
+        //#endif
+        //        }
+        //        filenames.Sort((x, y) => int.Parse(x.Split("Market_Emoji_")[1]).CompareTo(int.Parse(y.Split("Market_Emoji_")[1])));
+        //        for (int k = 0; k < filenames.Count; k++)
+        //        {
+        //            int temp = k;
+        //            //GameObject resource = fileName.Split("/TextureImg/")[1].Split('.')[0];
+        //            GameObject resource = Resources.Load<GameObject>("Emoji_");
+        //            GameObject prefab = Instantiate(resource, emoji_content);
+
+        //            prefab.name = "Custom_" + filenames[k];
+        //            byte[] byteTexture = File.ReadAllBytes(path + "/" + filenames[k] + ".png");
+        //            if (byteTexture.Length > 0)
+        //            {
+        //                Texture2D texture = new Texture2D(0, 0);
+        //                texture.LoadImage(byteTexture);
+        //                Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        //                prefab.GetComponent<Image>().sprite = sprite;
+        //            }
+        //            prefab.GetComponent<Button>().onClick.AddListener(
+        //                () => OnClickEmojiButton(temp + 15));
+        //        }
+        //        maxNum = filenames.Count;
+        //        emoji_content.offsetMax = new Vector2(140 * (15 + filenames.Count), emoji_content.offsetMax.y);
+        #endregion
     }
     private void Update()
     {
@@ -147,20 +192,96 @@ public class UI_Chatting : MonoBehaviourPun
         //    transform.GetChild(1).gameObject.SetActive(false);
         //}
         //else
-        //{
-            transform.GetChild(1).gameObject.SetActive(true);
+        ////{
+        //    transform.GetChild(1).gameObject.SetActive(true);
 
-            if (!transform.GetChild(1).GetChild(0).gameObject.activeSelf)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    if (!EventSystem.current.IsPointerOverGameObject())
-                    {
-                        transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
-                    }
-                }
-            }
+        //    if (!transform.GetChild(1).GetChild(0).gameObject.activeSelf)
+        //    {
+        //        if (Input.GetMouseButtonDown(0))
+        //        {
+        //            if (!EventSystem.current.IsPointerOverGameObject())
+        //            {
+        //                transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+        //            }
+        //        }
+            //}
         //}
+    }
+
+    bool isActiceEmoji = false;
+    public void OnClickActiveEmoji()
+    {
+        if (!isActiceEmoji)
+        {
+            isActiceEmoji = true;
+            emoji_Window.SetActive(true);
+        }
+        else
+        {
+            isActiceEmoji = false;
+            emoji_Window.SetActive(false);
+        }
+    }
+    /// <summary>
+    /// Category를 눌렀을 경우
+    /// </summary>
+    /// <param name="i"></param>
+    public void OnClickEmojiCategory(int i)
+    {
+        for(int j = emojis_content.childCount -1; j >= 0; j--)
+        {
+            Destroy(emojis_content.GetChild(j).gameObject);
+        }
+        if (i > 0)
+        {
+#if UNITY_STANDALONE
+            string path = Application.dataPath + "/TextureImg";
+#elif UNITY_IOS
+        string path = Application.persistentDataPath + "/TextureImg";
+#endif
+            string[] fileEntries = Directory.GetFiles(path, "*.png");
+
+            List<string> filenames = new List<string>();
+            //썸네일 넣기
+            foreach (string fileName in fileEntries)
+            {
+#if UNITY_STANDALONE
+                filenames.Add(fileName.Split("/TextureImg\\")[1].Split('.')[0]);
+#elif UNITY_IOS || UNITY_ANDROID
+            filenames.Add(fileName.Split("/TextureImg/")[1].Split('.')[0]);
+#endif
+            }
+            filenames.Sort((x, y) => int.Parse(x.Split("Market_Emoji_")[1]).CompareTo(int.Parse(y.Split("Market_Emoji_")[1])));
+            for(int j = i-15; j < i-3; j++)
+            {
+                int temp = j;
+                GameObject emojiResource = Resources.Load<GameObject>("Emoji_");
+                GameObject emojiPre = Instantiate(emojiResource, emojis_content);
+                byte[] byteTexture = File.ReadAllBytes(path + "/" + filenames[j] + ".png");
+                if (byteTexture.Length > 0)
+                {
+                    Texture2D texture = new Texture2D(0, 0);
+                    texture.LoadImage(byteTexture);
+                    Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                    emojiPre.GetComponent<Image>().sprite = sprite;
+                }
+                emojiPre.GetComponent<Button>().onClick.AddListener(
+                    () => OnClickEmojiButton(temp + 15));
+            }
+        }
+        else
+        {
+            for(int j = 1; j <= 14; j++)
+            {
+                int temp = j;
+                Sprite emojiSprite = Resources.Load<Sprite>("Emoji_image/Emoji_" + j);
+                GameObject emojiResource = Resources.Load<GameObject>("Emoji_");
+                GameObject emojiPre = Instantiate(emojiResource, emojis_content);
+                emojiPre.GetComponent<Image>().sprite = Instantiate(emojiSprite);
+                emojiPre.GetComponent<Button>().onClick.AddListener(
+                    () => OnClickEmojiButton(temp));
+            }
+        }
     }
     /// <summary>
     /// Emoji Button을 눌렀을 경우
@@ -210,7 +331,7 @@ public class UI_Chatting : MonoBehaviourPun
             {
                 transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
             }
-            transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
+            //transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
 
             Vector2  endPos =
                 new Vector2(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x, 
@@ -218,26 +339,26 @@ public class UI_Chatting : MonoBehaviourPun
 
             Vector2 endPos2 =
                 new Vector2(transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
-                transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y + chatMoveDistance);
+                transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y + chatMoveDistance - chatMoveDistanceMinus);
 
             StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
             StartCoroutine(ChatActive(transform.GetChild(1).GetChild(0), endPos2));
+            StartCoroutine(ChatActive(transform.GetChild(2).GetChild(0), endPos));
             isActiveChat = true;
         }
         else
         {
-            transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
-
             Vector2 endPos =
                 new Vector2(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
                 transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y- chatMoveDistance);
 
             Vector2 endPos2 =
                 new Vector2(transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
-                transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatMoveDistance);
+                transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatMoveDistance - chatMoveDistanceMinus);
 
             StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
             StartCoroutine(ChatActive(transform.GetChild(1).GetChild(0), endPos2));
+            StartCoroutine(ChatActive(transform.GetChild(2).GetChild(0), endPos));
             isActiveChat = false;
         }
 
@@ -298,7 +419,6 @@ public class UI_Chatting : MonoBehaviourPun
         prevContentH = content.sizeDelta.y;
 
         GameObject emojiPre = Instantiate(emojiPrefab, content);
-        Debug.Log("i = " + i);
 
         if (i >= 15)
         {
