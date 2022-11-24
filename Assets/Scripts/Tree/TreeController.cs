@@ -25,7 +25,7 @@ public class TreeController : MonoBehaviour
     public int playSproutGroupId;  // 1 ~ 4
     int n;  // SproutEnabled에 쓰이는 랜덤 변수 
     public int playSproutEnabledNum; // 1 ~ 5
-    public int playBarkIdx;
+    public int playBarkIdx; // General : 0~4, Special : 5~8
     // Play Mode - Bad Grow
     public bool badMode;
     // Demo Mode
@@ -186,7 +186,7 @@ public class TreeController : MonoBehaviour
     public VideoCapture videoCapture;
     #endregion
 
-
+    int i;
     private void Start()
     {
         treeFactory.gameObject.SetActive(false);
@@ -198,12 +198,12 @@ public class TreeController : MonoBehaviour
         if (visitType == VisitType.First)
         {
             // Mode에 따른 Pipeline 선택
-            if (playMode)
-            {
-                pipeName = "BasicTree";
-                selectedSeed = SeedType.Demo;
-                treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
-            }
+            //if (playMode)
+            //{
+            //    pipeName = "BasicTree";
+            //    selectedSeed = SeedType.Demo;
+            //    treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+            //}
             if (demoMode)
             {
                 pipeName = "DemoTree_Cherry";
@@ -212,7 +212,8 @@ public class TreeController : MonoBehaviour
             else
             {
                 // Pipeline 랜덤 선택 ( Tree Shape )
-                int i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo Tree 빼고 랜덤 선택
+                if (playMode) i = UnityEngine.Random.Range(0, pipeNameList.Count - 2);  // DR, Demo 제외
+                else i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo 제외
                 pipeName = pipeNameList[2];
                 selectedSeed = pipeNameDict[pipeName];
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
@@ -1083,7 +1084,7 @@ public class TreeController : MonoBehaviour
             // Bark Material Name
             treeData.barkMaterial = barkMaterial;
             // Land ID 
-            treeData.landId = DataTemporary.MyUserData.currentLandId;
+            treeData.landId = 49;//DataTemporary.MyUserData.currentLandId;
             // Sprout Group Id
             treeData.sproutGroupId = sproutGroupId;
             // Sprout Texture Enabled (Sprout Grop 4가지)
