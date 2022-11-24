@@ -12,15 +12,15 @@ using UnityEngine.UI;
 public class UI_Chatting : MonoBehaviourPun
 {
 
-    [SerializeField] private float chatMoveDistance = 836f;
-    [SerializeField] private float chatMoveDistanceMinus = 30f;
-    [SerializeField] private float chatEmojiMove = 516f;
     [SerializeField] private RectTransform emojis_content;
     [SerializeField] private RectTransform emoji_Category_content;
     [SerializeField] private GameObject emoji_Window;
 
     public RectTransform emoji_content;
 
+    private float chatEmojiMove;
+    private float chatMoveDistanceMinus;
+    private float chatMoveDistance;
     //InputChat
     private InputField chatting;
     //ChatItem 공장
@@ -88,6 +88,10 @@ public class UI_Chatting : MonoBehaviourPun
     }
     private void Start()
     {
+        chatMoveDistance = Vector2.Distance(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition, new Vector2(0, 0));
+        chatMoveDistanceMinus = Mathf.Abs(chatMoveDistance - Mathf.Abs(transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y));
+        chatEmojiMove = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<RectTransform>().sizeDelta.y - 20;
+
         photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
         TextAsset textFile = DataTemporary.stopwordsAsset.LoadAsset<TextAsset>("stopwords");
 
