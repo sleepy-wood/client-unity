@@ -1,10 +1,12 @@
-using UnityEngine;
+                                                                                                                                                             using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using ICSharpCode.SharpZipLib.Zip;
 
+# region 비트맵
 class BitmapEncoder
 {
     public static void WriteBitmap(Stream stream, int width, int height, byte[] imageData)
@@ -45,6 +47,7 @@ class BitmapEncoder
     }
 
 }
+# endregion
 
 /// <summary>
 /// Captures frames from a Unity camera in real time
@@ -66,25 +69,25 @@ public class ScreenRecorder : MonoBehaviour
     public int frameRate = 30; // number of frames to capture per second
 
     // The Encoder Thread
-    private Thread encoderThread;
+    public Thread encoderThread;
 
     // Texture Readback Objects
-    private RenderTexture tempRenderTexture;
-    private Texture2D tempTexture2D;
+    public RenderTexture tempRenderTexture;
+    public Texture2D tempTexture2D;
 
     // Timing Data
-    private float captureFrameTime;
-    private float lastFrameTime;
-    private int frameNumber;
-    private int savingFrameNumber;
+    public float captureFrameTime;
+    public float lastFrameTime;
+    public int frameNumber;
+    public int savingFrameNumber;
 
     // Encoder Thread Shared Resources
-    private Queue<byte[]> frameQueue;
-    private string persistentDataPath;
-    private int screenWidth;
-    private int screenHeight;
-    private bool threadIsProcessing;
-    private bool terminateThreadWhenDone;
+    public Queue<byte[]> frameQueue;
+    public string persistentDataPath;
+    public int screenWidth;
+    public int screenHeight;
+    public bool threadIsProcessing;
+    public bool terminateThreadWhenDone;
 
     void Start()
     {
@@ -125,16 +128,9 @@ public class ScreenRecorder : MonoBehaviour
             threadIsProcessing = false;
             encoderThread.Join();
         }
-
-        // Start a new encoder thread
-        threadIsProcessing = true;
-        encoderThread = new Thread(EncodeAndSave);
-        encoderThread.Start();
     }
 
-    /// <summary>
-    /// ???
-    /// </summary>
+
     void OnDisable()
     {
         // Reset target frame rate
@@ -144,7 +140,7 @@ public class ScreenRecorder : MonoBehaviour
         terminateThreadWhenDone = true;
     }
 
-    void OnRenderImage(RenderTexture source, RenderTexture destination)
+    public void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
         if (frameNumber <= maxFrames)
         {
@@ -200,9 +196,9 @@ public class ScreenRecorder : MonoBehaviour
         Graphics.Blit(source, destination);
     }
 
-    private void EncodeAndSave()
+    public void EncodeAndSave()
     {
-        print("SCREENRECORDER IO THREAD STARTED");
+        print("Tree 영상 캡처 시작");
 
         while (threadIsProcessing)
         {
@@ -238,7 +234,39 @@ public class ScreenRecorder : MonoBehaviour
 
         terminateThreadWhenDone = false;
         threadIsProcessing = false;
+        print("Tree 영상 캡처 완료");
 
-        print("SCREENRECORDER IO THREAD FINISHED");
+        // 압축할 이미지가 들어있는 파일 경로
+#if UNITY_STANDALONE
+        string from = $"{Application.dataPath}/ScreenRecorder";
+
+#elif UNITY_IOS || UNITY_ANDROID
+        string from = $"{Application.persistentDataPath}/ScreenRecorder";
+#endif
+        // 압축한 파일을 저장할 파일 경로
+#if UNITY_STANDALONE
+        string to = $"{Application.dataPath}/Zipfiles";
+#elif UNITY_IOS || UNITY_ANDROID
+        string to = $"{Application.persistentDataPath}/Zipfiles";
+#endif
+        ZipManager.ZipFiles(from, to, true);
+        print($"압축 완료 여부 = {ZipManager.ZipFiles(from, to, true)}");
+
+        
     }
+
+    /// <summary>
+    /// 캡처 이미지 압축
+    /// </summary>
+    //public class ZipManager()
+    //{
+    //}
+
+    ///// <summary>
+    ///// 이미지 압축 파일 웹에 업로드
+    ///// </summary>
+    //public async void UploadZipFile()
+    //{
+
+    //}
 }
