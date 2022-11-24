@@ -70,7 +70,7 @@ public class DataModule
     /// <param name="networkType">어떻게 Request 할 것인가</param>
     /// <param name="data">보낼 데이터</param>
     /// <returns></returns>
-    public static async UniTask<T> WebRequestBuffer<T>(string _url, NetworkType networkType, DataType dataType, string data = null, WWWForm form = null, string filePath = null)
+    public static async UniTask<T> WebRequestBuffer<T>(string _url, NetworkType networkType, DataType dataType, string data = null, List<IMultipartFormSection> form = null, string filePath = null)
     {
         //네트워크 체킹
         await CheckNetwork();
@@ -100,13 +100,14 @@ public class DataModule
         {
             request = UnityWebRequest.Post(requestURL, form);
             SetHeaders(request, "Authorization", "Bearer " + REPLACE_BEARER_TOKEN);
-            SetHeaders(request, "Content-Type", "multipart/form-data");
-            SetHeaders(request, "FileName", "multipart/form-data");
+            //SetHeaders(request, "Content-Type", "multipart/form-data");
+            //SetHeaders(request, "FileName", "multipart/form-data");
         }
         else
         {
             SetHeaders(request, "Authorization", "Bearer " + REPLACE_BEARER_TOKEN);
             SetHeaders(request, "Content-Type", "application/json");
+
         }
 
         //Header 정보 입력
