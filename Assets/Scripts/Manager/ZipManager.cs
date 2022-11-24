@@ -91,7 +91,7 @@ public class ZipManager
 
 
         // 폴더 삭제를 원할 경우 폴더 삭제. 
-        if (isDeleteFolder)
+        if (isDeleteFolder) 
             try
             {
                 Directory.Delete(targetFolderPath, true);
