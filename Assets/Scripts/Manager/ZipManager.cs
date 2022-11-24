@@ -26,10 +26,15 @@ public class ZipManager
     public static bool ZipFiles(string targetFolderPath, string zipFilePath, bool isDeleteFolder)//,string password, )
     {
         // 폴더가 존재하지 않는 경우 만들기
-        if (!Directory.Exists(targetFolderPath))
+        if (Directory.Exists(targetFolderPath) == false)
         {
             Directory.CreateDirectory(targetFolderPath);
         }
+        if (Directory.Exists(zipFilePath) == false)
+        {
+            Directory.CreateDirectory(zipFilePath);
+        }
+
         // 압축 대상 폴더의 파일 목록. 
         ArrayList ar = GenerateFileList(targetFolderPath);
 

@@ -235,9 +235,11 @@ public class ScreenRecorder : MonoBehaviour
         terminateThreadWhenDone = false;
         threadIsProcessing = false;
         print("Tree 영상 캡처 완료");
+
         // 압축할 이미지가 들어있는 파일 경로
 #if UNITY_STANDALONE
         string from = $"{Application.dataPath}/ScreenRecorder";
+
 #elif UNITY_IOS || UNITY_ANDROID
         string from = $"{Application.persistentDataPath}/ScreenRecorder";
 #endif
@@ -248,6 +250,9 @@ public class ScreenRecorder : MonoBehaviour
         string to = $"{Application.persistentDataPath}/Zipfiles";
 #endif
         ZipManager.ZipFiles(from, to, true);
+        print($"압축 완료 여부 = {ZipManager.ZipFiles(from, to, true)}");
+
+        
     }
 
     /// <summary>
