@@ -35,10 +35,10 @@ public class ResultPut
 }
 public class DataModule
 {
-    private const string DOMAIN = "http://116.255.117.119:4000"; //"https://dev.team-buildup.shop";
+    private const string DOMAIN = "http://14.47.254.38:4000"; //"https://dev.team-buildup.shop";
     //public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY4MDkwMDkzLCJleHAiOjMzMjI1NjkwMDkzfQ.9WI6YXZlRLiB8dIb-Fea4AzMZocUQKkHjVZ0NeAyS2I";
     public static string REPLACE_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY4NjY3NjYyLCJleHAiOjMzMjI2MjY3NjYyfQ.xfMelHxCCAcqzXtsR6DPESWBOJf-ty20UP0y1f0sTis";
-    
+
     /// <summary>
     /// Network Type 설정
     /// </summary>
@@ -70,7 +70,7 @@ public class DataModule
     /// <param name="networkType">어떻게 Request 할 것인가</param>
     /// <param name="data">보낼 데이터</param>
     /// <returns></returns>
-    public static async UniTask<T> WebRequestBuffer<T>(string _url, NetworkType networkType, DataType dataType ,  string data = null, WWWForm form = null, string filePath = null)
+    public static async UniTask<T> WebRequestBuffer<T>(string _url, NetworkType networkType, DataType dataType, string data = null, List<IMultipartFormSection> form = null, string filePath = null)
     {
         //네트워크 체킹
         await CheckNetwork();
@@ -79,7 +79,7 @@ public class DataModule
         //Timeout 설정
         var cts = new CancellationTokenSource();
         cts.CancelAfterSlim(TimeSpan.FromSeconds(timeout));
-        
+
         UnityWebRequest request;
 
         //웹 요청 생성(Get,Post,Delete,Update)
@@ -101,6 +101,7 @@ public class DataModule
             request = UnityWebRequest.Post(requestURL, form);
             SetHeaders(request, "Authorization", "Bearer " + REPLACE_BEARER_TOKEN);
             SetHeaders(request, "Content-Type", "multipart/form-data");
+            SetHeaders(request, "FileName", "multipart/form-data");
         }
         else
         {
@@ -118,10 +119,10 @@ public class DataModule
 
         try
         {
-            
+
             var res = await request.SendWebRequest().WithCancellation(cts.Token);
             T result = JsonUtility.FromJson<T>(res.downloadHandler.text);
-      
+
             return result;
         }
         catch (OperationCanceledException ex)
@@ -164,7 +165,7 @@ public class DataModule
         //Texture인가 Buffer인가?
         request = UnityWebRequestTexture.GetTexture(requestURL);
         //Body 정보 입력
-        DownloadHandlerTexture handlerTexture =  request.downloadHandler as DownloadHandlerTexture;
+        DownloadHandlerTexture handlerTexture = request.downloadHandler as DownloadHandlerTexture;
 
         //Header 정보 입력
         if (REPLACE_BEARER_TOKEN == "" && PlayerPrefs.GetString("Bearer") != "")
@@ -178,8 +179,8 @@ public class DataModule
         try
         {
             var res = await request.SendWebRequest().WithCancellation(cts.Token);
-                Texture2D result = handlerTexture.texture;
-                return result;
+            Texture2D result = handlerTexture.texture;
+            return result;
         }
         catch (OperationCanceledException ex)
         {
@@ -189,7 +190,7 @@ public class DataModule
                 //TODO: 네트워크 재시도 팝업 호출.
 
                 //재시도
-                return await WebrequestTextureGet(url,networkType);
+                return await WebrequestTextureGet(url, networkType);
             }
         }
         catch (Exception e)
@@ -247,7 +248,7 @@ public class DataModule
 #elif UNITY_IOS
             string assetBundleDirectory = Application.persistentDataPath + "/MarketBundle";
 #endif
-            if (!Directory.Exists(assetBundleDirectory + "/" +bundleName.Split("/")[0]))
+            if (!Directory.Exists(assetBundleDirectory + "/" + bundleName.Split("/")[0]))
             {
                 Directory.CreateDirectory(assetBundleDirectory + "/" + bundleName.Split("/")[0]);
             }
@@ -286,7 +287,7 @@ public class DataModule
     /// <returns></returns>
     private static async UniTask CheckNetwork()
     {
-        if(Application.internetReachability == NetworkReachability.NotReachable)
+        if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             Debug.LogError("The netwok is not connected");
             await UniTask.WaitUntil(() => Application.internetReachability != NetworkReachability.NotReachable);

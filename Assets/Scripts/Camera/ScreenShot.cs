@@ -151,20 +151,33 @@ public class ScreenShot : MonoBehaviour
 #elif UNITY_IOS || UNITY_ANDROID
         string path = $"{Application.persistentDataPath}/ScreenShot/Image/TreeCapture_{GameManager.Instance.treeController.treeId}.png";
 #endif
-        byte[] bytes = File.ReadAllBytes(path);
-        WWWForm form = new WWWForm();
-        // image
-        form.AddBinaryData("files", bytes, "TreeCapture_{GameManager.Instance.treeController.treeId}.png", "image/png");
+        #region WWW
+        //byte[] bytes = File.ReadAllBytes(path);
+        //WWWForm form = new WWWForm();
+        //// image
+        //form.AddBinaryData("files", bytes, "TreeCapture_{GameManager.Instance.treeController.treeId}.png", "image/png");
 
-        //treeCaptures.Add(new MultipartFormFileSection("files", File.ReadAllBytes(path), $"TreeCapture_{GameManager.Instance.treeController.treeId}.png", "image/png"));
+        //ResultPost<TreeFile> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeFile>>(
+        //    saveUrl,
+        //    DataModule.NetworkType.POST,
+        //    DataModule.DataType.BUFFER,
+        //    null,
+        //    form
+        //    );
+        #endregion
+
+        #region MultipartFormSection
+        treeCaptures.Add(new MultipartFormFileSection("files", File.ReadAllBytes(path), $"TreeCapture_{GameManager.Instance.treeController.treeId}.png", "image/png"));
 
         ResultPost<TreeFile> resultPost = await DataModule.WebRequestBuffer<ResultPost<TreeFile>>(
             saveUrl,
             DataModule.NetworkType.POST,
             DataModule.DataType.BUFFER,
             null,
-            form
+            treeCaptures
             );
+        #endregion
+
 
         if (!resultPost.result)
         {

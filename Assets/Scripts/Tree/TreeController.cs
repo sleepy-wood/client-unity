@@ -22,9 +22,9 @@ public class TreeController : MonoBehaviour
     [Header("Mode")]
     // Play Mode - Good Grow
     public bool playMode;
-    public int playSproutGroupId;
-    int n;  // SproutEnabled에 쓰이는 랜덤 변수
-    public int playSproutEnabledNum;
+    public int playSproutGroupId;  // 1 ~ 4
+    int n;  // SproutEnabled에 쓰이는 랜덤 변수 
+    public int playSproutEnabledNum; // 1 ~ 5
     public int playBarkIdx;
     // Play Mode - Bad Grow
     public bool badMode;
@@ -249,6 +249,7 @@ public class TreeController : MonoBehaviour
                     else if (playSproutEnabledNum == 4) n = 90;
                     else if (playSproutEnabledNum == 5) n = 98;
                 }
+                
                 
                 if (n < 50)
                 {
@@ -1085,12 +1086,11 @@ public class TreeController : MonoBehaviour
             treeData.landId = DataTemporary.MyUserData.currentLandId;
             // Sprout Group Id
             treeData.sproutGroupId = sproutGroupId;
-            // Sprout Texture Enabled
+            // Sprout Texture Enabled (Sprout Grop 4가지)
             treeData.sproutColor1 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[0].enabled ? 1 : 0;
             treeData.sproutColor2 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[1].enabled ? 1 : 0;
             treeData.sproutColor3 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[2].enabled ? 1 : 0;
             treeData.sproutColor4 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[3].enabled ? 1 : 0;
-            treeData.sproutColor5 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[4].enabled ? 1 : 0;
             // 희귀성
             treeData.rarity = rarityScore;
             // 생명력
