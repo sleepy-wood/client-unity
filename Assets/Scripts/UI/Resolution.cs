@@ -10,8 +10,8 @@ public class Resolution : MonoBehaviour
     {
         CanvasScaler cs = GetComponent<CanvasScaler>();
 
-        float ratioX = Screen.width / 1080.0f;// 600.0f;
-        float ratioY = Screen.height / 1920.0f;
+        float ratioX = Screen.width / 1290;// 600.0f;
+        float ratioY = Screen.height / 2796;
 
         if (ratioX < ratioY) cs.scaleFactor = ratioX;
         else cs.scaleFactor = ratioY;
