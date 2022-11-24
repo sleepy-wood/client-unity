@@ -213,8 +213,7 @@ public class TreeController : MonoBehaviour
             else
             {
                 // Pipeline 랜덤 선택 ( Tree Shape )
-                if (playMode) i = UnityEngine.Random.Range(0, pipeNameList.Count - 2);  // DR, Demo 제외
-                else i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo 제외
+                i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo 제외
                 pipeName = pipeNameList[2];
                 selectedSeed = pipeNameDict[pipeName];
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
