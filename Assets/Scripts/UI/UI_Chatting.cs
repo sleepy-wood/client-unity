@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks.Triggers;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -13,6 +14,7 @@ public class UI_Chatting : MonoBehaviourPun
 
     [SerializeField] private float chatMoveDistance = 836f;
     [SerializeField] private float chatMoveDistanceMinus = 30f;
+    [SerializeField] private float chatEmojiMove = 516f;
     [SerializeField] private RectTransform emojis_content;
     [SerializeField] private RectTransform emoji_Category_content;
     [SerializeField] private GameObject emoji_Window;
@@ -33,6 +35,8 @@ public class UI_Chatting : MonoBehaviourPun
     private GameObject user;
     private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
     private string[] stopwords;
+    private Vector2 chatContent_Initial;
+    private Vector2 chatContent_Initial_Emoji;
 
     /// <summary>
     /// 업데이트 후 윈도우 재설정
@@ -80,7 +84,7 @@ public class UI_Chatting : MonoBehaviourPun
             prefab.GetComponent<Button>().onClick.AddListener(
                 () => OnClickEmojiCategory(temp + 15));
         }
-        emoji_Category_content.offsetMax = new Vector2(70 * ((15 + filenames.Count) / 12), emoji_content.offsetMax.y);
+        //emoji_Category_content.offsetMax = new Vector2(70 * ((15 + filenames.Count) / 12), emoji_content.offsetMax.y);
     }
     private void Start()
     {
@@ -134,7 +138,10 @@ public class UI_Chatting : MonoBehaviourPun
             prefab.GetComponent<Button>().onClick.AddListener(
                 () => OnClickEmojiCategory(temp + 15));
         }
-        emoji_Category_content.offsetMax = new Vector2(70 * ((15 + filenames.Count) / 12), emoji_content.offsetMax.y);
+        //emoji_Category_content.offsetMax = new Vector2(70 * ((15 + filenames.Count) / 12), emoji_content.offsetMax.y);
+
+        chatContent_Initial = content.anchoredPosition;
+        //chatContent_Initial_Emoji = content.anchoredPosition + new Vector2(0, (chatEmojiMove) / 2);
 
         #region Regacy
         //        string[] fileEntries = Directory.GetFiles(path, "*.png");
@@ -186,40 +193,6 @@ public class UI_Chatting : MonoBehaviourPun
             {
                 user.GetComponent<UserInput>().InputControl = false;
             }
-        }
-        //if (PhotonNetwork.PlayerList.Length <= 1)
-        //{
-        //    transform.GetChild(1).gameObject.SetActive(false);
-        //}
-        //else
-        ////{
-        //    transform.GetChild(1).gameObject.SetActive(true);
-
-        //    if (!transform.GetChild(1).GetChild(0).gameObject.activeSelf)
-        //    {
-        //        if (Input.GetMouseButtonDown(0))
-        //        {
-        //            if (!EventSystem.current.IsPointerOverGameObject())
-        //            {
-        //                transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
-        //            }
-        //        }
-            //}
-        //}
-    }
-
-    bool isActiceEmoji = false;
-    public void OnClickActiveEmoji()
-    {
-        if (!isActiceEmoji)
-        {
-            isActiceEmoji = true;
-            emoji_Window.SetActive(true);
-        }
-        else
-        {
-            isActiceEmoji = false;
-            emoji_Window.SetActive(false);
         }
     }
     /// <summary>
@@ -291,6 +264,7 @@ public class UI_Chatting : MonoBehaviourPun
     {
         //Debug.Log("Cnt = " + DataTemporary.emoji_Url.Count);
         string url = i - 15 < 0 ? null : DataTemporary.emoji_Url[i - 15];
+        prevContentH = content.sizeDelta.y;
         //Debug.Log("i = " + i);
         photonView.RPC("RPC_EmojiButtonAsync", RpcTarget.All, i, DataTemporary.MyUserData.nickname, url);
     }
@@ -314,7 +288,7 @@ public class UI_Chatting : MonoBehaviourPun
                 }
             }
         }
-        string chat = ": " + s;
+        string chat = " " + s;
         if(s != "")
             photonView.RPC("RpcAddChat", RpcTarget.All, chat, DataTemporary.MyUserData.nickname);
 
@@ -340,28 +314,85 @@ public class UI_Chatting : MonoBehaviourPun
             Vector2 endPos2 =
                 new Vector2(transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
                 transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y + chatMoveDistance - chatMoveDistanceMinus);
+            Vector2 endPos3 =
+                new Vector2(transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
+                transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y + chatMoveDistance ); 
 
             StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
             StartCoroutine(ChatActive(transform.GetChild(1).GetChild(0), endPos2));
-            StartCoroutine(ChatActive(transform.GetChild(2).GetChild(0), endPos));
+            StartCoroutine(ChatActive(transform.GetChild(2).GetChild(0), endPos3));
             isActiveChat = true;
         }
         else
         {
             Vector2 endPos =
                 new Vector2(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
-                transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y- chatMoveDistance);
+                transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatMoveDistance);
 
             Vector2 endPos2 =
                 new Vector2(transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
-                transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatMoveDistance - chatMoveDistanceMinus);
+                transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatMoveDistance + chatMoveDistanceMinus);
+            Vector2 endPos3 =
+               new Vector2(transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
+               transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatMoveDistance);
 
             StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
             StartCoroutine(ChatActive(transform.GetChild(1).GetChild(0), endPos2));
-            StartCoroutine(ChatActive(transform.GetChild(2).GetChild(0), endPos));
+            StartCoroutine(ChatActive(transform.GetChild(2).GetChild(0), endPos3));
             isActiveChat = false;
         }
+    }
 
+    bool isActiceEmoji = false;
+    /// <summary>
+    /// Emoji Active
+    /// </summary>
+    public void OnClickActiveEmoji()
+    {
+        if (!isActiceEmoji)
+        {
+            isActiceEmoji = true;
+            Vector2 endPos =
+                new Vector2(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
+                transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y + chatEmojiMove);
+            Vector2 endPos3 =
+                new Vector2(transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
+                transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y + chatEmojiMove);
+
+            //content.sizeDelta = new Vector2(content.sizeDelta.x, content.sizeDelta.y - chatEmojiMove);
+            //content.anchoredPosition -= new Vector2(0, (chatEmojiMove) / 2);
+
+            trScrollView.sizeDelta = new Vector2(trScrollView.sizeDelta.x, trScrollView.sizeDelta.y - (chatEmojiMove));
+            trScrollView.anchoredPosition -= new Vector2(0, (chatEmojiMove) / 2);
+
+            trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta.x, trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta.y - chatEmojiMove);
+            trScrollView.GetChild(0).GetComponent<RectTransform>().anchoredPosition -= new Vector2(0, (chatEmojiMove) / 2);
+
+            StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
+            StartCoroutine(ChatActive(transform.GetChild(2).GetChild(0), endPos3));
+        }
+        else
+        {
+            isActiceEmoji = false;
+            Vector2 endPos =
+                new Vector2(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
+                transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatEmojiMove);
+            Vector2 endPos3 =
+                new Vector2(transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
+                transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatEmojiMove);
+
+            //content.sizeDelta = new Vector2(content.sizeDelta.x, content.sizeDelta.y + chatEmojiMove);
+            //content.anchoredPosition += new Vector2(0, (chatEmojiMove) / 2);
+
+            trScrollView.sizeDelta = new Vector2(trScrollView.sizeDelta.x, trScrollView.sizeDelta.y + chatEmojiMove);
+            trScrollView.anchoredPosition += new Vector2(0, (chatEmojiMove) / 2);
+
+            trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta.x, trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta.y + chatEmojiMove);
+            trScrollView.GetChild(0).GetComponent<RectTransform>().anchoredPosition += new Vector2(0, (chatEmojiMove) / 2);
+
+            StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
+            StartCoroutine(ChatActive(transform.GetChild(2).GetChild(0), endPos3));
+        }
     }
     private IEnumerator ChatActive(Transform activeObject ,Vector2 endPosition)
     {
@@ -373,6 +404,7 @@ public class UI_Chatting : MonoBehaviourPun
                 Vector2.Lerp(activeObject.GetComponent<RectTransform>().anchoredPosition, endPosition, t);
             yield return null;
         }
+        activeObject.GetComponent<RectTransform>().anchoredPosition = endPosition;
     }
     IEnumerator AutoScrollBottom()
     {
@@ -381,7 +413,7 @@ public class UI_Chatting : MonoBehaviourPun
         if (content.sizeDelta.y > trScrollView.sizeDelta.y)
         {
             //4. Content가 바닥에 닿아 있었다면 => 누가 끝에서 채팅을 쳤단 얘기
-            if (content.anchoredPosition.y >= prevContentH - trScrollView.sizeDelta.y)
+            if (content.sizeDelta.y >= prevContentH)
             {
                 //5. Content의 y값을 다시 설정해주자
                 content.anchoredPosition = new Vector2(0, content.sizeDelta.y - trScrollView.sizeDelta.y);

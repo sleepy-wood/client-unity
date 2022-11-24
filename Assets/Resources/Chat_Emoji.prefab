@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 2676189842191234898}
   - component: {fileID: 2676189842191234901}
   - component: {fileID: -181563706404017642}
+  - component: {fileID: 2260070719229709862}
   m_Layer: 5
   m_Name: Chat_Emoji
   m_TagString: Untagged
@@ -166,3 +167,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d36293ef252cd14f8ac905cc8b7a983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2260070719229709862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2676189842191234903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb30198aa32dd140b5750692dd48104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 61.75
+  image: {fileID: 2676189842191234901}
