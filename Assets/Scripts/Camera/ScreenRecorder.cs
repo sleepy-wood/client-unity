@@ -1,10 +1,11 @@
-using UnityEngine;
+                                                                                                                                                             using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
+# region 비트맵
 class BitmapEncoder
 {
     public static void WriteBitmap(Stream stream, int width, int height, byte[] imageData)
@@ -45,6 +46,7 @@ class BitmapEncoder
     }
 
 }
+# endregion
 
 /// <summary>
 /// Captures frames from a Unity camera in real time
