@@ -12,6 +12,7 @@ using System.IO;
 using UnityEngine.EventSystems;
 using System;
 using UnityEngine.Networking;
+using System.Threading;
 
 
 
@@ -183,7 +184,7 @@ public class TreeController : MonoBehaviour
 
     [Header("Camera")]
     public ScreenShot screenShot;
-    public VideoCapture videoCapture;
+    public ScreenRecorder screenRecorder;
     #endregion
 
     int i;
@@ -918,9 +919,15 @@ public class TreeController : MonoBehaviour
             screenShot.SaveCameraView();
             // Tree 캡처 이미지 업로드
             screenShot.SaveTreeImg();
+            // Tree Video 캡쳐 + 압축 + 웹에 올리기
+            screenRecorder.threadIsProcessing = true;
+            screenRecorder.encoderThread = new Thread(screenRecorder.EncodeAndSave);
+            screenRecorder.encoderThread.Start();
+
         }
         if (day>1) SaveTreeData();
     }
+
 
     /// <summary>
     /// 데모할 때의 SetTree 함수
