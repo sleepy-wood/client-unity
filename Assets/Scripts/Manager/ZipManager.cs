@@ -1,20 +1,17 @@
+using UnityEngine;
 using System.IO;
-
 using System.Collections;
-
 using ICSharpCode.SharpZipLib.Zip;
 
 
 
-public class ZipManager
+public class ZipManager : MonoBehaviour
 {
     public static float ProgressValue = 0;
     public static bool retVal = false;
 
     /// 
-
     /// 특정 폴더를 ZIP으로 압축 
-
     /// 
 
     /// 압축 대상 폴더 경로 
@@ -35,12 +32,17 @@ public class ZipManager
             Directory.CreateDirectory(zipFilePath);
         }
 
+        Debug.Log("1");
         // 압축 대상 폴더의 파일 목록. 
         ArrayList ar = GenerateFileList(targetFolderPath);
+
+        Debug.Log("2");
 
         // 압축 대상 폴더 경로의 길이 + 1 
         int TrimLength =
                (Directory.GetParent(targetFolderPath)).ToString().Length + 1;
+
+        Debug.Log("3");
         // find number of chars to remove. from orginal file path. remove '\' 
 
         FileStream ostream;
@@ -49,6 +51,8 @@ public class ZipManager
 
         // ZIP 스트림 생성. 
         ZipOutputStream oZipStream = new ZipOutputStream(File.Create(outPath));
+
+        Debug.Log("4");
         try
         {
             // 패스워드가 있는 경우 패스워드 지정. 
@@ -62,6 +66,7 @@ public class ZipManager
             {
                 oZipEntry = new ZipEntry(Fil.Remove(0, TrimLength));
                 oZipStream.PutNextEntry(oZipEntry);
+                Debug.Log("5");
 
                 // 파일인 경우. 
                 if (!Fil.EndsWith(@"/"))
@@ -70,10 +75,12 @@ public class ZipManager
                     obuffer = new byte[ostream.Length];
                     ostream.Read(obuffer, 0, obuffer.Length);
                     oZipStream.Write(obuffer, 0, obuffer.Length);
+                    Debug.Log("6");
                 }
             }
 
             retVal = true;
+            Debug.Log("7");
         }
         catch
         {
@@ -81,12 +88,14 @@ public class ZipManager
             // 오류가 난 경우 생성 했던 파일을 삭제. 
             if (File.Exists(outPath))
                 File.Delete(outPath);
+            Debug.Log("8");
         }
         finally
         {
             // 압축 종료. 
             oZipStream.Finish();
             oZipStream.Close();
+            Debug.Log("9");
         }
 
 
@@ -95,6 +104,7 @@ public class ZipManager
             try
             {
                 Directory.Delete(targetFolderPath, true);
+                Debug.Log("10");
             }
             catch { }
 
@@ -114,14 +124,17 @@ public class ZipManager
     {
         ArrayList fils = new ArrayList();
         bool Empty = true;
+        Debug.Log("1-1");
         // 폴더 내의 파일 추가. 
         foreach (string file in Directory.GetFiles(Dir))
         {
             fils.Add(file);
             Empty = false;
         }
+        Debug.Log("1-2");
         if (Empty)
         {
+            Debug.Log("1-3");
             // 파일이 없고, 폴더도 없는 경우 자신의 폴더 추가. 
             if (Directory.GetDirectories(Dir).Length == 0)
                 fils.Add(Dir + @"/");
@@ -129,6 +142,7 @@ public class ZipManager
         // 폴더 내 폴더 목록. 
         foreach (string dirs in Directory.GetDirectories(Dir))
         {
+            Debug.Log("1-4");
             // 해당 폴더로 다시 GenerateFileList 재귀 호출 
             foreach (object obj in GenerateFileList(dirs))
             {
@@ -136,7 +150,9 @@ public class ZipManager
                 fils.Add(obj);
             }
         }
+        Debug.Log("1-5");
         return fils;
+        
     }
 
     /// 
