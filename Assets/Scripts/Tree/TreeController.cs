@@ -930,6 +930,12 @@ public class TreeController : MonoBehaviour
             // Tree 캡처 이미지 업로드
             screenShot.SaveTreeImg();
             // Tree Video 캡쳐 + 압축 + 웹에 올리기
+            // Kill the encoder thread if running from a previous execution
+            if (screenRecorder.encoderThread != null && (screenRecorder.threadIsProcessing || screenRecorder.encoderThread.IsAlive))
+            {
+                screenRecorder.threadIsProcessing = false;
+                screenRecorder.encoderThread.Join();
+            }
             screenRecorder.threadIsProcessing = true;
             screenRecorder.encoderThread = new Thread(screenRecorder.EncodeAndSave);
             screenRecorder.encoderThread.Start();
