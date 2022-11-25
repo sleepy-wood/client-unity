@@ -32,13 +32,13 @@ public class SkyController : MonoBehaviour
             else if (DateTime.Now.Hour > 17 && DateTime.Now.Hour < 18)
             {
                 txtMain.color = Color.white;
-                txtMain.color = Color.white;
+                txtSub.color = Color.white;
                 Sunset();
             }
             else
             {
                 txtMain.color = Color.white;
-                txtMain.color = Color.white;
+                txtSub.color = Color.white;
                 Night();
             }
         }
