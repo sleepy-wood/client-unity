@@ -247,29 +247,34 @@ public class ScreenRecorder : MonoBehaviour
 #elif UNITY_IOS || UNITY_ANDROID
         from = $"{Application.persistentDataPath}/ScreenRecorder";
 #endif
+
+
+        // 압축 대상 폴더 경로의 길이 + 1 
+        int TrimLength =
+               (Directory.GetParent(from)).ToString().Length + 1;
         // 압축한 파일을 저장할 파일 경로
 #if UNITY_STANDALONE
-        if (!System.IO.Directory.Exists(from))
-        {
-            System.IO.Directory.CreateDirectory(from);
-        }
+        //if (!System.IO.Directory.Exists(from))
+        //{
+        //    System.IO.Directory.CreateDirectory(from);
+        //}
         string to = $"{Application.streamingAssetsPath}/Zipfiles";
 #elif UNITY_IOS || UNITY_ANDROID
-        to = $"{Application.streamingAssetsPath}/Zipfiles";
-        if (!System.IO.Directory.Exists(to))
-        {
-            System.IO.Directory.CreateDirectory(to);
-            print("1");
-        }
+        to = Application.persistentDataPath + "/";
+        //if (!System.IO.Directory.Exists(to))
+        //{
+        //    System.IO.Directory.CreateDirectory(to);
+        //    print("1");
+        //}
 #endif
         // 이미지 압축
         ZipFile zip = new ZipFile();
         print("2");
-        zip.AddDirectory(to);
+        zip.AddDirectory(from);
         print("3");
-        zipFilePath = $"TreeImgZip_{GameManager.Instance.treeController.treeId}";
+        zipFilePath = $"TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
         print("4");
-        zip.Save(zipFilePath);
+        zip.Save(to+zipFilePath);
         print("Zip Images");
 
         // 이미지 삭제
@@ -311,5 +316,44 @@ public class ScreenRecorder : MonoBehaviour
         {
             Debug.Log("Tree Video Zip File Upload : Success");
         }
+    }
+
+
+    /// <summary>
+    /// 파일 경로에 있는 모든 파일의 리스트 뽑기
+    /// </summary>
+    /// <param name="Dir"></param>
+    /// <returns></returns>
+    private static ArrayList GenerateFileList(string Dir)
+    {
+        ArrayList fils = new ArrayList();
+        bool Empty = true;
+        
+        // 폴더 내의 파일 추가. 
+        foreach (string file in Directory.GetFiles(Dir))
+        {
+            fils.Add(file);
+            Empty = false;
+        }
+
+        //if (Empty)
+        //{
+        //    // 파일이 없고, 폴더도 없는 경우 자신의 폴더 추가. 
+        //    if (Directory.GetDirectories(Dir).Length == 0)
+        //        fils.Add(Dir + @"/");
+        //}
+        //// 폴더 내 폴더 목록. 
+        //foreach (string dirs in Directory.GetDirectories(Dir))
+        //{
+        //    Debug.Log("1-4");
+        //    // 해당 폴더로 다시 GenerateFileList 재귀 호출 
+        //    foreach (object obj in GenerateFileList(dirs))
+        //    {
+        //        // 해당 폴더 내의 파일, 폴더 추가. 
+        //        fils.Add(obj);
+        //    }
+        //}
+
+        return fils;
     }
 }

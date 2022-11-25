@@ -14,6 +14,7 @@ public class UI_PlantName : MonoBehaviour
     public GameObject treeNameUI;
     public GameObject chatUI;
     public GameObject landCanvas;
+    public GameObject treeNameBG;
 
     private void Start()
     {
@@ -59,5 +60,6 @@ public class UI_PlantName : MonoBehaviour
         chatUI.SetActive(true);
         // 나무 이름 결정 UI 비활성화
         treeNameUI.SetActive(false);
+        treeNameBG.SetActive(false);
     }
 }

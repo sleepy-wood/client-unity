@@ -179,6 +179,7 @@ public class TreeController : MonoBehaviour
     public Text txtTreeBirth;
     public Text txtTreeRarity;
     public Text txtTreeVitality;
+    public GameObject treeNameBG;
 
     [Space]
 
@@ -714,6 +715,7 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 식물 이름 UI Animation
+        treeNameBG.SetActive(true);
         treeNameWindow.transform.localScale = new Vector3(0, 0, 0);
         t = 0;
         while (t <= 1)
