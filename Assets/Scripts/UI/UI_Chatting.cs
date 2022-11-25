@@ -16,9 +16,9 @@ public class UI_Chatting : MonoBehaviourPun
     [SerializeField] private RectTransform emoji_Category_content;
     [SerializeField] private GameObject emoji_Window;
 
-    [SerializeField] private float chatEmojiMove;
-    [SerializeField] private float chatMoveDistanceMinus;
-    [SerializeField] private float chatMoveDistance;
+    private float chatEmojiMove;
+    private float chatMoveDistanceMinus;
+    private float chatMoveDistance;
 
     public RectTransform emoji_content;
     
@@ -36,8 +36,6 @@ public class UI_Chatting : MonoBehaviourPun
     private GameObject user;
     private Dictionary<string, Sprite> profileDic = new Dictionary<string, Sprite>();
     private string[] stopwords;
-    private Vector2 chatContent_Initial;
-    private Vector2 chatContent_Initial_Emoji;
 
     /// <summary>
     /// 업데이트 후 윈도우 재설정
@@ -89,9 +87,9 @@ public class UI_Chatting : MonoBehaviourPun
     }
     private void Start()
     {
-        //chatMoveDistance = Vector2.Distance(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition, new Vector2(0, 0));
-        //chatMoveDistanceMinus = Mathf.Abs(chatMoveDistance - Mathf.Abs(transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y));
-        //chatEmojiMove = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<RectTransform>().sizeDelta.y;
+        chatMoveDistance = Vector2.Distance(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition, new Vector2(0, 0));
+        chatMoveDistanceMinus = Mathf.Abs(chatMoveDistance - Mathf.Abs(transform.GetChild(1).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y));
+        chatEmojiMove = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<RectTransform>().sizeDelta.y;
 
         photonView.RPC("RPC_ProfileList", RpcTarget.AllBuffered, DataTemporary.MyUserData.profileImg, DataTemporary.MyUserData.nickname);
         TextAsset textFile = DataTemporary.stopwordsAsset.LoadAsset<TextAsset>("stopwords");
@@ -143,11 +141,6 @@ public class UI_Chatting : MonoBehaviourPun
             prefab.GetComponent<Button>().onClick.AddListener(
                 () => OnClickEmojiCategory(temp + 15));
         }
-        //emoji_Category_content.offsetMax = new Vector2(70 * ((15 + filenames.Count) / 12), emoji_content.offsetMax.y);
-
-        chatContent_Initial = content.anchoredPosition;
-        //chatContent_Initial_Emoji = content.anchoredPosition + new Vector2(0, (chatEmojiMove) / 2);
-
         #region Regacy
         //        string[] fileEntries = Directory.GetFiles(path, "*.png");
 
@@ -367,11 +360,11 @@ public class UI_Chatting : MonoBehaviourPun
             //content.sizeDelta = new Vector2(content.sizeDelta.x, content.sizeDelta.y - chatEmojiMove);
             //content.anchoredPosition -= new Vector2(0, (chatEmojiMove) / 2);
 
-            trScrollView.sizeDelta = new Vector2(trScrollView.sizeDelta.x, trScrollView.sizeDelta.y - (chatEmojiMove));
+            trScrollView.sizeDelta -= new Vector2(0, chatEmojiMove);
             trScrollView.anchoredPosition -= new Vector2(0, (chatEmojiMove) / 2);
 
-            trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta.x, trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta.y - chatEmojiMove);
-            trScrollView.GetChild(0).GetComponent<RectTransform>().anchoredPosition -= new Vector2(0, (chatEmojiMove) / 2);
+            trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta -= new Vector2(0, chatEmojiMove);
+            trScrollView.GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
             StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
             StartCoroutine(ChatActive(transform.GetChild(2).GetChild(0), endPos3));
@@ -386,14 +379,12 @@ public class UI_Chatting : MonoBehaviourPun
                 new Vector2(transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
                 transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatEmojiMove);
 
-            //content.sizeDelta = new Vector2(content.sizeDelta.x, content.sizeDelta.y + chatEmojiMove);
-            //content.anchoredPosition += new Vector2(0, (chatEmojiMove) / 2);
-
-            trScrollView.sizeDelta = new Vector2(trScrollView.sizeDelta.x, trScrollView.sizeDelta.y + chatEmojiMove);
+            trScrollView.sizeDelta += new Vector2(0, chatEmojiMove);
             trScrollView.anchoredPosition += new Vector2(0, (chatEmojiMove) / 2);
 
-            trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta.x, trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta.y + chatEmojiMove);
-            trScrollView.GetChild(0).GetComponent<RectTransform>().anchoredPosition += new Vector2(0, (chatEmojiMove) / 2);
+            trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta += new Vector2(0, chatEmojiMove);
+            trScrollView.GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+            //trScrollView.GetChild(0).GetComponent<RectTransform>().anchoredPosition += new Vector2(0, (chatEmojiMove) / 2);
 
             StartCoroutine(ChatActive(transform.GetChild(0).GetChild(0), endPos));
             StartCoroutine(ChatActive(transform.GetChild(2).GetChild(0), endPos3));
