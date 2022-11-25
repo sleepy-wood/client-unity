@@ -169,8 +169,8 @@ public class TreeController : MonoBehaviour
     public UI_Initial uiInitial;
     public GameObject landCanvas;
     public GameObject chatCanvas;
-    // 나무 이름 입력 UI
-    public GameObject treeNameUI;
+    // 나무 이름 입력 창UI
+    public GameObject treeNameWindow;
     // SkyLand Main Text
     public Text txtMain;
     public Text txtSub;
@@ -683,7 +683,7 @@ public class TreeController : MonoBehaviour
         t = 0;
         while (t <= 1f)
         {
-            t += Time.deltaTime * 0.5f;
+            t += Time.deltaTime * 2f;
             sprout.transform.localScale = new Vector3(t, t, t);
             yield return null;
         }
@@ -694,7 +694,7 @@ public class TreeController : MonoBehaviour
         sproutLeaf.transform.localScale = new Vector3(0, 0, 0);
         while (t <= targetScale)
         {
-            t += Time.deltaTime * 0.5f;
+            t += Time.deltaTime * 2f;
             sproutLeaf.transform.localScale = new Vector3(t, t, t);
             yield return null;
         }
@@ -713,8 +713,17 @@ public class TreeController : MonoBehaviour
         //Camera.main.fieldOfView = defaultFOV;
         #endregion
 
-        // 식물 이름 UI 띄우기
-        treeNameUI.gameObject.SetActive(true);
+        // 식물 이름 UI Animation
+        treeNameWindow.transform.localScale = new Vector3(0, 0, 0);
+        t = 0;
+        while (t <= 1)
+        {
+            t += Time.deltaTime * 2f;
+            treeNameWindow.transform.localScale = new Vector3(t, t, t);
+            yield return null;
+        }
+        treeNameWindow.transform.localScale = new Vector3(1, 1, 1);
+        yield return new WaitForSeconds(1);
     }
     #endregion
 
