@@ -247,11 +247,6 @@ public class ScreenRecorder : MonoBehaviour
 #elif UNITY_IOS || UNITY_ANDROID
         from = $"{Application.persistentDataPath}/ScreenRecorder";
 #endif
-
-
-        // 압축 대상 폴더 경로의 길이 + 1 
-        int TrimLength =
-               (Directory.GetParent(from)).ToString().Length + 1;
         // 압축한 파일을 저장할 파일 경로
 #if UNITY_STANDALONE
         //if (!System.IO.Directory.Exists(from))
@@ -269,19 +264,16 @@ public class ScreenRecorder : MonoBehaviour
 #endif
         // 이미지 압축
         ZipFile zip = new ZipFile();
-        print("2");
         zip.AddDirectory(from);
-        print("3");
         zipFilePath = $"TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
-        print("4");
         zip.Save(to+zipFilePath);
-        print("Zip Images");
+        print("이미지 압축 완료");
 
         // 이미지 삭제
         Directory.Delete(from, true);
-        print("Delete Caputure Image");
+        print("이미지 삭제 완료");
 
-        //UploadZipFile();
+        UploadZipFile();
     }
     public string zipFilePath;
     public string from;
@@ -320,7 +312,7 @@ public class ScreenRecorder : MonoBehaviour
 
 
     /// <summary>
-    /// 파일 경로에 있는 모든 파일의 리스트 뽑기
+    /// 파일 경로에 있는 모든 파일의 리스트 뽑
     /// </summary>
     /// <param name="Dir"></param>
     /// <returns></returns>
