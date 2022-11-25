@@ -4,7 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using ICSharpCode.SharpZipLib.Zip;
+using Ionic.Zip;
+using UnityEngine.Networking;
+//using ICSharpCode.SharpZipLib.Zip;
+
 
 # region 비트맵
 class BitmapEncoder
@@ -95,10 +98,11 @@ public class ScreenRecorder : MonoBehaviour
         Application.targetFrameRate = frameRate;
 
         // Prepare the data directory
+        string path = "/ScreenRecorder";
 #if UNITY_STANDALONE
-        persistentDataPath = Application.dataPath + "/ScreenRecorder";
+        persistentDataPath = Application.dataPath + path;
 #elif UNITY_IOS || UNITY_ANDROID
-        persistentDataPath = Application.persistentDataPath + "/ScreenRecorder";
+        persistentDataPath = Application.persistentDataPath + path;
 #endif
         print("Capturing to: " + persistentDataPath + "/");
 
@@ -238,35 +242,74 @@ public class ScreenRecorder : MonoBehaviour
 
         // 압축할 이미지가 들어있는 파일 경로
 #if UNITY_STANDALONE
-        string from = $"{Application.dataPath}/ScreenRecorder";
+        from = $"{Application.dataPath}/ScreenRecorder";
 
 #elif UNITY_IOS || UNITY_ANDROID
-        string from = $"{Application.persistentDataPath}/ScreenRecorder";
+        from = $"{Application.persistentDataPath}/ScreenRecorder";
 #endif
         // 압축한 파일을 저장할 파일 경로
 #if UNITY_STANDALONE
-        string to = $"{Application.dataPath}/Zipfiles";
+        if (!System.IO.Directory.Exists(from))
+        {
+            System.IO.Directory.CreateDirectory(from);
+        }
+        string to = $"{Application.streamingAssetsPath}/Zipfiles";
 #elif UNITY_IOS || UNITY_ANDROID
-        string to = $"{Application.persistentDataPath}/Zipfiles";
+        to = $"{Application.streamingAssetsPath}/Zipfiles";
+        if (!System.IO.Directory.Exists(to))
+        {
+            System.IO.Directory.CreateDirectory(to);
+            print("1");
+        }
 #endif
-        ZipManager.ZipFiles(from, to, true);
-        print($"압축 완료 여부 = {ZipManager.ZipFiles(from, to, true)}");
+        // 이미지 압축
+        ZipFile zip = new ZipFile();
+        print("2");
+        zip.AddDirectory(to);
+        print("3");
+        zipFilePath = $"TreeImgZip_{GameManager.Instance.treeController.treeId}";
+        print("4");
+        zip.Save(zipFilePath);
+        print("Zip Images");
 
-        
+        // 이미지 삭제
+        Directory.Delete(from, true);
+        print("Delete Caputure Image");
+
+        //UploadZipFile();
     }
-
+    public string zipFilePath;
+    public string from;
+    public string to;
     /// <summary>
-    /// 캡처 이미지 압축
+    /// 이미지 압축 파일 웹에 업로드
     /// </summary>
-    //public class ZipManager()
-    //{
-    //}
+    public async void UploadZipFile()
+    {
+        string saveUrl = "/api/v1/files/temp/image-to-video";
+        List<IMultipartFormSection> treeCaptures = new List<IMultipartFormSection>();
+#if UNITY_STANDALONE
+        string path = $"{Application.streamingAssetsPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
+#elif UNITY_IOS || UNITY_ANDROID
+        string path = $"{Application.streamingAssetsPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
+#endif
+        treeCaptures.Add(new MultipartFormFileSection("files", File.ReadAllBytes(path), zipFilePath, "application/zip"));
 
-    ///// <summary>
-    ///// 이미지 압축 파일 웹에 업로드
-    ///// </summary>
-    //public async void UploadZipFile()
-    //{
+        ResultPost<List<TreeFile>> resultPost = await DataModule.WebRequestBuffer<ResultPost<List<TreeFile>>>(
+           saveUrl,
+           DataModule.NetworkType.POST,
+           DataModule.DataType.BUFFER,
+           null,
+           treeCaptures);
 
-    //}
+        if (!resultPost.result)
+        {
+            Debug.Log("Tree Video Zip File Upload : Fail");
+            return;
+        }
+        else
+        {
+            Debug.Log("Tree Video Zip File Upload : Success");
+        }
+    }
 }
