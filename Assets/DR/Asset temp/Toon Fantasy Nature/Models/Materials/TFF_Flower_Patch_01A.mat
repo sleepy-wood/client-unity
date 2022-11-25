@@ -2,14 +2,18 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TFF_Flower_Patch_01A
   m_Shader: {fileID: 4800000, guid: 2fcab0b6e64ffa64da84ab855bac8735, type: 3}
-  m_ShaderKeywords: _ACCENTS_ON _ALPHAPREMULTIPLY_ON _HIGHLIGHTS_ON
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _ACCENTS_ON
+  - _ALPHAPREMULTIPLY_ON
+  - _HIGHLIGHTS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -71,10 +75,11 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _Accents: 1
     - _BumpScale: 1
-    - _Color1Level: 0.534
+    - _Color1Level: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
@@ -97,8 +102,9 @@ Material:
     m_Colors:
     - _AccentColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.8, g: 0.8, b: 0.8, a: 0.19999999}
-    - _Color1: {r: 1, g: 0, b: 0.11635065, a: 1}
-    - _Color2: {r: 0, g: 0.6886792, b: 0.16504757, a: 1}
+    - _Color1: {r: 1, g: 0.3820755, b: 0.48314258, a: 1}
+    - _Color2: {r: 1, g: 1, b: 1, a: 1}
     - _Color3: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _HighlightColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
+  m_BuildTextureStacks: []
