@@ -129,16 +129,16 @@ public class UI_Initial : MonoBehaviour
             if (i==2)
             {
                 // 원래 이미지
-                bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                bottomUI.transform.GetChild(0).GetChild(i).GetChild(0).gameObject.SetActive(false);
                 // 선택했을 때의 이미지
-                bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(true);
+                bottomUI.transform.GetChild(0).GetChild(i).GetChild(1).gameObject.SetActive(true);
             }
             else
             {
                 // 원래 이미지
-                bottomUI.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                bottomUI.transform.GetChild(0).GetChild(i).GetChild(0).gameObject.SetActive(true);
                 // 선택했을 때의 이미지
-                bottomUI.transform.GetChild(i).GetChild(1).gameObject.SetActive(false);
+                bottomUI.transform.GetChild(0).GetChild(i).GetChild(1).gameObject.SetActive(false);
             }
         }
     }
@@ -406,6 +406,7 @@ public class UI_Initial : MonoBehaviour
         {
             if (idx == i)
             {
+                print("선택된 Bottom UI Idx : " + idx);
                 // 원래 이미지
                 bottomUI.transform.GetChild(0).GetChild(i).GetChild(0).gameObject.SetActive(false);
                 // 선택했을 때의 이미지
