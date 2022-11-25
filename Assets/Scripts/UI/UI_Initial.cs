@@ -206,8 +206,6 @@ public class UI_Initial : MonoBehaviour
             // 현재 나무 이미지 업데이트 및 웹 저장
             // 스크린샷 + 이미지 저장
             screenShotCam.GetComponent<ScreenShot>().SaveCameraView();
-            // 영상 캡처 + 저장
-
         }
         else
         {

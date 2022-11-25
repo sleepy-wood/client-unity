@@ -171,6 +171,7 @@ public class TreeController : MonoBehaviour
     public GameObject chatCanvas;
     // 나무 이름 입력 창UI
     public GameObject treeNameWindow;
+    public GameObject treeNameBG;
     // SkyLand Main Text
     public Text txtMain;
     public Text txtSub;
@@ -714,6 +715,7 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 식물 이름 UI Animation
+        treeNameBG.SetActive(true);
         treeNameWindow.transform.localScale = new Vector3(0, 0, 0);
         t = 0;
         while (t <= 1)
