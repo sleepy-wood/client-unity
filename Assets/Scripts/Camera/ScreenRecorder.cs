@@ -63,8 +63,7 @@ class BitmapEncoder
 /// frames in uncompressed BMP format.
 /// Created by Richard Copperwaite.
 /// </description>
-
-
+/// 
 [RequireComponent(typeof(Camera))]
 public class ScreenRecorder : MonoBehaviour
 {
@@ -93,51 +92,82 @@ public class ScreenRecorder : MonoBehaviour
     public bool threadIsProcessing;
     public bool terminateThreadWhenDone;
 
-    // Zip File Path
-    public string zipFilePath;
-    public string from;
-    public string to;
-
     void Start()
     {
-        // Set target frame rate (optional)
-        Application.targetFrameRate = frameRate;
+        //        // Set target frame rate (optional)
+        //        Application.targetFrameRate = frameRate;
 
-        // Prepare the data directory
-        string path = "/ScreenRecorder";
+        //        // Prepare the data directory
+        //        string path = "/ScreenRecorder";
+        //#if UNITY_STANDALONE
+        //        persistentDataPath = Application.dataPath + path;
+        //#elif UNITY_IOS || UNITY_ANDROID
+        //        persistentDataPath = Application.persistentDataPath + path;
+        //#endif
+        //        print("Capturing to: " + persistentDataPath + "/");
+
+        //        if (!System.IO.Directory.Exists(persistentDataPath))
+        //        {
+        //            System.IO.Directory.CreateDirectory(persistentDataPath);
+        //        }
+
+        //        // Prepare textures and initial values
+        //        screenWidth = GetComponent<Camera>().pixelWidth;
+        //        screenHeight = GetComponent<Camera>().pixelHeight;
+
+        //        // Render Texture
+        //        tempRenderTexture = new RenderTexture(screenWidth, screenHeight, 0);
+        //        tempTexture2D = new Texture2D(screenWidth, screenHeight, TextureFormat.RGB24, false);
+        //        frameQueue = new Queue<byte[]>();
+
+        //        frameNumber = 0;
+        //        savingFrameNumber = 0;
+
+        //        captureFrameTime = 1.0f / (float)frameRate;
+        //        lastFrameTime = Time.time;
+
+        //        // Kill the encoder thread if running from a previous execution
+        //        if (encoderThread != null && (threadIsProcessing || encoderThread.IsAlive))
+        //        {
+        //            threadIsProcessing = false;
+        //            encoderThread.Join();
+        //        }
+
+
+        // 압축할 이미지가 들어있는 파일 경로
 #if UNITY_STANDALONE
-        persistentDataPath = Application.dataPath + path;
+        from = $"{Application.dataPath}/ScreenRecorder";
+
 #elif UNITY_IOS || UNITY_ANDROID
-        persistentDataPath = Application.persistentDataPath + path;
+        from = $"{Application.persistentDataPath}/ScreenRecorder";
 #endif
-        print("Capturing to: " + persistentDataPath + "/");
+        // 압축한 파일을 저장할 파일 경로
+#if UNITY_STANDALONE
+        //if (!System.IO.Directory.Exists(from))
+        //{
+        //    System.IO.Directory.CreateDirectory(from);
+        //}
+        string to = $"{Application.streamingAssetsPath}/Zipfiles";
+#elif UNITY_IOS || UNITY_ANDROID
+        to = Application.persistentDataPath + "/";
+        //if (!System.IO.Directory.Exists(to))
+        //{
+        //    System.IO.Directory.CreateDirectory(to);
+        //    print("1");
+        //}
+#endif
+        // 이미지 압축
+        ZipFile zip = new ZipFile();
+        zip.AddDirectory(from);
+        zipFilePath = $"TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
+        zip.Save(to + zipFilePath);
+        print("이미지 압축 완료");
 
-        if (!System.IO.Directory.Exists(persistentDataPath))
-        {
-            System.IO.Directory.CreateDirectory(persistentDataPath);
-        }
+        // 이미지 삭제
+        Directory.Delete(from, true);
+        print("이미지 삭제 완료");
 
-        // Prepare textures and initial values
-        screenWidth = GetComponent<Camera>().pixelWidth;
-        screenHeight = GetComponent<Camera>().pixelHeight;
-
-        // Render Texture
-        tempRenderTexture = new RenderTexture(screenWidth, screenHeight, 0);
-        tempTexture2D = new Texture2D(screenWidth, screenHeight, TextureFormat.RGB24, false);
-        frameQueue = new Queue<byte[]>();
-
-        frameNumber = 0;
-        savingFrameNumber = 0;
-
-        captureFrameTime = 1.0f / (float)frameRate;
-        lastFrameTime = Time.time;
-
-        // Kill the encoder thread if running from a previous execution
-        if (encoderThread != null && (threadIsProcessing || encoderThread.IsAlive))
-        {
-            threadIsProcessing = false;
-            encoderThread.Join();
-        }
+        UploadZipFile();
     }
 
 
@@ -254,46 +284,56 @@ public class ScreenRecorder : MonoBehaviour
         from = $"{Application.persistentDataPath}/ScreenRecorder";
 #endif
         // 압축한 파일을 저장할 파일 경로
-        if (!System.IO.Directory.Exists(from))
-        {
-            System.IO.Directory.CreateDirectory(from);
-        }
-        string to = $"{Application.streamingAssetsPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
-
+#if UNITY_STANDALONE
+        //if (!System.IO.Directory.Exists(from))
+        //{
+        //    System.IO.Directory.CreateDirectory(from);
+        //}
+        string to = $"{Application.streamingAssetsPath}/Zipfiles";
+#elif UNITY_IOS || UNITY_ANDROID
+        to = Application.persistentDataPath + "/";
+        //if (!System.IO.Directory.Exists(to))
+        //{
+        //    System.IO.Directory.CreateDirectory(to);
+        //    print("1");
+        //}
+#endif
         // 이미지 압축
         ZipFile zip = new ZipFile();
-        zip.AddDirectory(from);  // 압축할 파일 지정
-        zip.Save(to);  // 압축 파일 저장
+        zip.AddDirectory(from);
+        zipFilePath = $"TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
+        zip.Save(to+zipFilePath);
         print("이미지 압축 완료");
 
-        // 여러 이미지 캡처한 폴더 삭제
+        // 이미지 삭제
         Directory.Delete(from, true);
-        print("이미지 폴더 삭제 완료");
+        print("이미지 삭제 완료");
 
-        // 나무 이미지 압축 파일 웹에 업로드
         UploadZipFile();
     }
-    
+    public string zipFilePath;
+    public string from;
+    public string to;
     /// <summary>
     /// 이미지 압축 파일 웹에 업로드
     /// </summary>
     public async void UploadZipFile()
     {
         string saveUrl = "/api/v1/files/temp/image-to-video";
-        List<IMultipartFormSection> videoCaptures = new List<IMultipartFormSection>();
+        List<IMultipartFormSection> treeCaptures = new List<IMultipartFormSection>();
 #if UNITY_STANDALONE
         string path = $"{Application.streamingAssetsPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
 #elif UNITY_IOS || UNITY_ANDROID
         string path = $"{Application.streamingAssetsPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
 #endif
-        videoCaptures.Add(new MultipartFormFileSection("files", File.ReadAllBytes(path), $"TreeImgZip_{GameManager.Instance.treeController.treeId}.zip", "application/zip"));
+        treeCaptures.Add(new MultipartFormFileSection("files", File.ReadAllBytes(path), zipFilePath, "application/zip"));
 
         ResultPost<List<TreeFile>> resultPost = await DataModule.WebRequestBuffer<ResultPost<List<TreeFile>>>(
            saveUrl,
            DataModule.NetworkType.POST,
            DataModule.DataType.BUFFER,
            null,
-           videoCaptures);
+           treeCaptures);
 
         if (!resultPost.result)
         {
@@ -304,5 +344,44 @@ public class ScreenRecorder : MonoBehaviour
         {
             Debug.Log("Tree Video Zip File Upload : Success");
         }
+    }
+
+
+    /// <summary>
+    /// 파일 경로에 있는 모든 파일의 리스트 뽑
+    /// </summary>
+    /// <param name="Dir"></param>
+    /// <returns></returns>
+    private static ArrayList GenerateFileList(string Dir)
+    {
+        ArrayList fils = new ArrayList();
+        bool Empty = true;
+        
+        // 폴더 내의 파일 추가. 
+        foreach (string file in Directory.GetFiles(Dir))
+        {
+            fils.Add(file);
+            Empty = false;
+        }
+
+        //if (Empty)
+        //{
+        //    // 파일이 없고, 폴더도 없는 경우 자신의 폴더 추가. 
+        //    if (Directory.GetDirectories(Dir).Length == 0)
+        //        fils.Add(Dir + @"/");
+        //}
+        //// 폴더 내 폴더 목록. 
+        //foreach (string dirs in Directory.GetDirectories(Dir))
+        //{
+        //    Debug.Log("1-4");
+        //    // 해당 폴더로 다시 GenerateFileList 재귀 호출 
+        //    foreach (object obj in GenerateFileList(dirs))
+        //    {
+        //        // 해당 폴더 내의 파일, 폴더 추가. 
+        //        fils.Add(obj);
+        //    }
+        //}
+
+        return fils;
     }
 }
