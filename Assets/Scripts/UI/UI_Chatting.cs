@@ -323,6 +323,27 @@ public class UI_Chatting : MonoBehaviourPun
         }
         else
         {
+            if (isActiceEmoji)
+            {
+                isActiceEmoji = false;
+
+                Vector2 endPos11 =
+                    new Vector2(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
+                    transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatEmojiMove);
+                Vector2 endPos33 =
+                    new Vector2(transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
+                    transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatEmojiMove);
+
+                trScrollView.sizeDelta += new Vector2(0, chatEmojiMove);
+                trScrollView.anchoredPosition += new Vector2(0, (chatEmojiMove) / 2);
+
+                trScrollView.GetChild(0).GetComponent<RectTransform>().sizeDelta += new Vector2(0, chatEmojiMove);
+                trScrollView.GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+
+                transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition = endPos11;
+                transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().anchoredPosition = endPos33;
+
+            }
             Vector2 endPos =
                 new Vector2(transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x,
                 transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y - chatMoveDistance);
