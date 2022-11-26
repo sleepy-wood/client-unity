@@ -286,7 +286,7 @@ public class UI_Initial : MonoBehaviour
         if (!once)
         {
             Vector2 pos = developerUI.anchoredPosition;
-            StartCoroutine(UILerp(pos, new Vector2(120, pos.y), 2, developerUI));
+            StartCoroutine(UILerp(pos, new Vector2(195, pos.y), 2, developerUI));
             once = true;
         }
         else
