@@ -108,8 +108,10 @@ public class LoadingData : MonoBehaviourPunCallbacks
         DataTemporary.assetBundleImg = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustomimg");
         //금칙어번들 풀기
         DataTemporary.stopwordsAsset = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/otherbundle");
-        // tree Pipeline 에셋번들
+        // Tree Pipeline 에셋번들
         DataTemporary.assetBundleTreePipeline = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
+        // Tree Bark Material 에셋번들
+        DataTemporary.treeBarkAssetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/barktexturebundle");
 
         //로그인
         //"/api/v1/auth/login/temp/{id}"
