@@ -141,7 +141,7 @@ public class UI_Chatting : MonoBehaviourPun
             prefab.GetComponent<Button>().onClick.AddListener(
                 () => OnClickEmojiCategory(temp + 15));
         }
-        #region Regacy
+        #region Legacy
         //        string[] fileEntries = Directory.GetFiles(path, "*.png");
 
         //        List<string> filenames = new List<string>();
