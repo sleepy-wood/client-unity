@@ -924,14 +924,8 @@ public class TreeController : MonoBehaviour
             else if (healthSetting == 1) ApplyHealthData();
             PipelineReload();
             assetBundle.Unload(false);
-            // Tree & Land 이미지 캡처
+            // Tree 이미지 캡처 & 동영상 이미지 캡처 & 웹에 업로드 순차적으로 진행
             screenShot.SaveCameraView();
-            // Tree 이미지 캡처
-            screenShot.SaveTreeImg();
-            // Tree Video 이미지 캡처 및 압축
-            screenRecorder.VideoCaptureStart();
-            // 나무 비디오/이미지 웹 업로드
-            GetComponent<UploadTreeData>().FileIDUpload();
         }
         if (day>1) SaveTreeData();
     }

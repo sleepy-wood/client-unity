@@ -118,8 +118,8 @@ public class ScreenRecorder : MonoBehaviour
         }
 
         // Prepare textures and initial values
-        screenWidth = GetComponent<Camera>().pixelWidth;
-        screenHeight = GetComponent<Camera>().pixelHeight;
+        screenWidth = Screen.width;
+        screenHeight = Screen.height;
 
         // Render Texture
         tempRenderTexture = new RenderTexture(screenWidth, screenHeight, 0);
@@ -131,10 +131,30 @@ public class ScreenRecorder : MonoBehaviour
 
         captureFrameTime = 1.0f / (float)frameRate;
         lastFrameTime = Time.time;
-    }
 
-    public void VideoCaptureStart()
-    {
+        // 압축할 이미지가 들어있는 파일 경로
+#if UNITY_STANDALONE
+        from = $"{Application.dataPath}/ScreenRecorder";
+
+#elif UNITY_IOS || UNITY_ANDROID
+        from = $"{Application.persistentDataPath}/ScreenRecorder";
+#endif
+        // 압축한 파일을 저장할 파일 경로
+        if (!System.IO.Directory.Exists(from))
+        {
+            System.IO.Directory.CreateDirectory(from);
+        }
+#if UNITY_STANDALONE
+        to = $"{Application.dataPath}/Zipfiles";
+
+#elif UNITY_IOS || UNITY_ANDROID
+        to = $"{Application.persistentDataPath}/Zipfiles";
+#endif
+        if (!System.IO.Directory.Exists(to))
+        {
+            System.IO.Directory.CreateDirectory(to);
+        }
+
         if (encoderThread != null && (threadIsProcessing || encoderThread.IsAlive))
         {
             threadIsProcessing = false;
@@ -144,6 +164,11 @@ public class ScreenRecorder : MonoBehaviour
         encoderThread = new Thread(EncodeAndSave);
         encoderThread.Start();
     }
+
+    //public void VideoCaptureStart()
+    //{
+        
+    //}
 
 
     void OnDisable()
@@ -251,29 +276,18 @@ public class ScreenRecorder : MonoBehaviour
         threadIsProcessing = false;
         print("Tree 영상 캡처 완료");
 
-        // 압축할 이미지가 들어있는 파일 경로
-#if UNITY_STANDALONE
-        from = $"{Application.dataPath}/ScreenRecorder";
 
-#elif UNITY_IOS || UNITY_ANDROID
-        from = $"{Application.persistentDataPath}/ScreenRecorder";
-#endif
-        // 압축한 파일을 저장할 파일 경로
-        if (!System.IO.Directory.Exists(from))
-        {
-            System.IO.Directory.CreateDirectory(from);
-        }
-        string to = $"{Application.streamingAssetsPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
 
         // 이미지 압축
         ZipFile zip = new ZipFile();
         zip.AddDirectory(from);  // 압축할 파일 지정
-        zip.Save(to);  // 압축 파일 저장
-        print("이미지 압축 완료");
+        string savePath = to + $"/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
+        zip.Save(savePath);  // 압축 파일 저장
+        print($"Tree 영상 이미지 압축 완료 : {File.ReadAllBytes(savePath).Length}");
 
         // 여러 이미지 캡처한 폴더 삭제
         Directory.Delete(from, true);
-        print("이미지 폴더 삭제 완료");
+        print("Tree 영상 이미지 폴더 삭제 완료");
 
         // 나무 이미지 압축 파일 웹에 업로드
         UploadZipFile();
@@ -287,13 +301,13 @@ public class ScreenRecorder : MonoBehaviour
         string saveUrl = "/api/v1/files/temp/image-to-video";
         List<IMultipartFormSection> videoCaptures = new List<IMultipartFormSection>();
 #if UNITY_STANDALONE
-        string path = $"{Application.streamingAssetsPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
+        string path = $"{Application.dataPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
 #elif UNITY_IOS || UNITY_ANDROID
-        string path = $"{Application.streamingAssetsPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
+        string path = $"{Application.dataPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
 #endif
         videoCaptures.Add(new MultipartFormFileSection("files", File.ReadAllBytes(path), $"TreeImgZip_{GameManager.Instance.treeController.treeId}.zip", "application/zip"));
 
-        ResultPost<List<TreeFile>> resultPost = await DataModule.WebRequestBuffer<ResultPost<List<TreeFile>>>(
+        ResultPost<GetVideoFromZip> resultPost = await DataModule.WebRequestBuffer<ResultPost<GetVideoFromZip>>(
            saveUrl,
            DataModule.NetworkType.POST,
            DataModule.DataType.BUFFER,
@@ -308,9 +322,11 @@ public class ScreenRecorder : MonoBehaviour
         else
         {
             Debug.Log("Tree Video Zip File Upload : Success");
-            Debug.Log($"Video Zip FileId = {resultPost.data[0].id}");
+            Debug.Log($"Video Zip FileId = {resultPost.data.id}");
             // Video Zip File Id 저장
-            GameManager.Instance.treeController.GetComponent<UploadTreeData>().fileIds.Add(resultPost.data[0].id);
+            GameManager.Instance.treeController.GetComponent<UploadTreeData>().fileIds.Add(resultPost.data.id);
+            // 나무 비디오/이미지 파일 ID 웹 업로드
+            GameManager.Instance.treeController.GetComponent<UploadTreeData>().FileIDUpload();
         }
     }
 }

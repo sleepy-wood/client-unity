@@ -136,6 +136,8 @@ public class ScreenShot : MonoBehaviour
         if (succeded)
         {
             Debug.Log($"Screenshot Save Succeded :  {path}");
+            // Tree Image Capture Web Upload
+            SaveTreeImg();
         }
     }
 
@@ -190,6 +192,8 @@ public class ScreenShot : MonoBehaviour
             Debug.Log($"Screenshot Image FileId = {resultPost.data[0].id}");
             // Image File Id 저장
             GameManager.Instance.treeController.GetComponent<UploadTreeData>().fileIds.Add(resultPost.data[0].id);
+            // Tree Video 이미지 캡처 시작
+            GetComponent<ScreenRecorder>().enabled = true;
         }
     }
 }
