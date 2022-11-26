@@ -32,6 +32,8 @@ public class DataTemporary
     public static ArrayTreeData TreeData = new ArrayTreeData(); // Day1
     public static ArrayTreeData2 TreeData2 = new ArrayTreeData2();  // Day2~Day5
     public static ArrayGetTreeData GetTreeData = new ArrayGetTreeData();
+    // Tree Bark Data
+    public static AssetBundle treeBarkAssetBundle;
     //Collection data;
     public static ArrayCollectionData arrayCollectionDatas= new ArrayCollectionData();
     public static List<Texture2D> collectionPictures = new List<Texture2D>();

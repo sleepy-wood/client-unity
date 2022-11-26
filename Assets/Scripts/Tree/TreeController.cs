@@ -193,7 +193,7 @@ public class TreeController : MonoBehaviour
     {
         treeFactory.gameObject.SetActive(false);
         assetBundle = DataTemporary.assetBundleTreePipeline;
-        barkAssetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/barktexturebundle");
+        barkAssetBundle = DataTemporary.treeBarkAssetBundle;
 
 
         // 방문 타입에 따라 다른 시나리오 구현
@@ -376,7 +376,6 @@ public class TreeController : MonoBehaviour
                 // ReVisit했는데 해당 DayCount와 저장한 나무 데이터 수가 동일하지 않을 경우 (= 24H 지나고 처음 들어온 경우)
                 if (dayCount != currentTreeData.treeGrowths.Count)
                 {
-                    print("24H 지나고 첫방문으로 Daycount가 바뀌었음");
                     // 이전 날의 HealthData 반영 + 데이터 저장 + 나무 변경 Text
                     ApplyHealthData();
                     SaveTreeData();
