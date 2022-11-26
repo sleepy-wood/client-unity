@@ -863,7 +863,8 @@ public class TreeController : MonoBehaviour
         treeFactory.UnloadAndClearPipeline();
         // previewTree
         if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
-        treeFactory.transform.GetChild(1).gameObject.layer = 11;  
+        treeFactory.transform.GetChild(1).gameObject.layer = 11;
+        changeParticle.Play();
         treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         Resources.UnloadAsset(loadedPipeline);
     }
@@ -896,6 +897,7 @@ public class TreeController : MonoBehaviour
             soil.SetActive(false);
             plant.SetActive(true);
             if (healthSetting == 0) PipelineSetting(0);
+
             treeFactory.gameObject.SetActive(true);
             PipelineReload();
         }
