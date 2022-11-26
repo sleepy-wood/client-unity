@@ -33,8 +33,6 @@ public class LandCustom : MonoBehaviour
     {
         userInput = GetComponent<UserInput>();
         cam = GetComponent<Camera>();
-        cam.transform.position = Camera.main.transform.position;
-        cam.transform.eulerAngles = new Vector3(-180, 180, 180);
         initialOrthographicSize = cam.fieldOfView;
     }
     private LayerMask preLayer;
@@ -97,13 +95,37 @@ public class LandCustom : MonoBehaviour
         }
         else
         {
-            //if (userInput.Interact)
-            //{
-            //    isActiveMove = false;
-            //}
+            if (userInput.Interact)
+            {
+                Vector3 mousePos = Input.mousePosition;
+                Ray ray = cam.ScreenPointToRay(mousePos);
+                RaycastHit hit;
+                LayerMask layer = 1 << LayerMask.NameToLayer("Ground");
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~layer))
+                {
+                    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Selected"))
+                    {
+                        selectedObject.gameObject.layer = preLayer;
+                        selectedObject = null;
+                        //아웃라인 끄기
+                        if (hit.transform.parent.GetComponent<Outline>())
+                            hit.transform.parent.GetComponent<Outline>().enabled = false;
+
+                        for (int i = 0; i < hit.transform.parent.childCount; i++)
+                        {
+                            if (hit.transform.parent.GetChild(i).GetComponent<Outline>())
+                                hit.transform.parent.GetChild(i).GetComponent<Outline>().enabled = false;
+                        }
+                        selectState = SelectState.None;
+                        //editButton.transform.GetChild(1).GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                    }
+                }
+            }
+
             switch (editType)
             {
                 case EditType.Editor:
+                    //editButton.transform.GetChild(1).GetComponent<Image>().color = new Color32(150, 150, 150, 255);
                     editButton.transform.GetChild(1).gameObject.SetActive(true);
                     RotateMode();
                     MoveMode();
@@ -116,6 +138,7 @@ public class LandCustom : MonoBehaviour
         switch (editType)
         {
             case EditType.Camera:
+                //editButton.transform.GetChild(1).GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                 CameraMode();
                 break;
             default:
@@ -267,18 +290,6 @@ public class LandCustom : MonoBehaviour
     /// <param name="i"></param>
     public void OnClickEditSelect(int i)
     {
-        //클릭된 버튼 색 변경하
-        for (int j = 0; j < editButton.transform.childCount; j++)
-        {
-            if (j + 1 == i && i != 5)
-            {
-                editButton.transform.GetChild(j).GetComponent<Image>().color = new Color32(150, 150, 150, 255);
-            }
-            else
-            {
-                editButton.transform.GetChild(j).GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            }
-        }
         //상태 변경
         switch (i)
         {
