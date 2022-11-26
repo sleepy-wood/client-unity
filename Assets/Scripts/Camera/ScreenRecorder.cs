@@ -94,12 +94,17 @@ public class ScreenRecorder : MonoBehaviour
     public bool terminateThreadWhenDone;
 
     // Zip File Path
-    public string zipFilePath;
-    public string from;
-    public string to;
+    string zipFilePath;
+    string from;
+    string to;
+
+    //Another Script
+    private VideoUploadHelper uploadHelper;
 
     void Start()
     {
+        uploadHelper = GetComponent<VideoUploadHelper>();
+
         // Set target frame rate (optional)
         Application.targetFrameRate = frameRate;
 
@@ -160,16 +165,13 @@ public class ScreenRecorder : MonoBehaviour
             threadIsProcessing = false;
             encoderThread.Join();
         }
-        threadIsProcessing = true;
-        encoderThread = new Thread(EncodeAndSave);
-        encoderThread.Start();
+        else
+        {
+            threadIsProcessing = true;
+            encoderThread = new Thread(EncodeAndSave);
+        }
+            encoderThread.Start();
     }
-
-    //public void VideoCaptureStart()
-    //{
-        
-    //}
-
 
     void OnDisable()
     {
@@ -290,43 +292,7 @@ public class ScreenRecorder : MonoBehaviour
         print("Tree 영상 이미지 폴더 삭제 완료");
 
         // 나무 이미지 압축 파일 웹에 업로드
-        UploadZipFile();
+        uploadHelper.IsCompleteMakingVideo = true;
     }
     
-    /// <summary>
-    /// 이미지 압축 파일 웹에 업로드
-    /// </summary>
-    public async void UploadZipFile()
-    {
-        string saveUrl = "/api/v1/files/temp/image-to-video";
-        List<IMultipartFormSection> videoCaptures = new List<IMultipartFormSection>();
-#if UNITY_STANDALONE
-        string path = $"{Application.dataPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
-#elif UNITY_IOS || UNITY_ANDROID
-        string path = $"{Application.dataPath}/Zipfiles/TreeImgZip_{GameManager.Instance.treeController.treeId}.zip";
-#endif
-        videoCaptures.Add(new MultipartFormFileSection("files", File.ReadAllBytes(path), $"TreeImgZip_{GameManager.Instance.treeController.treeId}.zip", "application/zip"));
-
-        ResultPost<GetVideoFromZip> resultPost = await DataModule.WebRequestBuffer<ResultPost<GetVideoFromZip>>(
-           saveUrl,
-           DataModule.NetworkType.POST,
-           DataModule.DataType.BUFFER,
-           null,
-           videoCaptures);
-
-        if (!resultPost.result)
-        {
-            Debug.Log("Tree Video Zip File Upload : Fail");
-            return;
-        }
-        else
-        {
-            Debug.Log("Tree Video Zip File Upload : Success");
-            Debug.Log($"Video Zip FileId = {resultPost.data.id}");
-            // Video Zip File Id 저장
-            GameManager.Instance.treeController.GetComponent<UploadTreeData>().fileIds.Add(resultPost.data.id);
-            // 나무 비디오/이미지 파일 ID 웹 업로드
-            GameManager.Instance.treeController.GetComponent<UploadTreeData>().FileIDUpload();
-        }
-    }
 }
