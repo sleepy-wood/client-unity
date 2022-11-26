@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChoiceRespawnPos : MonoBehaviour
+public class ChoiceRespawnPos : MonoBehaviourPunCallbacks
 {
     private Camera camera_share;
     public GameObject collection;
@@ -33,5 +34,9 @@ public class ChoiceRespawnPos : MonoBehaviour
     public void OnClickCreateButton()
     {
         camera_share.gameObject.SetActive(true);
+    }
+    public void OnClickBackSharedLandButton()
+    {
+        PhotonNetwork.LoadLevel("MyWorld");
     }
 }

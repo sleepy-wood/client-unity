@@ -10,6 +10,8 @@ using static TreeController;
 
 public class Choice : MonoBehaviour
 {
+    public List<Sprite> grades = new List<Sprite>();
+
     public RectTransform content;
     public float scaleTo = 1;
     public List<TreeFactory> treeFactory =new List<TreeFactory>();
@@ -33,7 +35,28 @@ public class Choice : MonoBehaviour
             GameObject profile_Prefab = Instantiate(profile_resource, content);
             profile_Prefab.name = profile_Prefab.name.Split('(')[0] + "_" + i;
             CollectionData collectionData = DataTemporary.arrayCollectionDatas.collectionLists[i];
-           
+
+            if (collectionData.rarity > 90 && collectionData.rarity <= 100)
+            {
+                profile_Prefab.GetComponent<Image>().sprite = grades[0];
+            }
+            else if (collectionData.rarity > 80 && collectionData.rarity <= 90)
+            {
+                profile_Prefab.GetComponent<Image>().sprite = grades[1];
+            }
+            else if (collectionData.rarity > 70 && collectionData.rarity <= 80)
+            {
+                profile_Prefab.GetComponent<Image>().sprite = grades[2];
+            }
+            else if (collectionData.rarity > 60 && collectionData.rarity <= 70)
+            {
+                profile_Prefab.GetComponent<Image>().sprite = grades[3];
+            }
+            else if (collectionData.rarity > 50 && collectionData.rarity <= 60)
+            {
+                profile_Prefab.GetComponent<Image>().sprite = grades[4];
+            }
+
             for (int j = 0; j < collectionData.treeAttachments.Count; j++)
             {
                 if (collectionData.treeAttachments[j].mimeType.Contains("image"))
@@ -117,7 +140,6 @@ public class Choice : MonoBehaviour
             }
         }
         treeFactory[createPos].LoadPipeline(treePipeline.Clone(), true);
-        if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
         treeFactory[createPos].transform.GetChild(1).gameObject.layer = 11;
         treeFactory[createPos].transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
     }
