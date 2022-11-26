@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChoiceRespawnPos : MonoBehaviour
 {
     private Camera camera;
+    public GameObject collection;
 
     private void Start()
     {
@@ -23,5 +24,9 @@ public class ChoiceRespawnPos : MonoBehaviour
                 hit.transform.GetComponent<IClickedObject>().ClickMe();
             }
         }
+    }
+    public void OnClickBackButton()
+    {
+        collection.SetActive(false);
     }
 }
