@@ -60,12 +60,12 @@ public class DataModule
         FILE
     }
 
-    protected static double timeout = 5;
+    protected static double timeout = 180;
 
     /// <summary>
     /// Web에 Data를 Request할 수 있다.
     /// </summary>
-    /// <typeparam name="T">Json 형식</typeparam>
+    /// <typeparam name="T">Json 형식</typeparam> 
     /// <param name="_url">Json 올릴 url</param>
     /// <param name="networkType">어떻게 Request 할 것인가</param>
     /// <param name="data">보낼 데이터</param>
