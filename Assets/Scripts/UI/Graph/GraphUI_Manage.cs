@@ -25,7 +25,8 @@ public class GraphUI_Manage : MonoBehaviour
     }
     public void OnClickNotActive_SleepRecord()
     {
-        OnClickActive_Graph();
+        init_Window.SetActive(true);
+        sleep_Record.SetActive(false);
     }
 
 }
