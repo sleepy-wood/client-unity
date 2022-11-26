@@ -187,30 +187,9 @@ public class ScreenShot : MonoBehaviour
         else
         {
             Debug.Log($"Tree Screenshot Image 업로드 성공");
-            Debug.Log($"id = {resultPost.data[0].id}");
-            fileId = resultPost.data[0].id;
-            UploadImg();
+            Debug.Log($"Screenshot Image FileId = {resultPost.data[0].id}");
+            // Image File Id 저장
+            GameManager.Instance.treeController.GetComponent<UploadTreeData>().fileIds.Add(resultPost.data[0].id);
         }
-    }
-    public async void UploadImg()
-    {
-        saveUrl = "/api/v1/trees/upload";
-        TreeImgVideo treeImgVideo = new TreeImgVideo();
-        treeImgVideo.treeId = GameManager.Instance.treeController.treeId;
-        treeImgVideo.attachFileIds = new List<int>();
-        treeImgVideo.attachFileIds.Add(fileId);
-
-        string ImgVideoJsonData = JsonUtility.ToJson(treeImgVideo);
-        Debug.Log(JsonUtility.ToJson(treeImgVideo, true));
-
-        ResultPost<GetTreeImgVideo> resultPost2 = await DataModule.WebRequestBuffer<ResultPost<GetTreeImgVideo>>(
-            saveUrl,
-            DataModule.NetworkType.POST,
-            DataModule.DataType.BUFFER,
-            ImgVideoJsonData);
-
-        if (!resultPost2.result) Debug.LogError("WebRequestError : NetworkType[Post]");
-        else Debug.Log($"Tree Img/Video 업로드 성공");
-        Debug.Log($"id = {resultPost2.data}");
     }
 }

@@ -131,13 +131,18 @@ public class ScreenRecorder : MonoBehaviour
 
         captureFrameTime = 1.0f / (float)frameRate;
         lastFrameTime = Time.time;
+    }
 
-        // Kill the encoder thread if running from a previous execution
+    public void VideoCaptureStart()
+    {
         if (encoderThread != null && (threadIsProcessing || encoderThread.IsAlive))
         {
             threadIsProcessing = false;
             encoderThread.Join();
         }
+        threadIsProcessing = true;
+        encoderThread = new Thread(EncodeAndSave);
+        encoderThread.Start();
     }
 
 
@@ -303,6 +308,9 @@ public class ScreenRecorder : MonoBehaviour
         else
         {
             Debug.Log("Tree Video Zip File Upload : Success");
+            Debug.Log($"Video Zip FileId = {resultPost.data[0].id}");
+            // Video Zip File Id 저장
+            GameManager.Instance.treeController.GetComponent<UploadTreeData>().fileIds.Add(resultPost.data[0].id);
         }
     }
 }
