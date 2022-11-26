@@ -70,7 +70,7 @@ public class Choice : MonoBehaviour
             int temp = i;
             profile_Prefab.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => OnClickChoice(temp));
         }
-        content.offsetMax = new Vector2(480 * DataTemporary.arrayCollectionDatas.collectionLists.Count, content.offsetMax.y);
+        content.offsetMax = new Vector2(550 * DataTemporary.arrayCollectionDatas.collectionLists.Count, content.offsetMax.y);
     }
 
     public void OnClickChoice(int i)
