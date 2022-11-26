@@ -240,7 +240,7 @@ public class ScreenRecorder : MonoBehaviour
 
     public void EncodeAndSave()
     {
-        print("Tree 영상 캡처 시작");
+        print($"Tree 영상 캡처 시작");
 
         while (threadIsProcessing)
         {
@@ -276,7 +276,7 @@ public class ScreenRecorder : MonoBehaviour
 
         terminateThreadWhenDone = false;
         threadIsProcessing = false;
-        print("Tree 영상 캡처 완료");
+        print($"Tree 영상 캡처 완료");
 
 
 
