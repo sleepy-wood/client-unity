@@ -100,8 +100,6 @@ public class DataModule
         {
             request = UnityWebRequest.Post(requestURL, form);
             SetHeaders(request, "Authorization", "Bearer " + REPLACE_BEARER_TOKEN);
-            //SetHeaders(request, "Content-Type", "multipart/form-data");
-            //SetHeaders(request, "FileName", "multipart/form-data");
         }
         else
         {

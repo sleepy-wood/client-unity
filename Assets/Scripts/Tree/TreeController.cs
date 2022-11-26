@@ -926,16 +926,19 @@ public class TreeController : MonoBehaviour
             assetBundle.Unload(false);
             // Tree & Land 이미지 캡처
             screenShot.SaveCameraView();
-            // Tree 캡처 이미지 업로드
+            // Tree 이미지 캡처
             screenShot.SaveTreeImg();
-            // Tree Video 캡쳐 + 압축 + 웹에 올리기
-            screenRecorder.threadIsProcessing = true;
-            screenRecorder.encoderThread = new Thread(screenRecorder.EncodeAndSave);
-            screenRecorder.encoderThread.Start();
-
+            // Tree Video 이미지 캡처 및 압축
+            screenRecorder.VideoCaptureStart();
+            // 나무 비디오/이미지 웹 업로드
+            GetComponent<UploadTreeData>().FileIDUpload();
         }
         if (day>1) SaveTreeData();
     }
+
+    
+
+    
 
 
     /// <summary>

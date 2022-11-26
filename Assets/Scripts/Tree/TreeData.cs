@@ -133,18 +133,18 @@ public class TreeFile
     public int id;
 } 
 
-// 5일차 나무 이미지 & 영상 업로드
+// 5일차 나무 이미지 & 영상 파일 아이디 나무 아이디에 맞춰 저장
 [Serializable]
-public class TreeImgVideo
+public class TreeFileID
 {
     // 나무 아이디
     public int treeId;
-    // 첨부파일 아이디
+    // 첨부파일 아이디 리스트 (이미지, 비디오)
     public List<int>? attachFileIds;
 }
 
 [Serializable]
-public class GetTreeImgVideo
+public class GetTreeFileID
 {
     string? filename;
     string? originalName;
@@ -183,8 +183,8 @@ public class ArrayGetTreeData
 }
 // My Collection 나무 이미지 & 영상 저장소
 [Serializable]
-public class ArrayTreeImgVideo
+public class ArrayTreeFileID
 {
-    public List<TreeImgVideo>? TreeImgVideoList;
+    public List<TreeFileID>? TreeFileIDList;
 }
 
