@@ -146,17 +146,33 @@ public class TreeFileID
 [Serializable]
 public class GetTreeFileID
 {
-    string? filename;
-    string? originalName;
-    string? path;
-    string? mimeType;
-    int size;
-    int treeId;
-    bool isThumbnail;
-    string? deletedAt;
-    int id;
-    string? createdAt;
-    string? updatedAt;
+    public string? filename;
+    public string? originalName;
+    public string? path;
+    public string? mimeType;
+    public int size;
+    public int treeId;
+    public bool isThumbnail;
+    public string? deletedAt;
+    public int id;
+    public string? createdAt;
+    public string? updatedAt;
+}
+
+[Serializable]
+public class GetVideoFromZip
+{
+    public string filename;
+    public string originalName;
+    public string path;
+    public string mimeType;
+    public int size;
+    public int userId;
+    public string type;
+    public string deletedAt;
+    public int id;
+    public string createdAt;
+    public string updatedAt;
 }
 
 
