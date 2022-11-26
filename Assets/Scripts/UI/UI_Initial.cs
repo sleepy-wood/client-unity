@@ -17,15 +17,16 @@ public class UI_Initial : MonoBehaviour
 
     [Header("Menu Bar Canvas")]
     [SerializeField] private GameObject healthCanvas;
+    [SerializeField] private GameObject sleepRecordCanvas;
     [SerializeField] private GameObject shareCanvas;
     [SerializeField] private GameObject marketCanvas;
+    [SerializeField] private GameObject collectionCanvas;
 
     
     [Space]
 
     
     public GameObject profileUI;
-    public GameObject myCollectionUI;
     public GameObject screenShotCam;
     public GameObject sleepDataUI;
     public GameObject bottomUI;
@@ -75,6 +76,9 @@ public class UI_Initial : MonoBehaviour
     /// </summary>
     public void OnClickHealthActive()
     {
+        sleepRecordCanvas.SetActive(false);
+        shareCanvas.SetActive(false);
+        collectionCanvas.SetActive(false);
         healthCanvas.SetActive(true);
     }
     /// <summary>
@@ -90,6 +94,9 @@ public class UI_Initial : MonoBehaviour
     /// </summary>
     public void OnClickShareActive()
     {
+        sleepRecordCanvas.SetActive(false);
+        healthCanvas.SetActive(false);
+        collectionCanvas.SetActive(false);
         shareCanvas.SetActive(true);
     }
     /// <summary>
@@ -120,9 +127,10 @@ public class UI_Initial : MonoBehaviour
     public void OnClickHome()
     {
         healthCanvas.SetActive(false);
+        sleepRecordCanvas.SetActive(false);
         shareCanvas.SetActive(false);
         //marketCanvas.SetActive(false);
-        myCollectionUI.SetActive(false);
+        collectionCanvas.SetActive(false);
         // Bottom UI 색 Home 제외 모두 원래대로
         for (int i = 0; i < 5; i++)
         {
@@ -217,7 +225,7 @@ public class UI_Initial : MonoBehaviour
             treeScreenShot.enabled = false;
         }
 
-        myCollectionUI.gameObject.SetActive(true);
+        collectionCanvas.gameObject.SetActive(true);
     }
     /// <summary>
     /// TreeList UI 비활성화
@@ -225,7 +233,7 @@ public class UI_Initial : MonoBehaviour
     public Transform imgCollection;
     public void OnMyCollectionOff()
     {
-        myCollectionUI.gameObject.SetActive(false);
+        collectionCanvas.gameObject.SetActive(false);
         // Bottom UI에서 컬렉션 메뉴 색상 변경
         imgCollection.GetChild(1).gameObject.SetActive(false);
         imgCollection.GetChild(0).gameObject.SetActive(true);
