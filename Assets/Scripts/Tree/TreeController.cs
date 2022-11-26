@@ -718,13 +718,13 @@ public class TreeController : MonoBehaviour
         treeNameBG.SetActive(true);
         treeNameWindow.transform.localScale = new Vector3(0, 0, 0);
         t = 0;
-        while (t <= 1)
+        while (t <= 1.2f)
         {
             t += Time.deltaTime * 2f;
             treeNameWindow.transform.localScale = new Vector3(t, t, t);
             yield return null;
         }
-        treeNameWindow.transform.localScale = new Vector3(1, 1, 1);
+        treeNameWindow.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
         yield return new WaitForSeconds(1);
     }
     #endregion
