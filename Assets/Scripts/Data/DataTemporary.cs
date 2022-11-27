@@ -34,6 +34,8 @@ public class DataTemporary
     public static ArrayGetTreeData GetTreeData = new ArrayGetTreeData();
     // Tree Bark Data
     public static AssetBundle treeBarkAssetBundle;
+    // Tree Sprout Texture
+    public static AssetBundle treeLeafTextureBundle;
     //Collection data;
     public static ArrayCollectionData arrayCollectionDatas= new ArrayCollectionData();
     public static List<Texture2D> collectionPictures = new List<Texture2D>();
