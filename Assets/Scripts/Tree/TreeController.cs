@@ -852,7 +852,8 @@ public class TreeController : MonoBehaviour
     }
 
 
-
+    public ParticleSystem fallingLeafPrefab;
+    ParticleSystem.ShapeModule particleShape;
     /// <summary>
     /// 업데이트한 나무 정보를 기반으로 나무 다시 로드
     /// </summary>
@@ -860,13 +861,36 @@ public class TreeController : MonoBehaviour
     {
         Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
-        treeFactory.UnloadAndClearPipeline();
-        // previewTree
+        //treeFactory.UnloadAndClearPipeline();
+        
+        // 새로 생성되는 previewTree 설정
         if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
         treeFactory.transform.GetChild(1).gameObject.layer = 11;
-        if (dayCount > 1) changeParticle.Play();
         treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
-        Resources.UnloadAsset(loadedPipeline);
+
+        // Falling Leaf Particle System
+        ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);  // 생성
+        fallingLeaf.GetComponent<Falling_Leaf>().SetFallingLeafParticle(currentTreeData);  // 잎 설정
+        particleShape = fallingLeaf.shape;
+        fallingLeaf.transform.SetParent(previewTree.transform);
+        if (selectedSeed == SeedType.Oak)  // position 및 radius
+        {
+            fallingLeaf.transform.localPosition = new Vector3(0, 4, 0);
+            particleShape.radius = 0.75f + 0.31f * (dayCount-1);
+        }
+        else  // Basic, Sakura, DR
+        {
+            fallingLeaf.transform.localPosition = new Vector3(0, 17.5f, 0);
+            particleShape.radius = 0.21f + 0.14f * (dayCount - 1);
+        }
+        fallingLeaf.Play();  // 재생
+        
+
+
+        // Change Particle
+        if (dayCount > 1) changeParticle.Play();
+        
+        //Resources.UnloadAsset(loadedPipeline);
     }
 
 
@@ -897,7 +921,6 @@ public class TreeController : MonoBehaviour
             soil.SetActive(false);
             plant.SetActive(true);
             if (healthSetting == 0) PipelineSetting(0);
-
             treeFactory.gameObject.SetActive(true);
             PipelineReload();
         }

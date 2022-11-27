@@ -164,6 +164,7 @@ public class TimeManager : MonoBehaviour
         //}
         #endregion
 
+        // PlayMode일 경우 Tree Setting
         if (getResult)
         {
             getResult = false;
@@ -173,14 +174,6 @@ public class TimeManager : MonoBehaviour
                 // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
                 if (DataTemporary.GetTreeData.getTreeDataList[i].treeName == treeControll.treeName)
                 {
-                    // 현재 랜드의 트리 데이터 인덱스 저장
-                    //treeControll.treeDataIdx = i;
-
-                    //// 현재 랜드의 나무 데이터
-                    //treeControll.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
-                    //print($"{treeDataCount}개의 트리 데이터 중 {i}번째 트리 데이터");  // 심은 순서대로 저장 
-                    //print("나무 처음 심은 시간 : " + firstPlantDate.dateTime);
-
                     // Tree Id 저장
                     treeControll.treeId = DataTemporary.GetTreeData.getTreeDataList[i].id;
                 }
@@ -209,7 +202,7 @@ public class TimeManager : MonoBehaviour
     /// 일 수 하루 더한 뒤 트리 헬스 데이터로 세팅
     /// </summary>
     int day = 0;
-    public void OnPlusDay(DateTime firstDate)
+    public void OnPlusDay(DateTime firstDate) 
     {
         day += 1;
         now = firstDate.AddDays(day);
@@ -229,7 +222,7 @@ public class TimeManager : MonoBehaviour
 
         if (treeData.result)
         {
-            getResult = true;
+            getResult = true;  // Update 통해 Tree Setting
             Debug.Log(treeData.data);
             ArrayGetTreeData arrayTreeData = new ArrayGetTreeData();
             arrayTreeData.getTreeDataList = treeData.data;
