@@ -104,21 +104,19 @@ public class UI_Collection : MonoBehaviour
 
         if (Input.touchCount == 1)
         {
-            for (int i = 0; i < Input.touches.Length; i++)
+            Touch touchFirstFinger = Input.GetTouch(0);
+            Vector2 touchMoveBeforePos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
+            if (Input.touches[0].phase == TouchPhase.Moved)
             {
-                if (Input.touches[i].phase == TouchPhase.Moved)
-                {
-                    Touch touchFirstFinger = Input.GetTouch(0);
-                    Vector2 touchMoveBeforePos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
-                    if (Vector2.Distance(touchFirstFinger.position, touchMoveBeforePos) != 0)
-                        Draging = Vector2.Distance(touchFirstFinger.position, touchMoveBeforePos);
-                    isChange = false;
-                }
-                else if(Input.touches[i].phase == TouchPhase.Ended)
-                {
-                    isChange = true;
-                    isOnce = false;
-                }
+                Draging = 0;
+                isChange = false;
+            }
+            else if (Input.touches[0].phase == TouchPhase.Ended)
+            {
+                if (touchFirstFinger.position.x - touchMoveBeforePos.x != 0)
+                    Draging = touchFirstFinger.position.x - touchMoveBeforePos.x;
+                isChange = true;
+                isOnce = false;
             }
         }
 
@@ -138,35 +136,14 @@ public class UI_Collection : MonoBehaviour
         //}
 #endif
 
-        if (Input.touchCount == 1)
-        {
-            Touch touchFirstFinger = Input.GetTouch(0);
-            Vector2 touchMoveBeforePos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
-            if (Input.touches[0].phase == TouchPhase.Moved)
-            {
-                Debug.Log("Move");
-                Draging = 0;
-                isChange = false;
-            }
-            else if (Input.touches[0].phase == TouchPhase.Ended)
-            {
-                if (touchFirstFinger.position.x - touchMoveBeforePos.x != 0)
-                    Draging = touchFirstFinger.position.x - touchMoveBeforePos.x;
-                Debug.Log("End / " + Draging);
-                isChange = true;
-                isOnce = false;
-            }
-        }
         if (isChange && !isOnce)
         {
-            Debug.Log("Draging = " + Draging);
             StopAllCoroutines();
             isOnce = true;
             if (selectNum == 0)
             {
                 if (Draging < 0)
                 {
-                    Debug.Log("1");
                     selectNum = 1;
                     StartCoroutine(ContentMove(-812.5f));
                 }
@@ -175,13 +152,11 @@ public class UI_Collection : MonoBehaviour
             {
                 if (Draging < 0 && selectNum < maxNum)
                 {
-                    Debug.Log("2");
                     selectNum++;
                     StartCoroutine(ContentMove(posXList[selectNum]));
                 }
                 else if (Draging > 0)
                 {
-                    Debug.Log("3");
                     selectNum--;
                     StartCoroutine(ContentMove(posXList[selectNum]));
                 }
