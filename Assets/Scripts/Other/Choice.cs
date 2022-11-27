@@ -95,11 +95,11 @@ public class Choice : MonoBehaviour
         treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
         treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = treeCollectionData.sproutGroupId;
         // sproutColor
-        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId].sproutAreas[0].enabled = treeCollectionData.sproutColor1 == 1 ? true : false;
-        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId].sproutAreas[1].enabled = treeCollectionData.sproutColor2 == 1 ? true : false;
-        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId].sproutAreas[2].enabled = treeCollectionData.sproutColor3 == 1 ? true : false;
-        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId].sproutAreas[3].enabled = treeCollectionData.sproutColor4 == 1 ? true : false;
-        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId].sproutAreas[4].enabled = treeCollectionData.sproutColor5 == 1 ? true : false;
+        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[0].enabled = treeCollectionData.sproutColor1 == 1 ? true : false;
+        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[1].enabled = treeCollectionData.sproutColor2 == 1 ? true : false;
+        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[2].enabled = treeCollectionData.sproutColor3 == 1 ? true : false;
+        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[3].enabled = treeCollectionData.sproutColor4 == 1 ? true : false;
+        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[4].enabled = treeCollectionData.sproutColor5 == 1 ? true : false;
 
         TreePipeLine_Collection treePipeline_Collection = treeCollectionData.treeGrowths[0].treePipeline;
 
@@ -115,8 +115,8 @@ public class Choice : MonoBehaviour
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].minFrequency = treePipeline_Collection.branch4;
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].maxFrequency = treePipeline_Collection.branch4;
         // 4. Sprout Number
-        treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = treePipeline_Collection.sproutNum;
-        treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = treePipeline_Collection.sproutNum;
+        treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = 20;
+        treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = 20;
         // 5. Ratio of Rotten Sprout : 0, 25, 50, 75, 100
         List<int> groupNum = new List<int>() { 5, 6, 7, 8 };
         for (int j = 0; j < (treePipeline_Collection.rottenRate / 25); j++) // i < 0, 1, 2, 3, 4

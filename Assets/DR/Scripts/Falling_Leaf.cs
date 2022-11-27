@@ -44,6 +44,7 @@ public class Falling_Leaf : MonoBehaviour
 
         }
         ///////////////////////////////////
+        // 잎의 모양 = Group Id
         if (Input.GetKeyDown(KeyCode.A))
         {
             Leaf_Shape = 0;
@@ -62,6 +63,7 @@ public class Falling_Leaf : MonoBehaviour
         }
         
         /////////////////////////////////
+        // 잎의 색깔 = Sprout Color
         if (Input.GetKeyDown("1"))
         {
             
