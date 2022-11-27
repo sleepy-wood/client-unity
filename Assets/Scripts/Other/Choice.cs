@@ -75,50 +75,72 @@ public class Choice : MonoBehaviour
 
     public void OnClickChoice(int i)
     {
-        Debug.Log("?? ");
+        Debug.Log($"선택 : {i}");
 
         CollectionData treeCollectionData = DataTemporary.arrayCollectionDatas.collectionLists[i];
-        
+        print("1");
         string pipeName = treeCollectionData.treePipeName;
         Pipeline treePipeline = DataTemporary.assetBundleTreePipeline.LoadAsset<Pipeline>(pipeName);
-
+        print("2");
         if (!treePipeline)
         {
             Debug.LogError("Tree Pipe Line is Not loaded!: Pipeline is Null!");
         }
-
+        print("3");
         treePipeline.seed = treeCollectionData.seedNumber;
+        print("4");
         TreeController.SeedType selectedSeed = pipeNameDict[treeCollectionData.treePipeName];
+        print("5");
         string name = treeCollectionData.barkMaterial;
+        print("6");
         Material mat = DataTemporary.treeBarkAssetBundle.LoadAsset<Material>(name);
+        print("7");
         treePipeline._serializedPipeline.barkMappers[0].customMaterial = mat;
+        print("8");
 
         SproutSeed sproutSeed = new SproutSeed();
         treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+        print("9");
         treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = treeCollectionData.sproutGroupId;
+        print("10");
         // sproutColor
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[0].enabled = treeCollectionData.sproutColor1 == 1 ? true : false;
+        print("11");
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[1].enabled = treeCollectionData.sproutColor2 == 1 ? true : false;
+        print("12");
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[2].enabled = treeCollectionData.sproutColor3 == 1 ? true : false;
+        print("13");
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[3].enabled = treeCollectionData.sproutColor4 == 1 ? true : false;
+        print("14");
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[4].enabled = treeCollectionData.sproutColor5 == 1 ? true : false;
+        print("15");
 
         TreePipeLine_Collection treePipeline_Collection = treeCollectionData.treeGrowths[0].treePipeline;
-
+        print("16");
         // 1. Scale
         float scaleTo = treePipeline_Collection.scale;
+        print("17");
         // 2. Branch Number
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minFrequency = treePipeline_Collection.branch1;
+        print("18");
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxFrequency = treePipeline_Collection.branch1;
+        print("19");
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].minFrequency = treePipeline_Collection.branch2;
+        print("20");
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].maxFrequency = treePipeline_Collection.branch2;
+        print("21");
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].minFrequency = treePipeline_Collection.branch3;
+        print("22");
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].maxFrequency = treePipeline_Collection.branch3;
+        print("23");
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].minFrequency = treePipeline_Collection.branch4;
+        print("24");
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].maxFrequency = treePipeline_Collection.branch4;
+        print("25");
         // 4. Sprout Number
         treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = 20;
         treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = 20;
+        print("26");
         // 5. Ratio of Rotten Sprout : 0, 25, 50, 75, 100
         List<int> groupNum = new List<int>() { 5, 6, 7, 8 };
         for (int j = 0; j < (treePipeline_Collection.rottenRate / 25); j++) // i < 0, 1, 2, 3, 4
@@ -127,11 +149,13 @@ public class Choice : MonoBehaviour
             treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutGroup);
             treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = groupNum[j];
         }
+        print("27");
         // 6. Sprout Width
         foreach (SproutMesh s in treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes)
         {
             s.width = treePipeline_Collection.sproutWidth;
         }
+        print("28");
         // 7. Gravity
         for (int j = 0; j < 4; j++)
         {
@@ -141,9 +165,15 @@ public class Choice : MonoBehaviour
                 treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[j].maxGravityAlignAtBase = treePipeline_Collection.gravity;
             }
         }
+        print("29");
         treeFactory[createPos].LoadPipeline(treePipeline.Clone(), true);
+        print("30");
         treeFactory[createPos].transform.GetChild(1).gameObject.layer = 11;
+        print("31");
         treeFactory[createPos].transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
+        print("32");
+        print($"scaleTo = {scaleTo}");
+        print($"TreeFactory SetActive = {treeFactory[createPos].gameObject.activeSelf}");
         ChoiceRespawnPos.Instance.isComplete = true;
     }
 
