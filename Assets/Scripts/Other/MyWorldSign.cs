@@ -10,6 +10,8 @@ public class MyWorldSign : MonoBehaviour
     [SerializeField] private TextMesh txtTreeName;
     [SerializeField] private int mylandId;
     [SerializeField] private GetTreeData treeData;
+    AssetBundle leafTextureBundle;
+    [SerializeField] private Transform bushTr;
 
     void Start()
     {
@@ -28,6 +30,14 @@ public class MyWorldSign : MonoBehaviour
         }
 
         // Bush 표현
+        leafTextureBundle = DataTemporary.treeLeafTextureBundle;
 
+        foreach ( Transform bush in bushTr)
+        {
+            Material bushMat = bush.GetComponent<Material>();
+            
+        }
+        // Sprout Group 선택
+        // Sprout Group 내의 Color 선택
     }
 }
