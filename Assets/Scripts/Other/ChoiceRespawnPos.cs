@@ -1,3 +1,5 @@
+using Broccoli.Factory;
+using Broccoli.Pipe;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +11,8 @@ public class ChoiceRespawnPos : MonoBehaviourPunCallbacks
     private Camera camera_share;
     public GameObject collection;
     public bool isComplete { get; set; }
+    public List<bool> isCompleteList = new List<bool>();
+    public TreeFactory treeFactory;
 
     private void Awake()
     {
@@ -17,7 +21,13 @@ public class ChoiceRespawnPos : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-        camera_share = transform.GetChild(0).GetComponent<Camera>(); 
+        camera_share = transform.GetChild(0).GetComponent<Camera>();
+        for (int i = 1; i < transform.childCount; i++)
+        {
+            isCompleteList.Add(false);
+        }
+        isCompleteList[3] = true;
+        isCompleteList[4] = true;
     }
 
 
@@ -48,9 +58,9 @@ public class ChoiceRespawnPos : MonoBehaviourPunCallbacks
     }
     public void OnClickCreateButton()
     {
-        for(int i = 1; i < 4; i++)
+        for(int i = 0; i < transform.childCount-1; i++)
         {
-            if (transform.GetChild(i).GetComponent<MeshRenderer>().enabled)
+            if (!isCompleteList[i])
             {
                 camera_share.gameObject.SetActive(true);
             }
@@ -60,4 +70,6 @@ public class ChoiceRespawnPos : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel("MyWorld");
     }
+
+   
 }

@@ -12,15 +12,21 @@ public class ChoicePosition : MonoBehaviour, IClickedObject
         Debug.Log("클릭됨: " + gameObject);
         if (!isCreate)
         {
+            collection.transform.parent.GetComponent<Choice>().SettingChoicePos(int.Parse(gameObject.name[gameObject.name.Length - 1].ToString()));
             collection.SetActive(true);
-            collection.GetComponent<Choice>().SettingChoicePos(int.Parse(gameObject.name[gameObject.name.Length - 1].ToString()));
             isCreate = true;
-            GetComponent<MeshRenderer>().enabled = false;
-            GetComponent<BoxCollider>().enabled = false;
         }
     }
 
     public void StairMe()
     {
+    }
+    private void Update()
+    {
+        if (ChoiceRespawnPos.Instance.isCompleteList[int.Parse(gameObject.name[gameObject.name.Length - 1].ToString())])
+        {
+            GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<BoxCollider>().enabled = false;
+        }
     }
 }
