@@ -142,17 +142,19 @@ public class UI_Collection : MonoBehaviour
         {
             for (int i = 0; i < Input.touches.Length; i++)
             {
+                Touch touchFirstFinger = Input.GetTouch(0);
+                Vector2 touchMoveBeforePos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
                 if (Input.touches[i].phase == TouchPhase.Moved)
                 {
                     Debug.Log("Move");
-                    Touch touchFirstFinger = Input.GetTouch(0);
-                    Vector2 touchMoveBeforePos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
                     if (touchFirstFinger.position.x - touchMoveBeforePos.x != 0)
                         Draging = Vector2.Distance(touchFirstFinger.position, touchMoveBeforePos);
                     isChange = false;
                 }
                 else if (Input.touches[i].phase == TouchPhase.Ended)
                 {
+                    if (touchFirstFinger.position.x - touchMoveBeforePos.x != 0)
+                        Draging = Vector2.Distance(touchFirstFinger.position, touchMoveBeforePos);
                     Debug.Log("End / " + Draging);
                     isChange = true;
                     isOnce = false;
