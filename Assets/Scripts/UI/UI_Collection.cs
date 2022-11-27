@@ -101,21 +101,43 @@ public class UI_Collection : MonoBehaviour
         }
 
 #elif UNITY_IOS || UNITY_ANDROID
-        if (Input.GetMouseButtonUp(0))
+
+        if (Input.touchCount == 1)
         {
-            isChange = true;
-            isOnce = false;
-        }
-        else if(Input.GetMouseButtonDown(0))
-        {
-            if (userInput.MoveX != 0)
+            for (int i = 0; i < Input.touches.Length; i++)
             {
-                Draging = userInput.MoveX;
+                if (Input.touches[i].phase == TouchPhase.Moved)
+                {
+                    Touch touchFirstFinger = Input.GetTouch(0);
+                    Vector2 touchMoveBeforePos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
+                    if (Vector2.Distance(touchFirstFinger.position, touchMoveBeforePos) != 0)
+                        Draging = Vector2.Distance(touchFirstFinger.position, touchMoveBeforePos);
+                    isChange = false;
+                }
+                else if(Input.touches[i].phase == TouchPhase.Ended)
+                {
+                    isChange = true;
+                    isOnce = false;
+                }
             }
-            isChange = false;
         }
+
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    isChange = true;
+        //    isOnce = false;
+        //}
+        //else if(Input.GetMouseButtonDown(0))
+        //{
+        //    Debug.Log("Dragging: " + Draging);
+        //    if (userInput.MoveX != 0)
+        //    {
+        //        Draging = userInput.MoveX;
+        //    }
+        //    isChange = false;
+        //}
 #endif
-        Debug.Log("Dragging: " + Draging);
+
         if (isChange && !isOnce)
         {
             StopAllCoroutines();
