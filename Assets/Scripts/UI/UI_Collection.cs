@@ -151,7 +151,7 @@ public class UI_Collection : MonoBehaviour
             else if (Input.touches[0].phase == TouchPhase.Ended)
             {
                 if (touchFirstFinger.position.x - touchMoveBeforePos.x != 0)
-                    Draging = Vector2.Distance(touchFirstFinger.position, touchMoveBeforePos);
+                    Draging = touchFirstFinger.position.x - touchMoveBeforePos.x;
                 Debug.Log("End / " + Draging);
                 isChange = true;
                 isOnce = false;
