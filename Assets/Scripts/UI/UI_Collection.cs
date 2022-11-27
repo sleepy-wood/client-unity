@@ -153,7 +153,7 @@ public class UI_Collection : MonoBehaviour
                 }
                 else if (Input.touches[i].phase == TouchPhase.Ended)
                 {
-                    Debug.Log("End");
+                    Debug.Log("End / " + Draging);
                     isChange = true;
                     isOnce = false;
                 }
@@ -168,6 +168,7 @@ public class UI_Collection : MonoBehaviour
             {
                 if (Draging < 0)
                 {
+                    Debug.Log("1");
                     selectNum = 1;
                     StartCoroutine(ContentMove(-812.5f));
                 }
@@ -176,11 +177,13 @@ public class UI_Collection : MonoBehaviour
             {
                 if (Draging < 0 && selectNum < maxNum)
                 {
+                    Debug.Log("2");
                     selectNum++;
                     StartCoroutine(ContentMove(posXList[selectNum]));
                 }
                 else if (Draging > 0)
                 {
+                    Debug.Log("3");
                     selectNum--;
                     StartCoroutine(ContentMove(posXList[selectNum]));
                 }
