@@ -48,7 +48,13 @@ public class ChoiceRespawnPos : MonoBehaviourPunCallbacks
     }
     public void OnClickCreateButton()
     {
-        camera_share.gameObject.SetActive(true);
+        for(int i = 1; i < 4; i++)
+        {
+            if (transform.GetChild(i).GetComponent<MeshRenderer>().enabled)
+            {
+                camera_share.gameObject.SetActive(true);
+            }
+        }
     }
     public void OnClickBackSharedLandButton()
     {
