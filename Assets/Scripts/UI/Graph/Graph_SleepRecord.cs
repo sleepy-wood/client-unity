@@ -604,6 +604,7 @@ public class Graph_SleepRecord : MonoBehaviour
         startDayGraph = 0;
         endDayGraph = 0;
         isGraphOnce = false;
+        Debug.Log(sleepsData.Length);
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
             if (!isGraphOnce)
