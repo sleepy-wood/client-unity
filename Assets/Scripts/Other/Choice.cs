@@ -75,6 +75,8 @@ public class Choice : MonoBehaviour
 
     public void OnClickChoice(int i)
     {
+        Debug.Log("?? ");
+
         CollectionData treeCollectionData = DataTemporary.arrayCollectionDatas.collectionLists[i];
         
         string pipeName = treeCollectionData.treePipeName;
@@ -142,6 +144,7 @@ public class Choice : MonoBehaviour
         treeFactory[createPos].LoadPipeline(treePipeline.Clone(), true);
         treeFactory[createPos].transform.GetChild(1).gameObject.layer = 11;
         treeFactory[createPos].transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
+        ChoiceRespawnPos.Instance.isComplete = true;
     }
 
     public void SettingChoicePos(int Pos)

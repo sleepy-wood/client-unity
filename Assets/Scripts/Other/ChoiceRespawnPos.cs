@@ -5,13 +5,21 @@ using UnityEngine;
 
 public class ChoiceRespawnPos : MonoBehaviourPunCallbacks
 {
+    public static ChoiceRespawnPos Instance;
     private Camera camera_share;
     public GameObject collection;
+    public bool isComplete { get; set; }
 
+    private void Awake()
+    {
+        if (!Instance)
+            Instance = this;
+    }
     private void Start()
     {
         camera_share = transform.GetChild(0).GetComponent<Camera>(); 
     }
+
 
     private void Update()
     {
@@ -24,6 +32,13 @@ public class ChoiceRespawnPos : MonoBehaviourPunCallbacks
             {
                 hit.transform.GetComponent<IClickedObject>().ClickMe();
             }
+        }
+
+        if(isComplete)
+        {
+            collection.SetActive(false);
+            camera_share.gameObject.SetActive(false);
+            isComplete = false;
         }
     }
     public void OnClickBackButton()
