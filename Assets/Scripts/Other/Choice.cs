@@ -176,6 +176,10 @@ public class Choice : MonoBehaviour
         treeFactory[createPos].UnloadAndClearPipeline();
         treeFactory[createPos].transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         Resources.UnloadAsset(loadedPipeline);
+        if (treeFactory[createPos].transform.parent.GetChild(1))
+        {
+            treeFactory[createPos].transform.parent.GetChild(1).gameObject.SetActive(true);
+        }
         treeFactory[createPos].gameObject.SetActive(true);
         ChoiceRespawnPos.Instance.isComplete = true;
         ChoiceRespawnPos.Instance.isCompleteList[createPos] = true;
