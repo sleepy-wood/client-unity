@@ -51,13 +51,13 @@ public class UI_FlipCard : MonoBehaviour
     }
     public IEnumerator CalcFlip()
     {
-        for(int i = 0; i < 180; i++)
+        for(int i = 0; i < 36; i++)
         {
             yield return new WaitForSeconds(0.000001f);
-            transform.Rotate(new Vector3(0,3,0));
+            transform.Rotate(new Vector3(0,5,0));
             timer++;
 
-            if (timer == 90 || timer == -90)
+            if (timer == 18 || timer == -18)
                 Flip();
         }
         timer = 0;
