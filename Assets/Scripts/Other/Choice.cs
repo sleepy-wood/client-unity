@@ -71,6 +71,14 @@ public class Choice : MonoBehaviour
             profile_Prefab.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => OnClickChoice(temp));
         }
         content.offsetMax = new Vector2(550 * DataTemporary.arrayCollectionDatas.collectionLists.Count, content.offsetMax.y);
+
+        // treeFactory 초기설정
+        //for (int i=0; i<treeFactory.Count; i++)
+        //{
+        //    Pipeline loadedPipeline = DataTemporary.assetBundleTreePipeline.LoadAsset<Pipeline>("BasicTree");
+        //    treeFactory[i].LoadPipeline(loadedPipeline.Clone(), true);
+        //    treeFactory[i].UnloadAndClearPipeline();
+        //}
     }
 
     public void OnClickChoice(int i)
@@ -81,6 +89,7 @@ public class Choice : MonoBehaviour
         print("1");
         string pipeName = treeCollectionData.treePipeName;
         Pipeline treePipeline = DataTemporary.assetBundleTreePipeline.LoadAsset<Pipeline>(pipeName);
+
         print("2");
         if (!treePipeline)
         {
@@ -167,17 +176,13 @@ public class Choice : MonoBehaviour
         }
         print("29");
         Pipeline loadedPipeline = DataTemporary.assetBundleTreePipeline.LoadAsset<Pipeline>(pipeName);
-
-        print($"로드한 파이프라인 : {loadedPipeline}");
-        print($"로드한 파이프라인 element 개수 : {loadedPipeline.Clone().elements.Count}");
         treeFactory[createPos].LoadPipeline(loadedPipeline.Clone(), true);
-        //treeFactory[createPos].UnloadAndClearPipeline();
-        print("30");
+        treeFactory[createPos].UnloadAndClearPipeline();
+        loadedPipeline = DataTemporary.assetBundleTreePipeline.LoadAsset<Pipeline>(pipeName);
+        treeFactory[createPos].LoadPipeline(loadedPipeline.Clone(), true);
+        treeFactory[createPos].UnloadAndClearPipeline();
         treeFactory[createPos].transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         treeFactory[createPos].gameObject.SetActive(true);
-        print("31");
-        print($"scaleTo = {treeFactory[createPos].transform.GetChild(1).localScale.x}");
-        print($"TreeFactory SetActive = {treeFactory[createPos].gameObject.activeSelf}");
         ChoiceRespawnPos.Instance.isComplete = true;
     }
 
