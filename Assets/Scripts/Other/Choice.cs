@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static TreeController;
 
 public class Choice : MonoBehaviour
 {
@@ -19,14 +18,6 @@ public class Choice : MonoBehaviour
 
     private int createPos;
 
-    public Dictionary<string, SeedType> pipeNameDict = new Dictionary<string, SeedType>()
-    {
-        { "BasicTree", SeedType.Basic },
-        { "OakTree", SeedType.Oak },
-        { "SakuraTree", SeedType.Sakura },
-        { "DRTree", SeedType.DR },
-        { "DemoTree_Red", SeedType.Demo }
-    };
     async void Start()
     {
         for (int i = 0; i < DataTemporary.arrayCollectionDatas.collectionLists.Count; i++)
@@ -72,13 +63,6 @@ public class Choice : MonoBehaviour
         }
         content.offsetMax = new Vector2(550 * DataTemporary.arrayCollectionDatas.collectionLists.Count, content.offsetMax.y);
 
-        // treeFactory 초기설정
-        //for (int i=0; i<treeFactory.Count; i++)
-        //{
-        //    Pipeline loadedPipeline = DataTemporary.assetBundleTreePipeline.LoadAsset<Pipeline>("BasicTree");
-        //    treeFactory[i].LoadPipeline(loadedPipeline.Clone(), true);
-        //    treeFactory[i].UnloadAndClearPipeline();
-        //}
     }
 
     public void OnClickChoice(int i)
@@ -98,7 +82,6 @@ public class Choice : MonoBehaviour
         print("3");
         treePipeline.seed = treeCollectionData.seedNumber;
         print("4");
-        TreeController.SeedType selectedSeed = pipeNameDict[treeCollectionData.treePipeName];
         print("5");
         string name = treeCollectionData.barkMaterial;
         print("6");
@@ -176,9 +159,6 @@ public class Choice : MonoBehaviour
         }
         print("29");
         Pipeline loadedPipeline = DataTemporary.assetBundleTreePipeline.LoadAsset<Pipeline>(pipeName);
-        treeFactory[createPos].LoadPipeline(loadedPipeline.Clone(), true);
-        treeFactory[createPos].UnloadAndClearPipeline();
-        loadedPipeline = DataTemporary.assetBundleTreePipeline.LoadAsset<Pipeline>(pipeName);
         treeFactory[createPos].LoadPipeline(loadedPipeline.Clone(), true);
         treeFactory[createPos].UnloadAndClearPipeline();
         treeFactory[createPos].transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
