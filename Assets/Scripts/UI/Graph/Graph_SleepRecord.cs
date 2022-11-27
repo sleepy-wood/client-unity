@@ -642,6 +642,7 @@ public class Graph_SleepRecord : MonoBehaviour
                     Vector2 rect = graphGO.GetComponent<RectTransform>().anchoredPosition;
                     rect.x = posX;
                     graphGO.GetComponent<RectTransform>().anchoredPosition = rect;
+                    Debug.Log("GraphGo = " + graphGO +"\nper = " + per);
                     StartCoroutine(MoveSleepFlow(graphGO, per));
                     totalFlow += diff;
                 }
@@ -794,7 +795,7 @@ public class Graph_SleepRecord : MonoBehaviour
         while (t < 1f)
         {
             t += select_imageSpeed * Time.deltaTime;
-            selectButton.anchoredPosition = Vector2.Lerp(start, end, t);
+            selectButton.anchoredPosition = Vector2.Lerp(selectButton.anchoredPosition, end, t);
             yield return null;
         }
         selectButton.anchoredPosition = end;
