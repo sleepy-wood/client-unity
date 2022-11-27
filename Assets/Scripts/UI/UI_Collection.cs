@@ -108,7 +108,10 @@ public class UI_Collection : MonoBehaviour
         }
         else if(Input.GetMouseButtonDown(0))
         {
-            Draging = userInput.DragX;
+            if (userInput.DragX != 0)
+            {
+                Draging = userInput.MoveX;
+            }
             isChange = false;
         }
 #endif
