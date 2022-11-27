@@ -1187,7 +1187,7 @@ public class TreeController : MonoBehaviour
             treeData.branch3 = level[2].minFrequency;
             treeData.branch4 = level[3].minFrequency;
             // 3. Sprout Number
-            treeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].minFrequency;
+            treeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency;
             // 4. Rotten Rate
             int rate = 0;
             foreach (SproutSeed s in treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds)
