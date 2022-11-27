@@ -26,24 +26,24 @@ public enum Category
 public class LoadingData : MonoBehaviourPunCallbacks
 {
     NativeLoadData nativeLoad = new NativeLoadData();
-    [SerializeField] private GameObject scrollbar_right;
-    [SerializeField] private GameObject scrollbar_left;
+    //[SerializeField] private GameObject scrollbar_right;
+    //[SerializeField] private GameObject scrollbar_left;
     [SerializeField] private float scrollbarSpeed = 2;
     [SerializeField] private int loginId = 1; 
 
     public bool m_testMode = false;
-    private Scrollbar right;
-    private Scrollbar left;
+    //private Scrollbar right;
+    //private Scrollbar left;
 
 
-    private void Awake()
-    {
-        if (!m_testMode)
-        {
-            right = scrollbar_right.GetComponent<Scrollbar>();
-            left = scrollbar_left.GetComponent<Scrollbar>();
-        }
-    }
+    //private void Awake()
+    //{
+    //    if (!m_testMode)
+    //    {
+    //        right = scrollbar_right.GetComponent<Scrollbar>();
+    //        left = scrollbar_left.GetComponent<Scrollbar>();
+    //    }
+    //}
     public void OnConnect()
     {
         //마스터 서버에 접속 요청
@@ -97,11 +97,11 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
     private async void Start()
     {
-        if (!m_testMode)
-        {
-            scrollbar_left.SetActive(false);
-            StartCoroutine(StartLoading());
-        }
+        //if (!m_testMode)
+        //{
+        //    scrollbar_left.SetActive(false);
+        //    //StartCoroutine(StartLoading());
+        //}
 
         //커스텀 관련 에셋번들
         DataTemporary.assetBundleCustom = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustombundle");
@@ -457,40 +457,40 @@ public class LoadingData : MonoBehaviourPunCallbacks
             }
         }
     }
-    public IEnumerator StartLoading()
-    {
-        float t = 0;
-        bool isRight = true;
-        while (true)
-        {
-            if (isRight)
-            {
-                t += Time.deltaTime * scrollbarSpeed;
-                if (t > 1)
-                {
-                    left.size = 1;
-                    scrollbar_right.SetActive(false);
-                    scrollbar_left.SetActive(true);
-                    t = 1;
-                    isRight = false;
-                }
-                right.size = t;
-            }
-            else
-            {
+    //public IEnumerator StartLoading()
+    //{
+    //    float t = 0;
+    //    bool isRight = true;
+    //    while (true)
+    //    {
+    //        if (isRight)
+    //        {
+    //            t += Time.deltaTime * scrollbarSpeed;
+    //            if (t > 1)
+    //            {
+    //                left.size = 1;
+    //                scrollbar_right.SetActive(false);
+    //                scrollbar_left.SetActive(true);
+    //                t = 1;
+    //                isRight = false;
+    //            }
+    //            right.size = t;
+    //        }
+    //        else
+    //        {
 
-                t -= Time.deltaTime * scrollbarSpeed;
-                if (t < 0)
-                {
-                    right.size = 0;
-                    scrollbar_right.SetActive(true);
-                    scrollbar_left.SetActive(false);
-                    t = 0;
-                    isRight = true;
-                }
-                left.size = t;
-            }
-            yield return null;
-        }
-    }
+    //            t -= Time.deltaTime * scrollbarSpeed;
+    //            if (t < 0)
+    //            {
+    //                right.size = 0;
+    //                scrollbar_right.SetActive(true);
+    //                scrollbar_left.SetActive(false);
+    //                t = 0;
+    //                isRight = true;
+    //            }
+    //            left.size = t;
+    //        }
+    //        yield return null;
+    //    }
+    //}
 }
