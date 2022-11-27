@@ -161,7 +161,7 @@ public class UI_Collection : MonoBehaviour
                     StartCoroutine(ContentMove(posXList[selectNum]));
                 }
             }
-            //Draging = 0;
+            Draging = 0;
         }
     }
     private IEnumerator ContentMove(float endPosx)
