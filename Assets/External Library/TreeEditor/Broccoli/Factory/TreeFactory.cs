@@ -776,7 +776,10 @@ namespace Broccoli.Factory
 		public bool ValidatePipeline (Broccoli.Pipe.Pipeline pipeline) {
 			log.Clear ();
 			pipeline.Update ();
+			print("pipeline 있냐 없냐? : " + pipeline);
+			print("pipeline validate : " + pipeline.Validate());
 			bool result = pipeline.Validate ();
+			print($"result : {result}");
 			LogPipelineState (pipeline);
 			return result;
 		}
@@ -826,7 +829,14 @@ namespace Broccoli.Factory
 				}
 				ProcessPipeline (_localPipeline, _previewTree,
 					treeFactoryPreferences.previewLODIndex);
-			}
+				bool i = ProcessPipeline(_localPipeline, _previewTree,
+					treeFactoryPreferences.previewLODIndex);
+				print($"ProcessPipeline : {i}");
+				print(_localPipeline);
+				print(_previewTree);
+				print(treeFactoryPreferences.previewLODIndex);
+
+            }
 		}
 		/// <summary>
 		/// Unloads a pipeline from this factory and destroys its elements.
@@ -885,8 +895,10 @@ namespace Broccoli.Factory
 			_componentManager.BeginUsage ();
 			_meshManager.BeginUsage ();
 			_materialManager.BeginUsage (treeFactoryPreferences);
+			print($"Is Pipeline null? : {pipeline == null}");
 			if (pipeline != null) {
 				if (ValidatePipeline (pipeline)) {
+					print("Pipeline is Validate");
 					// Save the current random state.
 					Random.State randomState = Random.state;
 					if (!useCache) {

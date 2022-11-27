@@ -468,6 +468,7 @@ namespace Broccoli.Pipe {
 		/// 'status' variable.
 		/// </summary>
 		public bool Validate () {
+			Debug.Log("elements.count" + elements.Count);
 			if (elements.Count > 0) {
 				validPipelines = 0;
 				srcElements.Clear ();
@@ -478,10 +479,13 @@ namespace Broccoli.Pipe {
 						srcElements.Add (elements[i]);
 					}
 				}
+				Debug.Log(srcElements.Count);
 				if (srcElements.Count == 0) {
 					root = null;
 					state = State.NoSourceElement;
-				} else {
+				}
+				else {
+					Debug.Log("dasdasda1");
 					for (int i = 0; i < srcElements.Count; i++) {
 						if (validPipelines == 0)
 							root = srcElements[i];
@@ -491,10 +495,13 @@ namespace Broccoli.Pipe {
 						}
 					}
 					if (validPipelines == 0) {
+						Debug.Log("valid0");
 						state = State.NoSinkElement;
 					} else if (validPipelines > 1) {
+						Debug.Log("valid1");
 						state = State.MultiplePipelines;
 					} else {
+						Debug.Log("valid2");
 						state = State.Valid;
 						SetElementsOnValidPipeline (root);
 						return true;
