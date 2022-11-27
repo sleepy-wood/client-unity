@@ -53,8 +53,8 @@ public class UI_FlipCard : MonoBehaviour
     {
         for(int i = 0; i < 180; i++)
         {
-            yield return null;
-            transform.Rotate(new Vector3(0,1,0));
+            yield return new WaitForSeconds(0.000001f);
+            transform.Rotate(new Vector3(0,3,0));
             timer++;
 
             if (timer == 90 || timer == -90)
