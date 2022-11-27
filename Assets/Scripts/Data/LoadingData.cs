@@ -112,6 +112,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
         DataTemporary.assetBundleTreePipeline = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/newtreebundle");
         // Tree Bark Material 에셋번들
         DataTemporary.treeBarkAssetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/barktexturebundle");
+        // Tree Leaf Texture 번들
+        DataTemporary.treeLeafTextureBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/leaftexturebundle");
 
         //로그인
         //"/api/v1/auth/login/temp/{id}"
