@@ -6,7 +6,10 @@ using UnityEngine.UI;
 
 public class UI_SleepDetection : MonoBehaviour
 {
-    [SerializeField] private Text resultText;
+    [SerializeField] private Text resultText_Move;
+    [SerializeField] private Text resultText_Ac;
+    [SerializeField] private Text resultText_Heart;
+    [SerializeField] private Text resultText_Net;
 
     private float curTime = 0;
     private float showTime = 1;
@@ -17,12 +20,10 @@ public class UI_SleepDetection : MonoBehaviour
         sleepDetectionResult = SleepDetection.DetectSleep();
         if(sleepDetectionResult.SleepState == SleepState.Awake)
         {
-            string t = "움직임 여부: " + sleepDetectionResult.IsStationary;
-            t += "\n가속도계 측정값: " + sleepDetectionResult.AccelerationMagnitudeInG;
-            t += "\n심장박동 표준 편차: " + sleepDetectionResult.HeartRateStandardDeviationInBpm;
-            t += "\n네트워크 출력: "  + (-Mathf.Abs((float)sleepDetectionResult.NetworkOutput));
-
-            resultText.text = t;
+            resultText_Move.text = "움직임 여부: " + sleepDetectionResult.IsStationary;
+            resultText_Ac.text = "가속도계 측정값: " + sleepDetectionResult.AccelerationMagnitudeInG;
+            resultText_Heart.text = "심장박동 표준 편차: " + sleepDetectionResult.HeartRateStandardDeviationInBpm;
+            resultText_Net.text = "네트워크 출력: "  + (-Mathf.Abs((float)sleepDetectionResult.NetworkOutput));
         }
     }
     private void Update()
@@ -35,12 +36,10 @@ public class UI_SleepDetection : MonoBehaviour
             if (sleepDetectionResult.SleepState == SleepState.Awake)
             {
                 curTime = 0;
-                string t = "움직임 여부: " + sleepDetectionResult.IsStationary;
-                t += "\n가속도계 측정값: " + sleepDetectionResult.AccelerationMagnitudeInG;
-                t += "\n심장박동 표준 편차: " + sleepDetectionResult.HeartRateStandardDeviationInBpm;
-                t += "\n네트워크 출력: " + (-Mathf.Abs((float)sleepDetectionResult.NetworkOutput));
-
-                resultText.text = t;
+                resultText_Move.text = "움직임 여부: " + sleepDetectionResult.IsStationary;
+                resultText_Ac.text = "가속도계 측정값: " + sleepDetectionResult.AccelerationMagnitudeInG;
+                resultText_Heart.text = "심장박동 표준 편차: " + sleepDetectionResult.HeartRateStandardDeviationInBpm;
+                resultText_Net.text = "네트워크 출력: " + (-Mathf.Abs((float)sleepDetectionResult.NetworkOutput));
             }
         }
     }
