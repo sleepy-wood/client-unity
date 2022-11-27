@@ -870,10 +870,10 @@ public class TreeController : MonoBehaviour
 
         // Falling Leaf Particle System
         ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);  // 생성
-        fallingLeaf.GetComponent<Falling_Leaf>().SetFallingLeafParticle(currentTreeData);  // 잎 설정
+        fallingLeaf.GetComponent<Falling_Leaf>().SetFallingLeafParticle(currentTreeData);  // 트리데이터로 떨어질 잎 설정
         particleShape = fallingLeaf.shape;
         fallingLeaf.transform.SetParent(previewTree.transform);
-        if (selectedSeed == SeedType.Oak)  // position 및 radius
+        if (selectedSeed == SeedType.Oak)  // position & radius
         {
             fallingLeaf.transform.localPosition = new Vector3(0, 4, 0);
             particleShape.radius = 0.75f + 0.31f * (dayCount-1);
