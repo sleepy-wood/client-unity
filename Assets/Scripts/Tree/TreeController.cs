@@ -864,7 +864,7 @@ public class TreeController : MonoBehaviour
         // previewTree
         if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
         treeFactory.transform.GetChild(1).gameObject.layer = 11;
-        changeParticle.Play();
+        if (dayCount > 1) changeParticle.Play();
         treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         Resources.UnloadAsset(loadedPipeline);
     }
