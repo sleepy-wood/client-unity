@@ -138,6 +138,28 @@ public class UI_Collection : MonoBehaviour
         //}
 #endif
 
+        if (Input.touchCount == 1)
+        {
+            for (int i = 0; i < Input.touches.Length; i++)
+            {
+                if (Input.touches[i].phase == TouchPhase.Moved)
+                {
+                    Debug.Log("Move");
+                    Touch touchFirstFinger = Input.GetTouch(0);
+                    Vector2 touchMoveBeforePos = touchFirstFinger.position - touchFirstFinger.deltaPosition;
+                    if (touchFirstFinger.position.x - touchMoveBeforePos.x != 0)
+                        Draging = Vector2.Distance(touchFirstFinger.position, touchMoveBeforePos);
+                    isChange = false;
+                }
+                else if (Input.touches[i].phase == TouchPhase.Ended)
+                {
+                    Debug.Log("End");
+                    isChange = true;
+                    isOnce = false;
+                }
+            }
+        }
+        Debug.Log("Draging = " + Draging);
         if (isChange && !isOnce)
         {
             StopAllCoroutines();
