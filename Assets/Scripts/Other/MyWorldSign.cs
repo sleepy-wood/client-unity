@@ -33,8 +33,13 @@ public class MyWorldSign : MonoBehaviour
             // Tree Name으로 팻말 Text 표시
             sign.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = treeList[i].treeName;
 
-            // 
-
+            // 나무의 Day에 따라 Bush 그룹 활성화
+            int day = treeList[i].treeGrowths.Count;
+            for (int j=0; j<day-1; j++)
+            {
+                
+            }
+                                                                                             
         }
 
 
