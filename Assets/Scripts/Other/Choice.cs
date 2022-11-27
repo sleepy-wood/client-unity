@@ -104,7 +104,8 @@ public class Choice : MonoBehaviour
 
         Debug.Log("시");
         createPos = 3;
-        OnClickChoice(0);
+        if(DataTemporary.arrayCollectionDatas.collectionLists.Count > 0)
+            OnClickChoice(0);
     }
 
     public void OnClickChoice(int i)
