@@ -162,17 +162,17 @@ public class GetTreeFileID
 [Serializable]
 public class GetVideoFromZip
 {
-    public string filename;
-    public string originalName;
-    public string path;
-    public string mimeType;
+    public string? filename;
+    public string? originalName;
+    public string? path;
+    public string? mimeType;
     public int size;
     public int userId;
-    public string type;
-    public string deletedAt;
+    public string? type;
+    public string? deletedAt;
     public int id;
-    public string createdAt;
-    public string updatedAt;
+    public string? createdAt;
+    public string? updatedAt;
 }
 
 
