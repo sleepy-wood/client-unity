@@ -86,8 +86,8 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
             {
                 transform.position =
                     Vector3.Lerp(transform.position, receivePos, Time.deltaTime * 5);
-                //transform.GetChild(2).rotation =
-                //    Quaternion.Lerp(transform.GetChild(2).rotation, receiveRot, Time.deltaTime * 5);
+                transform.GetChild(2).rotation =
+                    Quaternion.Lerp(transform.GetChild(2).rotation, receiveRot, Time.deltaTime * 5);
             }
             #endregion
         }
