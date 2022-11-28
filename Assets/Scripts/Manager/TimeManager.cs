@@ -212,7 +212,7 @@ public class TimeManager : MonoBehaviour
         {
             if (treeControll.demoMode)
             {
-                treeControll.SetTree(totalPlantDay);
+                treeControll.SetTree(totalPlantDay, 0);
             }
             else
             {
