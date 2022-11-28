@@ -70,7 +70,7 @@ public class TreeController : MonoBehaviour
         { "OakTree", SeedType.Oak },
         { "SakuraTree", SeedType.Sakura },
         { "DRTree", SeedType.DR },
-        { "DemoTree_Red", SeedType.Demo }
+        { "Lava", SeedType.Demo }
     };
     // 선택된 TreeSetting List
     List<TreeSetting> selectedTreeSetting;
@@ -195,7 +195,6 @@ public class TreeController : MonoBehaviour
         assetBundle = DataTemporary.assetBundleTreePipeline;
         barkAssetBundle = DataTemporary.treeBarkAssetBundle;
 
-
         // 방문 타입에 따라 다른 시나리오 구현
         if (visitType == VisitType.First)
         {
@@ -208,7 +207,7 @@ public class TreeController : MonoBehaviour
             //}
             if (demoMode)
             {
-                pipeName = "DemoTree_Cherry";
+                pipeName = "Lava";
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
             }
             else
