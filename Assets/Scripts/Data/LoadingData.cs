@@ -497,7 +497,6 @@ public class LoadingData : MonoBehaviourPunCallbacks
     }
     public IEnumerator LoadingMove(float endSize)
     {
-        Debug.Log("endSize = " + endSize);
         float t = 0f;
         while (t < 1.0f)
         {
