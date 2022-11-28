@@ -48,10 +48,6 @@ public class LoadingData : MonoBehaviourPunCallbacks
     }
     public void OnConnect()
     {
-        StopAllCoroutines();
-        sum += loadingValue;
-        StartCoroutine(LoadingMove(sum));
-
         //마스터 서버에 접속 요청
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -89,6 +85,10 @@ public class LoadingData : MonoBehaviourPunCallbacks
         roomOptions.IsVisible = true;
         if (PhotonNetwork.CreateRoom(PhotonNetwork.NickName, roomOptions))
         {
+            StopAllCoroutines();
+            sum += loadingValue;
+            StartCoroutine(LoadingMove(sum));
+
             isCreateComplete = true;
         }
     }
