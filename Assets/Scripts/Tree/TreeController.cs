@@ -679,7 +679,7 @@ public class TreeController : MonoBehaviour
         t = 0;
         while (t <= 1f)
         {
-            t += Time.deltaTime * 2f;
+            t += Time.deltaTime * 3f;
             sprout.transform.localScale = new Vector3(t, t, t);
             yield return null;
         }
@@ -690,7 +690,7 @@ public class TreeController : MonoBehaviour
         sproutLeaf.transform.localScale = new Vector3(0, 0, 0);
         while (t <= targetScale)
         {
-            t += Time.deltaTime * 2f;
+            t += Time.deltaTime * 3f;
             sproutLeaf.transform.localScale = new Vector3(t, t, t);
             yield return null;
         }
@@ -809,8 +809,6 @@ public class TreeController : MonoBehaviour
 
                 pipe1.minFrequency = store1.min;
                 pipe1.maxFrequency = store1.max;
-                print(store1.min);
-                print(store1.max);
             }
             #endregion
 
@@ -822,8 +820,6 @@ public class TreeController : MonoBehaviour
             pipe2.minFrequency = store2;
             // Root Max Freqency
             pipe2.maxFrequency = store2;
-
-            print(store2);
             #endregion
 
             #region 3. Min/Max Length At Base
@@ -834,7 +830,6 @@ public class TreeController : MonoBehaviour
             pipe3.minLengthAtBase = store3;
             // Root Max Length At Base
             pipe3.maxLengthAtBase = store3;
-            print(store3);
             #endregion
 
             #region 4. Min/Max Girth At Base
@@ -845,13 +840,10 @@ public class TreeController : MonoBehaviour
             pipe4.minGirthAtBase = store4;
             // Max Girth At Base
             pipe4.maxGirthAtBase = store4;
-
-            print(store4);
             #endregion
 
             #region 5. Object scale
             scaleTo = element.scale;
-            print(scaleTo);
             #endregion
         }
 
@@ -876,6 +868,7 @@ public class TreeController : MonoBehaviour
 
         ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);
         fallingLeaf.transform.SetParent(previewTree.transform);
+        print("fallingLeaf 생김 ? " + fallingLeaf);
         // Falling Leaf Particle System
         //ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);  // 생성
         //fallingLeaf.GetComponent<Falling_Leaf>().SetFallingLeafParticle(currentTreeData);  // 트리데이터로 떨어질 잎 설정
@@ -968,7 +961,7 @@ public class TreeController : MonoBehaviour
             // Tree 이미지 캡처 & 동영상 이미지 캡처 & 웹에 업로드 순차적으로 진행
             screenShot.SaveCameraView();
         }
-        if (day>1 && !demoMode) SaveTreeData();
+        if (day > 1 && !demoMode) SaveTreeData();
     }
 
     
@@ -1138,14 +1131,25 @@ public class TreeController : MonoBehaviour
             // Bark Material Name
             treeData.barkMaterial = barkMaterial;
             // Land ID 
-            treeData.landId = 49;//DataTemporary.MyUserData.currentLandId;
+            treeData.landId = 1;//DataTemporary.MyUserData.currentLandId;
             // Sprout Group Id
             treeData.sproutGroupId = sproutGroupId;
             // Sprout Texture Enabled (Sprout Grop 4가지)
-            treeData.sproutColor1 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[0].enabled ? 1 : 0;
-            treeData.sproutColor2 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[1].enabled ? 1 : 0;
-            treeData.sproutColor3 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[2].enabled ? 1 : 0;
-            treeData.sproutColor4 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[3].enabled ? 1 : 0;
+            if (demoMode)
+            {
+                treeData.sproutColor1 = 0;
+                treeData.sproutColor2 = 0;
+                treeData.sproutColor3 = 0;
+                treeData.sproutColor4 = 0;
+            }
+            else
+            {
+                treeData.sproutColor1 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[0].enabled ? 1 : 0;
+                treeData.sproutColor2 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[1].enabled ? 1 : 0;
+                treeData.sproutColor3 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[2].enabled ? 1 : 0;
+                treeData.sproutColor4 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[3].enabled ? 1 : 0;
+            }
+            
             // 희귀성
             treeData.rarity = rarityScore;
             // 생명력
@@ -1155,11 +1159,22 @@ public class TreeController : MonoBehaviour
             // 1. Scale
             treeData.scale = previewTree.localScale.x;
             // 2. Branch Numbers
-            List<StructureGenerator.StructureLevel> level = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels;
-            treeData.branch1 = level[0].minFrequency;
-            treeData.branch2 = level[1].minFrequency;
-            treeData.branch3 = level[2].minFrequency;
-            treeData.branch4 = level[3].minFrequency;
+            if (demoMode)
+            {
+                treeData.branch1 = 0;
+                treeData.branch2 = 0;
+                treeData.branch3 = 0;
+                treeData.branch4 = 0;
+            }
+            else
+            {
+                List<StructureGenerator.StructureLevel> level = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels;
+                treeData.branch1 = level[0].minFrequency;
+                treeData.branch2 = level[1].minFrequency;
+                treeData.branch3 = level[2].minFrequency;
+                treeData.branch4 = level[3].minFrequency;
+            }
+            
             // 3. Sprout Number
             treeData.sproutNum = treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency;
             // 5. Rotten Rate

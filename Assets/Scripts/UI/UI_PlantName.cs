@@ -64,7 +64,8 @@ public class UI_PlantName : MonoBehaviour
             GameManager.Instance.treeController.treeName = inputPlantName.text;
 
             // 1일차 TreeData 저장
-            if (!treeController.demoMode) treeController.SaveTreeData();
+            //if (!treeController.demoMode) treeController.SaveTreeData();
+            treeController.SaveTreeData();
             print("나무 이름 결정 완료");
 
             // UI 버튼들 활성화
