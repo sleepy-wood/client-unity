@@ -26,26 +26,32 @@ public enum Category
 public class LoadingData : MonoBehaviourPunCallbacks
 {
     NativeLoadData nativeLoad = new NativeLoadData();
-    //[SerializeField] private GameObject scrollbar_right;
-    //[SerializeField] private GameObject scrollbar_left;
+    [SerializeField] private GameObject scrollbar_right;
+    [SerializeField] private GameObject scrollbar_left;
     [SerializeField] private float scrollbarSpeed = 2;
     [SerializeField] private int loginId = 1; 
 
     public bool m_testMode = false;
-    //private Scrollbar right;
-    //private Scrollbar left;
+    private Scrollbar right;
+    private Scrollbar left;
+    private float loadingValue = 1.0f / 15.0f;
+    private float sum = 0;
 
-
-    //private void Awake()
-    //{
-    //    if (!m_testMode)
-    //    {
-    //        right = scrollbar_right.GetComponent<Scrollbar>();
-    //        left = scrollbar_left.GetComponent<Scrollbar>();
-    //    }
-    //}
+    private void Awake()
+    {
+        Debug.Log(loadingValue);
+        if (!m_testMode)
+        {
+            right = scrollbar_right.GetComponent<Scrollbar>();
+            left = scrollbar_left.GetComponent<Scrollbar>();
+        }
+    }
     public void OnConnect()
     {
+        StopAllCoroutines();
+        sum += loadingValue;
+        StartCoroutine(LoadingMove(sum));
+
         //마스터 서버에 접속 요청
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -97,11 +103,11 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
     private async void Start()
     {
-        //if (!m_testMode)
-        //{
-        //    scrollbar_left.SetActive(false);
-        //    //StartCoroutine(StartLoading());
-        //}
+        if (!m_testMode)
+        {
+            scrollbar_left.SetActive(false);
+            StartCoroutine(StartLoading());
+        }
 
         //커스텀 관련 에셋번들
         DataTemporary.assetBundleCustom = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/AssetBundles/landcustombundle");
@@ -120,7 +126,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
         ResultPost<UserLogin> login = await DataModule.WebRequestBuffer<ResultPost<UserLogin>>("/api/v1/auth/login/temp/" + loginId, DataModule.NetworkType.POST, DataModule.DataType.BUFFER);
         if (login.result)
         {
+            StopAllCoroutines();
+            sum += loadingValue;
+            StartCoroutine(LoadingMove(sum));
+
             DataModule.REPLACE_BEARER_TOKEN = login.data.token;
+            
         }
         //Native Data Load
         HealthDataStore.Init();
@@ -135,52 +146,79 @@ public class LoadingData : MonoBehaviourPunCallbacks
             ResultGet<MarketData> marketData = await DataModule.WebRequestBuffer<ResultGet<MarketData>>("/api/v1/orders?category=" + (Category)i, DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
             marketsData.Add(marketData);
         }
-        
+
+        for (int h = 0; h < marketsData.Count; h++)
+        {
+            if (marketsData[h].result)
+            {
+                StopAllCoroutines();
+                sum += loadingValue;
+                StartCoroutine(LoadingMove(sum));
+            }
+        }
         //UserData 
         ResultGetId <UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-
+        if (userData.result)
+        {
+            StopAllCoroutines();
+            sum += loadingValue;
+            StartCoroutine(LoadingMove(sum));
+            DataTemporary.MyUserData = userData.data;
+        }
         //LandData Load
         //Root landData = await DataModule.WebRequest<Root>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         ResultGet<LandData> landData = await DataModule.WebRequestBuffer<ResultGet<LandData>>("/api/v1/lands", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-        ResultGet<BridgeData> bridgeData = await DataModule.WebRequestBuffer<ResultGet<BridgeData>>("/api/v1/bridges", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-
-        // TreeData Get
-        ResultGet<GetTreeData> treeData = await DataModule.WebRequestBuffer<ResultGet<GetTreeData>>("/api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
-        
-        //CollectionData Get
-        ResultGet<CollectionData> collectionData = await DataModule.WebRequestBuffer<ResultGet<CollectionData>>("/api/v1/trees/collections", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
 
         if (landData.result)
         {
+            StopAllCoroutines();
+            sum += loadingValue;
+            StartCoroutine(LoadingMove(sum));
+
             Debug.Log(landData.data);
             ArrayLandData arrayLandData = new ArrayLandData();
             arrayLandData.landLists = landData.data;
             DataTemporary.MyLandData = arrayLandData;
         }
+        ResultGet<BridgeData> bridgeData = await DataModule.WebRequestBuffer<ResultGet<BridgeData>>("/api/v1/bridges", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
+
         if (bridgeData.result)
         {
+            StopAllCoroutines();
+            sum += loadingValue;
+            StartCoroutine(LoadingMove(sum));
+
             Debug.Log(bridgeData.data);
             ArrayBridgeData arrayBridgeData = new ArrayBridgeData();
             arrayBridgeData.bridgeLists = bridgeData.data;
             DataTemporary.MyBridgeData = arrayBridgeData;
         }
-        if (userData.result)
-        {
-            DataTemporary.MyUserData = userData.data;
-        }
+        // TreeData Get
+        ResultGet<GetTreeData> treeData = await DataModule.WebRequestBuffer<ResultGet<GetTreeData>>("/api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         if (treeData.result)
         {
+            StopAllCoroutines();
+            sum += loadingValue;
+            StartCoroutine(LoadingMove(sum));
+
             Debug.Log(treeData.data);
             ArrayGetTreeData arrayTreeData = new ArrayGetTreeData();
             arrayTreeData.getTreeDataList = treeData.data;
             DataTemporary.GetTreeData = arrayTreeData;
         }
+        //CollectionData Get
+        ResultGet<CollectionData> collectionData = await DataModule.WebRequestBuffer<ResultGet<CollectionData>>("/api/v1/trees/collections", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         if (collectionData.result)
         {
+            StopAllCoroutines();
+            sum += loadingValue;
+            StartCoroutine(LoadingMove(sum));
+
             ArrayCollectionData arrayCollections = new ArrayCollectionData();
             arrayCollections.collectionLists = collectionData.data;
             DataTemporary.arrayCollectionDatas = arrayCollections;
         }
+
         for (int h = 0; h < marketsData.Count; h++)
         {
             if (h == (int)Category.emoticon)
@@ -318,6 +356,10 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
         if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded && !once && isLoadingComplete)
         {
+            StopAllCoroutines();
+            sum += loadingValue;
+            StartCoroutine(LoadingMove(sum));
+
             once = true;
             isLoadingComplete = false;
 
@@ -457,40 +499,50 @@ public class LoadingData : MonoBehaviourPunCallbacks
             }
         }
     }
-    //public IEnumerator StartLoading()
-    //{
-    //    float t = 0;
-    //    bool isRight = true;
-    //    while (true)
-    //    {
-    //        if (isRight)
-    //        {
-    //            t += Time.deltaTime * scrollbarSpeed;
-    //            if (t > 1)
-    //            {
-    //                left.size = 1;
-    //                scrollbar_right.SetActive(false);
-    //                scrollbar_left.SetActive(true);
-    //                t = 1;
-    //                isRight = false;
-    //            }
-    //            right.size = t;
-    //        }
-    //        else
-    //        {
+    public IEnumerator LoadingMove(float endSize)
+    {
+        float t = 0f;
+        while (t < 1)
+        {
+            t += Time.deltaTime;
+            right.size = Mathf.Lerp(right.size, endSize, t);
+            yield return null;
+        }
+    }
+    public IEnumerator StartLoading()
+    {
+        float t = 0;
+        bool isRight = true;
+        while (true)
+        {
+            if (isRight)
+            {
+                t += Time.deltaTime * scrollbarSpeed;
+                if (t > 1)
+                {
+                    left.size = 1;
+                    scrollbar_right.SetActive(false);
+                    scrollbar_left.SetActive(true);
+                    t = 1;
+                    isRight = false;
+                }
+                right.size = t;
+            }
+            else
+            {
 
-    //            t -= Time.deltaTime * scrollbarSpeed;
-    //            if (t < 0)
-    //            {
-    //                right.size = 0;
-    //                scrollbar_right.SetActive(true);
-    //                scrollbar_left.SetActive(false);
-    //                t = 0;
-    //                isRight = true;
-    //            }
-    //            left.size = t;
-    //        }
-    //        yield return null;
-    //    }
-    //}
+                t -= Time.deltaTime * scrollbarSpeed;
+                if (t < 0)
+                {
+                    right.size = 0;
+                    scrollbar_right.SetActive(true);
+                    scrollbar_left.SetActive(false);
+                    t = 0;
+                    isRight = true;
+                }
+                left.size = t;
+            }
+            yield return null;
+        }
+    }
 }
