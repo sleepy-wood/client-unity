@@ -62,7 +62,7 @@ public class TreeController : MonoBehaviour
     // The pipeline
     public Pipeline treePipeline;
     // pipeNameList
-    List<string> pipeNameList = new List<string>() { "BasicTree", "OakTree", "SakuraTree", "DRTree", "DemoTree_Red" };
+    List<string> pipeNameList = new List<string>() { "BasicTree", "OakTree", "SakuraTree", "DRTree", "Ice" };
     // pipeName별 SeedType
     public Dictionary<string, SeedType> pipeNameDict = new Dictionary<string, SeedType>()
     {
@@ -70,7 +70,7 @@ public class TreeController : MonoBehaviour
         { "OakTree", SeedType.Oak },
         { "SakuraTree", SeedType.Sakura },
         { "DRTree", SeedType.DR },
-        { "Lava", SeedType.Demo }
+        { "Ice", SeedType.Demo }
     };
     // 선택된 TreeSetting List
     List<TreeSetting> selectedTreeSetting;
@@ -207,8 +207,9 @@ public class TreeController : MonoBehaviour
             //}
             if (demoMode)
             {
-                pipeName = "Lava";
+                pipeName = "Ice";
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+                selectedSeed = SeedType.Demo;
             }
             else
             {
@@ -668,7 +669,6 @@ public class TreeController : MonoBehaviour
 
         // 씨앗 심기
         seed.SetActive(true);
-        yield return new WaitForSeconds(2);
         sproutParticle.Play();
         sproutLeaf.transform.localScale = new Vector3(0, 0, 0);
         sprout.SetActive(true);
@@ -733,8 +733,10 @@ public class TreeController : MonoBehaviour
     /// </sumary>
     public void PipelineSetting(int index)
     {
+        print(index);
         // 기본 세팅 성장 데이터 정보 지닌 요소
         TreeSetting element = selectedTreeSetting[index];
+        
 
         if (playMode)
         {
@@ -859,7 +861,7 @@ public class TreeController : MonoBehaviour
         treeFactory.UnloadAndClearPipeline();
         
         // 새로 생성되는 previewTree 설정
-        if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
+        if (previewTree == null) previewTree = treeFactory.transform.GetChild(1).transform;
         treeFactory.transform.GetChild(1).gameObject.layer = 11;
         treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
 
