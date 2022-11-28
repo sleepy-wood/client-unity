@@ -70,6 +70,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
         //닉네임 설정
         PhotonNetwork.NickName = DataTemporary.MyUserData.nickname;
         Debug.Log(PhotonNetwork.NickName);
+
         PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()
@@ -87,7 +88,7 @@ public class LoadingData : MonoBehaviourPunCallbacks
         {
             StopAllCoroutines();
             sum += loadingValue;
-            StartCoroutine(LoadingMove(sum));
+            StartCoroutine(LoadingMove(1));
 
             isCreateComplete = true;
         }
@@ -147,15 +148,6 @@ public class LoadingData : MonoBehaviourPunCallbacks
             marketsData.Add(marketData);
         }
 
-        for (int h = 0; h < marketsData.Count; h++)
-        {
-            if (marketsData[h].result)
-            {
-                StopAllCoroutines();
-                sum += loadingValue;
-                StartCoroutine(LoadingMove(sum));
-            }
-        }
         //UserData 
         ResultGetId <UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         if (userData.result)
@@ -326,6 +318,9 @@ public class LoadingData : MonoBehaviourPunCallbacks
                     }
                 }
             }
+            StopAllCoroutines();
+            sum += loadingValue;
+            StartCoroutine(LoadingMove(sum));
         }
 
         if (!m_testMode)
@@ -356,9 +351,6 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
         if (HealthDataStore.GetStatus() == HealthDataStoreStatus.Loaded && !once && isLoadingComplete)
         {
-            StopAllCoroutines();
-            sum += loadingValue;
-            StartCoroutine(LoadingMove(sum));
 
             once = true;
             isLoadingComplete = false;
@@ -427,10 +419,14 @@ public class LoadingData : MonoBehaviourPunCallbacks
                     return;
                 }
             }
+
+            StopAllCoroutines();
+            sum += loadingValue;
+            StartCoroutine(LoadingMove(sum));
             //새로운 분당 심박수
 
             //새로운 산소포화도
-            
+
             //새로운 분당 호흡수
 
             OnConnect();
@@ -501,10 +497,11 @@ public class LoadingData : MonoBehaviourPunCallbacks
     }
     public IEnumerator LoadingMove(float endSize)
     {
+        Debug.Log("endSize = " + endSize);
         float t = 0f;
-        while (t < 1)
+        while (t < 1.0f)
         {
-            t += Time.deltaTime;
+            t += Time.deltaTime * 5;
             right.size = Mathf.Lerp(right.size, endSize, t);
             yield return null;
         }
