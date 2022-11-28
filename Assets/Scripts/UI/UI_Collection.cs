@@ -76,6 +76,14 @@ public class UI_Collection : MonoBehaviour
         user.GetComponent<UserInteract>().moveControl = true;
         userInput = user.GetComponent<UserInput>();
     }
+    private void OnDisable()
+    {
+        if (!user)
+        {
+            user = GameManager.Instance.User;
+        }
+        user.GetComponent<UserInteract>().moveControl = false;
+    }
     float Draging = 0;
     bool isChange = false;
     bool isOnce = false;

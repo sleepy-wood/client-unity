@@ -215,7 +215,7 @@ public class TreeController : MonoBehaviour
             {
                 // Pipeline 랜덤 선택 ( Tree Shape )
                 i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo 제외
-                pipeName = pipeNameList[3];  // i = 0~3
+                pipeName = pipeNameList[i];  // i = 0~3
                 selectedSeed = pipeNameDict[pipeName];
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 

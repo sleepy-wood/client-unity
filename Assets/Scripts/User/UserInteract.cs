@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 
 public class UserInteract : MonoBehaviourPun, IPunObservable
 {
-    [SerializeField] private float moveSpeed = 3f;
+    public float moveSpeed = 3f;
     
     public bool moveControl;
     private UserInput userInput;
@@ -80,14 +80,14 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
                 transform.position += moveSpeed * moveDir * Time.deltaTime;
 
                 //회전
-                transform.Rotate(transform.up, userInput.DragX);
+                //transform.Rotate(transform.up, userInput.DragX);
             }
             else
             {
                 transform.position =
                     Vector3.Lerp(transform.position, receivePos, Time.deltaTime * 5);
-                transform.GetChild(2).rotation =
-                    Quaternion.Lerp(transform.GetChild(2).rotation, receiveRot, Time.deltaTime * 5);
+                //transform.GetChild(2).rotation =
+                //    Quaternion.Lerp(transform.GetChild(2).rotation, receiveRot, Time.deltaTime * 5);
             }
             #endregion
         }
