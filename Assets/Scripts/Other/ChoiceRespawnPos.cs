@@ -33,6 +33,14 @@ public class ChoiceRespawnPos : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+        if (collection.activeSelf)
+        {
+            GameManager.Instance.User.GetComponent<UserInteract>().moveControl = true;
+        }
+        else
+        {
+            GameManager.Instance.User.GetComponent<UserInteract>().moveControl = false;
+        }
         Vector3 mousePos = Input.mousePosition;
         Ray ray = camera_share.ScreenPointToRay(mousePos);
         RaycastHit hit;
