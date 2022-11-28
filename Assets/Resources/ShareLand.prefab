@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -137, y: -27.000122}
+  m_AnchoredPosition: {x: -137, y: -47}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6209799367230500069
@@ -156,8 +156,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -326, y: -1}
-  m_SizeDelta: {x: 170, y: 170}
+  m_AnchoredPosition: {x: -369, y: -27.8125}
+  m_SizeDelta: {x: 223.625, y: 223.625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6209799367856088182
 CanvasRenderer:
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cb862153e75aa25449c80ce630c90ab9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9a40031da437f4b41825ba1046c0e421, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -341,11 +341,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 65e8dfecfc71c274abdbaa190a77f663, type: 3}
-    m_FontSize: 55
+    m_FontSize: 67
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 62
+    m_MaxSize: 69
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -390,8 +390,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: -8.000122}
-  m_SizeDelta: {x: 170, y: 60}
+  m_AnchoredPosition: {x: 359, y: -27.999878}
+  m_SizeDelta: {x: 207.0599, y: 73.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6209799368476207793
 CanvasRenderer:
@@ -474,7 +474,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6209799368476207792}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UI_Share, Assembly-CSharp
+        m_MethodName: OnClickEnterSharedLand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6209799368706361551
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +522,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -176, y: 27.999878}
+  m_AnchoredPosition: {x: -176, y: 8}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6209799368706361538
@@ -542,8 +554,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ea5a0102452e26a4abb0eb288c6c628c, type: 3}
-    m_FontSize: 100
+    m_Font: {fileID: 12800000, guid: d317d1736a4c06c489bec30fbd968ee2, type: 3}
+    m_FontSize: 118
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -554,4 +566,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "UserA\uC758 Land"
+  m_Text: "\uC2AC\uB9AC\uD53C\uC6B0\uB4DC \uCE5C\uAD6C \uD574\uC694"
