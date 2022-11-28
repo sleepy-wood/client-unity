@@ -135,7 +135,7 @@ public class Choice : MonoBehaviour
 
         TreePipeLine_Collection treePipeline_Collection = treeCollectionData.treeGrowths[0].treePipeline;
         // 1. Scale
-        float scaleTo = treePipeline_Collection.scale;
+        float scaleTo = 0.5f;
         // 2. Branch Number
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minFrequency = treePipeline_Collection.branch1;
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxFrequency = treePipeline_Collection.branch1;
