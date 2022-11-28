@@ -20,7 +20,7 @@ public class UI_LoadingText : MonoBehaviour
             string text = loadingText.text;
             if (text.Split(".").Length >= 4)
             {
-                text = "로딩 진행중";
+                text = "나무에 물주는 중";
             }
             else
             {
