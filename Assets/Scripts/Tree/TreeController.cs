@@ -215,7 +215,7 @@ public class TreeController : MonoBehaviour
             {
                 // Pipeline 랜덤 선택 ( Tree Shape )
                 i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo 제외
-                pipeName = pipeNameList[i];  // i = 0~3
+                pipeName = pipeNameList[2];  // i = 0~3
                 selectedSeed = pipeNameDict[pipeName];
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 
@@ -861,7 +861,7 @@ public class TreeController : MonoBehaviour
     {
         Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
         treeFactory.LoadPipeline(loadedPipeline.Clone(), true);
-        //treeFactory.UnloadAndClearPipeline();
+        treeFactory.UnloadAndClearPipeline();
         
         // 새로 생성되는 previewTree 설정
         if (previewTree == null) previewTree = GameObject.Find("previewTree").transform;
@@ -869,28 +869,28 @@ public class TreeController : MonoBehaviour
         treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
 
         // Falling Leaf Particle System
-        ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);  // 생성
-        fallingLeaf.GetComponent<Falling_Leaf>().SetFallingLeafParticle(currentTreeData);  // 트리데이터로 떨어질 잎 설정
-        particleShape = fallingLeaf.shape;
-        fallingLeaf.transform.SetParent(previewTree.transform);
-        if (selectedSeed == SeedType.Oak)  // position & radius
-        {
-            fallingLeaf.transform.localPosition = new Vector3(0, 4, 0);
-            particleShape.radius = 0.75f + 0.31f * (dayCount-1);
-        }
-        else  // Basic, Sakura, DR
-        {
-            fallingLeaf.transform.localPosition = new Vector3(0, 17.5f, 0);
-            particleShape.radius = 0.21f + 0.14f * (dayCount - 1);
-        }
-        fallingLeaf.Play();  // 재생
+        //ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);  // 생성
+        //fallingLeaf.GetComponent<Falling_Leaf>().SetFallingLeafParticle(currentTreeData);  // 트리데이터로 떨어질 잎 설정
+        //particleShape = fallingLeaf.shape;
+        //fallingLeaf.transform.SetParent(previewTree.transform);
+        //if (selectedSeed == SeedType.Oak)  // position & radius
+        //{
+        //    fallingLeaf.transform.localPosition = new Vector3(0, 4, 0);
+        //    particleShape.radius = 0.75f + 0.31f * (dayCount-1);
+        //}
+        //else  // Basic, Sakura, DR
+        //{
+        //    fallingLeaf.transform.localPosition = new Vector3(0, 17.5f, 0);
+        //    particleShape.radius = 0.21f + 0.14f * (dayCount - 1);
+        //}
+        //fallingLeaf.Play();  // 재생
         
 
 
         // Change Particle
         if (dayCount > 1) changeParticle.Play();
         
-        //Resources.UnloadAsset(loadedPipeline);
+        Resources.UnloadAsset(loadedPipeline);
     }
 
 
