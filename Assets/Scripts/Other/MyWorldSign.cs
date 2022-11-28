@@ -99,6 +99,7 @@ public class MyWorldSign : MonoBehaviour
 
     public void OnClickNextLevel()
     {
-        PhotonNetwork.LoadLevel("SkyLand");
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel("SkyLand");
     }
 }
