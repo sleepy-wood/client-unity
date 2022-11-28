@@ -23,13 +23,15 @@ public class WeatherController : MonoBehaviour
 
     public ParticleSystem rainParticle;
     public ParticleSystem snowParticle;
-    public ParticleSystem flowerParticle;
+
+    public AudioSource sunny;
+    public AudioSource rain;
+    public AudioSource snow;
+
 
     void Start()
     {
-        //rainParticle.Stop();
-        //snowParticle.Stop();
-        //flowerParticle.Stop();
+        Init();
         GetWeatherData();
     }
 
@@ -55,9 +57,39 @@ public class WeatherController : MonoBehaviour
             //Debug.Log($"Time : {resultGet.data.time}");
             weatherData.weather = resultGet.data.weather;
             weatherData.time = resultGet.data.time;
+
+            if (weatherData.weather == "맑음")
+            {
+                Sunny();
+                sunny.gameObject.SetActive(true);
+            }
+            else if (weatherData.weather == "비" | weatherData.weather == "소나기")
+            {
+                Rain();
+                rain.gameObject.SetActive(true);
+            }
+            else if (weatherData.weather == "눈")
+            {
+                Snow();
+                snow.gameObject.SetActive(true);
+            }
+            else if (weatherData.weather == "비/눈")
+            {
+                Rain();
+                Snow();
+                snow.gameObject.SetActive(true);
+            }
         }
     }
 
+    /// <summary>
+    /// 초기화
+    /// </summary>
+    public void Init()
+    {
+        rainParticle.Stop();
+        snowParticle.Stop();
+    }
 
     /// <summary>
     /// 날씨 적용
@@ -76,13 +108,12 @@ public class WeatherController : MonoBehaviour
     {
         rainParticle.Stop();
         snowParticle.Play();
-        flowerParticle.Stop();
     }
     
-    public void Flower()
-    {
-        flowerParticle.Play();
-        rainParticle.Stop();
-        snowParticle.Stop();
-    }
+    //public void Flower()
+    //{
+    //    flowerParticle.Play();
+    //    rainParticle.Stop();
+    //    snowParticle.Stop();
+    //}
 }
