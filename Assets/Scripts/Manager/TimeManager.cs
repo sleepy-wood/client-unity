@@ -205,13 +205,20 @@ public class TimeManager : MonoBehaviour
     public void OnPlusDay(DateTime firstDate) 
     {
         day += 1;
+        if (totalPlantDay > 5) return;
         now = firstDate.AddDays(day);
-        //if (day == 5) day = 1;  
         CalculatePlantDays(firstDate, now);
         if (day > 0)
         {
-            // Tree Data 받아와서 Tree Id 세팅해서 2~5일 데이터 저장
-            GetTreeData();
+            if (treeControll.demoMode)
+            {
+                treeControll.SetTree(totalPlantDay);
+            }
+            else
+            {
+                // Tree Data 받아와서 Tree Id 세팅해서 2~5일 데이터 저장
+                GetTreeData();
+            }
         }
     }
 
