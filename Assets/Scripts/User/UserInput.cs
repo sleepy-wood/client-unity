@@ -143,7 +143,7 @@ public class UserInput : MonoBehaviour
                         MoveX = dir.x;
                         preX = MoveX;
                     }
-                    if (Mathf.Abs(dir.x - preX) >= 0.1f)
+                    if (Mathf.Abs(dir.y - preY) >= 0.1f)
                     {
                         MoveZ = dir.y;
                         preY = MoveZ;
