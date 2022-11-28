@@ -38,7 +38,7 @@ public class UI_LandCustom : MonoBehaviourPun
         }
 
         //초기값 0번째 버튼 활성화
-        //OnClickCategoryActive(transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text, 0);
+        OnClickCategoryActive(transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text, 0);
 
         //비활성화
         for (int i = 0; i < objects.Count; i++)
