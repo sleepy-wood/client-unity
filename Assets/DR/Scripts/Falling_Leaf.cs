@@ -55,10 +55,14 @@ public class Falling_Leaf : MonoBehaviour
 
         // Rotten Sprout
         int count = treeData.treeGrowths.Count;
-        if (treeData.treeGrowths[count - 1].treePipeline.rottenRate > 0)
+        if (count > 0)
         {
-            particle.textureSheetAnimation.AddSprite(Leaf_Rotten);
+            if (treeData.treeGrowths[count - 1].treePipeline.rottenRate > 0)
+            {
+                particle.textureSheetAnimation.AddSprite(Leaf_Rotten);
+            }
         }
+        
     }
 
     #region DR
