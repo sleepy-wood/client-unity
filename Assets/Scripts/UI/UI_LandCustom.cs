@@ -254,19 +254,19 @@ public class UI_LandCustom : MonoBehaviourPun
                 //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
 #if UNITY_STANDALONE
                 //myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
-                myLoadedAssetBundle = AssetBundle.LoadFromFile(assetBundleDirectory + "/" + "landcustom_mushroom_a");
-                //GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
-                GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>("landcustom_mushroom_a");
-                AssetBundleManifest assetBundleManifest = myLoadedAssetBundle.LoadAsset<AssetBundleManifest>(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
+                //myLoadedAssetBundle = AssetBundle.LoadFromFile(assetBundleDirectory + "/" + "landcustom_mushroom_a");
+                ////GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
+                //GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>("landcustom_mushroom_a");
+                //AssetBundleManifest assetBundleManifest = myLoadedAssetBundle.LoadAsset<AssetBundleManifest>(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
                 //Debug.Log(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
 #elif UNITY_IOS
                 //var myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
                 //GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1]);
                 //AssetBundleManifest assetBundleManifest = myLoadedAssetBundle.LoadAsset<AssetBundleManifest>(fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1]);
-                myLoadedAssetBundle = AssetBundle.LoadFromFile(assetBundleDirectory + "/" + "landcustom_mushroom_a");
-                GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>("landcustom_mushroom_a");
+                //myLoadedAssetBundle = AssetBundle.LoadFromFile(assetBundleDirectory + "/" + "landcustom_mushroom_a");
+                //GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>("landcustom_mushroom_a");
 #endif
-                //GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
+                GameObject resource = Resources.Load<GameObject>("LandCustom/landcustom_mushroom_a");
                 GameObject prefab = Instantiate(resource);
                 //string[] names = assetBundleManifest.GetAllAssetBundles();
 
