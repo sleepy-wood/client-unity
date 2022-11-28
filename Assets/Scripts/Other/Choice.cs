@@ -103,7 +103,7 @@ public class Choice : MonoBehaviour
         content.offsetMax = new Vector2(550 * DataTemporary.arrayCollectionDatas.collectionLists.Count, content.offsetMax.y);
 
         Debug.Log("시작");
-        createPos = 3;
+        //createPos = 3;
         //if(DataTemporary.arrayCollectionDatas.collectionLists.Count > 0)
         //    OnClickChoice(0);
     }

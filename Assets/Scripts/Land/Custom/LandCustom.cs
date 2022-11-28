@@ -219,7 +219,8 @@ public class LandCustom : MonoBehaviour
     /// </summary>
     void RotateMode()
     {
-        selectedObject.transform.Rotate(selectedObject.transform.up, -userInput.DragX * 2);
+        if(selectedObject != null)
+            selectedObject.transform.Rotate(selectedObject.transform.up, -userInput.DragX * 2);
     }
 
     bool isActiveMove = false;
