@@ -8,6 +8,6 @@ public class UIMove : MonoBehaviour
     private void Update()
     {
         float y = speed * Mathf.Sin(Time.time *2 );
-        transform.localPosition = new Vector3(transform.localPosition.x, 3 +y, transform.localPosition.z);
+        transform.localPosition = new Vector3(transform.localPosition.x, 2+y, transform.localPosition.z);
     }
 }
