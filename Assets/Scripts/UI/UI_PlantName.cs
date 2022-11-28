@@ -51,21 +51,23 @@ public class UI_PlantName : MonoBehaviour
     /// </summary>
     public void onConfirmPlantName()
     {
-        // My Collection
-        // 나무 이름
-        GameManager.Instance.treeController.treeName = inputPlantName.text;
-          
-        // 1일차 TreeData 저장
-        treeController.SaveTreeData();
-        print("나무 이름 결정 완료");
+        if (inputPlantName.text.Length > 0)
+        {
+            // 나무 이름
+            GameManager.Instance.treeController.treeName = inputPlantName.text;
 
-        // UI 버튼들 활성화
-        landCanvas.SetActive(true);
-        chatUI.SetActive(true);
-        menuCanvas.SetActive(true);
+            // 1일차 TreeData 저장
+            treeController.SaveTreeData();
+            print("나무 이름 결정 완료");
 
-        // 나무 이름 결정 UI 비활성화
-        treeNameWindow.SetActive(false);
-        treeNameBG.SetActive(false);
+            // UI 버튼들 활성화
+            landCanvas.SetActive(true);
+            chatUI.SetActive(true);
+            menuCanvas.SetActive(true);
+
+            // 나무 이름 결정 UI 비활성화
+            treeNameWindow.SetActive(false);
+            treeNameBG.SetActive(false);
+        }
     }
 }

@@ -206,7 +206,7 @@ public class TimeManager : MonoBehaviour
     {
         day += 1;
         now = firstDate.AddDays(day);
-        if (day == 5) day = 1;  
+        //if (day == 5) day = 1;  
         CalculatePlantDays(firstDate, now);
         if (day > 0)
         {
