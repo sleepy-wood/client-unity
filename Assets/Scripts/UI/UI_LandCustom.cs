@@ -22,10 +22,10 @@ public class UI_LandCustom : MonoBehaviourPun
 
     private void Start()
     {
-        if (PhotonNetwork.PlayerList.Length != 1)
-        {
-            button.SetActive(false);
-        }
+        //if (PhotonNetwork.PlayerList.Length != 1)
+        //{
+        //    button.SetActive(false);
+        //}
 
         itemWindow = transform.GetChild(2).gameObject;
 
@@ -52,14 +52,14 @@ public class UI_LandCustom : MonoBehaviourPun
     }
     private void Update()
     {
-        if (PhotonNetwork.PlayerList.Length != 1)
-        {
-            button.SetActive(false);
-        }
-        else
-        {
-            button.SetActive(true);
-        }
+        //if (PhotonNetwork.PlayerList.Length != 1)
+        //{
+        //    button.SetActive(false);
+        //}
+        //else
+        //{
+        //    button.SetActive(true);
+        //}
     }
     public void OnClickCategoryActive(string Cat, int num)
     {
