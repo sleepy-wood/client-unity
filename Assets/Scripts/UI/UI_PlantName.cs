@@ -15,6 +15,7 @@ public class UI_PlantName : MonoBehaviour
     public GameObject landCanvas;
     public GameObject treeNameWindow;
     public GameObject treeNameBG;
+    public TreeController treeController;
 
     private void Start()
     {
@@ -53,7 +54,7 @@ public class UI_PlantName : MonoBehaviour
         GameManager.Instance.treeController.treeName = inputPlantName.text;
           
         // 1일차 TreeData 저장
-        GameManager.Instance.treeController.SaveTreeData();
+        treeController.SaveTreeData();
         print("나무 이름 결정 완료");
 
         // UI 버튼들 활성화

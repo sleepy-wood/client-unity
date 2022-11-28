@@ -133,10 +133,10 @@ MonoBehaviour:
   sinkElementClassType: 4
   nodePosition: {x: -145, y: 365.5}
   windSpread: 1
-  windAmplitude: 0.6
-  sproutTurbulence: 0.4
+  windAmplitude: 1.12
+  sproutTurbulence: 0.71
   sproutSway: 1
-  branchSway: 1
+  branchSway: 1.56
   windQuality: 4
   useMultiPhaseOnTrunk: 1
   previewWindAlways: 1
@@ -3678,8 +3678,8 @@ MonoBehaviour:
       forward: {x: 0.73607624, y: -0.6268555, z: -0.2554287}
       _position: 0.5
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: 2.5615678, y: 1.4985422, z: 0.42371643}
-      positionFromRoot: {x: 8.081745, y: 52.328953, z: -4.998738}
+      positionFromBranch: {x: 2.5577197, y: 1.5103226, z: 0.42152148}
+      positionFromRoot: {x: 8.077897, y: 52.340733, z: -5.0009327}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -3762,7 +3762,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: 3.8080485, y: 1.1634951, z: -0.38085112}
-      positionFromRoot: {x: 11.889793, y: 53.492447, z: -5.379589}
+      positionFromRoot: {x: 11.885945, y: 53.504227, z: -5.381784}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -3844,8 +3844,8 @@ MonoBehaviour:
       forward: {x: -0.4608533, y: -0.1342961, z: -0.8772565}
       _position: 0.6666667
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: 3.8313138, y: 6.729652, z: -4.038829}
-      positionFromRoot: {x: 3.8313138, y: 46.979652, z: -4.0388355}
+      positionFromBranch: {x: 3.5723453, y: 7.0851164, z: -3.6631222}
+      positionFromRoot: {x: 3.5723453, y: 47.335117, z: -3.6631289}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -3928,7 +3928,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -1.1520662, y: 1.2909976, z: -6.0923877}
-      positionFromRoot: {x: 2.6792476, y: 48.27065, z: -10.131224}
+      positionFromRoot: {x: 2.420279, y: 48.626114, z: -9.755516}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4011,7 +4011,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -1.1680036, y: 3.1236715, z: -2.2087195}
-      positionFromRoot: {x: 1.511244, y: 51.39432, z: -12.339943}
+      positionFromRoot: {x: 1.2522755, y: 51.749786, z: -11.964235}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4093,8 +4093,8 @@ MonoBehaviour:
       forward: {x: 0.27631393, y: -0.79559004, z: -0.53915405}
       _position: 0.5
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -0.71032596, y: -0.27247855, z: -3.3681233}
-      positionFromRoot: {x: 3.120988, y: 46.707172, z: -7.4069586}
+      positionFromBranch: {x: -0.67268926, y: -0.21998094, z: -3.2026262}
+      positionFromRoot: {x: 2.899656, y: 47.115135, z: -6.865755}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4177,7 +4177,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: 0.3332429, y: 0.6586465, z: -3.9313016}
-      positionFromRoot: {x: 3.4542308, y: 47.365818, z: -11.338261}
+      positionFromRoot: {x: 3.232899, y: 47.77378, z: -10.797056}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4259,8 +4259,8 @@ MonoBehaviour:
       forward: {x: -0.027897147, y: 0.3208867, z: 0.94670683}
       _position: 0.33333334
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: 1.4023256, y: 3.9063067, z: -1.5101265}
-      positionFromRoot: {x: 1.4023256, y: 44.156307, z: -1.5101331}
+      positionFromBranch: {x: 1.7302796, y: 3.5588996, z: -1.8565361}
+      positionFromRoot: {x: 1.7302796, y: 43.8089, z: -1.8565428}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4343,7 +4343,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: 0.7723472, y: 2.3637607, z: 6.185512}
-      positionFromRoot: {x: 2.1746728, y: 46.52007, z: 4.675379}
+      positionFromRoot: {x: 2.502627, y: 46.17266, z: 4.328969}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4426,7 +4426,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -1.0334805, y: 1.721847, z: 3.4593585}
-      positionFromRoot: {x: 1.1411923, y: 48.241917, z: 8.134737}
+      positionFromRoot: {x: 1.4691464, y: 47.89451, z: 7.788327}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4508,8 +4508,8 @@ MonoBehaviour:
       forward: {x: 0.77739817, y: 0.4372047, z: -0.45222136}
       _position: 0.5
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: 0.42986518, y: 0.31151387, z: 3.551248}
-      positionFromRoot: {x: 1.8321908, y: 44.46782, z: 2.0411148}
+      positionFromBranch: {x: 0.40963796, y: 0.39103922, z: 3.3744996}
+      positionFromRoot: {x: 2.1399176, y: 44.19994, z: 1.5179567}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4592,7 +4592,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: 2.6145623, y: 2.871489, z: 0.9584437}
-      positionFromRoot: {x: 4.446753, y: 47.33931, z: 2.9995584}
+      positionFromRoot: {x: 4.75448, y: 47.07143, z: 2.4764004}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4674,8 +4674,8 @@ MonoBehaviour:
       forward: {x: -0.9890461, y: -0.00000004608674, z: 0.14760745}
       _position: 0.7732245
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -0.68074346, y: 30.961285, z: 0.66868615}
-      positionFromRoot: {x: -0.68074346, y: 31.211285, z: 0.66868615}
+      positionFromBranch: {x: -0.2674224, y: 30.925066, z: 0.2626827}
+      positionFromRoot: {x: -0.2674224, y: 31.175066, z: 0.2626827}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4758,7 +4758,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -14.423453, y: 4.3113694, z: 2.1525886}
-      positionFromRoot: {x: -15.104197, y: 35.522655, z: 2.8212748}
+      positionFromRoot: {x: -14.690876, y: 35.486435, z: 2.4152713}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4841,7 +4841,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -5.933626, y: -0.87720287, z: 0.15030937}
-      positionFromRoot: {x: -21.037823, y: 34.645454, z: 2.971584}
+      positionFromRoot: {x: -20.624502, y: 34.609234, z: 2.5655806}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -4924,7 +4924,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -3.4456573, y: 1.034299, z: 1.7486202}
-      positionFromRoot: {x: -24.48348, y: 35.679752, z: 4.7202044}
+      positionFromRoot: {x: -24.07016, y: 35.64353, z: 4.314201}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5006,8 +5006,8 @@ MonoBehaviour:
       forward: {x: 0.03723354, y: 0.31696942, z: -0.9477047}
       _position: 0.5
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -2.9510899, y: -0.4780091, z: 0.03517943}
-      positionFromRoot: {x: -18.055286, y: 35.044647, z: 2.8564541}
+      positionFromBranch: {x: -2.9653473, y: -0.45480543, z: 0.03799472}
+      positionFromRoot: {x: -17.656223, y: 35.031628, z: 2.453266}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5090,7 +5090,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -2.5809484, y: 1.7253414, z: -2.5222814}
-      positionFromRoot: {x: -20.636234, y: 36.76999, z: 0.33417273}
+      positionFromRoot: {x: -20.237171, y: 36.75697, z: -0.0690155}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5172,8 +5172,8 @@ MonoBehaviour:
       forward: {x: 0.50610286, y: 0.59994614, z: 0.6196163}
       _position: 0.6666667
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -10.360745, y: 1.122954, z: 1.5998688}
-      positionFromRoot: {x: -11.041489, y: 32.33424, z: 2.268555}
+      positionFromBranch: {x: -9.848648, y: 1.9714671, z: 1.4969035}
+      positionFromRoot: {x: -10.116071, y: 33.146534, z: 1.7595862}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5256,7 +5256,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -0.72889, y: 4.362178, z: 4.533347}
-      positionFromRoot: {x: -11.770379, y: 36.69642, z: 6.801902}
+      positionFromRoot: {x: -10.844961, y: 37.508713, z: 6.2929335}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5339,7 +5339,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -2.0109715, y: 2.440608, z: 2.4493725}
-      positionFromRoot: {x: -13.781351, y: 39.137028, z: 9.251274}
+      positionFromRoot: {x: -12.855932, y: 39.94932, z: 8.742306}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5421,8 +5421,8 @@ MonoBehaviour:
       forward: {x: 0.91975963, y: 0.27116275, z: -0.28374824}
       _position: 0.5
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -0.14511585, y: 1.7952309, z: 2.7190828}
-      positionFromRoot: {x: -11.1866045, y: 34.12947, z: 4.9876375}
+      positionFromBranch: {x: -0.19295277, y: 1.8688105, z: 2.5745356}
+      positionFromRoot: {x: -10.309024, y: 35.015343, z: 4.3341217}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5505,7 +5505,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: 2.533884, y: 3.0033765, z: 0.7477716}
-      positionFromRoot: {x: -8.65272, y: 37.132847, z: 5.7354093}
+      positionFromRoot: {x: -7.77514, y: 38.01872, z: 5.0818934}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5587,8 +5587,8 @@ MonoBehaviour:
       forward: {x: -0.29517242, y: -0.22724321, z: -0.9280269}
       _position: 0.33333334
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -5.216523, y: 0.24295802, z: 0.81579167}
-      positionFromRoot: {x: -5.8972664, y: 31.454243, z: 1.4844778}
+      positionFromBranch: {x: -5.111685, y: 0.2598248, z: 0.79817986}
+      positionFromRoot: {x: -5.379107, y: 31.43489, z: 1.0608625}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5671,7 +5671,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -3.8851144, y: -1.2990409, z: -5.259546}
-      positionFromRoot: {x: -9.782381, y: 30.155201, z: -3.775068}
+      positionFromRoot: {x: -9.264221, y: 30.135849, z: -4.1986833}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5754,7 +5754,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: -3.4187217, y: 1.2004205, z: -1.6945007}
-      positionFromRoot: {x: -13.201103, y: 31.355621, z: -5.4695687}
+      positionFromRoot: {x: -12.682943, y: 31.33627, z: -5.8931837}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5836,8 +5836,8 @@ MonoBehaviour:
       forward: {x: 0.8056869, y: 0.01809444, z: -0.59206545}
       _position: 0.5
       _positionOffset: {x: 0, y: 0, z: 0}
-      positionFromBranch: {x: -1.8042505, y: -1.7638931, z: -2.7617834}
-      positionFromRoot: {x: -7.701517, y: 29.69035, z: -1.2773056}
+      positionFromBranch: {x: -1.6870121, y: -1.6602923, z: -2.58512}
+      positionFromRoot: {x: -7.066119, y: 29.7746, z: -1.5242574}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
@@ -5920,7 +5920,7 @@ MonoBehaviour:
       _position: 1
       _positionOffset: {x: 0, y: 0, z: 0}
       positionFromBranch: {x: 0.5888952, y: 1.2027384, z: -3.7691672}
-      positionFromRoot: {x: -7.112622, y: 30.893087, z: -5.0464725}
+      positionFromRoot: {x: -6.477224, y: 30.977337, z: -5.2934246}
       isRoot: 0
       isBroken: 0
       breakPosition: 0.5
