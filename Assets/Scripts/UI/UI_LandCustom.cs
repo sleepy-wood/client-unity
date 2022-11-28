@@ -268,7 +268,7 @@ public class UI_LandCustom : MonoBehaviourPun
 #endif
                 //GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
-                string[] names = assetBundleManifest.GetAllAssetBundles();
+                //string[] names = assetBundleManifest.GetAllAssetBundles();
                 for(int k = 0; k < names.Length; k++)
                 {
                     if (names[k].Split(".")[1] == "prefab")
