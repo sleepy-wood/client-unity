@@ -48,19 +48,19 @@ public class Cine_Graph : MonoBehaviour
     IEnumerator GraphMove(Vector3 value_scale, Vector3 value, int idx)
     {
         float a, b, c;
-        a = Random.Range(1, 8) * 0.1f;
+        a = Random.Range(1, 16) * 0.05f;
         b = Random.Range(1, 5) * 0.4f;
         c = Random.Range(1, 5) * 0.4f;
         
         Color endColor = new Color(a, 0.1f, 1.0f);
-      //  Color startColor = new Color(0.54f - a, 0.4f, 0.55f, 0.7f);
+      //  Color startColor = new Color(0.54f - a, 0.4f, 0.55f, 0.7f);s
         float t = 0;
         while (t < 1f)
         {
             t += Time.deltaTime * 0.1f;
             transform.GetChild(idx).localPosition = Vector3.Lerp(transform.GetChild(idx).localPosition, value, t);
             transform.GetChild(idx).localScale = Vector3.Lerp(transform.GetChild(idx).localScale, value_scale, t);
-            transform.GetChild(idx).GetComponent<MeshRenderer>().material.color = new Color(0.7f, 0.5f, 1.0f, 1.0f);
+            transform.GetChild(idx).GetComponent<MeshRenderer>().material.color = new Color(0.7f, 0.5f, 1.0f, 0.9f);
             transform.GetChild(idx).GetComponent<MeshRenderer>().material.SetColor("_EmissionColor",endColor);
            // Color.Lerp(, endColor, t);
             //Color.Lerp(transform.GetChild(idx).GetComponent<MeshRenderer>().material.GetColor("_EmissionColor"), endColor, t);
