@@ -217,7 +217,7 @@ public class TreeController : MonoBehaviour
                 i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo 제외
                 pipeName = pipeNameList[i];  // i = 0~3
                 selectedSeed = pipeNameDict[pipeName];
-                treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+                treePipeline = assetBundle.LoadAsset<Pipeline>("TreePipeline_Lava");
 
 
                 // Sprout Texture 확률적 랜덤 선택
@@ -1276,18 +1276,22 @@ public class TreeController : MonoBehaviour
         else if (sleepAmount == 1)
         {
             BranchNumChange(false, 2);
+            vitalityScore += 25;
         }
         else if (sleepAmount == 2)
         {
             BranchNumChange(false, 1);
+            vitalityScore += 50;
         }
         else if (sleepAmount == 3)
         {
             BranchNumChange(true, 1);
+            vitalityScore += 75;
         }
         else if (sleepAmount == 4)
         {
             BranchNumChange(true, 2);
+            vitalityScore += 100;
         }
     }
     /// <summary>
