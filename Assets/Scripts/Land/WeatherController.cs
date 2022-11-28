@@ -62,19 +62,19 @@ public class WeatherController : MonoBehaviour
             {
                 Sunny();
                 AudioInit();
-                sunnyAudio.gameObject.SetActive(true);
+                sunnyAudio.Play();
             }
             else if (weatherData.weather == "비" | weatherData.weather == "소나기")
             {
                 Rain();
                 AudioInit();
-                rainAudio.gameObject.SetActive(true);
+                rainAudio.Play();
             }
             else if (weatherData.weather == "눈")
             {
                 Snow();
                 AudioInit();
-                snowAudio.gameObject.SetActive(true);
+                snowAudio.Play();
             }
             else if (weatherData.weather == "비/눈")
             {
@@ -97,9 +97,9 @@ public class WeatherController : MonoBehaviour
 
     public void AudioInit()
     {
-        sunnyAudio.gameObject.SetActive(false);
-        rainAudio.gameObject.SetActive(false);
-        snowAudio.gameObject.SetActive(false);
+        sunnyAudio.Stop();
+        rainAudio.Stop()l;
+        snowAudio.Stop()l;
     }
 
     /// <summary>
