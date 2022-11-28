@@ -128,7 +128,9 @@ public class UserInput : MonoBehaviour
                     }
                 }
 
-            #region 이동 
+                #region 이동
+                float preX = 0;
+                float preY = 0;
                 if (currentState == TouchState.Move)
                 {
                     Touch touchFirstFinger = Input.GetTouch(0);
@@ -136,8 +138,17 @@ public class UserInput : MonoBehaviour
 
                     Vector2 dir = touchFirstFinger.position - touchMoveBeforePos;
                     dir.Normalize();
-                    MoveX = dir.x;
-                    MoveZ = dir.y;
+                    if (Mathf.Abs(dir.x - preX) >= 0.1f)
+                    {
+                        MoveX = dir.x;
+                        preX = MoveX;
+                    }
+                    if (Mathf.Abs(dir.x - preX) >= 0.1f)
+                    {
+                        MoveZ = dir.y;
+                        preY = MoveZ;
+                    }
+
 
             #region Legacy
                     //Vector3 mousePos = Input.mousePosition;
