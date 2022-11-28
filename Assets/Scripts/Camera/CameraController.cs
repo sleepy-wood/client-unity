@@ -44,18 +44,18 @@ public class CameraController : MonoBehaviourPun
                 if (user)
                 {
                     
-                    //zoom을 했을 경우
-                    if (userInput.Zoom != 0 && preZoom != userInput.Zoom)
-                    {
-                        preZoom = userInput.Zoom;
-                        //카메라 재조정
-                        StopAllCoroutines();
-                        StartCoroutine(CameraMoving(7));
+                    ////zoom을 했을 경우
+                    //if (userInput.Zoom != 0 && preZoom != userInput.Zoom)
+                    //{
+                    //    preZoom = userInput.Zoom;
+                    //    //카메라 재조정
+                    //    StopAllCoroutines();
+                    //    StartCoroutine(CameraMoving(7));
 
-                        //카메라 Zoom in / out
-                        myCamera.fieldOfView -= userInput.Zoom * wheelScrollSpeed;
-                        myCamera.fieldOfView = Mathf.Clamp(myCamera.fieldOfView, initialOrthographicSize - 15, initialOrthographicSize + 30);
-                    }
+                    //    //카메라 Zoom in / out
+                    //    myCamera.fieldOfView -= userInput.Zoom * wheelScrollSpeed;
+                    //    myCamera.fieldOfView = Mathf.Clamp(myCamera.fieldOfView, initialOrthographicSize - 15, initialOrthographicSize + 30);
+                    //}
 
                     transform.position = camPos.position;
                     //플레이어와 카메라의 거리가 5정도 떨어지면 따라가기
@@ -63,7 +63,7 @@ public class CameraController : MonoBehaviourPun
                     //{
                     //    StartCoroutine(CameraMoving());
                     //}
-                    transform.forward = camPos.forward;
+                    //transform.forward = camPos.forward;
                     //transform.parent.Rotate(user.transform.up, userInput.RotateX);
                 }
                 else
