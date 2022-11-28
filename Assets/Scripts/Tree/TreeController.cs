@@ -1402,6 +1402,14 @@ public class TreeController : MonoBehaviour
             treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency -= sproutNum;
         }
     }
+
+    public void OnDemoBadChange()
+    {
+        BadChange(true);
+        PipelineReload();
+    }
+
+
     /// <summary>
     /// 나무의 상한잎, 중력, 나뭇잎 너비, 나무 가지 두께
     /// </summary>
