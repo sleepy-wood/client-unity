@@ -58,15 +58,6 @@ public class UI_Initial : MonoBehaviour
 
     private void Start()
     {
-        
-        //if (!PhotonNetwork.IsMasterClient)
-        //{
-        //    gameObject.SetActive(false);
-        //}
-        //developerUI.anchoredPosition = new Vector2(-570, -211);
-
-
-
     }
 
     
@@ -263,17 +254,6 @@ public class UI_Initial : MonoBehaviour
     }
 
     
-
-    /// <summary>
-    /// 5일차 나무 완성 시 마이 컬렉션 추가 
-    /// </summary>
-    public void MakeMyCollection()
-    {
-        // 나무 탄생일
-        //DateTime birth = GameManager.Instance.timeManager.firstPlantDate.dateTime;
-        //string date = birth.ToString("yyyy.MM.dd / hh:mm");
-        //GameManager.Instance.treeController.txtTreeBirth.text = date;
-    }
 
     #region 개발자 모드
 
