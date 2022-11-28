@@ -184,15 +184,15 @@ public class Graph_Initial_Window : MonoBehaviour
         Debug.Log("4");
         if (m_thisWeek_Scroll.size < m_lastWeek_Scroll.size)
         {
-            m_sleepResultText.text = "이번주 하루 평균 수면시간이 지난주보다 줄었습니다.";
+            m_sleepResultText.text = "이번 주 하루 평균 수면시간이 지난 주보다 줄었습니다.";
         }
         else if (m_thisWeek_Scroll.size > m_lastWeek_Scroll.size)
         {
-            m_sleepResultText.text = "이번주 하루 평균 수면시간이 지난주보다 늘었습니다.";
+            m_sleepResultText.text = "이번 주 하루 평균 수면시간이 지난 주보다 늘었습니다.";
         }
         else
         {
-            m_sleepResultText.text = "이번주 하루 평균 수면시간이 지난주와 같습니다.";
+            m_sleepResultText.text = "이번 주 하루 평균 수면시간이 지난 주와 같습니다.";
         }
         //오늘 몇시간 잤는가?
         m_todaySleep.text = today.Hours.ToString() + "시간 " + today.Minutes.ToString() + "분 ";
