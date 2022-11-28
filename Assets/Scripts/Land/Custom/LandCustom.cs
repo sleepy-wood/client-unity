@@ -38,6 +38,15 @@ public class LandCustom : MonoBehaviour
     private LayerMask preLayer;
     private void Update()
     {
+        if (selectedObject != null)
+        {
+            if (selectedObject.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                selectedObject.gameObject.layer = preLayer;
+                selectedObject = null;
+                selectState = SelectState.None;
+            }
+        }
         //선택하기 전
         if (selectState == SelectState.None)
         {
@@ -45,6 +54,7 @@ public class LandCustom : MonoBehaviour
             editButton.transform.GetChild(1).gameObject.SetActive(false);
             if (userInput.Interact)
             {
+
                 Vector3 mousePos = Input.mousePosition;
                 Ray ray = cam.ScreenPointToRay(mousePos);
                 RaycastHit hit;

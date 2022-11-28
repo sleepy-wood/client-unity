@@ -324,7 +324,7 @@ public class UI_LandCustom : MonoBehaviourPun
                 //}
                 Debug.Log(prefab);
 
-                myLoadedAssetBundle.Unload(true);
+                //myLoadedAssetBundle.Unload(true);
                 myLoadedAssetBundle = null;
 
                 prefab.name = prefab.name.Split('(')[0];
