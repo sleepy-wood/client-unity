@@ -95,32 +95,32 @@ public class LandCustom : MonoBehaviour
         }
         else
         {
-            if (userInput.Interact)
-            {
-                Vector3 mousePos = Input.mousePosition;
-                Ray ray = cam.ScreenPointToRay(mousePos);
-                RaycastHit hit;
-                LayerMask layer = 1 << LayerMask.NameToLayer("Ground");
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~layer))
-                {
-                    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Selected"))
-                    {
-                        selectedObject.gameObject.layer = preLayer;
-                        selectedObject = null;
-                        //아웃라인 끄기
-                        if (hit.transform.parent.GetComponent<Outline>())
-                            hit.transform.parent.GetComponent<Outline>().enabled = false;
+            //if (userInput.Interact)
+            //{
+            //    Vector3 mousePos = Input.mousePosition;
+            //    Ray ray = cam.ScreenPointToRay(mousePos);
+            //    RaycastHit hit;
+            //    LayerMask layer = 1 << LayerMask.NameToLayer("Ground");
+            //    if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~layer))
+            //    {
+            //        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Selected"))
+            //        {
+            //            selectedObject.gameObject.layer = preLayer;
+            //            selectedObject = null;
+            //            //아웃라인 끄기
+            //            if (hit.transform.parent.GetComponent<Outline>())
+            //                hit.transform.parent.GetComponent<Outline>().enabled = false;
 
-                        for (int i = 0; i < hit.transform.parent.childCount; i++)
-                        {
-                            if (hit.transform.parent.GetChild(i).GetComponent<Outline>())
-                                hit.transform.parent.GetChild(i).GetComponent<Outline>().enabled = false;
-                        }
-                        selectState = SelectState.None;
-                        //editButton.transform.GetChild(1).GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-                    }
-                }
-            }
+            //            for (int i = 0; i < hit.transform.parent.childCount; i++)
+            //            {
+            //                if (hit.transform.parent.GetChild(i).GetComponent<Outline>())
+            //                    hit.transform.parent.GetChild(i).GetComponent<Outline>().enabled = false;
+            //            }
+            //            selectState = SelectState.None;
+            //            //editButton.transform.GetChild(1).GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            //        }
+            //    }
+            //}
 
             switch (editType)
             {
