@@ -138,12 +138,12 @@ public class UserInput : MonoBehaviour
 
                     Vector2 dir = touchFirstFinger.position - touchMoveBeforePos;
                     dir.Normalize();
-                    if (Mathf.Abs(dir.x - preX) >= 0.6f)
+                    if (Mathf.Abs(dir.x - preX) >= 0.8f)
                     {
                         MoveX = dir.x;
                         preX = MoveX;
                     }
-                    if (Mathf.Abs(dir.y - preY) >= 0.6f)
+                    if (Mathf.Abs(dir.y - preY) >= 0.8f)
                     {
                         MoveZ = dir.y;
                         preY = MoveZ;
