@@ -32,14 +32,14 @@ public class ChoicePosition : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("User"))
         {
-            transform.GetChild(2).gameObject.SetActive(true);
+            transform.GetChild(3).gameObject.SetActive(true);
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("User"))
         {
-            transform.GetChild(2).gameObject.SetActive(false);
+            transform.GetChild(3).gameObject.SetActive(false);
         }
     }
 
