@@ -384,7 +384,6 @@ public class UI_LandCustom : MonoBehaviourPun
     {
         if (!isActiveCanvase)
         {
-            menuBar.SetActive(false);
             menuBar2.SetActive(false);
             isActiveCanvase = true;
             GameManager.Instance.User.GetComponent<UserInteract>().moveControl = true;
@@ -399,7 +398,6 @@ public class UI_LandCustom : MonoBehaviourPun
         }
         else
         {
-            menuBar.SetActive(true);
             menuBar2.SetActive(true);
             //SkyLandManager.Instance.SaveData();
             GameManager.Instance.User.GetComponent<UserInteract>().moveControl = false;
