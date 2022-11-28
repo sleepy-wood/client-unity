@@ -340,23 +340,19 @@ public class TreeController : MonoBehaviour
             }
             print("Selected pipeline = " + pipeName);
 
-            // Tree Grow 1일차 기본 세팅
-            if (!demoMode)
+            // 랜덤 선택된 Seed로 기본 세팅값 찾기
+            for (int i = 0; i < treeStores.Count; i++)
             {
-                // 랜덤 선택된 Seed로 기본 세팅값 찾기
-                for (int i = 0; i < treeStores.Count; i++)
+                if (treeStores[i].seedType == selectedSeed)
                 {
-                    if (treeStores[i].seedType == selectedSeed)
-                    {
-                        selectedTreeSetting = treeStores[i].treeSettings;
-                        print($"나무 기본 세팅 : {treeStores[i].seedType}");
-                    }
+                    selectedTreeSetting = treeStores[i].treeSettings;
+                    print($"나무 기본 세팅 : {treeStores[i].seedType}");
                 }
-                // 1일차 기본 세팅
-                PipelineSetting(0);
-                // 씨앗심기
-                SetTree(1);
             }
+            // 1일차 기본 세팅
+            PipelineSetting(0);
+            // 씨앗심기
+            SetTree(1);
         }
         else if (visitType == VisitType.ReVisit)
         {
@@ -740,64 +736,64 @@ public class TreeController : MonoBehaviour
         // 기본 세팅 성장 데이터 정보 지닌 요소
         TreeSetting element = selectedTreeSetting[index];
 
-        //if (playMode)
-        //{
-        //    #region 1. Branch Element MinMax Frequency
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        pipeline
-        //        StructureGenerator.StructureLevel pipe1 = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-        //        저장값
-        //       MinMax store1 = element.minMaxList[i];
+        if (playMode)
+        {
+            #region 1. Branch Element MinMax Frequency
+            for (int i = 0; i < 4; i++)
+            {
+                // pipeline
+                StructureGenerator.StructureLevel pipe1 = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
+               // 저장값
+               MinMax store1 = element.minMaxList[i];
 
-        //        if (badMode && dayCount > 3)
-        //        {
-        //            pipe1.minFrequency = store1.min - 2;
-        //            pipe1.maxFrequency = store1.max - 2;
-        //        }
-        //        else
-        //        {
-        //            pipe1.minFrequency = store1.min;
-        //            pipe1.maxFrequency = store1.max;
-        //        }
-        //    }
-        //    #endregion
+                if (badMode && dayCount > 3)
+                {
+                    pipe1.minFrequency = store1.min - 2;
+                    pipe1.maxFrequency = store1.max - 2;
+                }
+                else
+                {
+                    pipe1.minFrequency = store1.min;
+                    pipe1.maxFrequency = store1.max;
+                }
+            }
+            #endregion
 
-        //    #region 2. Min/Max Girth At Base
-        //    GirthTransformElement pipe4 = treePipeline._serializedPipeline.girthTransforms[0];
-        //    float store4 = element.girthBase;
+            #region 2. Min/Max Girth At Base
+            GirthTransformElement pipe4 = treePipeline._serializedPipeline.girthTransforms[0];
+            float store4 = element.girthBase;
 
-        //    if (badMode && dayCount > 3)
-        //    {
-        //        Min Girth At Base
-        //        pipe4.minGirthAtBase = store4 - 1f;
-        //        Max Girth At Base
-        //        pipe4.maxGirthAtBase = store4 - 1f;
-        //    }
-        //    else
-        //    {
-        //        Min Girth At Base
-        //        pipe4.minGirthAtBase = store4;
-        //        Max Girth At Base
-        //        pipe4.maxGirthAtBase = store4;
-        //    }
+            if (badMode && dayCount > 3)
+            {
+                // Min Girth At Base
+                pipe4.minGirthAtBase = store4 - 1f;
+                //Max Girth At Base
+                pipe4.maxGirthAtBase = store4 - 1f;
+            }
+            else
+            {
+                //Min Girth At Base
+                pipe4.minGirthAtBase = store4;
+                //Max Girth At Base
+                pipe4.maxGirthAtBase = store4;
+            }
 
-        //    #endregion
+            #endregion
 
-        //    #region 3. Object scale
-        //    if (badMode && dayCount > 3)
-        //    {
-        //        scaleTo += 0.1f;
-        //    }
-        //    else
-        //    {
-        //        scaleTo = element.scale;
-        //    }
+            #region 3. Object scale
+            if (badMode && dayCount > 3)
+            {
+                scaleTo += 0.1f;
+            }
+            else
+            {
+                scaleTo = element.scale;
+            }
 
-        //    #endregion
-        //}
-        //else
-        //{
+            #endregion
+        }
+        else
+        {
             #region 1. Branch Element MinMax Frequency
             //int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
             // pipeline element 개수만큼 설정
@@ -846,7 +842,7 @@ public class TreeController : MonoBehaviour
             #region 5. Object scale
             scaleTo = element.scale;
             #endregion
-        //}
+        }
 
     }
 
@@ -875,7 +871,7 @@ public class TreeController : MonoBehaviour
         //if (selectedSeed == SeedType.Oak)  // position & radius
         //{
         //    fallingLeaf.transform.localPosition = new Vector3(0, 4, 0);
-        //    particleShape.radius = 0.75f + 0.31f * (dayCount-1);
+        //    particleShape.radius = 0.75f + 0.31f * (dayCount - 1);
         //}
         //else  // Basic, Sakura, DR
         //{
@@ -883,7 +879,7 @@ public class TreeController : MonoBehaviour
         //    particleShape.radius = 0.21f + 0.14f * (dayCount - 1);
         //}
         //fallingLeaf.Play();  // 재생
-        
+
 
 
         // Change Particle
@@ -929,6 +925,10 @@ public class TreeController : MonoBehaviour
             print("3일차");
             if (healthSetting == 0) PipelineSetting(1);
             else if (healthSetting == 1) ApplyHealthData();
+            if (playMode)
+            {
+                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].enabled = true;
+            }
             PipelineReload();
             campos = Camera.main.gameObject.transform;
         }
@@ -946,6 +946,10 @@ public class TreeController : MonoBehaviour
             print("5일차");
             if (healthSetting == 0) PipelineSetting(3);
             else if (healthSetting == 1) ApplyHealthData();
+            if (playMode)
+            {
+                treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].enabled = true;
+            }
             PipelineReload();
             assetBundle.Unload(false);
             // Tree 이미지 캡처 & 동영상 이미지 캡처 & 웹에 업로드 순차적으로 진행
