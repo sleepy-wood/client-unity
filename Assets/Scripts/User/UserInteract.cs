@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 
 public class UserInteract : MonoBehaviourPun, IPunObservable
 {
-    [SerializeField] private float moveSpeed = 3f;
+    public float moveSpeed = 3f;
     
     public bool moveControl;
     private UserInput userInput;
