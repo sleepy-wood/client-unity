@@ -24,6 +24,7 @@ public class ChoicePosition : MonoBehaviour
 
     public void OnClickHere()
     {
+        Debug.Log("클릭: " + int.Parse(gameObject.name[gameObject.name.Length - 1].ToString()));
         collection.transform.parent.GetComponent<Choice>().SettingChoicePos(int.Parse(gameObject.name[gameObject.name.Length - 1].ToString()));
         collection.SetActive(true);
     }
