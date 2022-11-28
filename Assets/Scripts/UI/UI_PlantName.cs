@@ -17,6 +17,13 @@ public class UI_PlantName : MonoBehaviour
     public GameObject treeNameBG;
     public TreeController treeController;
 
+    private void Awake()
+    {
+        // SkyLand 처음 들어왔을 때 비활성화할 UI
+        landCanvas.SetActive(false);
+        chatUI.SetActive(false);
+        menuCanvas.SetActive(false);
+    }
     private void Start()
     {
         inputPlantName.onValueChanged.AddListener(onValueChanged);
