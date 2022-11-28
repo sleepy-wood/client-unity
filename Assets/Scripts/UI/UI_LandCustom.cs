@@ -104,8 +104,9 @@ public class UI_LandCustom : MonoBehaviourPun
         string path = Application.dataPath + "/MarketImg/" + (Category)h;
 #elif UNITY_IOS || UNITY_ANDROID
         string path = Application.persistentDataPath + "/MarketImg/" + (Category)h;
+        //string path = Application.streamingAssetsPath + "/AssetBundles";
 #endif
-
+        //landcustom_mushroom_a
         string[] fileMarket = Directory.GetFiles(path, "*.png");
         Debug.Log("1");
         for(int i = 0; i < fileMarket.Length; i++)
@@ -227,7 +228,8 @@ public class UI_LandCustom : MonoBehaviourPun
 #if UNITY_STANDALONE
         string assetBundleDirectory = Application.dataPath + "/MarketBundle/" + (Category)selectCat;
 #elif UNITY_IOS
-        string assetBundleDirectory = Application.persistentDataPath + "/MarketBundle/" + (Category)selectCat;
+        //string assetBundleDirectory = Application.persistentDataPath + "/MarketBundle/" + (Category)selectCat;
+        string assetBundleDirectory = Application.streamingAssetsPath + "/AssetBundles";
 #endif
         string[] bundles = Directory.GetFiles(assetBundleDirectory);
 
@@ -251,8 +253,10 @@ public class UI_LandCustom : MonoBehaviourPun
             {
                 //Debug.Log(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "/")[1].Split('.')[0]));
 #if UNITY_STANDALONE
-                myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
-                GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
+                //myLoadedAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetBundleDirectory + "/", fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1].Split('.')[0]));
+                myLoadedAssetBundle = AssetBundle.LoadFromFile(assetBundleDirectory + "/" + "landcustom_mushroom_a");
+                //GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
+                GameObject resource = myLoadedAssetBundle.LoadAsset<GameObject>("landcustom_mushroom_a");
                 AssetBundleManifest assetBundleManifest = myLoadedAssetBundle.LoadAsset<AssetBundleManifest>(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
                 //Debug.Log(fileName.Split("/MarketBundle/" + (Category)selectCat + "\\")[1]);
 #elif UNITY_IOS
