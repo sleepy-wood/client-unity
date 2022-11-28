@@ -102,31 +102,39 @@ public class Choice : MonoBehaviour
         }
         content.offsetMax = new Vector2(550 * DataTemporary.arrayCollectionDatas.collectionLists.Count, content.offsetMax.y);
 
-        Debug.Log("시");
+        Debug.Log("시작");
         createPos = 3;
-        if(DataTemporary.arrayCollectionDatas.collectionLists.Count > 0)
-            OnClickChoice(0);
+        //if(DataTemporary.arrayCollectionDatas.collectionLists.Count > 0)
+        //    OnClickChoice(0);
     }
 
     public void OnClickChoice(int i)
     {
+        // Tree Data
         CollectionData treeCollectionData = DataTemporary.arrayCollectionDatas.collectionLists[i];
+        
+        // Pipeline
         string pipeName = treeCollectionData.treePipeName;
-        Pipeline treePipeline = DataTemporary.assetBundleTreePipeline.LoadAsset<Pipeline>(pipeName);
+        Pipeline treePipeline = DataTemporary.assetBundleTreePipeline.LoadAsset<Pipeline>("Lava");
         if (!treePipeline)
         {
             Debug.LogError("Tree Pipe Line is Not loaded!: Pipeline is Null!");
         }
+
+        // SeedNumber
         treePipeline.seed = treeCollectionData.seedNumber;
         
+        // Bark Material
         string name = treeCollectionData.barkMaterial;
         Material mat = DataTemporary.treeBarkAssetBundle.LoadAsset<Material>(name);
         treePipeline._serializedPipeline.barkMappers[0].customMaterial = mat;
 
+        // Sprout Group Id
         SproutSeed sproutSeed = new SproutSeed();
         treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
         treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = treeCollectionData.sproutGroupId;
-        // sproutColor
+
+        // Sprout Color
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[0].enabled = treeCollectionData.sproutColor1 == 1 ? true : false;
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[1].enabled = treeCollectionData.sproutColor2 == 1 ? true : false;
         treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[treeCollectionData.sproutGroupId - 1].sproutAreas[2].enabled = treeCollectionData.sproutColor3 == 1 ? true : false;
@@ -135,7 +143,7 @@ public class Choice : MonoBehaviour
 
         TreePipeLine_Collection treePipeline_Collection = treeCollectionData.treeGrowths[0].treePipeline;
         // 1. Scale
-        float scaleTo = 0.5f;
+        float scaleTo = 1;
         // 2. Branch Number
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].minFrequency = treePipeline_Collection.branch1;
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[0].maxFrequency = treePipeline_Collection.branch1;
@@ -146,8 +154,8 @@ public class Choice : MonoBehaviour
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].minFrequency = treePipeline_Collection.branch4;
         treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[3].maxFrequency = treePipeline_Collection.branch4;
         // 4. Sprout Number
-        treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = 20;
-        treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = 20;
+        treePipeline._serializedPipeline.sproutGenerators[0].minFrequency = treePipeline_Collection.sproutNum;
+        treePipeline._serializedPipeline.sproutGenerators[0].maxFrequency = treePipeline_Collection.sproutNum;
         // 5. Ratio of Rotten Sprout : 0, 25, 50, 75, 100
         List<int> groupNum = new List<int>() { 5, 6, 7, 8 };
         for (int j = 0; j < (treePipeline_Collection.rottenRate / 25); j++) // i < 0, 1, 2, 3, 4
@@ -172,11 +180,14 @@ public class Choice : MonoBehaviour
                 treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[j].maxGravityAlignAtBase = treePipeline_Collection.gravity;
             }
         }
+
+        // Load Tree
         Pipeline loadedPipeline = DataTemporary.assetBundleTreePipeline.LoadAsset<Pipeline>(pipeName);
         treeFactory[createPos].LoadPipeline(loadedPipeline.Clone(), true);
         treeFactory[createPos].UnloadAndClearPipeline();
         treeFactory[createPos].transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
         Resources.UnloadAsset(loadedPipeline);
+
         if (treeFactory[createPos].transform.parent.childCount > 1)
         {
             treeFactory[createPos].transform.parent.GetChild(1).gameObject.SetActive(true);
