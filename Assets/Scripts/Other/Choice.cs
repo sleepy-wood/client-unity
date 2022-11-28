@@ -197,7 +197,12 @@ public class Choice : MonoBehaviour
         //{
         //    treeFactory[createPos].transform.parent.GetChild(2).gameObject.SetActive(false);
         //}
+
+        // soil 비활성화
+        treeFactory[createPos].gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        // Tree 활성화
         treeFactory[createPos].gameObject.SetActive(true);
+
         //ChoiceRespawnPos.Instance.isComplete = true;
         //ChoiceRespawnPos.Instance.isCompleteList[createPos] = true;
     }
