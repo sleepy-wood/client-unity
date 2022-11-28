@@ -98,8 +98,8 @@ public class WeatherController : MonoBehaviour
     public void AudioInit()
     {
         sunnyAudio.Stop();
-        rainAudio.Stop()l;
-        snowAudio.Stop()l;
+        rainAudio.Stop();
+        snowAudio.Stop();
     }
 
     /// <summary>
