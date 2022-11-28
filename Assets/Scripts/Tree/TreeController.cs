@@ -672,7 +672,7 @@ public class TreeController : MonoBehaviour
         sproutParticle.Play();
         sproutLeaf.transform.localScale = new Vector3(0, 0, 0);
         sprout.transform.localScale = new Vector3(0, 0, 0);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.5f    );
         sprout.SetActive(true);
         
 
