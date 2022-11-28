@@ -35,6 +35,7 @@ public class MyWorldSign : MonoBehaviourPunCallbacks
         {
             if (treeList[i].landId == int.Parse(gameObject.name[gameObject.name.Length - 1].ToString()))
             {
+                Debug.Log(treeList[i].landId  + " / 이름: " + treeList[i].treeName);
                 transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = treeList[i].treeName;
                 break;
             }
