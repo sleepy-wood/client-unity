@@ -44,6 +44,8 @@ public class UI_PlantName : MonoBehaviour
         btnPlantName.interactable = true;
     }
 
+
+    public GameObject menuCanvas;
     /// <summary>
     /// 나무 이름 결정 버튼 누르면 나무 이름 저장 & UI 비활성화 & 
     /// </summary>
@@ -60,6 +62,7 @@ public class UI_PlantName : MonoBehaviour
         // UI 버튼들 활성화
         landCanvas.SetActive(true);
         chatUI.SetActive(true);
+        menuCanvas.SetActive(true);
 
         // 나무 이름 결정 UI 비활성화
         treeNameWindow.SetActive(false);

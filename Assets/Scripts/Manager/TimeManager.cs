@@ -25,7 +25,7 @@ public class TimeManager : MonoBehaviour
         if (treeControll.playMode)
         {
             firstPlantDate.dateTime = DateTime.MinValue;
-        }
+        }                                                                                                                                    
         else
         {
             print("Land Id : " + DataTemporary.MyUserData.currentLandId);
