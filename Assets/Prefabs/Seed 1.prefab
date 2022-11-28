@@ -14,13 +14,14 @@ GameObject:
   - component: {fileID: 4337357960478078385}
   - component: {fileID: 4337357960478078384}
   - component: {fileID: 7264933706917706129}
+  - component: {fileID: 913986850}
   m_Layer: 0
   m_Name: Seed 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4337357960478078390
 Transform:
   m_ObjectHideFlags: 0
@@ -28,9 +29,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4337357960478078389}
-  m_LocalRotation: {x: -0.23837909, y: -0.66816825, z: -0.35187918, w: 0.61066175}
+  m_LocalRotation: {x: 0.23837589, y: 0.66817117, z: 0.35188353, w: -0.6106573}
   m_LocalPosition: {x: 0.036141172, y: 2.5064108, z: 0.005887363}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 3.2000003, y: 3.2000003, z: 3.2000003}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -114,7 +115,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4337357960478078389}
   serializedVersion: 2
-  m_Mass: 0.8
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -136,3 +137,15 @@ CapsuleCollider:
   m_Height: 0.18369608
   m_Direction: 1
   m_Center: {x: -3.6225762e-12, y: -0.000000020161199, z: 0.024783064}
+--- !u!114 &913986850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4337357960478078389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d0ee736f6ac444f8cc916c53178c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

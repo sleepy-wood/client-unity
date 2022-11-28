@@ -671,6 +671,7 @@ public class TreeController : MonoBehaviour
         seed.SetActive(true);
         sproutParticle.Play();
         sproutLeaf.transform.localScale = new Vector3(0, 0, 0);
+        sprout.transform.localScale = new Vector3(0, 0, 0);
         sprout.SetActive(true);
         
 
@@ -733,9 +734,9 @@ public class TreeController : MonoBehaviour
     /// </sumary>
     public void PipelineSetting(int index)
     {
-        print(index);
         // 기본 세팅 성장 데이터 정보 지닌 요소
         TreeSetting element = selectedTreeSetting[index];
+        print(element);
         
 
         if (playMode)
@@ -797,9 +798,9 @@ public class TreeController : MonoBehaviour
         else
         {
             #region 1. Branch Element MinMax Frequency
-            //int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
+            int idx = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels.Count;
             // pipeline element 개수만큼 설정
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < idx; i++)
             {
                 // pipeline
                 StructureGenerator.StructureLevel pipe1 = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
@@ -808,6 +809,8 @@ public class TreeController : MonoBehaviour
 
                 pipe1.minFrequency = store1.min;
                 pipe1.maxFrequency = store1.max;
+                print(store1.min);
+                print(store1.max);
             }
             #endregion
 
@@ -819,6 +822,8 @@ public class TreeController : MonoBehaviour
             pipe2.minFrequency = store2;
             // Root Max Freqency
             pipe2.maxFrequency = store2;
+
+            print(store2);
             #endregion
 
             #region 3. Min/Max Length At Base
@@ -829,6 +834,7 @@ public class TreeController : MonoBehaviour
             pipe3.minLengthAtBase = store3;
             // Root Max Length At Base
             pipe3.maxLengthAtBase = store3;
+            print(store3);
             #endregion
 
             #region 4. Min/Max Girth At Base
@@ -839,10 +845,13 @@ public class TreeController : MonoBehaviour
             pipe4.minGirthAtBase = store4;
             // Max Girth At Base
             pipe4.maxGirthAtBase = store4;
+
+            print(store4);
             #endregion
 
             #region 5. Object scale
             scaleTo = element.scale;
+            print(scaleTo);
             #endregion
         }
 
@@ -865,6 +874,8 @@ public class TreeController : MonoBehaviour
         treeFactory.transform.GetChild(1).gameObject.layer = 11;
         treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
 
+        ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);
+        fallingLeaf.transform.SetParent(previewTree.transform);
         // Falling Leaf Particle System
         //ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);  // 생성
         //fallingLeaf.GetComponent<Falling_Leaf>().SetFallingLeafParticle(currentTreeData);  // 트리데이터로 떨어질 잎 설정
@@ -957,7 +968,7 @@ public class TreeController : MonoBehaviour
             // Tree 이미지 캡처 & 동영상 이미지 캡처 & 웹에 업로드 순차적으로 진행
             screenShot.SaveCameraView();
         }
-        if (day>1) SaveTreeData();
+        if (day>1 && !demoMode) SaveTreeData();
     }
 
     
