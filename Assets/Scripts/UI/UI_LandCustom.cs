@@ -38,7 +38,7 @@ public class UI_LandCustom : MonoBehaviourPun
         }
 
         //초기값 0번째 버튼 활성화
-        OnClickCategoryActive(transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text, 0);
+        OnClickCategoryActive(transform.GetChild(1).GetChild(0).GetChild(0).gameObject.name, 0);
 
         //비활성화
         for (int i = 0; i < objects.Count; i++)
@@ -269,58 +269,59 @@ public class UI_LandCustom : MonoBehaviourPun
                 //GameObject resource = Resources.Load<GameObject>("LandCustom/" + selectCatName + "/" + fileName.Split('\\')[1].Split('.')[0]);
                 GameObject prefab = Instantiate(resource);
                 //string[] names = assetBundleManifest.GetAllAssetBundles();
-                for(int k = 0; k < names.Length; k++)
-                {
-                    if (names[k].Split(".")[1] == "prefab")
-                        continue;
-                    Object obj = myLoadedAssetBundle.LoadAsset(names[k]);
 
-                    if (names[k].Split(".")[1] == "mat")
-                    {
-                        if (prefab.GetComponent<MeshRenderer>())
-                        {
-                            if (!prefab.GetComponent<MeshRenderer>().material)
-                            {
-                                prefab.GetComponent<MeshRenderer>().material = obj as Material;
-                                continue;
-                            }
-                        }
-                        for (int l = 0; l < prefab.transform.childCount; l++)
-                        {
-                            if (prefab.transform.GetChild(l).GetComponent<MeshRenderer>())
-                            {
-                                if (!prefab.transform.GetChild(l).GetComponent<MeshRenderer>().material)
-                                {
-                                    prefab.transform.GetChild(l).GetComponent<MeshRenderer>().material = obj as Material;
-                                    continue;
-                                }
-                            }
-                        }
-                    }
-                    else if(names[k].Split(".")[1] == "mesh")
-                    {
-                        if (prefab.GetComponent<MeshFilter>())
-                        {
-                            if (!prefab.GetComponent<MeshFilter>().mesh)
-                            {
-                                prefab.GetComponent<MeshFilter>().mesh = obj as Mesh;
-                                continue;
-                            }
-                        }
-                        for (int l = 0; l < prefab.transform.childCount; l++)
-                        {
-                            if (prefab.transform.GetChild(l).GetComponent<MeshFilter>())
-                            {
-                                if (!prefab.transform.GetChild(l).GetComponent<MeshFilter>().mesh)
-                                {
-                                    prefab.transform.GetChild(l).GetComponent<MeshFilter>().mesh = obj as Mesh;
-                                    continue;
-                                }
-                            }
-                        }
-                    }
+                //for(int k = 0; k < names.Length; k++)
+                //{
+                //    if (names[k].Split(".")[1] == "prefab")
+                //        continue;
+                //    Object obj = myLoadedAssetBundle.LoadAsset(names[k]);
 
-                }
+                //    if (names[k].Split(".")[1] == "mat")
+                //    {
+                //        if (prefab.GetComponent<MeshRenderer>())
+                //        {
+                //            if (!prefab.GetComponent<MeshRenderer>().material)
+                //            {
+                //                prefab.GetComponent<MeshRenderer>().material = obj as Material;
+                //                continue;
+                //            }
+                //        }
+                //        for (int l = 0; l < prefab.transform.childCount; l++)
+                //        {
+                //            if (prefab.transform.GetChild(l).GetComponent<MeshRenderer>())
+                //            {
+                //                if (!prefab.transform.GetChild(l).GetComponent<MeshRenderer>().material)
+                //                {
+                //                    prefab.transform.GetChild(l).GetComponent<MeshRenderer>().material = obj as Material;
+                //                    continue;
+                //                }
+                //            }
+                //        }
+                //    }
+                //    else if(names[k].Split(".")[1] == "mesh")
+                //    {
+                //        if (prefab.GetComponent<MeshFilter>())
+                //        {
+                //            if (!prefab.GetComponent<MeshFilter>().mesh)
+                //            {
+                //                prefab.GetComponent<MeshFilter>().mesh = obj as Mesh;
+                //                continue;
+                //            }
+                //        }
+                //        for (int l = 0; l < prefab.transform.childCount; l++)
+                //        {
+                //            if (prefab.transform.GetChild(l).GetComponent<MeshFilter>())
+                //            {
+                //                if (!prefab.transform.GetChild(l).GetComponent<MeshFilter>().mesh)
+                //                {
+                //                    prefab.transform.GetChild(l).GetComponent<MeshFilter>().mesh = obj as Mesh;
+                //                    continue;
+                //                }
+                //            }
+                //        }
+                //    }
+
+                //}
                 Debug.Log(prefab);
 
                 myLoadedAssetBundle.Unload(true);
