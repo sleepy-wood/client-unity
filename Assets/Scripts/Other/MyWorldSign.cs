@@ -4,11 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+#if UNITY_IOS
+using UnityEngine.iOS;
+#endif
 
 /// <summary>
 /// MyWorld 각 섬이 어떤 나무를 지니고 있는지 Bush & 팻말 표시
 /// </summary>
-public class MyWorldSign : MonoBehaviour
+public class MyWorldSign : MonoBehaviourPunCallbacks
 {
     [SerializeField] private int mylandId;
     [SerializeField] private GetTreeData treeData;
@@ -99,7 +102,10 @@ public class MyWorldSign : MonoBehaviour
 
     public void OnClickNextLevel()
     {
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
+        {
+            DataTemporary.MyUserData.currentLandId = int.Parse(name[name.Length - 1].ToString());
             PhotonNetwork.LoadLevel("SkyLand");
+        }
     }
 }
