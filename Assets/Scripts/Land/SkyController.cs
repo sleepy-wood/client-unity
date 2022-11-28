@@ -21,6 +21,10 @@ public class SkyController : MonoBehaviour
     public Text txtMain;
     public Text txtSub;
 
+    public AudioSource night;
+    public AudioSource sunset;
+    public AudioSource day;
+
 
     private void Start()
     {
