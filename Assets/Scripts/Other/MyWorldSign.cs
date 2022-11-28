@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,52 +27,62 @@ public class MyWorldSign : MonoBehaviour
     {
         // TreeData에 있는 데이터를 통해 각 섬의 팻말 & Bush 표시
         List<GetTreeData> treeList = DataTemporary.GetTreeData.getTreeDataList;
-        for (int i = 0; i < treeList.Count; i++)
+
+        for(int i = 0; i  <treeList.Count; i++)
         {
-            int landId = treeList[i].landId;
-            GameObject land = landManagerTr.GetChild(landId - 1).gameObject;
-
-            // Tree Data가 있다면 팻말 & Bush 활성화
-            GameObject sign = land.transform.GetChild(0).gameObject;
-            sign.SetActive(true);
-            GameObject bush = land.transform.GetChild(1).gameObject;
-            bush.SetActive(true);
-
-            // Tree Name으로 팻말 Text 표시
-            sign.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = treeList[i].treeName;
-
-            // 나무의 Day에 따라 Bush 그룹 활성화
-            int day = treeList[i].treeGrowths.Count;
-            if (day == 2)
+            if (treeList[i].landId == int.Parse(gameObject.name[gameObject.name.Length - 1].ToString()))
             {
-                bush.transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = treeList[i].treeName;
+                break;
             }
-            else if (day == 3)
-            {
-                for (int j=0; j<2; j++)
-                {
-                    bush.transform.GetChild(j).gameObject.SetActive(true);
-                }
-            }
-            else if (day == 4 | day == 5)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    bush.transform.GetChild(j).gameObject.SetActive(true);
-                }
-            }
-
-            // 활성화된 Bush 그룹의 Material 잎의 Material로 
-            int groupId = treeList[i].sproutGroupId;
-            
-            for (int k=0; k<6; k++)
-            {
-
-            }
-            //LeafColor[groupId]
-
-
         }
+
+        //for (int i = 0; i < treeList.Count; i++)
+        //{
+        //    int landId = treeList[i].landId;
+        //    GameObject land = landManagerTr.GetChild(landId - 1).gameObject;
+
+        //    // Tree Data가 있다면 팻말 & Bush 활성화
+        //    GameObject sign = land.transform.GetChild(0).gameObject;
+        //    sign.SetActive(true);
+        //    GameObject bush = land.transform.GetChild(1).gameObject;
+        //    bush.SetActive(true);
+
+        //    // Tree Name으로 팻말 Text 표시
+        //    sign.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = treeList[i].treeName;
+
+        //    // 나무의 Day에 따라 Bush 그룹 활성화
+        //    int day = treeList[i].treeGrowths.Count;
+        //    if (day == 2)
+        //    {
+        //        bush.transform.GetChild(0).gameObject.SetActive(true);
+        //    }
+        //    else if (day == 3)
+        //    {
+        //        for (int j=0; j<2; j++)
+        //        {
+        //            bush.transform.GetChild(j).gameObject.SetActive(true);
+        //        }
+        //    }
+        //    else if (day == 4 | day == 5)
+        //    {
+        //        for (int j = 0; j < 3; j++)
+        //        {
+        //            bush.transform.GetChild(j).gameObject.SetActive(true);
+        //        }
+        //    }
+
+        //    // 활성화된 Bush 그룹의 Material 잎의 Material로 
+        //    int groupId = treeList[i].sproutGroupId;
+
+        //    for (int k=0; k<6; k++)
+        //    {
+
+        //    }
+        //    //LeafColor[groupId]
+
+
+        //}
     }
 
     bool once;
@@ -84,5 +95,10 @@ public class MyWorldSign : MonoBehaviour
             Material color1 = DataTemporary.treeLeafTextureBundle.LoadAsset<Material>("Color1");
 
         }
+    }
+
+    public void OnClickNextLevel()
+    {
+        PhotonNetwork.LoadLevel("SkyLand");
     }
 }
