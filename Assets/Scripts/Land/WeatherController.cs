@@ -28,6 +28,7 @@ public class WeatherController : MonoBehaviour
     public AudioSource rainAudio;
     public AudioSource snowAudio;
 
+    public Transform BGMTr2;
 
     void Start()
     {
@@ -62,26 +63,26 @@ public class WeatherController : MonoBehaviour
             {
                 Sunny();
                 AudioInit();
-                sunnyAudio.Play();
+                sunnyAudio.gameObject.SetActive(true);
             }
             else if (weatherData.weather == "비" | weatherData.weather == "소나기")
             {
                 Rain();
                 AudioInit();
-                rainAudio.Play();
+                rainAudio.gameObject.SetActive(true);
             }
             else if (weatherData.weather == "눈")
             {
                 Snow();
                 AudioInit();
-                snowAudio.Play();
+                snowAudio.gameObject.SetActive(true);
             }
             else if (weatherData.weather == "비/눈")
             {
                 Rain();
                 Snow();
                 AudioInit();
-                snowAudio.Play();
+                snowAudio.gameObject.SetActive(true);
             }
         }
     }
@@ -97,12 +98,16 @@ public class WeatherController : MonoBehaviour
 
     public void AudioInit()
     {
-        GetComponent<SkyController>().day.Stop();
-        GetComponent<SkyController>().night.Stop();
-        GetComponent<SkyController>().sunset.Stop();
-        sunnyAudio.Stop();
-        rainAudio.Stop();
-        snowAudio.Stop();
+        //GetComponent<SkyController>().day.Stop();
+        //GetComponent<SkyController>().night.Stop();
+        //GetComponent<SkyController>().sunset.Stop();
+        //sunnyAudio.Stop();
+        //rainAudio.Stop();
+        //snowAudio.Stop();
+        foreach (Transform audio in BGMTr2)
+        {
+            audio.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -112,16 +117,22 @@ public class WeatherController : MonoBehaviour
     {
         rainParticle.Stop();
         snowParticle.Stop();
+        AudioInit();
+        sunnyAudio.gameObject.SetActive(true);
     }
     public void Rain()
     {
         rainParticle.Play();
         snowParticle.Stop();
+        AudioInit();
+        rainAudio.gameObject.SetActive(true);
     }
     public void Snow()
     {
         rainParticle.Stop();
         snowParticle.Play();
+        AudioInit();
+        snowAudio.gameObject.SetActive(true);
     }
     
     //public void Flower()
