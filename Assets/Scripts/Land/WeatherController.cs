@@ -97,6 +97,7 @@ public class WeatherController : MonoBehaviour
 
     public void AudioInit()
     {
+        GetComponent<SkyController>().AudioInit();
         sunnyAudio.Stop();
         rainAudio.Stop();
         snowAudio.Stop();
