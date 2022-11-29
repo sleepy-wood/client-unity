@@ -30,7 +30,7 @@ public class ChoicePosition : MonoBehaviour
     }
     public void OnTriggerStay(Collider other)
     {
-        if (ChoiceRespawnPos.Instance.isCompleteList[int.Parse(gameObject.name[gameObject.name.Length - 1].ToString())])
+        if (!ChoiceRespawnPos.Instance.isCompleteList[int.Parse(gameObject.name[gameObject.name.Length - 1].ToString())])
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("User"))
             {
