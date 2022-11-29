@@ -205,8 +205,8 @@ public class Choice : MonoBehaviour
         // Tree 활성화
         treeFactory[createPos].gameObject.SetActive(true);
 
-        //ChoiceRespawnPos.Instance.isComplete = true;
-        //ChoiceRespawnPos.Instance.isCompleteList[createPos] = true;
+        ChoiceRespawnPos.Instance.isComplete = true;
+        ChoiceRespawnPos.Instance.isCompleteList[createPos] = true;
     }
 
     public void SettingChoicePos(int Pos)
