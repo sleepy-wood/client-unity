@@ -30,16 +30,19 @@ public class ChoicePosition : MonoBehaviour
     }
     public void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.layer == LayerMask.NameToLayer("User"))
+        if (!ChoiceRespawnPos.Instance.isCompleteList[int.Parse(gameObject.name[gameObject.name.Length - 1].ToString())])
         {
-            transform.GetChild(2).gameObject.SetActive(true);
+            if (other.gameObject.layer == LayerMask.NameToLayer("User"))
+            {
+                transform.GetChild(3).gameObject.SetActive(true);
+            }
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("User"))
         {
-            transform.GetChild(2).gameObject.SetActive(false);
+            transform.GetChild(3).gameObject.SetActive(false);
         }
     }
 

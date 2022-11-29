@@ -51,7 +51,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -695,7 +695,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.21
+      value: 0.39
       mode: 0
       spread: 0
       speed:
@@ -1429,7 +1429,11 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 0
     sprites:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 996653282, guid: 039d0f4e0d6a4f84fbeb1fe1ccaa5128, type: 3}
+    - sprite: {fileID: -2072923056, guid: 039d0f4e0d6a4f84fbeb1fe1ccaa5128, type: 3}
+    - sprite: {fileID: 1175771335, guid: 039d0f4e0d6a4f84fbeb1fe1ccaa5128, type: 3}
+    - sprite: {fileID: -1495711471, guid: 039d0f4e0d6a4f84fbeb1fe1ccaa5128, type: 3}
+    - sprite: {fileID: -1217813376, guid: 039d0f4e0d6a4f84fbeb1fe1ccaa5128, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:

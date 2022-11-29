@@ -21,9 +21,12 @@ public class SkyController : MonoBehaviour
     public Text txtMain;
     public Text txtSub;
 
-    //public AudioSource night;
-    //public AudioSource sunset;
-    //public AudioSource day;
+    public AudioSource night;
+    public AudioSource sunset;
+    public AudioSource day;
+
+    public Transform BGMTr;
+
 
 
     private void Start()
@@ -52,6 +55,20 @@ public class SkyController : MonoBehaviour
         //}
     }
 
+    public void AudioInit()
+    {
+        foreach(Transform audio in BGMTr)
+        {
+            audio.gameObject.SetActive(false);
+        }
+        //GetComponent<WeatherController>().rainAudio.Stop();
+        //GetComponent<WeatherController>().snowAudio.Stop();
+        //GetComponent<WeatherController>().sunnyAudio.Stop();
+        //night.Stop();
+        //sunset.Stop();
+        //day.Stop();
+    }
+
     public void Day()
     {
         RenderSettings.skybox = daySky;
@@ -59,6 +76,8 @@ public class SkyController : MonoBehaviour
         postProcessVolume.profile = dayPp;
         lt.color = new Color(1, 0.9568627f, 0.8392157f);
         lt.intensity = 1.6f;
+        AudioInit();
+        day.gameObject.SetActive(true);
     }
 
     public void Night()
@@ -68,6 +87,8 @@ public class SkyController : MonoBehaviour
         postProcessVolume.profile = nightPp;
         lt.color = new Color(0.7058824f, 0.5764706f, 0.6941177f);
         lt.intensity = 1.6f;
+        AudioInit();
+        night.gameObject.SetActive(true);
     }
 
     public void Sunset() 
@@ -77,5 +98,7 @@ public class SkyController : MonoBehaviour
         postProcessVolume.profile = sunsetPp;
         lt.color = new Color(0.9245283f, 0.7477447f, 0.6140263f);
         lt.intensity = 1.19f;
+        AudioInit();
+        sunset.gameObject.SetActive(true);
     }
 }
