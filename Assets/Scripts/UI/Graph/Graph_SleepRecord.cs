@@ -609,7 +609,7 @@ public class Graph_SleepRecord : MonoBehaviour
         {
             if (!isGraphOnce)
             {
-                endDayGraph = (int)((sleepsData[i].EndDate.AddDays(-1)).DayOfWeek);
+                endDayGraph = (int)((sleepsData[i].EndDate.AddDays(-2)).DayOfWeek);
                 isGraphOnce = true;
             }
             //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
