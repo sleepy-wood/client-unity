@@ -81,7 +81,7 @@ public class WeatherController : MonoBehaviour
                 Rain();
                 Snow();
                 AudioInit();
-                snowAudio.gameObject.SetActive(true);
+                snowAudio.Play();
             }
         }
     }
@@ -97,7 +97,9 @@ public class WeatherController : MonoBehaviour
 
     public void AudioInit()
     {
-        GetComponent<SkyController>().AudioInit();
+        GetComponent<SkyController>().day.Stop();
+        GetComponent<SkyController>().night.Stop();
+        GetComponent<SkyController>().sunset.Stop();
         sunnyAudio.Stop();
         rainAudio.Stop();
         snowAudio.Stop();
