@@ -875,8 +875,12 @@ public class TreeController : MonoBehaviour
         treeFactory.transform.GetChild(1).gameObject.layer = 11;
         treeFactory.transform.GetChild(1).localScale = new Vector3(scaleTo, scaleTo, scaleTo);
 
-        ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);
-        fallingLeaf.transform.SetParent(previewTree.transform);
+        if (dayCount > 2)
+        {
+            ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);
+            fallingLeaf.transform.SetParent(previewTree.transform);
+        }
+        
         // Falling Leaf Particle System
         //ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);  // 생성
         //fallingLeaf.GetComponent<Falling_Leaf>().SetFallingLeafParticle(currentTreeData);  // 트리데이터로 떨어질 잎 설정
