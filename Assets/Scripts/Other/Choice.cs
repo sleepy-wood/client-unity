@@ -200,11 +200,13 @@ public class Choice : MonoBehaviour
 
         // soil 비활성화
         treeFactory[createPos].gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        treeFactory[createPos].transform.parent.transform.GetChild(2).gameObject.SetActive(true);
+        treeFactory[createPos].transform.parent.transform.GetChild(3).gameObject.SetActive(false);
         // Tree 활성화
         treeFactory[createPos].gameObject.SetActive(true);
 
-        //ChoiceRespawnPos.Instance.isComplete = true;
-        //ChoiceRespawnPos.Instance.isCompleteList[createPos] = true;
+        ChoiceRespawnPos.Instance.isComplete = true;
+        ChoiceRespawnPos.Instance.isCompleteList[createPos] = true;
     }
 
     public void SettingChoicePos(int Pos)
