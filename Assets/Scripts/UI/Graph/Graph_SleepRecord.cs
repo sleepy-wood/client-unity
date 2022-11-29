@@ -605,12 +605,14 @@ public class Graph_SleepRecord : MonoBehaviour
         endDayGraph = 0;
         isGraphOnce = false;
         Debug.Log(sleepsData.Length);
+        int endDay = 0;
         for (int i = sleepsData.Length - 1; i >= 0; i--)
         {
             if (!isGraphOnce)
             {
-                endDayGraph = (int)((sleepsData[i].EndDate.AddDays(-2)).DayOfWeek);
+                endDayGraph = (int)((sleepsData[i].EndDate.AddDays(-1)).DayOfWeek);
                 isGraphOnce = true;
+                endDay = sleepsData[i].EndDate.AddDays(-1).Day;
             }
             //두 시간의 중앙값을 알아내어 어느 날에 속하게 할 것인지 정하기
             TimeSpan diff = sleepsData[i].EndDate - sleepsData[i].StartDate;
@@ -649,7 +651,7 @@ public class Graph_SleepRecord : MonoBehaviour
                 }
                 posX += 750 * per;
             }
-            else
+            else if(NewDate.Day < endDay)
             {
                 //Debug.Log(totalFlow.Hours + "시간 " + totalFlow.Minutes + "분 " + totalFlow.Seconds + "초");
                 break;
