@@ -110,6 +110,7 @@ public class DemoController : MonoBehaviour
                     branchPipe.maxLengthAtBase -= 2;
                     branchPipe.maxLengthAtTop -= 2;
                 }
+                
 
             }
             else if (num == 1)
