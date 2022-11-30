@@ -106,13 +106,13 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
     private async void Start()
     {
-        if (!m_testMode)
+        if (SceneManager.GetActiveScene().name == "LoadingScene(Legacy)")
+        {
+            StartCoroutine(StartLoading());
+        }
+        else
         {
             scrollbar_left.SetActive(false);
-            if (SceneManager.GetActiveScene().name == "LoadingScene(Legacy)")
-            {
-                StartCoroutine(StartLoading());
-            }
         }
 
         //커스텀 관련 에셋번들
@@ -174,9 +174,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
         if (landData.result)
         {
-            StopAllCoroutines();
             sum += loadingValue;
-            StartCoroutine(LoadingMove(sum));
+            if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
+            {
+                StopAllCoroutines();
+                StartCoroutine(LoadingMove(sum));
+            }
 
             Debug.Log(landData.data);
             ArrayLandData arrayLandData = new ArrayLandData();
@@ -187,12 +190,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
         if (bridgeData.result)
         {
+            sum += loadingValue;
             if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
             {
-                StartCoroutine(LoadingMove(sum));
                 StopAllCoroutines();
+                StartCoroutine(LoadingMove(sum));
             }
-            sum += loadingValue;
 
             Debug.Log(bridgeData.data);
             ArrayBridgeData arrayBridgeData = new ArrayBridgeData();
@@ -203,12 +206,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
         ResultGet<GetTreeData> treeData = await DataModule.WebRequestBuffer<ResultGet<GetTreeData>>("/api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         if (treeData.result)
         {
+            sum += loadingValue;
             if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
             {
                 StopAllCoroutines();
                 StartCoroutine(LoadingMove(sum));
             }
-            sum += loadingValue;
 
             Debug.Log(treeData.data);
             ArrayGetTreeData arrayTreeData = new ArrayGetTreeData();
@@ -219,12 +222,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
         ResultGet<CollectionData> collectionData = await DataModule.WebRequestBuffer<ResultGet<CollectionData>>("/api/v1/trees/collections", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         if (collectionData.result)
         {
+            sum += loadingValue;
             if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
             {
                 StopAllCoroutines();
                 StartCoroutine(LoadingMove(sum));
             }
-            sum += loadingValue;
 
             ArrayCollectionData arrayCollections = new ArrayCollectionData();
             arrayCollections.collectionLists = collectionData.data;
@@ -341,8 +344,8 @@ public class LoadingData : MonoBehaviourPunCallbacks
             sum += loadingValue;
             if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
             {
-                StartCoroutine(LoadingMove(sum));
                 StopAllCoroutines();
+                StartCoroutine(LoadingMove(sum));
             }
         }
 
