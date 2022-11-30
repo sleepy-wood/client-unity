@@ -385,7 +385,6 @@ namespace Broccoli.Pipe {
 		/// </summary>
 		public void GenerateSeed () {
             seed = 1;//UnityEngine.Random.Range(0, 10000);//(int)System.DateTime.Now.Ticks;
-            Debug.Log("GenerateSeed = " + seed);
         }
 		#endregion
 
