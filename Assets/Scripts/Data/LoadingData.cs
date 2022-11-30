@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
-using Random = UnityEngine.Random;
 using NativePlugin.HealthData;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,9 +85,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
         roomOptions.IsVisible = true;
         if (PhotonNetwork.CreateRoom(PhotonNetwork.NickName, roomOptions))
         {
-            StopAllCoroutines();
             sum += loadingValue;
-            StartCoroutine(LoadingMove(1));
+            if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
+            {
+                StopAllCoroutines();
+                StartCoroutine(LoadingMove(1));
+            }
 
             isCreateComplete = true;
         }
@@ -107,7 +109,10 @@ public class LoadingData : MonoBehaviourPunCallbacks
         if (!m_testMode)
         {
             scrollbar_left.SetActive(false);
-            StartCoroutine(StartLoading());
+            if (SceneManager.GetActiveScene().name == "LoadingScene(Legacy)")
+            {
+                StartCoroutine(StartLoading());
+            }
         }
 
         //커스텀 관련 에셋번들
@@ -127,9 +132,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
         ResultPost<UserLogin> login = await DataModule.WebRequestBuffer<ResultPost<UserLogin>>("/api/v1/auth/login/temp/" + loginId, DataModule.NetworkType.POST, DataModule.DataType.BUFFER);
         if (login.result)
         {
-            StopAllCoroutines();
             sum += loadingValue;
-            StartCoroutine(LoadingMove(sum));
+            if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
+            {
+                StopAllCoroutines();
+                StartCoroutine(LoadingMove(sum));
+            }
 
             DataModule.REPLACE_BEARER_TOKEN = login.data.token;
             
@@ -152,9 +160,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
         ResultGetId <UserData> userData = await DataModule.WebRequestBuffer<ResultGetId<UserData>>("/api/v1/users", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         if (userData.result)
         {
-            StopAllCoroutines();
             sum += loadingValue;
-            StartCoroutine(LoadingMove(sum));
+            if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
+            {
+                StopAllCoroutines();
+                StartCoroutine(LoadingMove(sum));
+            }
             DataTemporary.MyUserData = userData.data;
         }
         //LandData Load
@@ -176,9 +187,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
 
         if (bridgeData.result)
         {
-            StopAllCoroutines();
+            if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
+            {
+                StartCoroutine(LoadingMove(sum));
+                StopAllCoroutines();
+            }
             sum += loadingValue;
-            StartCoroutine(LoadingMove(sum));
 
             Debug.Log(bridgeData.data);
             ArrayBridgeData arrayBridgeData = new ArrayBridgeData();
@@ -189,9 +203,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
         ResultGet<GetTreeData> treeData = await DataModule.WebRequestBuffer<ResultGet<GetTreeData>>("/api/v1/trees", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         if (treeData.result)
         {
-            StopAllCoroutines();
+            if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
+            {
+                StopAllCoroutines();
+                StartCoroutine(LoadingMove(sum));
+            }
             sum += loadingValue;
-            StartCoroutine(LoadingMove(sum));
 
             Debug.Log(treeData.data);
             ArrayGetTreeData arrayTreeData = new ArrayGetTreeData();
@@ -202,9 +219,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
         ResultGet<CollectionData> collectionData = await DataModule.WebRequestBuffer<ResultGet<CollectionData>>("/api/v1/trees/collections", DataModule.NetworkType.GET, DataModule.DataType.BUFFER);
         if (collectionData.result)
         {
-            StopAllCoroutines();
+            if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
+            {
+                StopAllCoroutines();
+                StartCoroutine(LoadingMove(sum));
+            }
             sum += loadingValue;
-            StartCoroutine(LoadingMove(sum));
 
             ArrayCollectionData arrayCollections = new ArrayCollectionData();
             arrayCollections.collectionLists = collectionData.data;
@@ -318,9 +338,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
                     }
                 }
             }
-            StopAllCoroutines();
             sum += loadingValue;
-            StartCoroutine(LoadingMove(sum));
+            if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
+            {
+                StartCoroutine(LoadingMove(sum));
+                StopAllCoroutines();
+            }
         }
 
         if (!m_testMode)
@@ -420,9 +443,12 @@ public class LoadingData : MonoBehaviourPunCallbacks
                 }
             }
 
-            StopAllCoroutines();
             sum += loadingValue;
-            StartCoroutine(LoadingMove(sum));
+            if (SceneManager.GetActiveScene().name != "LoadingScene(Legacy)")
+            {
+                StopAllCoroutines();
+                StartCoroutine(LoadingMove(sum));
+            }
             //새로운 분당 심박수
 
             //새로운 산소포화도
