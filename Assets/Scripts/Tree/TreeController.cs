@@ -88,7 +88,7 @@ public class TreeController : MonoBehaviour
     {
         public List<MinMax> minMaxList = new List<MinMax>();
         public int rootFreq;
-        public int rootBaseLength;
+        public float rootBaseLength;
         public float girthBase;
         public float scale;
     }
@@ -830,7 +830,7 @@ public class TreeController : MonoBehaviour
 
             #region 3. Min/Max Length At Base
             StructureGenerator.StructureLevel pipe3 = treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel;
-            int store3 = element.rootBaseLength;
+            float store3 = element.rootBaseLength;
 
             // Root Min Length At Base
             pipe3.minLengthAtBase = store3;
@@ -926,6 +926,7 @@ public class TreeController : MonoBehaviour
             print("1일차");
             StartCoroutine(PlantSeed(1.02f));
             PipelineReload();
+            
         }
         // 2일차
         else if (day == 2)
@@ -937,6 +938,7 @@ public class TreeController : MonoBehaviour
             if (healthSetting == 0) PipelineSetting(0);
             treeFactory.gameObject.SetActive(true);
             PipelineReload();
+            day1CustomObj.SetActive(true);
         }
         // 3일차
         else if (day == 3)
@@ -950,6 +952,7 @@ public class TreeController : MonoBehaviour
             }
             PipelineReload();
             campos = Camera.main.gameObject.transform;
+            day2CustomObj.SetActive(true);
         }
         // 4일차
         else if (day == 4)
@@ -958,6 +961,7 @@ public class TreeController : MonoBehaviour
             if (healthSetting == 0) PipelineSetting(2);
             else if (healthSetting == 1) ApplyHealthData();
             PipelineReload();
+            day3CustomObj.SetActive(true);
         }
         // 5일차
         else if (day == 5)
@@ -973,6 +977,7 @@ public class TreeController : MonoBehaviour
             assetBundle.Unload(false);
             // Tree 이미지 캡처 & 동영상 이미지 캡처 & 웹에 업로드 순차적으로 진행
             screenShot.SaveCameraView();
+            day4CustomObj.SetActive(true);
         }
         if (day>1 && !demoMode) SaveTreeData();
     }
@@ -996,6 +1001,7 @@ public class TreeController : MonoBehaviour
     public ParticleSystem snow;
     public ParticleSystem rain;
     public ParticleSystem rottenLeafParticle;
+    public GameObject day1CustomObj;
     public GameObject day2CustomObj;
     public GameObject day3CustomObj;
     public GameObject day4CustomObj;
