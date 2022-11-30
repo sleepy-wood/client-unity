@@ -1016,6 +1016,10 @@ public class TreeController : MonoBehaviour
                 screenShot.SaveCameraView();
             }
             day4CustomObj.SetActive(true);
+            // UI 버튼들 활성화
+            GetComponent<DemoController>().p.landCanvas.SetActive(true);
+            GetComponent<DemoController>().p.chatUI.SetActive(true);
+            GetComponent<DemoController>().p.menuCanvas.SetActive(true);
         }
         if (day>1 && !demoMode) SaveTreeData();
     }
