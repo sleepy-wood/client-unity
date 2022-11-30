@@ -13,6 +13,7 @@ public class DemoController : MonoBehaviour
     public SkyController s;
     public ParticleSystem goodFall;
     public ParticleSystem badFall;
+    public UI_PlantName p;
 
     int day;
 
@@ -26,9 +27,9 @@ public class DemoController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            t.pipeName = "Galaxy";
-            t.treePipeline = t.assetBundle.LoadAsset<Pipeline>("Galaxy");
-            t.selectedTreeSetting = t.treeStores[5].treeSettings;
+            //t.pipeName = "Galaxy";
+            //t.treePipeline = t.assetBundle.LoadAsset<Pipeline>("Galaxy");
+            //t.selectedTreeSetting = t.treeStores[5].treeSettings;
             // 1일차 기본 세팅
             t.PipelineSetting(0);
             // 씨앗심기
@@ -50,40 +51,38 @@ public class DemoController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             t.SetTree(5);
-        }
-
-        // Sprout Particle
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            t.sproutParticle.Play();
+            // UI 버튼들 활성화
+            p.landCanvas.SetActive(true);
+            p.chatUI.SetActive(true);
+            p.menuCanvas.SetActive(true);
         }
 
 
         // Sky
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             w.Sunny();
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             w.Rain();
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             w.Snow();
         }
 
 
         // Weather
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Keypad4))
         {
             s.Day();
         }
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Keypad5))
         {
             s.Sunset();
         }
-        if (Input.GetKeyDown(KeyCode.Y))
+        if (Input.GetKeyDown(KeyCode.Keypad6))
         {
             s.Night();
         }
@@ -91,9 +90,9 @@ public class DemoController : MonoBehaviour
 
         // Bad Change
         int num = 0;
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.KeypadMinus))
         {
-            t.OnDemoBadChange();
+            
             if (num == 0)
             {
                 goodFall.Stop();
@@ -102,13 +101,14 @@ public class DemoController : MonoBehaviour
                 SproutSeed sproutSeed = new SproutSeed();
                 t.treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
                 t.treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[1].groupId = 5;
+                t.treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[4].width = 1.9f;
 
                 // 길이 조정
                 for (int i = 0; i < 4; i++)
                 {
                     StructureGenerator.StructureLevel branchPipe = t.treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-                    branchPipe.maxLengthAtBase -= 7;
-                    branchPipe.maxLengthAtTop -= 7;
+                    branchPipe.maxLengthAtBase -= 2;
+                    branchPipe.maxLengthAtTop -= 2;
                 }
 
             }
@@ -118,14 +118,16 @@ public class DemoController : MonoBehaviour
                 SproutSeed sproutSeed = new SproutSeed();
                 t.treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
                 t.treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[2].groupId = 6;
+                t.treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[5].width = 1.9f;
 
                 // 길이 조정
                 for (int i = 0; i < 4; i++)
                 {
                     StructureGenerator.StructureLevel branchPipe = t.treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-                    branchPipe.maxLengthAtBase -= 7;
-                    branchPipe.maxLengthAtTop -= 7;
+                    branchPipe.maxLengthAtBase -= 2;
+                    branchPipe.maxLengthAtTop -= 2;
                 }
+                t.treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].enabled = false;
             }
             else if (num == 2)
             {
@@ -133,16 +135,21 @@ public class DemoController : MonoBehaviour
                 SproutSeed sproutSeed = new SproutSeed();
                 t.treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
                 t.treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[3].groupId = 7;
+                t.treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[6].width = 1.9f;
+                t.treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[7].width = 1.9f;
 
                 // 길이 조정
                 for (int i = 0; i < 4; i++)
                 {
                     StructureGenerator.StructureLevel branchPipe = t.treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-                    branchPipe.maxLengthAtBase -= 7;
-                    branchPipe.maxLengthAtTop -= 7;
+                    branchPipe.maxLengthAtBase -= 2;
+                    branchPipe.maxLengthAtTop -= 2;
                 }
+
+                t.treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].enabled = false;
             }
-            
+            t.OnDemoBadChange();
+
         }
 
 

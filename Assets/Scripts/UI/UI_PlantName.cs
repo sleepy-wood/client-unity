@@ -67,10 +67,7 @@ public class UI_PlantName : MonoBehaviour
             if (!treeController.demoMode) treeController.SaveTreeData();
             print("나무 이름 결정 완료");
 
-            // UI 버튼들 활성화
-            landCanvas.SetActive(true);
-            chatUI.SetActive(true);
-            menuCanvas.SetActive(true);
+            
 
             // 나무 이름 결정 UI 비활성화
             treeNameWindow.SetActive(false);

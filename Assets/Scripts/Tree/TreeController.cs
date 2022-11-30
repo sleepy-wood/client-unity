@@ -205,155 +205,158 @@ public class TreeController : MonoBehaviour
             //    selectedSeed = SeedType.Demo;
             //    treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
             //}
-//            if (demoMode)
-//            {
-//                pipeName = "Galaxy";
-//                treePipeline = Resources.Load<Pipeline>("Galaxy");
-//                selectedSeed = SeedType.Demo;
-//            }
-//            else
-//            {
-//                // Pipeline 랜덤 선택 ( Tree Shape )
-//                i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo 제외
-//                pipeName = pipeNameList[i];  // i = 0~3
-//                selectedSeed = pipeNameDict[pipeName];
-//                treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
+            if (demoMode)
+            {
+                pipeName = "Galaxy";
+                treePipeline = Resources.Load<Pipeline>("Galaxy");
+                print(treePipeline.name);
+                //selectedSeed = SeedType.Demo;
+                selectedTreeSetting = treeStores[5].treeSettings;
+                print(selectedTreeSetting);
+            }
+            //            else
+            //            {
+            //                // Pipeline 랜덤 선택 ( Tree Shape )
+            //                i = UnityEngine.Random.Range(0, pipeNameList.Count - 1);  //Demo 제외
+            //                pipeName = pipeNameList[i];  // i = 0~3
+            //                selectedSeed = pipeNameDict[pipeName];
+            //                treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
 
 
-//                // Sprout Texture 확률적 랜덤 선택
-//                // 1. Leaf Shape Group(A, B, C, D) 4개 중 랜덤 선택해서 해당 Group을 Sprout Generator - Sprout Seeds에 추가
-//                if (!playMode)
-//                {
-//                    sproutGroupId = UnityEngine.Random.Range(1, 5);
-//                    SproutSeed sproutSeed = new SproutSeed();
-//                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
-//                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = sproutGroupId;
-//                }
-//                else if (playMode)
-//                {
-//                    sproutGroupId = playSproutGroupId;
-//                    SproutSeed sproutSeed = new SproutSeed();
-//                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
-//                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = playSproutGroupId;
-//                }
+            //                // Sprout Texture 확률적 랜덤 선택
+            //                // 1. Leaf Shape Group(A, B, C, D) 4개 중 랜덤 선택해서 해당 Group을 Sprout Generator - Sprout Seeds에 추가
+            //                if (!playMode)
+            //                {
+            //                    sproutGroupId = UnityEngine.Random.Range(1, 5);
+            //                    SproutSeed sproutSeed = new SproutSeed();
+            //                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+            //                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = sproutGroupId;
+            //                }
+            //                else if (playMode)
+            //                {
+            //                    sproutGroupId = playSproutGroupId;
+            //                    SproutSeed sproutSeed = new SproutSeed();
+            //                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+            //                    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[0].groupId = playSproutGroupId;
+            //                }
 
 
-//                // 2. 해당 Group 안의 Textures Area Enabled 개수 확률적으로 enabled=true 시켜주기 (50%-1개, 20%-2개, 15%-3개, 10%-4개, 5%-5개)
-//                if (!playMode)
-//                {
-//                    n = UnityEngine.Random.Range(0, 100);
-//                }
-//                else if (playMode)
-//                {
-//                    if (playSproutEnabledNum == 1) n = 40;
-//                    else if (playSproutEnabledNum == 2) n = 60;
-//                    else if (playSproutEnabledNum == 3) n = 80;
-//                    else if (playSproutEnabledNum == 4) n = 90;
-//                    else if (playSproutEnabledNum == 5) n = 98;
-//                }
-                
-                
-//                if (n < 50)
-//                {
-//                    int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count);
-//                    treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
-//                    rarityScore += 10;
-//                }
-//                else if (n >= 50 && n < 70)
-//                {
-//                    rarityScore += 20;
-//                    for (int j = 0; j < 2; j++)
-//                    {
-//                        int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count);
-//                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
-//                    }
-//                }
-//                else if (n >= 70 && n < 85)
-//                {
-//                    rarityScore += 30;
-//                    for (int j = 0; j < 3; j++)
-//                    {
-//                        int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count);
-//                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
-//                    }
-//                }
-//                else if (n >= 85 && n < 95)
-//                {
-//                    rarityScore += 40;
-//                    for (int j = 0; j < 4; j++)
-//                    {
-//                        int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count);
-//                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
-//                    }
-//                }
-//                else
-//                {
-//                    rarityScore += 50;
-//                    for (int j = 0; j < 5; j++)
-//                    {
-//                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[j].enabled = true;
-//                    }
-//                }
-//                print("sprout 선택 완료");
+            //                // 2. 해당 Group 안의 Textures Area Enabled 개수 확률적으로 enabled=true 시켜주기 (50%-1개, 20%-2개, 15%-3개, 10%-4개, 5%-5개)
+            //                if (!playMode)
+            //                {
+            //                    n = UnityEngine.Random.Range(0, 100);
+            //                }
+            //                else if (playMode)
+            //                {
+            //                    if (playSproutEnabledNum == 1) n = 40;
+            //                    else if (playSproutEnabledNum == 2) n = 60;
+            //                    else if (playSproutEnabledNum == 3) n = 80;
+            //                    else if (playSproutEnabledNum == 4) n = 90;
+            //                    else if (playSproutEnabledNum == 5) n = 98;
+            //                }
 
 
-//                // Bark Material 확률적 랜덤 선택
-//#if UNITY_STANDALONE
-//                string path = Application.dataPath + "/Resources/Tree/Materials";
-//#elif UNITY_IOS
-//                string path = Application.persistentDataPath + "/Resources/Tree/Materials";
-//#endif
-//                Material[] mat = barkAssetBundle.LoadAllAssets<Material>();
-//                if (!playMode)
-//                {
-//                    int randNum = UnityEngine.Random.Range(0, 10);
-//                    // General Material (70%)
-//                    if (randNum < 7)
-//                    {
-//                        int r1 = UnityEngine.Random.Range(0, 5);
-//                        Material selectedMat = Instantiate(mat[r1]);
-//                        print("Selected General Bark Material: " + mat[r1].name);
-//                        treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
-//                        barkMaterial = selectedMat.name.Replace("(Clone)", "");
-//                        rarityScore += 30;
-//                    }
-//                    // Special Material (30%)
-//                    else
-//                    {
-//                        int r2 = UnityEngine.Random.Range(5, 9);
-//                        Material selectedMat = Instantiate(mat[r2]);
-//                        print("Selected Special Bark Material: " + mat[r2].name);
-//                        treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
-//                        barkMaterial = selectedMat.name.Replace("(Clone)", "");
-//                        rarityScore += 50;
-//                    }
-//                }
-//                // PlayMode의 경우 텍스처 선택
-//                else if (playMode)
-//                {
-//                    Material selectedMat2 = Instantiate(mat[playBarkIdx]);
-//                    print("Selected General Bark Material: " + mat[playBarkIdx].name);
-//                    treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat2;
-//                    barkMaterial = selectedMat2.name.Replace("(Clone)", "");
-//                    rarityScore += 50;
-//                }
-                
-//            }
-//            print("Selected pipeline = " + pipeName);
+            //                if (n < 50)
+            //                {
+            //                    int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count);
+            //                    treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
+            //                    rarityScore += 10;
+            //                }
+            //                else if (n >= 50 && n < 70)
+            //                {
+            //                    rarityScore += 20;
+            //                    for (int j = 0; j < 2; j++)
+            //                    {
+            //                        int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count);
+            //                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
+            //                    }
+            //                }
+            //                else if (n >= 70 && n < 85)
+            //                {
+            //                    rarityScore += 30;
+            //                    for (int j = 0; j < 3; j++)
+            //                    {
+            //                        int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count);
+            //                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
+            //                    }
+            //                }
+            //                else if (n >= 85 && n < 95)
+            //                {
+            //                    rarityScore += 40;
+            //                    for (int j = 0; j < 4; j++)
+            //                    {
+            //                        int random = UnityEngine.Random.Range(0, treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas.Count);
+            //                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[random].enabled = true;
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    rarityScore += 50;
+            //                    for (int j = 0; j < 5; j++)
+            //                    {
+            //                        treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[sproutGroupId - 1].sproutAreas[j].enabled = true;
+            //                    }
+            //                }
+            //                print("sprout 선택 완료");
 
-//            // 랜덤 선택된 Seed로 기본 세팅값 찾기
-//            for (int i = 0; i < treeStores.Count; i++)
-//            {
-//                if (treeStores[i].seedType == selectedSeed)
-//                {
-//                    selectedTreeSetting = treeStores[i].treeSettings;
-//                    print($"나무 기본 세팅 : {treeStores[i].seedType}");
-//                }
-//            }
-//            // 1일차 기본 세팅
-//            PipelineSetting(0);
-//            // 씨앗심기
-//            SetTree(1);
+
+            //                // Bark Material 확률적 랜덤 선택
+            //#if UNITY_STANDALONE
+            //                string path = Application.dataPath + "/Resources/Tree/Materials";
+            //#elif UNITY_IOS
+            //                string path = Application.persistentDataPath + "/Resources/Tree/Materials";
+            //#endif
+            //                Material[] mat = barkAssetBundle.LoadAllAssets<Material>();
+            //                if (!playMode)
+            //                {
+            //                    int randNum = UnityEngine.Random.Range(0, 10);
+            //                    // General Material (70%)
+            //                    if (randNum < 7)
+            //                    {
+            //                        int r1 = UnityEngine.Random.Range(0, 5);
+            //                        Material selectedMat = Instantiate(mat[r1]);
+            //                        print("Selected General Bark Material: " + mat[r1].name);
+            //                        treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
+            //                        barkMaterial = selectedMat.name.Replace("(Clone)", "");
+            //                        rarityScore += 30;
+            //                    }
+            //                    // Special Material (30%)
+            //                    else
+            //                    {
+            //                        int r2 = UnityEngine.Random.Range(5, 9);
+            //                        Material selectedMat = Instantiate(mat[r2]);
+            //                        print("Selected Special Bark Material: " + mat[r2].name);
+            //                        treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat;
+            //                        barkMaterial = selectedMat.name.Replace("(Clone)", "");
+            //                        rarityScore += 50;
+            //                    }
+            //                }
+            //                // PlayMode의 경우 텍스처 선택
+            //                else if (playMode)
+            //                {
+            //                    Material selectedMat2 = Instantiate(mat[playBarkIdx]);
+            //                    print("Selected General Bark Material: " + mat[playBarkIdx].name);
+            //                    treePipeline._serializedPipeline.barkMappers[0].customMaterial = selectedMat2;
+            //                    barkMaterial = selectedMat2.name.Replace("(Clone)", "");
+            //                    rarityScore += 50;
+            //                }
+
+            //            }
+            //            print("Selected pipeline = " + pipeName);
+
+            //            // 랜덤 선택된 Seed로 기본 세팅값 찾기
+            //            for (int i = 0; i < treeStores.Count; i++)
+            //            {
+            //                if (treeStores[i].seedType == selectedSeed)
+            //                {
+            //                    selectedTreeSetting = treeStores[i].treeSettings;
+            //                    print($"나무 기본 세팅 : {treeStores[i].seedType}");
+            //                }
+            //            }
+            //            // 1일차 기본 세팅
+            //            PipelineSetting(0);
+            //            // 씨앗심기
+            //            SetTree(1);
         }
         else if (visitType == VisitType.ReVisit)
         {
@@ -1450,10 +1453,18 @@ public class TreeController : MonoBehaviour
         }
     }
 
+    int num = 0;
     public void OnDemoBadChange()
     {
+        
         BadChange(true);
         PipelineReload();
+        if (num == 0) changeScale(0.8f, 0.77f);
+        if (num == 1) changeScale(0.77f, 0.74f);
+        if (num == 2) changeScale(0.74f, 0.74f);
+        num++;
+
+
     }
 
 
@@ -1502,13 +1513,13 @@ public class TreeController : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 StructureGenerator.StructureLevel gravityPipe = treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[i];
-                gravityPipe.minGravityAlignAtTop -= 0.2f;
-                gravityPipe.maxGravityAlignAtTop -= 0.2f;
+                gravityPipe.minGravityAlignAtTop -= 0.1f;
+                gravityPipe.maxGravityAlignAtTop -= 0.1f;
             }
             #endregion
 
             #region 3. 나뭇잎 너비
-            treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[sproutGroupId].width -= 0.5f;
+            treePipeline._serializedPipeline.sproutMeshGenerators[0].sproutMeshes[0].width -= 0.5f;
             #endregion
 
             #region 4. 나무 가지 두께
@@ -1517,8 +1528,8 @@ public class TreeController : MonoBehaviour
             #endregion
 
             #region 5. 나뭇잎 처짐
-            treePipeline._serializedPipeline.sproutGenerators[0].minGravityAlignAtTop -= 0.3f;
-            treePipeline._serializedPipeline.sproutGenerators[0].maxGravityAlignAtTop -= 0.3f;
+            treePipeline._serializedPipeline.sproutGenerators[0].minGravityAlignAtTop -= 0.1f;
+            treePipeline._serializedPipeline.sproutGenerators[0].maxGravityAlignAtTop -= 0.1f;
             #endregion
         }
         // 나쁜 영향을 완화시킬 경우
