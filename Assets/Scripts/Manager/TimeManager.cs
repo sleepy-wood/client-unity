@@ -26,7 +26,7 @@ public class TimeManager : MonoBehaviour
         {
             firstPlantDate.dateTime = DateTime.MinValue;
         }                                                                                                                                    
-        else
+        if (!treeControll.demoMode)
         {
             print("Land Id : " + DataTemporary.MyUserData.currentLandId);
             int treeDataCount = DataTemporary.GetTreeData.getTreeDataList.Count;
