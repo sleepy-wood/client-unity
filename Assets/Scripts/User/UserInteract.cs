@@ -60,22 +60,11 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
             if (photonView && photonView.IsMine)
             {
                 Vector3 moveDir;
-                if (SceneManager.GetActiveScene().name == "SharedLand")
-                {
-#if UNITY_STANDALONE
-                    moveDir = userInput.MoveX * transform.forward + userInput.MoveZ * transform.right;
-#elif UNITY_IOS || UNITY_ANDROID
-                    moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
-#endif
-                }
-                else
-                {
 #if UNITY_STANDALONE
                     moveDir = userInput.MoveX * transform.right + userInput.MoveZ * transform.forward;
 #elif UNITY_IOS || UNITY_ANDROID
                     moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
 #endif
-                }
                 moveDir.Normalize();
 
                 if (moveDir.magnitude != 0)
