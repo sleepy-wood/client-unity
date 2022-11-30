@@ -156,7 +156,7 @@ public class TreeController : MonoBehaviour
     // 로드해야하는 나무의 데이터
     public GetTreeData currentTreeData;
     // AssetBundle
-    AssetBundle assetBundle;
+    public AssetBundle assetBundle;
     // User의 HealthData
     HealthReport report;
     // Bark Texture AssetBundle
@@ -542,7 +542,7 @@ public class TreeController : MonoBehaviour
         #region 썩은잎 만들기 Test
         //if (count == 1 && !isOnce)
         //{
-        //    // sprout areas enabled true;
+        //    sprout areas enabled true;
         //    SproutMap.SproutMapArea pipe0 = treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[1];
         //    pipe0.enabled = true;
         //    Pipeline loadedPipeline = assetBundle.LoadAsset<Pipeline>("badTree");
@@ -602,7 +602,7 @@ public class TreeController : MonoBehaviour
         //    }
         //}
         #endregion
-        
+
 
         #region 자연스러운 나무 성장 Test
         //if (Input.GetKeyDown(KeyCode.Alpha5) && !isOnce3)
@@ -633,26 +633,26 @@ public class TreeController : MonoBehaviour
         //    treePipeline = assetBundle.LoadAsset<Pipeline>("BasicTree");
         //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
         //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 2;
-        //treePipeline._serializedPipeline.sproutMappers[0].sproutMaps.Count
-        //treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[0].enabled
+        //    treePipeline._serializedPipeline.sproutMappers[0].sproutMaps.Count
+        //    treePipeline._serializedPipeline.sproutMappers[0].sproutMaps[0].sproutAreas[0].enabled
 
 
         //for (int i = 0; i < treeStores.Count; i++)
-        //{
-        //    if (treeStores[i].seedType == SeedType.Basic)
         //    {
-        //        selectedTreeSetting = treeStores[i].treeSettings;
-        //        print($"나무 기본 세팅 : {treeStores[i].seedType}");
+        //        if (treeStores[i].seedType == SeedType.Basic)
+        //        {
+        //            selectedTreeSetting = treeStores[i].treeSettings;
+        //            print($"나무 기본 세팅 : {treeStores[i].seedType}");
+        //        }
         //    }
-        //}
-        //PipelineSetting(2);
-        //PipelineReload();
+        //    PipelineSetting(2);
+        //    PipelineReload();
 
-        //print("sproutSeeds Count : " + treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Count);
-        #endregion
+        //    print("sproutSeeds Count : " + treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Count);
+            #endregion
 
 
-    }
+        }
 
     #region 씨앗 심기 코루틴
     IEnumerator PlantSeed(float targetScale)
@@ -675,7 +675,7 @@ public class TreeController : MonoBehaviour
         sprout.transform.localScale = new Vector3(0, 0, 0);
         yield return new WaitForSeconds(1.5f);
         sprout.SetActive(true);
-        
+        sproutParticle.Play();
 
         // 새싹 자라기
         t = 0;
@@ -712,17 +712,17 @@ public class TreeController : MonoBehaviour
         #endregion
 
         // 식물 이름 UI Animation
-        //treeNameBG.SetActive(true);
-        //treeNameWindow.transform.localScale = new Vector3(0, 0, 0);
-        //t = 0;
-        //while (t <= 1.2f)
-        //{
-        //    t += Time.deltaTime * 2f;
-        //    treeNameWindow.transform.localScale = new Vector3(t, t, t);
-        //    yield return null;
-        //}
-        //treeNameWindow.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-        //yield return new WaitForSeconds(1);
+        treeNameBG.SetActive(true);
+        treeNameWindow.transform.localScale = new Vector3(0, 0, 0);
+        t = 0;
+        while (t <= 1.2f)
+        {
+            t += Time.deltaTime * 2f;
+            treeNameWindow.transform.localScale = new Vector3(t, t, t);
+            yield return null;
+        }
+        treeNameWindow.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        yield return new WaitForSeconds(1);
     }
     #endregion
 
@@ -738,7 +738,6 @@ public class TreeController : MonoBehaviour
     {
         // 기본 세팅 성장 데이터 정보 지닌 요소
         TreeSetting element = selectedTreeSetting[index];
-        
 
         if (playMode)
         {
@@ -910,19 +909,20 @@ public class TreeController : MonoBehaviour
         // 새로 생성되는 previewTree 설정
         if (previewTree == null) previewTree = treeFactory.transform.GetChild(1).transform;
         treeFactory.transform.GetChild(1).gameObject.layer = 11;
+        StopAllCoroutines();
         StartCoroutine(Change(a, b));
     }
     IEnumerator Change(float before, float after)
     {
         float t = 0;
-        treeFactory.transform.localScale = new Vector3(before, before, before);
-        while (t <= 1f)
+        previewTree.transform.localScale = new Vector3(before, before, before);
+        while (t < 1)
         {
-            t += Time.deltaTime * 2f;
-            sprout.transform.localScale = new Vector3(after, after, after);
+            t += Time.deltaTime * 0.8f;
+            previewTree.transform.localScale = Vector3.Lerp(previewTree.transform.localScale, new Vector3(after, after, after), t);
             yield return null;
         }
-        sprout.transform.localScale = new Vector3(after, after, after);
+        previewTree.transform.localScale = new Vector3(after, after, after);
     }
 
 
@@ -957,7 +957,9 @@ public class TreeController : MonoBehaviour
             if (healthSetting == 0) PipelineSetting(0);
             treeFactory.gameObject.SetActive(true);
             PipelineReload();
-            previewTree.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            if (previewTree == null) previewTree = treeFactory.transform.GetChild(1).transform;
+            treeFactory.transform.GetChild(1).gameObject.layer = 11;
+            previewTree.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
             changeParticle.Play();
             day1CustomObj.SetActive(true);
         }
@@ -971,8 +973,10 @@ public class TreeController : MonoBehaviour
             {
                 treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].enabled = true;
             }
+            //treePipeline._serializedPipeline.structureGenerators[0].rootStructureLevel.enabled = true;
+            treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[1].enabled = true;
             PipelineReload();
-            changeScale(0.2f, 0.3f);
+            changeScale(0.3f, 0.4f);
             changeParticle.Play();
             campos = Camera.main.gameObject.transform;
             day2CustomObj.SetActive(true);
@@ -983,8 +987,9 @@ public class TreeController : MonoBehaviour
             print("4일차");
             if (healthSetting == 0) PipelineSetting(2);
             else if (healthSetting == 1) ApplyHealthData();
+            treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].enabled = true;
             PipelineReload();
-            changeScale(0.3f, 0.6f);
+            changeScale(0.4f, 0.6f);
             changeParticle.Play();
             day3CustomObj.SetActive(true);
         }
@@ -999,7 +1004,7 @@ public class TreeController : MonoBehaviour
                 treePipeline._serializedPipeline.structureGenerators[0].flatStructureLevels[2].enabled = true;
             }
             PipelineReload();
-            changeScale(0.6f, 0.8f);
+            changeScale(0.6f, 0.75f);
             changeParticle.Play();
             if (!demoMode)
             {
@@ -1463,33 +1468,33 @@ public class TreeController : MonoBehaviour
         {
             #region 1. 상한 잎
             // 1. 상한 잎 => 상한 잎 Particle 색 변경 필요
-            List<int> groupId = new List<int>();
-            SproutSeed sproutSeed = new SproutSeed();
-            // Sprout Generator에 상한 잎 Group 5~8 있는지 확인 후 만약에 없으면 순서대로 하나 추가
-            foreach (SproutSeed s in treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds)
-            {
-                groupId.Add(s.groupId);
-            }
-            if (!groupId.Contains(5) && !groupId.Contains(6) && !groupId.Contains(7) && !groupId.Contains(8))
-            {
-                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
-                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 5;
-            }
-            if (groupId.Contains(5))
-            {
-                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
-                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 6;
-            }
-            if (groupId.Contains(5) && groupId.Contains(6))
-            {
-                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
-                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 7;
-            }
-            if (groupId.Contains(5) && groupId.Contains(6) && groupId.Contains(7))
-            {
-                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
-                treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 8;
-            }
+            //List<int> groupId = new List<int>();
+            //SproutSeed sproutSeed = new SproutSeed();
+            //// Sprout Generator에 상한 잎 Group 5~8 있는지 확인 후 만약에 없으면 순서대로 하나 추가
+            //foreach (SproutSeed s in treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds)
+            //{
+            //    groupId.Add(s.groupId);
+            //}
+            //if (!groupId.Contains(5) && !groupId.Contains(6) && !groupId.Contains(7) && !groupId.Contains(8))
+            //{
+            //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+            //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 5;
+            //}
+            //if (groupId.Contains(5))
+            //{
+            //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+            //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 6;
+            //}
+            //if (groupId.Contains(5) && groupId.Contains(6))
+            //{
+            //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+            //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 7;
+            //}
+            //if (groupId.Contains(5) && groupId.Contains(6) && groupId.Contains(7))
+            //{
+            //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Add(sproutSeed);
+            //    treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds[^1].groupId = 8;
+            //}
             #endregion
 
             #region 2. 가지 중력

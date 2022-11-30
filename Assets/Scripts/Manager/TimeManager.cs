@@ -24,7 +24,7 @@ public class TimeManager : MonoBehaviour
     {
         //if (treeControll.playMode)
         //{
-        //    firstPlantDate.dateTime = DateTime.MinValue;
+        firstPlantDate.dateTime = DateTime.MinValue;
         //}                                                                                                                                    
         //if (!treeControll.demoMode)
         //{
@@ -53,23 +53,23 @@ public class TimeManager : MonoBehaviour
         //        }
         //    }
         //}
-        
+
 
         //// firstPlantDate로 방문타입 결정 => 5일차 후 새로운 Seed 심기 전 null값 처리필요
-        //if (firstPlantDate.dateTime == DateTime.MinValue) 
-        //{
-        //    print("First Visit");
-        //    treeControll.visitType = TreeController.VisitType.First;
-        //    firstPlantDate = DateTime.Now;
-        //    CalculatePlantDays(firstPlantDate, DateTime.Now);
-        //}
-        //else
-        //{
-        //    print("Revisit");
-        //    treeControll.visitType = TreeController.VisitType.ReVisit;
-        //    // totalPlantDay, dayCount 계산
-        //    CalculatePlantDays(firstPlantDate, DateTime.Now);
-        //}
+        if (firstPlantDate.dateTime == DateTime.MinValue)
+        {
+            print("First Visit");
+            treeControll.visitType = TreeController.VisitType.First;
+            firstPlantDate = DateTime.Now;
+            CalculatePlantDays(firstPlantDate, DateTime.Now);
+        }
+        else
+        {
+            print("Revisit");
+            treeControll.visitType = TreeController.VisitType.ReVisit;
+            // totalPlantDay, dayCount 계산
+            CalculatePlantDays(firstPlantDate, DateTime.Now);
+        }
     }
 
     private void Start()

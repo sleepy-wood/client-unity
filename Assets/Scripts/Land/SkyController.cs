@@ -78,6 +78,8 @@ public class SkyController : MonoBehaviour
         lt.intensity = 1.6f;
         AudioInit();
         day.gameObject.SetActive(true);
+        txtMain.color = Color.black;
+        txtSub.color = Color.black;
     }
 
     public void Night()
@@ -89,6 +91,8 @@ public class SkyController : MonoBehaviour
         lt.intensity = 1.6f;
         AudioInit();
         night.gameObject.SetActive(true);
+        txtMain.color = Color.white;
+        txtSub.color = Color.white;
     }
 
     public void Sunset() 
@@ -100,5 +104,7 @@ public class SkyController : MonoBehaviour
         lt.intensity = 1.19f;
         AudioInit();
         sunset.gameObject.SetActive(true);
+        txtMain.color = Color.black;
+        txtSub.color = Color.black;
     }
 }
