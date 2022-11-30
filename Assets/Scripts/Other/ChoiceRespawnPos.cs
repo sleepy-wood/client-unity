@@ -77,6 +77,7 @@ public class ChoiceRespawnPos : MonoBehaviourPunCallbacks
     }
     public void OnClickBackSharedLandButton()
     {
+        Screen.orientation = ScreenOrientation.Portrait;
         PhotonNetwork.LoadLevel("MyWorld");
     }
 

@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Realtime;
 using Photon.Pun;
 using UnityEngine.UI;
-using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class UserInteract : MonoBehaviourPun, IPunObservable
 {
@@ -60,11 +59,23 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
 
             if (photonView && photonView.IsMine)
             {
+                Vector3 moveDir;
+                if (SceneManager.GetActiveScene().name == "SharedLand")
+                {
 #if UNITY_STANDALONE
-            Vector3 moveDir = userInput.MoveX * transform.right + userInput.MoveZ * transform.forward;
+                    moveDir = userInput.MoveX * transform.forward + userInput.MoveZ * transform.right;
 #elif UNITY_IOS || UNITY_ANDROID
-            Vector3 moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
+                    moveDir = userInput.MoveX * Vector3.forward + userInput.MoveZ * Vector3.right;
 #endif
+                }
+                else
+                {
+#if UNITY_STANDALONE
+                    moveDir = userInput.MoveX * transform.right + userInput.MoveZ * transform.forward;
+#elif UNITY_IOS || UNITY_ANDROID
+                    moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
+#endif
+                }
                 moveDir.Normalize();
 
                 if (moveDir.magnitude != 0)
