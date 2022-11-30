@@ -29964,7 +29964,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1234589315}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -29973,7 +29973,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.059999943}
+  m_AnchoredPosition: {x: 0, y: -0.2}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1234589317
@@ -29998,7 +29998,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 65e8dfecfc71c274abdbaa190a77f663, type: 3}
-    m_FontSize: 157
+    m_FontSize: 234
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -30009,7 +30009,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: CLICK!!
 --- !u!222 &1234589318
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35690,7 +35690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 732575698270952509, guid: 33e88ec7f688561419c9636d2ca8d779, type: 3}
       propertyPath: test
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 732575698270952509, guid: 33e88ec7f688561419c9636d2ca8d779, type: 3}
       propertyPath: UI_Canvas
