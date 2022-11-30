@@ -6,6 +6,7 @@ using Photon.Pun;
 using Random = UnityEngine.Random;
 using Unity.VisualScripting;
 
+
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance;

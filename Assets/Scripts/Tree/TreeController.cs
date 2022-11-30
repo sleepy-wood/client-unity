@@ -70,7 +70,7 @@ public class TreeController : MonoBehaviour
         { "OakTree", SeedType.Oak },
         { "SakuraTree", SeedType.Sakura },
         { "DRTree", SeedType.DR },
-        { "Ice", SeedType.Demo }
+        { "Galaxy", SeedType.Demo }
     };
     // 선택된 TreeSetting List
     List<TreeSetting> selectedTreeSetting;
@@ -207,7 +207,7 @@ public class TreeController : MonoBehaviour
             //}
             if (demoMode)
             {
-                pipeName = "Ice";
+                pipeName = "Galaxy";
                 treePipeline = assetBundle.LoadAsset<Pipeline>(pipeName);
                 selectedSeed = SeedType.Demo;
             }
@@ -651,6 +651,7 @@ public class TreeController : MonoBehaviour
         //print("sproutSeeds Count : " + treePipeline._serializedPipeline.sproutGenerators[0].sproutSeeds.Count);
         #endregion
 
+
     }
 
     #region 씨앗 심기 코루틴
@@ -880,7 +881,7 @@ public class TreeController : MonoBehaviour
         //    ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);
         //    fallingLeaf.transform.SetParent(previewTree.transform);
         //}
-        
+
         // Falling Leaf Particle System
         //ParticleSystem fallingLeaf = Instantiate(fallingLeafPrefab, previewTree.transform);  // 생성
         //fallingLeaf.GetComponent<Falling_Leaf>().SetFallingLeafParticle(currentTreeData);  // 트리데이터로 떨어질 잎 설정
