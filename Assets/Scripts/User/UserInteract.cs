@@ -65,7 +65,7 @@ public class UserInteract : MonoBehaviourPun, IPunObservable
 #if UNITY_STANDALONE
                     moveDir = userInput.MoveX * transform.forward + userInput.MoveZ * transform.right;
 #elif UNITY_IOS || UNITY_ANDROID
-                    moveDir = userInput.MoveX * Vector3.forward + userInput.MoveZ * Vector3.right;
+                    moveDir = userInput.MoveX * Vector3.right + userInput.MoveZ * Vector3.forward;
 #endif
                 }
                 else
