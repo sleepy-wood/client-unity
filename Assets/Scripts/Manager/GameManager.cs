@@ -44,5 +44,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject User { get; set; }
 
     public TimeManager timeManager;
+    public TimeManager2 timeManager2;
     public TreeController treeController;
+    public TreeGrow treeGrow;
 }

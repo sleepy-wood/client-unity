@@ -33,8 +33,8 @@ public class SkyController : MonoBehaviour
     {
         // 현재 시간 고려해 SkyBox 세팅
         // 낮 : 오전 7시~ / 일몰 : 오후 5시~ / 저녁 : 오후 6시~
-        //if (!GameManager.Instance.treeController.demoMode)
-        //{
+        if (!GameManager.Instance.treeController.demoMode)
+        {
             if (DateTime.Now.Hour > 7 && DateTime.Now.Hour < 17) Day();
             else if (DateTime.Now.Hour > 17 && DateTime.Now.Hour < 18)
             {
@@ -48,7 +48,7 @@ public class SkyController : MonoBehaviour
                 txtSub.color = Color.white;
                 Night();
             }
-        //}
+        }
         //else
         //{
         //    firstPlantDate = DateTime.Now;
@@ -85,7 +85,7 @@ public class SkyController : MonoBehaviour
         RenderSettings.skybox = nightSky;
         //ltSetting = sunsetSetting;
         postProcessVolume.profile = nightPp;
-        lt.color = new Color(0.7058824f, 0.5764706f, 0.6941177f);
+        lt.color = new Color(0.345098f, 0.4666667f, 0.5764706f);
         lt.intensity = 1.6f;
         AudioInit();
         night.gameObject.SetActive(true);

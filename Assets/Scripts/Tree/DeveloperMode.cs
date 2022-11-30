@@ -54,21 +54,13 @@ public class DeveloperMode : MonoBehaviour
         //}
     }
 
-    bool once;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !once)
-        {
-            once = true;
-            OnDeveloperPlusDay();
-            print("OnDeveloperPlusDay : " + GetComponent<TreeController>().dayCount);
-        }
     }
 
     // +Day 버튼 누를 때마다 헬스 데이터로 나무 업데이트 (2일차 ~ 5일차)
     public void OnDeveloperPlusDay()
     {
-        once = false;
         timeManager.OnPlusDay(firstDate);
     }
 }
