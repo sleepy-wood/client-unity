@@ -23,3 +23,10 @@ Broccoli Tree Creator (ver 1.5)
 
 ![Unity drawio](https://user-images.githubusercontent.com/76097749/206389781-89f6758e-d54b-4978-844a-78c15f63d815.png)
 
+### Project Struct UML
+
+#### 1. DataModule
+
+![DataModule](https://user-images.githubusercontent.com/76097749/206399699-70afe967-7d78-4100-b04a-3e19e6e9b655.png)
+
+#### 2. User
