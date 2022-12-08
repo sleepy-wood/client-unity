@@ -10,13 +10,13 @@
 
 ### Environment
 
-C# 10 (Visual Studio 2022)
-.Net Standard 2.1
+C# 10 (Visual Studio 2022) <br>
+.Net Standard 2.1 <br>
 Unity Editor 2021.3.11f1
 
 ### External Library
 
-UniTask (ver 2.3.1)
+UniTask (ver 2.3.1) <br>
 Broccoli Tree Creator (ver 1.5)
 
 ### System Architecture
