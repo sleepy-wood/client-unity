@@ -24,10 +24,29 @@ Broccoli Tree Creator (ver 1.5)
 ![Unity drawio](https://user-images.githubusercontent.com/76097749/206389781-89f6758e-d54b-4978-844a-78c15f63d815.png)
 
 ### Client-Result
+-  Land Entrance & Friend Visit
 
-### Project Struct UML
+    <img src="https://user-images.githubusercontent.com/86099781/206416582-e4a16a0b-6114-42ed-96d3-09e3d34922f2.png" width="150" height="280">  <img src="https://user-images.githubusercontent.com/86099781/206439907-a998a5d3-8472-459f-be15-81a7729210c4.gif" width="150" height="280">  
+- Tree Grow 
 
+    <img src="https://user-images.githubusercontent.com/86099781/206443328-a61aba05-f8d0-444c-9b21-4e10e1223c58.gif" width="150" height="280">  
+- Sky Change
+
+    <img src="https://user-images.githubusercontent.com/86099781/206444312-97ad81c7-c638-4e01-9b36-63ef0f7d17e9.png" width="150" height="280">  <img src="https://user-images.githubusercontent.com/86099781/206444165-3e106b6c-3b10-4a4c-bb11-86e44c972781.png" width="150" height="280">  <img src="https://user-images.githubusercontent.com/86099781/206443992-18738b34-0e6b-4ca2-b446-de2fd7a0d968.png" width="150" height="280">
+- Weather Change (Weather API)
+
+    <img src="https://user-images.githubusercontent.com/86099781/206448151-34e1b7a4-127c-4c1f-ba9f-ca14a625696f.gif" width="150" height="280">  <img src="https://user-images.githubusercontent.com/86099781/206448667-ecce9013-6524-445d-8473-bbae95272c83.gif" width="150" height="280">
+- Chatting & Land Custom
+
+    <img src="https://user-images.githubusercontent.com/86099781/206449633-2d598ddb-3f2c-46ce-abd2-ab308286a093.gif" width="150" height="280">  <img src="https://user-images.githubusercontent.com/86099781/206456136-f70c0a4c-03e7-4168-b9aa-7001d2fd95fc.gif" width="150" height="280">
+- Menu UI - Health & Sleep & Share & My Collection
+
+    <img src="https://user-images.githubusercontent.com/86099781/206459689-260e549f-e86b-4678-9710-61ea21717651.png" width="150" height="280">  <img src="https://user-images.githubusercontent.com/86099781/206459699-e202482a-5126-4b5c-9a6b-f70a18b0fdc1.png" width="150" height="280">  <img src="https://user-images.githubusercontent.com/86099781/206459709-0d11c61f-d1c1-48d0-b2c3-a9760080e0c6.png" width="150" height="280">  <img src="https://user-images.githubusercontent.com/86099781/206460551-3b86d547-f500-452b-84d8-1811794e20ed.gif" width="150" height="280">
+- Share Land
+
+    ![ShareLand](https://user-images.githubusercontent.com/86099781/206462173-e641845d-7f3a-4dbb-8d48-8c2c37b44623.jpg)
 #### 1. DataModule
+
 
 ![DataModule](https://user-images.githubusercontent.com/76097749/206399699-70afe967-7d78-4100-b04a-3e19e6e9b655.png)
 
