@@ -46,8 +46,8 @@ Broccoli Tree Creator (ver 1.5)
 
     ![ShareLand](https://user-images.githubusercontent.com/86099781/206462173-e641845d-7f3a-4dbb-8d48-8c2c37b44623.jpg)
 #### 1. DataModule
+![DataModule](https://user-images.githubusercontent.com/76097749/206599487-d988f33d-1ba9-44bd-bf96-08d65b5f1bd0.png)
 
 
-![DataModule](https://user-images.githubusercontent.com/76097749/206399699-70afe967-7d78-4100-b04a-3e19e6e9b655.png)
 
 #### 2. User
