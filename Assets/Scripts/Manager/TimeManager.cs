@@ -22,54 +22,40 @@ public class TimeManager : MonoBehaviour
 
     private void Awake()
     {
-        //if (treeControll.playMode)
-        //{
-        firstPlantDate.dateTime = DateTime.MinValue;
-        //}                                                                                                                                    
-        //if (!treeControll.demoMode)
-        //{
-        //    print("Land Id : " + DataTemporary.MyUserData.currentLandId);
-        //    int treeDataCount = DataTemporary.GetTreeData.getTreeDataList.Count;
-        //    print($"Tree Data Count : {treeDataCount}개");
-        //    // 해당 랜드의 firstPlantDate 알아내기
-        //    if (treeDataCount > 0)
-        //    {
-        //        for (int i = 0; i < treeDataCount; i++)
-        //        {
-        //            // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
-        //            if (DataTemporary.GetTreeData.getTreeDataList[i].landId == DataTemporary.MyUserData.currentLandId)
-        //            {
-        //                // 현재 랜드의 트리 데이터 인덱스 저장
-        //                treeControll.treeDataIdx = i;
-
-        //                // 처음 심은 날 저장
-        //                firstPlantDate = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
-        //                print("firstPlantDate : " + firstPlantDate.dateTime);
-
-        //                // 현재 랜드의 나무 데이터
-        //                treeControll.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
-        //                print($"{treeDataCount}개의 트리 데이터 중 {i}번째 트리 데이터");  // 심은 순서대로 저장 
-        //            }
-        //        }
-        //    }
-        //}
-
-
-        //// firstPlantDate로 방문타입 결정 => 5일차 후 새로운 Seed 심기 전 null값 처리필요
-        if (firstPlantDate.dateTime == DateTime.MinValue)
+        // demoMode일 경우에만 VisitType 강제결정
+        if (!treeControll.demoMode)
         {
-            print("First Visit");
-            treeControll.visitType = TreeController.VisitType.First;
-            firstPlantDate = DateTime.Now;
-            CalculatePlantDays(firstPlantDate, DateTime.Now);
+            print("Land Id : " + DataTemporary.MyUserData.currentLandId);
+            int treeDataCount = DataTemporary.GetTreeData.getTreeDataList.Count;
+            print($"Tree Data Count : {treeDataCount}개");
+            // 해당 랜드의 firstPlantDate 알아내기
+            if (treeDataCount > 0)
+            {
+                for (int i = 0; i < treeDataCount; i++)
+                {
+                    // User의 CurrentLandId와 같은 LandId인 treeData 가져오기
+                    if (DataTemporary.GetTreeData.getTreeDataList[i].landId == DataTemporary.MyUserData.currentLandId)
+                    {
+                        // 현재 랜드의 트리 데이터 인덱스 저장
+                        treeControll.treeDataIdx = i;
+
+                        // 처음 심은 날 저장
+                        firstPlantDate = DateTime.Parse(DataTemporary.GetTreeData.getTreeDataList[i].createdAt);
+                        print("firstPlantDate : " + firstPlantDate.dateTime);
+
+                        // 현재 랜드의 나무 데이터
+                        treeControll.currentTreeData = DataTemporary.GetTreeData.getTreeDataList[i];
+                        print($"{treeDataCount}개의 트리 데이터 중 {i}번째 트리 데이터");  // 심은 순서대로 저장 
+                    }
+                }
+            }
         }
         else
         {
-            print("Revisit");
-            treeControll.visitType = TreeController.VisitType.ReVisit;
-            // totalPlantDay, dayCount 계산
-            CalculatePlantDays(firstPlantDate, DateTime.Now);
+            firstPlantDate.dateTime = DateTime.MinValue;
         }
+
+        GetVisitType();
     }
 
     private void Start()
@@ -179,6 +165,28 @@ public class TimeManager : MonoBehaviour
         }
         
         
+    }
+
+
+    /// <summary>
+    /// firstPlantDate로 방문타입 결정 => 5일차 후 새로운 Seed 심기 전 null값 처리필요
+    /// </summary>
+    public void GetVisitType()
+    {
+        if (firstPlantDate.dateTime == DateTime.MinValue)
+        {
+            print("First Visit");
+            treeControll.visitType = TreeController.VisitType.First;
+            firstPlantDate = DateTime.Now;
+            CalculatePlantDays(firstPlantDate, DateTime.Now);
+        }
+        else
+        {
+            print("Revisit");
+            treeControll.visitType = TreeController.VisitType.ReVisit;
+            // totalPlantDay, dayCount 계산
+            CalculatePlantDays(firstPlantDate, DateTime.Now);
+        }
     }
 
 
