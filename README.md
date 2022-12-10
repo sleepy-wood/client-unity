@@ -15,10 +15,10 @@
       <a href="#about-the-client">About The Client</a>
     </li>
     <li>
-      <a href="#client-result">Client-Result</a>
+        <a href="#main-point-struct-uml">Main Point Struct UML</a>
     </li>
     <li>
-        <a href="#main-point-struct-uml">Main Point Struct UML</a>
+      <a href="#client-result">Client-Result</a>
     </li>
     <li><a href="#license">License</a></li>
   </ol>
