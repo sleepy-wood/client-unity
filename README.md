@@ -49,7 +49,6 @@ Broccoli Tree Creator (ver 1.5)
 
 ![Unity drawio](https://user-images.githubusercontent.com/76097749/206389781-89f6758e-d54b-4978-844a-78c15f63d815.png)
 
----
 ## Client-Result
 
 - #### Land Entrance & Friend Visit
@@ -73,8 +72,6 @@ Broccoli Tree Creator (ver 1.5)
 - #### Share Land
 
     ![SharedLand](https://user-images.githubusercontent.com/86099781/206699809-67772a70-4dd8-4703-90be-d4988aa05e87.gif)
-
----
 
 ## Main Point Struct UML
 
@@ -101,7 +98,6 @@ Broccoli Tree Creator (ver 1.5)
 
 ### 4. Tree
 
----
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
