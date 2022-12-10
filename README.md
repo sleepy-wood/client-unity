@@ -2,7 +2,7 @@
 # Unity-Client
 
 
-[![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![MIT License][license-shield]][license-url]
+[![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][https://github.com/sleepy-wood/client-unity/stargazers] [![MIT License][license-shield]][license-url]
 
 <div align="center">
   <a href="https://github.com/sleepy-wood">
