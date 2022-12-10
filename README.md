@@ -1,9 +1,6 @@
 ![Banner](https://user-images.githubusercontent.com/76097749/206390421-e6366351-7d8a-4833-b500-6be69b91d4c4.png)
 # Unity-Client
 
-
-[![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][https://github.com/sleepy-wood/client-unity/stargazers] [![MIT License][license-shield]][license-url]
-
 <div align="center">
   <a href="https://github.com/sleepy-wood">
     <img src="https://github.com/sleepy-wood/client-web/blob/dev/src/assets/images/logo.png" alt="Logo" width="120" height="120">
