@@ -1,14 +1,7 @@
 ![Banner](https://user-images.githubusercontent.com/76097749/206390421-e6366351-7d8a-4833-b500-6be69b91d4c4.png)
 # client-unity
 
-<a href="https://github.com/sleepy-wood/blocclient-unity/graphs/contributors"><img src="https://camo.githubusercontent.com/fd7830e76b2838501234dff5db92d8b2de78a77f8b906b7e669ecb308c8e5560/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f636f6e7472696275746f72732f736c656570792d776f6f642f636c69656e742d756e6974792d706c7567696e732e7376673f7374796c653d666f722d7468652d6261646765" alt="Contributors" data-canonical-src="https://img.shields.io/github/contributors/sleepy-wood/client-unity.svg?style=for-the-badge" style="max-width: 100%;"></a>
-
-<img src="https://camo.githubusercontent.com/77d51a90d4b37e57afa690015eab46e27bdd8bb80b1d376ba23d776345909940/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f666f726b732f736c656570792d776f6f642f636c69656e742d756e6974792d706c7567696e732e7376673f7374796c653d666f722d7468652d6261646765" alt="Forks" data-canonical-src="https://img.shields.io/github/forks/sleepy-wood/client-unity.svg?style=for-the-badge" style="max-width: 100%;">
-
-
-<a href="https://github.com/sleepy-wood/client-unity/stargazers"><img src="https://camo.githubusercontent.com/22c903140f3021acaaffd61678c647f147cb4c4301920bf1c720969e31fc5d47/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f73746172732f736c656570792d776f6f642f636c69656e742d756e6974792d706c7567696e732e7376673f7374796c653d666f722d7468652d6261646765" alt="Stargazers" data-canonical-src="https://img.shields.io/github/stars/sleepy-wood/client-unity.svg?style=for-the-badge" style="max-width: 100%;"></a>
-
-[![MIT License][license-shield]][license-url]
+<a href="https://github.com/sleepy-wood/blocclient-unity/graphs/contributors"><img src="https://img.shields.io/github/contributors/sleepy-wood/client-unity.svg?style=for-the-badge" alt="Contributors" style="max-width: 100%;"></a> <a href="https://github.com/sleepy-wood/client-unity/network/members"><img src="https://img.shields.io/github/forks/sleepy-wood/client-unity.svg?style=for-the-badge" alt="Forks" style="max-width: 100%;"></a> <a href="https://github.com/sleepy-wood/client-unity/stargazers"><img src="https://img.shields.io/github/stars/sleepy-wood/client-unity.svg?style=for-the-badge" alt="Stargazers" style="max-width: 100%;"></a> [![MIT License][license-shield]][license-url]
 
 <div align="center">
   <a href="https://github.com/sleepy-wood">
