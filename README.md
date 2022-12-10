@@ -1,5 +1,10 @@
 ![Banner](https://user-images.githubusercontent.com/76097749/206390421-e6366351-7d8a-4833-b500-6be69b91d4c4.png)
-# Unity-Client
+# client-unity
+
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![MIT License][license-shield]][license-url]
 
 <div align="center">
   <a href="https://github.com/sleepy-wood">
