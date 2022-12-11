@@ -57,7 +57,8 @@ Broccoli Tree Creator (ver 1.5)
 - #### Data
 ![DataModule](https://user-images.githubusercontent.com/76097749/206599487-d988f33d-1ba9-44bd-bf96-08d65b5f1bd0.png)
 
-- #### DataModule And Server
+- #### DataModule And Server 
+ <b> MVVM Patter에서 고안 </b>
  <img src="https://user-images.githubusercontent.com/76097749/206826820-dabb037c-5e70-4c67-b9cc-436b39b877fa.png" width="500" height="250"> 
 
 - #### DataModule
