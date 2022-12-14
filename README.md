@@ -61,9 +61,6 @@ Broccoli Tree Creator (ver 1.5)
  <b> MVVM Pattern에서 고안 </b><br>
  <img src="https://user-images.githubusercontent.com/76097749/206826820-dabb037c-5e70-4c67-b9cc-436b39b877fa.png" width="500" height="250"> 
 
-- #### DataModule
- <img src="https://user-images.githubusercontent.com/76097749/206826828-6999d1ac-3e93-43cd-94f8-fbfae6bb0d55.png" width="300" height="600"> 
-
 ### 2. User
  <img src="https://user-images.githubusercontent.com/76097749/206826957-a1849042-8e59-47a3-88f6-b07b16db4a59.png" width="400" height="600"> 
 
